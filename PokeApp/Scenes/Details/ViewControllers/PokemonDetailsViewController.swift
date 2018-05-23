@@ -108,6 +108,36 @@ private extension PokemonDetailsViewController {
     
     func bindTableViews() {
         
+        viewModel.pokemonAbilities
+            .asObservable()
+            .bind(to: abilitiesTableView.rx.items(cellIdentifier: "AbilitiesTableViewCell", cellType: UITableViewCell.self)) { (rowIndex, abilityString, cell) in
+                cell.textLabel?.text = abilityString
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.pokemonStats
+            .asObservable()
+            .bind(to: statsTableView.rx.items(cellIdentifier: "StatsTableViewCell", cellType: UITableViewCell.self)) { (rowIndex, statString, cell) in
+                cell.textLabel?.text = statString
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.pokemonMoves
+            .asObservable()
+            .bind(to: movesTableView.rx.items(cellIdentifier: "MovesTableViewCell", cellType: UITableViewCell.self)) { (rowIndex, moveString, cell) in
+                cell.textLabel?.text = moveString
+            }
+            .disposed(by: disposeBag)
+        
+    }
+    
+}
+
+// MARK: - UITableViewDelegate
+extension PokemonDetailsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 20
     }
     
 }

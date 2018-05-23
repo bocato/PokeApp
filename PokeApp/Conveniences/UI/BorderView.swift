@@ -1,5 +1,5 @@
 //
-//  BorderStackView.swift
+//  BorderView.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 22/05/18.
@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class BorderStackView: UIStackView {
+class BorderView: UIView {
     
     // MARK: - Properties
     @IBInspectable var cornerRadius: CGFloat = 6 {

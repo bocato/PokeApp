@@ -44,6 +44,7 @@ extension UIView {
         loadingView.tag = loadingViewTag
         loadingView.center = parentView.center
         loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.layer.zPosition = 1
         parentView.addSubview(loadingView)
         // Configure loadingView autolayout
         loadingView.centerXAnchor.constraint(equalTo: parentView.centerXAnchor).isActive = true
@@ -74,8 +75,8 @@ extension UIView {
     }
     
     func stopLoading() {
-        let loadingView = viewWithTag(loadingViewTag)
         DispatchQueue.main.async {
+            let loadingView = self.viewWithTag(loadingViewTag)
             UIView.animate(withDuration: 0.2, animations: {
                 loadingView?.alpha = 0
             }, completion: { (completed) in
@@ -85,3 +86,4 @@ extension UIView {
     }
     
 }
+

@@ -23,15 +23,16 @@ class PokemonDetailsViewModel {
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
-    private var pokemonId: Int!
+    private var pokemonId: Int
     var isLoadingPokemonImage = Variable<Bool>(true)
     var viewState = Variable<PokemonDetailsViewState>(.loading(true))
+    private var pokemonData: Pokemon?
     var pokemonImage = Variable<UIImage?>(nil)
     var pokemonNumber = Variable<String?>(nil)
     var pokemonName = Variable<String?>(nil)
-    var pokemonAbilities = Variable<[Ability]?>(nil)
-    var pokemonStats = Variable<[Stat]?>(nil)
-    var pokemonMoves = Variable<[Move]?>(nil)
+    var pokemonAbilities = Variable<[String]>([])
+    var pokemonStats = Variable<[String]>([])
+    var pokemonMoves = Variable<[String]>([])
 
     // MARK: - Initialization
     required init(pokemonId: Int) {
@@ -55,13 +56,14 @@ class PokemonDetailsViewModel {
                     return
                 }
                 
+                self.pokemonData = pokemonData
+                
                 self.downloadImage(from: imageURL)
                 self.pokemonNumber.value = "#\(number)"
                 self.pokemonName.value = name.capitalizingFirstLetter()
-                
-//                var pokemonAbilities = Variable<[Ability]?>(nil)
-//                var pokemonStats = Variable<[Stat]?>(nil)
-//                var pokemonMoves = Variable<[Move]?>(nil)
+                self.pokemonAbilities.value = self.extractAbilityNames(from: abilities)
+                self.pokemonStats.value = self.extractStatStrings(from: stats)
+                self.pokemonMoves.value = self.extractMoveStrings(from: moves)
                 
             }, onError: { (error) in
                 let networkError = error as! NetworkError
@@ -88,6 +90,38 @@ class PokemonDetailsViewModel {
                 }
             }
         }
+    }
+    
+    private func extractAbilityNames(from abilities: [Ability]) -> [String] {
+        var abilityNames = [String]()
+        for ability in abilities {
+            if let abilityName = ability.ability?.name?.capitalizingFirstLetter() {
+                abilityNames.append(abilityName)
+            }
+        }
+        return abilityNames
+    }
+    
+    private func extractStatStrings(from stats: [Stat]) -> [String] {
+        var statStrings = [String]()
+        for stat in stats {
+            if let statName = stat.stat?.name?.capitalizingFirstLetter(), let baseStat = stat.baseStat {
+                let statString = "\(statName) (\(baseStat))"
+                statStrings.append(statString)
+            }
+        }
+        return statStrings
+    }
+    
+    private func extractMoveStrings(from moves: [Move]) -> [String] {
+        var moveStrings = [String]()
+        for move in moves {
+            if let moveName = move.move?.name?.capitalizingFirstLetter(), let learnedAtLevel = move.versionGroupDetails?.first?.levelLearnedAt {
+                let moveString = "\(moveName) - Learned at LVL: \(learnedAtLevel)"
+                moveStrings.append(moveString)
+            }
+        }
+        return moveStrings
     }
     
 }

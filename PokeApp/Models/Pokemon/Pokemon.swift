@@ -38,8 +38,8 @@ struct Pokemon: Codable {
 extension Pokemon {
     
     var imageURL: String? {
-        guard let id = id else { return nil }
-        return "\(Environment.shared.spritesURL)\(id).png"
+        guard let id = id, let spritesURL = Environment.shared.spritesURL else { return nil }
+        return "\(spritesURL)\("pokemon/")\(id).png"
     }
     
 }

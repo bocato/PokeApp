@@ -74,7 +74,6 @@ private extension HomeViewController {
                     } else {
                         self.tableView.stopLoading()
                     }
-                    debugPrint("isLoading = \(isLoading)")
                 case .error(let networkError):
                     let errorMessage = networkError.message ?? NetworkErrorMessage.unexpected.rawValue
                     AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
