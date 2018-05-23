@@ -100,6 +100,13 @@ private extension HomeViewController {
             .modelSelected(PokemonTableViewCellModel.self)
             .subscribe(onNext: { selectedPokemonCellModel in
                 debugPrint("selectedPokemonCellModel = \(selectedPokemonCellModel)")
+                
+                // TODO: Do this with Coordinator/Router/Viewmodel... remove logic from here
+                if let id = selectedPokemonCellModel.pokemonListItem.id {
+                    let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: id)
+                    self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
+                }
+                
             })
             .disposed(by: disposeBag)
         

@@ -8,17 +8,22 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class PokemonDetailsViewController: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var pokemonImageView: UIImageView!
-    @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var abilitiesTableView: UITableView!
-    @IBOutlet weak var statsTableView: UITableView!
-    @IBOutlet weak var movesTableView: UITableView!
-    @IBOutlet weak var favoritesButton: PrimaryButton!
+    @IBOutlet private weak var pokemonImageView: UIImageView!
+    @IBOutlet private weak var numberLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var abilitiesTableView: UITableView!
+    @IBOutlet private weak var statsTableView: UITableView!
+    @IBOutlet private weak var movesTableView: UITableView!
+    @IBOutlet private weak var favoritesButton: PrimaryButton!
+    
+    // MARK: - Properties
+    var viewModel: PokemonDetailsViewModel!
+    private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -28,3 +33,91 @@ class PokemonDetailsViewController: UIViewController {
     // MARK: -
 
 }
+
+// MARK: - Binding
+private extension PokemonDetailsViewController {
+    
+    func bindAll() {
+        bindViewModel()
+        bindImage()
+        bindLabels()
+        bindTableViews()
+    }
+    
+    func bindViewModel() {
+        
+        viewModel.isLoadingPokemonImage
+            .asObservable()
+            .subscribe(onNext: { isLoading in
+                if isLoading {
+                    self.pokemonImageView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
+                } else {
+                    self.pokemonImageView.stopLoading()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.viewState
+            .asObservable()
+            .subscribe(onNext: { state in
+                switch state {
+                    case .loading(let isLoading):
+                        if isLoading {
+                            self.abilitiesTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
+                            self.statsTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
+                            self.movesTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
+                        } else {
+                            self.abilitiesTableView.stopLoading()
+                            self.statsTableView.stopLoading()
+                            self.movesTableView.stopLoading()
+                        }
+                    case .error(let networkError):
+                        let errorMessage = networkError.message ?? NetworkErrorMessage.unexpected.rawValue
+                        AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
+                    case .noData:
+                        debugPrint("No Data") // PopViewController... do this with Cooordinator/Router
+                }
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
+    func bindImage() {
+        viewModel.pokemonImage
+            .asObservable()
+            .bind(to: pokemonImageView.rx.image)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindLabels(){
+        
+        viewModel.pokemonNumber
+            .asObservable()
+            .bind(to: numberLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.pokemonName
+            .asObservable()
+            .bind(to: nameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+    }
+    
+    func bindTableViews() {
+        
+    }
+    
+}
+
+// MARK: - Instantiation
+extension PokemonDetailsViewController {
+    
+    class func instantiateNew(withPokemonId pokemonId: Int) -> PokemonDetailsViewController {
+        let controller = instantiate(viewControllerOfType: PokemonDetailsViewController.self, storyboardName: "Details")
+        controller.viewModel = PokemonDetailsViewModel(pokemonId: pokemonId)
+        return controller
+    }
+    
+}
+
+
