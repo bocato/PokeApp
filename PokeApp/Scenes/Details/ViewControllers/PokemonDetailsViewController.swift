@@ -43,6 +43,7 @@ private extension PokemonDetailsViewController {
         bindImage()
         bindLabels()
         bindTableViews()
+        bindButtons()
     }
     
     func bindViewModel() {
@@ -128,6 +129,16 @@ private extension PokemonDetailsViewController {
                 cell.textLabel?.text = moveString
             }
             .disposed(by: disposeBag)
+        
+    }
+    
+    func bindButtons() {
+        
+        favoritesButton.rx.tap.subscribe { onTap in
+            
+        }.disposed(by: disposeBag)
+        
+//        favoritesButton.titleLabel?.rx.text = // Bind is favorite
         
     }
     
