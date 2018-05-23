@@ -18,8 +18,6 @@ struct Pokemon: Codable {
     var abilities: [Ability]?
     var forms: [Form]?
     var gameIndices: [GameIndex]?
-    var heldItems: [JSONAny]?
-    var locationAreaEncounters: [JSONAny]?
     var moves: [Move]?
     var species: Form?
     var stats: [Stat]?
@@ -32,8 +30,6 @@ struct Pokemon: Codable {
         case isDefault = "is_default"
         case order, weight, abilities, forms
         case gameIndices = "game_indices"
-        case heldItems = "held_items"
-        case locationAreaEncounters = "location_area_encounters"
         case moves, species, stats, types
     }
     

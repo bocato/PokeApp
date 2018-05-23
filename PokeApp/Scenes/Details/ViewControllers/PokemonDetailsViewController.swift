@@ -28,6 +28,7 @@ class PokemonDetailsViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindAll()
     }
     
     // MARK: -
@@ -45,6 +46,8 @@ private extension PokemonDetailsViewController {
     }
     
     func bindViewModel() {
+        
+        viewModel.loadPokemonData()
         
         viewModel.isLoadingPokemonImage
             .asObservable()

@@ -36,11 +36,10 @@ class PokemonDetailsViewModel {
     // MARK: - Initialization
     required init(pokemonId: Int) {
         self.pokemonId = pokemonId
-        self.loadPokemonData()
     }
     
     // MARK: - API Calls
-    private func loadPokemonData() {
+    func loadPokemonData() {
         viewState.value = .loading(true)
         pokemonService.getDetailsForPokemon(withId: pokemonId)
             .subscribe(onNext: { (pokemonData, _) in

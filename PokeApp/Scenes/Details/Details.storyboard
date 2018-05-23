@@ -13,7 +13,7 @@
         <!--Pokemon Details View Controller-->
         <scene sceneID="Mz9-7l-yAL">
             <objects>
-                <viewController id="oP1-jr-ets" customClass="PokemonDetailsViewController" customModule="PokeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PokemonDetailsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oP1-jr-ets" customClass="PokemonDetailsViewController" customModule="PokeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DKt-Bj-HAE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                     <constraint firstAttribute="width" constant="84" id="oak-2r-GjL"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Qr9-wL-ily">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Qr9-wL-ily">
                                 <rect key="frame" x="20" y="122" width="335" height="525"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TNX-Nd-XUU" userLabel="Name and Number Stack View">
@@ -112,13 +112,16 @@
                                         <rect key="frame" x="0.0" y="176" width="335" height="293"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moves" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19I-a9-bm8">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="18"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="H0d-qi-rIw"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LpR-la-6U8">
-                                                <rect key="frame" x="0.0" y="23" width="335" height="270"/>
+                                                <rect key="frame" x="0.0" y="25" width="335" height="268"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
                                         </subviews>

@@ -1,204 +1,62 @@
 //
 //  JSONAny.swift
-//  PokeApp
+//  WhiteLabel
 //
-//  Created by Eduardo Sanches Bocato on 18/05/18.
-//  Copyright © 2018 Bocato. All rights reserved.
+//  Created by Eduardo Sanches Bocato on 14/11/17.
+//  Copyright © 2017 Zup IT. All rights reserved.
 //
 
 import Foundation
 
-class JSONAny: Codable {
-    
-    let value: Any
-    
-    static func decodingError(forCodingPath codingPath: [CodingKey]) -> DecodingError {
-        let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Cannot decode JSONAny")
-        return DecodingError.typeMismatch(JSONAny.self, context)
+public enum JSONAny {
+  case string(String)
+  case number(Float)
+  case object([String:JSONAny])
+  case array([JSONAny])
+  case bool(Bool)
+  case null
+}
+
+extension JSONAny: Equatable {
+  
+  public static func == (lhs: JSONAny, rhs: JSONAny) -> Bool {
+    switch (lhs, rhs) {
+    case (.string(let s1), .string(let s2)):
+      return s1 == s2
+    case (.number(let n1), .number(let n2)):
+      return n1 == n2
+    case (.object(let o1), .object(let o2)):
+      return o1 == o2
+    case (.array(let a1), .array(let a2)):
+      return a1 == a2
+    case (.bool(let b1), .bool(let b2)):
+      return b1 == b2
+    case (.null, .null):
+      return true
+    default:
+      return false
     }
-    
-    static func encodingError(forValue value: Any, codingPath: [CodingKey]) -> EncodingError {
-        let context = EncodingError.Context(codingPath: codingPath, debugDescription: "Cannot encode JSONAny")
-        return EncodingError.invalidValue(value, context)
+  }
+  
+}
+
+extension JSONAny: CustomDebugStringConvertible {
+  
+  public var debugDescription: String {
+    switch self {
+    case .string(let str):
+      return str.debugDescription
+    case .number(let num):
+      return num.debugDescription
+    case .bool(let bool):
+      return bool.description
+    case .null:
+      return "null"
+    default:
+      let encoder = JSONEncoder()
+      encoder.outputFormatting = [.prettyPrinted]
+      return try! String(data: encoder.encode(self), encoding: .utf8)!
     }
-    
-    static func decode(from container: SingleValueDecodingContainer) throws -> Any {
-        if let value = try? container.decode(Bool.self) {
-            return value
-        }
-        if let value = try? container.decode(Int64.self) {
-            return value
-        }
-        if let value = try? container.decode(Double.self) {
-            return value
-        }
-        if let value = try? container.decode(String.self) {
-            return value
-        }
-        if container.decodeNil() {
-            return JSONNull()
-        }
-        throw decodingError(forCodingPath: container.codingPath)
-    }
-    
-    static func decode(from container: inout UnkeyedDecodingContainer) throws -> Any {
-        if let value = try? container.decode(Bool.self) {
-            return value
-        }
-        if let value = try? container.decode(Int64.self) {
-            return value
-        }
-        if let value = try? container.decode(Double.self) {
-            return value
-        }
-        if let value = try? container.decode(String.self) {
-            return value
-        }
-        if let value = try? container.decodeNil() {
-            if value {
-                return JSONNull()
-            }
-        }
-        if var container = try? container.nestedUnkeyedContainer() {
-            return try decodeArray(from: &container)
-        }
-        if var container = try? container.nestedContainer(keyedBy: JSONCodingKey.self) {
-            return try decodeDictionary(from: &container)
-        }
-        throw decodingError(forCodingPath: container.codingPath)
-    }
-    
-    static func decode(from container: inout KeyedDecodingContainer<JSONCodingKey>, forKey key: JSONCodingKey) throws -> Any {
-        if let value = try? container.decode(Bool.self, forKey: key) {
-            return value
-        }
-        if let value = try? container.decode(Int64.self, forKey: key) {
-            return value
-        }
-        if let value = try? container.decode(Double.self, forKey: key) {
-            return value
-        }
-        if let value = try? container.decode(String.self, forKey: key) {
-            return value
-        }
-        if let value = try? container.decodeNil(forKey: key) {
-            if value {
-                return JSONNull()
-            }
-        }
-        if var container = try? container.nestedUnkeyedContainer(forKey: key) {
-            return try decodeArray(from: &container)
-        }
-        if var container = try? container.nestedContainer(keyedBy: JSONCodingKey.self, forKey: key) {
-            return try decodeDictionary(from: &container)
-        }
-        throw decodingError(forCodingPath: container.codingPath)
-    }
-    
-    static func decodeArray(from container: inout UnkeyedDecodingContainer) throws -> [Any] {
-        var arr: [Any] = []
-        while !container.isAtEnd {
-            let value = try decode(from: &container)
-            arr.append(value)
-        }
-        return arr
-    }
-    
-    static func decodeDictionary(from container: inout KeyedDecodingContainer<JSONCodingKey>) throws -> [String: Any] {
-        var dict = [String: Any]()
-        for key in container.allKeys {
-            let value = try decode(from: &container, forKey: key)
-            dict[key.stringValue] = value
-        }
-        return dict
-    }
-    
-    static func encode(to container: inout UnkeyedEncodingContainer, array: [Any]) throws {
-        for value in array {
-            if let value = value as? Bool {
-                try container.encode(value)
-            } else if let value = value as? Int64 {
-                try container.encode(value)
-            } else if let value = value as? Double {
-                try container.encode(value)
-            } else if let value = value as? String {
-                try container.encode(value)
-            } else if value is JSONNull {
-                try container.encodeNil()
-            } else if let value = value as? [Any] {
-                var container = container.nestedUnkeyedContainer()
-                try encode(to: &container, array: value)
-            } else if let value = value as? [String: Any] {
-                var container = container.nestedContainer(keyedBy: JSONCodingKey.self)
-                try encode(to: &container, dictionary: value)
-            } else {
-                throw encodingError(forValue: value, codingPath: container.codingPath)
-            }
-        }
-    }
-    
-    static func encode(to container: inout KeyedEncodingContainer<JSONCodingKey>, dictionary: [String: Any]) throws {
-        for (key, value) in dictionary {
-            let key = JSONCodingKey(stringValue: key)!
-            if let value = value as? Bool {
-                try container.encode(value, forKey: key)
-            } else if let value = value as? Int64 {
-                try container.encode(value, forKey: key)
-            } else if let value = value as? Double {
-                try container.encode(value, forKey: key)
-            } else if let value = value as? String {
-                try container.encode(value, forKey: key)
-            } else if value is JSONNull {
-                try container.encodeNil(forKey: key)
-            } else if let value = value as? [Any] {
-                var container = container.nestedUnkeyedContainer(forKey: key)
-                try encode(to: &container, array: value)
-            } else if let value = value as? [String: Any] {
-                var container = container.nestedContainer(keyedBy: JSONCodingKey.self, forKey: key)
-                try encode(to: &container, dictionary: value)
-            } else {
-                throw encodingError(forValue: value, codingPath: container.codingPath)
-            }
-        }
-    }
-    
-    static func encode(to container: inout SingleValueEncodingContainer, value: Any) throws {
-        if let value = value as? Bool {
-            try container.encode(value)
-        } else if let value = value as? Int64 {
-            try container.encode(value)
-        } else if let value = value as? Double {
-            try container.encode(value)
-        } else if let value = value as? String {
-            try container.encode(value)
-        } else if value is JSONNull {
-            try container.encodeNil()
-        } else {
-            throw encodingError(forValue: value, codingPath: container.codingPath)
-        }
-    }
-    
-    public required init(from decoder: Decoder) throws {
-        if var arrayContainer = try? decoder.unkeyedContainer() {
-            self.value = try JSONAny.decodeArray(from: &arrayContainer)
-        } else if var container = try? decoder.container(keyedBy: JSONCodingKey.self) {
-            self.value = try JSONAny.decodeDictionary(from: &container)
-        } else {
-            let container = try decoder.singleValueContainer()
-            self.value = try JSONAny.decode(from: container)
-        }
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        if let arr = self.value as? [Any] {
-            var container = encoder.unkeyedContainer()
-            try JSONAny.encode(to: &container, array: arr)
-        } else if let dict = self.value as? [String: Any] {
-            var container = encoder.container(keyedBy: JSONCodingKey.self)
-            try JSONAny.encode(to: &container, dictionary: dict)
-        } else {
-            var container = encoder.singleValueContainer()
-            try JSONAny.encode(to: &container, value: self.value)
-        }
-    }
+  }
+  
 }
