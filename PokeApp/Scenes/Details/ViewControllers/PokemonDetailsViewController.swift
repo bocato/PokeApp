@@ -135,11 +135,25 @@ private extension PokemonDetailsViewController {
     func bindButtons() {
         
         favoritesButton.rx.tap.subscribe { onTap in
-            
+            self.viewModel.favoriteButtonTouchUpInsideActionClosure?()
         }.disposed(by: disposeBag)
         
-//        favoritesButton.titleLabel?.rx.text = // Bind is favorite
+//        viewModel.favoriteButtonText
+//            .asObservable()
+//            .subscribe(onNext: { (buttonText) in
+//                guard let buttonText = buttonText else { return }
+//                DispatchQueue.main.async {
+//                    self.favoritesButton.titleLabel?.text = buttonText // TODO: Set to observe on Main Scheduler
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
+        viewModel.favoriteButtonText
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { text in
+                self.favoritesButton.titleLabel?.text = text
+            }).disposed(by: disposeBag)        
     }
     
 }

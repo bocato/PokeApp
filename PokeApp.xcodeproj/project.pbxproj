@@ -22,6 +22,14 @@
 		E551383F20A4469900A5F6EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E551383E20A4469900A5F6EB /* Assets.xcassets */; };
 		E551384220A4469900A5F6EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E551384020A4469900A5F6EB /* LaunchScreen.storyboard */; };
 		E551385220A4520900A5F6EB /* NetworkDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551385120A4520900A5F6EB /* NetworkDispatcher.swift */; };
+		E5583E6620B74C30003CAFA0 /* PokeAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E6520B74C30003CAFA0 /* PokeAppTabBarController.swift */; };
+		E5583E6820B75AA0003CAFA0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E6720B75AA0003CAFA0 /* AppCoordinator.swift */; };
+		E5583E6A20B7609F003CAFA0 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E6920B7609F003CAFA0 /* RootCoordinator.swift */; };
+		E5583E7820B77029003CAFA0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E7720B77029003CAFA0 /* Coordinator.swift */; };
+		E5583E7A20B774B2003CAFA0 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E7920B774B2003CAFA0 /* BaseCoordinator.swift */; };
+		E5583E7C20B7775C003CAFA0 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E7B20B7775C003CAFA0 /* TabBarCoordinator.swift */; };
+		E5583E7F20B778D9003CAFA0 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E7E20B778D9003CAFA0 /* CoordinatorFactory.swift */; };
+		E5583E8120B77A29003CAFA0 /* PokeAppTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E8020B77A29003CAFA0 /* PokeAppTabBarViewModel.swift */; };
 		E569728020AA57CB00F0B3E5 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */; };
 		E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728120AA5B9E00F0B3E5 /* NetworkError.swift */; };
 		E569728520AA5BD200F0B3E5 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728420AA5BD200F0B3E5 /* JSON.swift */; };
@@ -65,6 +73,11 @@
 		E5B8183F20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */; };
 		E5B8184120B4AAEE006F2AB0 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8184020B4AAEE006F2AB0 /* BorderView.swift */; };
 		E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8184220B4AB71006F2AB0 /* RoundedImageView.swift */; };
+		E5DCC2A220B6F37000325D32 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A120B6F37000325D32 /* FavoritesViewController.swift */; };
+		E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A320B6F37C00325D32 /* FavoritesViewModel.swift */; };
+		E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */; };
+		E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */; };
+		E5DCC2AA20B6F7D900325D32 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +112,14 @@
 		E551384120A4469900A5F6EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E551384320A4469900A5F6EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E551385120A4520900A5F6EB /* NetworkDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcher.swift; sourceTree = "<group>"; };
+		E5583E6520B74C30003CAFA0 /* PokeAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAppTabBarController.swift; sourceTree = "<group>"; };
+		E5583E6720B75AA0003CAFA0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		E5583E6920B7609F003CAFA0 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
+		E5583E7720B77029003CAFA0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		E5583E7920B774B2003CAFA0 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		E5583E7B20B7775C003CAFA0 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
+		E5583E7E20B778D9003CAFA0 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
+		E5583E8020B77A29003CAFA0 /* PokeAppTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAppTabBarViewModel.swift; sourceTree = "<group>"; };
 		E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		E569728120AA5B9E00F0B3E5 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		E569728420AA5BD200F0B3E5 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -144,6 +165,11 @@
 		E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsViewModel.swift; sourceTree = "<group>"; };
 		E5B8184020B4AAEE006F2AB0 /* BorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
 		E5B8184220B4AB71006F2AB0 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
+		E5DCC2A120B6F37000325D32 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		E5DCC2A320B6F37C00325D32 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
+		E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCellModel.swift; sourceTree = "<group>"; };
+		E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +240,7 @@
 				E551384B20A4504C00A5F6EB /* Conveniences */,
 				E551384C20A4506700A5F6EB /* Networking */,
 				E551385320A4521500A5F6EB /* Models */,
+				E5DCC2AB20B740D600325D32 /* Coordinators */,
 				E56972B720ACEA0200F0B3E5 /* Scenes */,
 				E56972B820ACEA1100F0B3E5 /* Resources */,
 			);
@@ -224,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				E551383720A4469700A5F6EB /* AppDelegate.swift */,
+				E5583E6720B75AA0003CAFA0 /* AppCoordinator.swift */,
 				E56972AD20AA746400F0B3E5 /* Environment.swift */,
 				E551384320A4469900A5F6EB /* Info.plist */,
 			);
@@ -233,12 +261,14 @@
 		E551384B20A4504C00A5F6EB /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
+				E5DCC2AC20B740ED00325D32 /* Coordinator */,
 				E569729420AA6FFC00F0B3E5 /* UI */,
 				E569728920AA5C6300F0B3E5 /* Extensions */,
 				E569728620AA5BEC00F0B3E5 /* Helpers */,
 				E569728320AA5BBE00F0B3E5 /* JSON */,
 				E569729920AA71CD00F0B3E5 /* Factory */,
 				E569729C20AA720200F0B3E5 /* Enums */,
+				E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */,
 			);
 			path = Conveniences;
 			sourceTree = "<group>";
@@ -267,6 +297,38 @@
 			children = (
 			);
 			path = Commons;
+			sourceTree = "<group>";
+		};
+		E5583E6320B74C09003CAFA0 /* ViewControlers */ = {
+			isa = PBXGroup;
+			children = (
+				E5583E6520B74C30003CAFA0 /* PokeAppTabBarController.swift */,
+			);
+			path = ViewControlers;
+			sourceTree = "<group>";
+		};
+		E5583E6420B74C15003CAFA0 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E5583E8020B77A29003CAFA0 /* PokeAppTabBarViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E5583E7220B76A6F003CAFA0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E5583E7920B774B2003CAFA0 /* BaseCoordinator.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		E5583E7D20B778CD003CAFA0 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				E5583E7E20B778D9003CAFA0 /* CoordinatorFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		E569727E20AA57BE00F0B3E5 /* Networking */ = {
@@ -389,8 +451,8 @@
 			isa = PBXGroup;
 			children = (
 				E56972BC20ACEA5B00F0B3E5 /* TabBar.storyboard */,
-				E56972C520ACEA9A00F0B3E5 /* ViewControllers */,
-				E56972C920ACEABD00F0B3E5 /* ViewModels */,
+				E5583E6320B74C09003CAFA0 /* ViewControlers */,
+				E5583E6420B74C15003CAFA0 /* ViewModels */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -399,8 +461,9 @@
 			isa = PBXGroup;
 			children = (
 				E56972BE20ACEA6700F0B3E5 /* Favorites.storyboard */,
-				E56972C620ACEAA400F0B3E5 /* ViewControllers */,
-				E56972C820ACEAB200F0B3E5 /* ViewModels */,
+				E5DCC29E20B6F34900325D32 /* ViewControllers */,
+				E5DCC29F20B6F35000325D32 /* ViewModels */,
+				E5DCC2A020B6F35600325D32 /* Cells */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -416,40 +479,12 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		E56972C520ACEA9A00F0B3E5 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		E56972C620ACEAA400F0B3E5 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		E56972C720ACEAA800F0B3E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				E56D243320B20ADA0059B0E0 /* HomeViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		E56972C820ACEAB200F0B3E5 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		E56972C920ACEABD00F0B3E5 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E56972CA20ACEACB00F0B3E5 /* ViewModels */ = {
@@ -564,6 +599,50 @@
 				E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E5DCC29E20B6F34900325D32 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E5DCC2A120B6F37000325D32 /* FavoritesViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E5DCC29F20B6F35000325D32 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E5DCC2A320B6F37C00325D32 /* FavoritesViewModel.swift */,
+				E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E5DCC2A020B6F35600325D32 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E5DCC2AB20B740D600325D32 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				E5583E7D20B778CD003CAFA0 /* Factory */,
+				E5583E7220B76A6F003CAFA0 /* Common */,
+				E5583E7B20B7775C003CAFA0 /* TabBarCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		E5DCC2AC20B740ED00325D32 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E5583E6920B7609F003CAFA0 /* RootCoordinator.swift */,
+				E5583E7720B77029003CAFA0 /* Coordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -747,31 +826,44 @@
 				E569728D20AA6ED500F0B3E5 /* UIView+Loading.swift in Sources */,
 				E569729320AA6FA500F0B3E5 /* UITableViewCellExtension.swift in Sources */,
 				E5B8183D20B49FFD006F2AB0 /* PokemonDetailsViewController.swift in Sources */,
+				E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */,
 				E569729820AA719E00F0B3E5 /* AlertHelper.swift in Sources */,
 				E569728F20AA6F6600F0B3E5 /* EncodableExtension.swift in Sources */,
 				E56D23FB20AF8D130059B0E0 /* Ability.swift in Sources */,
 				E50B734E20B51A0900154FCD /* JSONAny.swift in Sources */,
 				E569729620AA700500F0B3E5 /* PrimaryButton.swift in Sources */,
 				E56D240820AF8D9E0059B0E0 /* Stat.swift in Sources */,
+				E5DCC2A220B6F37000325D32 /* FavoritesViewController.swift in Sources */,
+				E5583E7F20B778D9003CAFA0 /* CoordinatorFactory.swift in Sources */,
+				E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */,
 				E569728820AA5BFF00F0B3E5 /* URLHelper.swift in Sources */,
 				E56D243420B20ADA0059B0E0 /* HomeViewController.swift in Sources */,
+				E5583E6820B75AA0003CAFA0 /* AppCoordinator.swift in Sources */,
 				E569728520AA5BD200F0B3E5 /* JSON.swift in Sources */,
 				E56D23F920AF8CD30059B0E0 /* Pokemon.swift in Sources */,
 				E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */,
 				E50B734020B293A900154FCD /* PokemonTableViewCellModel.swift in Sources */,
 				E50B734220B5197E00154FCD /* VersionGroupDetail.swift in Sources */,
 				E50B735020B51A0900154FCD /* JSONAny+Initialization.swift in Sources */,
+				E5583E7C20B7775C003CAFA0 /* TabBarCoordinator.swift in Sources */,
+				E5DCC2AA20B6F7D900325D32 /* FavoritesManager.swift in Sources */,
 				E50B734F20B51A0900154FCD /* JSONAny+Codable.swift in Sources */,
 				E56972A720AA73DE00F0B3E5 /* UIViewControllerExtension.swift in Sources */,
 				E56972AE20AA746400F0B3E5 /* Environment.swift in Sources */,
+				E5583E7A20B774B2003CAFA0 /* BaseCoordinator.swift in Sources */,
 				E50B734720B5199500154FCD /* GameIndex.swift in Sources */,
 				E56972A520AA736B00F0B3E5 /* UIImage+ProjectResources.swift in Sources */,
 				E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */,
 				E551385220A4520900A5F6EB /* NetworkDispatcher.swift in Sources */,
 				E56972B120AA867E00F0B3E5 /* PokemonService.swift in Sources */,
+				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
 				E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */,
 				E56D243920B2110C0059B0E0 /* PokemonTableViewCell.swift in Sources */,
+				E5583E6A20B7609F003CAFA0 /* RootCoordinator.swift in Sources */,
+				E5583E7820B77029003CAFA0 /* Coordinator.swift in Sources */,
 				E50B734820B5199500154FCD /* TypeElement.swift in Sources */,
+				E5583E6620B74C30003CAFA0 /* PokeAppTabBarController.swift in Sources */,
+				E5583E8120B77A29003CAFA0 /* PokeAppTabBarViewModel.swift in Sources */,
 				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,
 				E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */,
