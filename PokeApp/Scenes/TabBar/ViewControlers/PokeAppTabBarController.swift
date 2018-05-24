@@ -7,24 +7,55 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class PokeAppTabBarController: UITabBarController {
-
+    
+    // MARK: - Properties
+    let viewModel = PokeAppTabBarViewModel()
+    let disposeBag = DisposeBag()
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
 
-        // Do any additional setup after loading the view.
+//        if let controller = customizableViewControllers?.first as? UINavigationController {
+//            onViewDidLoad?(controller)
+//        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - Setup
+    private func setup() {
+        delegate = self
+        selectedIndex = viewModel.selectedIndex.rawValue
+        bindAll()
     }
-    */
+    
+}
 
+// MARK: - UITabBarControllerDelegate
+extension PokeAppTabBarController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        guard let controller = viewControllers?[selectedIndex] as? UINavigationController else { return }
+        viewModel.selectedIndex = selectedIndex
+    }
+    
+}
+
+// MARK: - Binding
+private extension PokeAppTabBarController {
+    
+    func bindAll(){
+        bindViewModel()
+    }
+    
+    func bindViewModel() {
+        
+        
+    }
+    
+    
 }

@@ -7,7 +7,19 @@
 //
 
 import Foundation
+import RxSwift
 
 class PokeAppTabBarViewModel {
+    
+    // MARK: - Enums
+    enum TabItem: Int {
+        case favorites = 0
+        case pokemons = 1
+    }
+    
+    // MARK: - Properties
+    var selectedIndex: TabItem = .favorites
+
+    
     
 }

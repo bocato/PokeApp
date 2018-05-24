@@ -32,7 +32,7 @@ final class AppCoordinator: RootCoordinatorProtocol {
     private var instructor: LaunchInstructor {
         return LaunchInstructor.configure()
     }
-    private var coordinatorFactory: 
+    private var coordinatorFactory: CoordinatorFactoryProtocol = CoordinatorFactory()
     
     // MARK: - Initializers
     init(window: UIWindow?) {
@@ -41,9 +41,9 @@ final class AppCoordinator: RootCoordinatorProtocol {
     
     // MARK: - Start
     func start() {
-        let tabBarCoordinator = TabBarCoordinator(rootController: )
-        rootController = tabBarCoordinator.rootControlelr
-        window?.rootViewController =
+        let tabBarCoordinator = coordinatorFactory.createTabBarCoordinator()
+        addDependency(tabBarCoordinator)
+        window?.rootViewController = tabBarCoordinator.rootTabBarController
         window?.makeKeyAndVisible()
     }
     
