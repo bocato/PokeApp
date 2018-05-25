@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--Poke App Tab Bar Controller-->
         <scene sceneID="5IP-r7-ZEq">
             <objects>
-                <tabBarController id="JxZ-V7-iOo" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="PokeAppTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JxZ-V7-iOo" customClass="PokeAppTabBarController" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6kc-hS-1as">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

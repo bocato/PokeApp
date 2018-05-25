@@ -6,7 +6,6 @@ def project_dependecies
     pod 'RxCocoa', '~> 4.0.0'
     pod 'RxSwift', '~> 4.0.0'
     pod 'Kingfisher', '~> 4.6.1'
-    pod 'IQKeyboardManagerSwift', '~> 5.0.0'
 end
 
 def testing_dependencies

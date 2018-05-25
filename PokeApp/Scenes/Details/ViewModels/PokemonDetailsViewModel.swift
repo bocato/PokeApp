@@ -11,6 +11,12 @@ import RxSwift
 
 class PokemonDetailsViewModel {
     
+    // MARK: - Constants
+    private struct Constants {
+        static let addToFavoritesButtonText = "Add to Favorites"
+        static let removeFromFavoritesButtonText = "Remove from Favorites"
+    }
+    
     // MARK: - ViewState
     enum PokemonDetailsViewState {
         case loading(Bool)
@@ -24,19 +30,32 @@ class PokemonDetailsViewModel {
     
     // MARK: - Properties
     private var pokemonId: Int
+    private var pokemonData: Pokemon?
+    private var isThisPokemonAFavorite: Bool {
+        guard let pokemonData = pokemonData else {
+            return false
+        }
+        return FavoritesManager.shared.isFavorite(pokemon: pokemonData)
+    }
+    
+    // MARK: - Rx Properties
     var isLoadingPokemonImage = Variable<Bool>(true)
     var viewState = Variable<PokemonDetailsViewState>(.loading(true))
-    private var pokemonData: Pokemon?
+    var favoriteButtonText = Variable<String?>(nil)
     var pokemonImage = Variable<UIImage?>(nil)
     var pokemonNumber = Variable<String?>(nil)
     var pokemonName = Variable<String?>(nil)
     var pokemonAbilities = Variable<[String]>([])
     var pokemonStats = Variable<[String]>([])
     var pokemonMoves = Variable<[String]>([])
+    
+    // MARK: - Action Closures
+    var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
 
     // MARK: - Initialization
     required init(pokemonId: Int) {
         self.pokemonId = pokemonId
+        setupActionClosures()
     }
     
     // MARK: - API Calls
@@ -58,6 +77,7 @@ class PokemonDetailsViewModel {
                 
                 self.pokemonData = pokemonData
                 
+                self.favoriteButtonText.value = self.getfavoritesButtonText()
                 self.downloadImage(from: imageURL)
                 self.pokemonNumber.value = "#\(number)"
                 self.pokemonName.value = name.capitalizingFirstLetter()
@@ -72,6 +92,10 @@ class PokemonDetailsViewModel {
                 self.viewState.value = .loading(false)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func getfavoritesButtonText() -> String? { // TODO: Review when CoreData is implemented
+        return isThisPokemonAFavorite ? Constants.removeFromFavoritesButtonText : Constants.addToFavoritesButtonText
     }
     
     private func downloadImage(from itemURL: String?) {
@@ -124,4 +148,19 @@ class PokemonDetailsViewModel {
         return moveStrings
     }
     
+    // MARK: - Action Closures
+    func setupActionClosures() {
+        
+        self.favoriteButtonTouchUpInsideActionClosure = {
+            guard let pokemonData = self.pokemonData else { return }
+            if self.isThisPokemonAFavorite {
+                FavoritesManager.shared.add(pokemon: pokemonData)
+                self.favoriteButtonText.value = Constants.removeFromFavoritesButtonText
+            } else {
+                FavoritesManager.shared.remove(pokemon: pokemonData)
+                self.favoriteButtonText.value = Constants.addToFavoritesButtonText
+            }
+        }
+        
+    }
 }
