@@ -12,10 +12,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private lazy var applicationCoordinator: Coordinator = makeCoordinator()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        configureLayout()
         setupApplication()
         return true
     }
@@ -46,26 +46,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func configureLayout() {
-        // Status Bar Configuration
-        UIApplication.shared.isStatusBarHidden = false
-        // Navigation Bar Style Configuration
-        UIApplication.shared.statusBarStyle = .lightContent
-        // Sets background to a blank/empty image
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        // Sets shadow (line below the bar) to a blank image
-        UINavigationBar.appearance().shadowImage = UIImage()
-        // Sets the translucent background color
-        UINavigationBar.appearance().backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-        // Set translucent. (Default value is already true, so this can be removed if desired.)
-        UINavigationBar.appearance().isTranslucent = true
-        // Sets the navigation bar item color
-        UINavigationBar.appearance(whenContainedInInstancesOf: [UINavigationController.self]).tintColor = UIColor(from: "0x555555")
+    var rootController: UINavigationController {
+        return self.window!.rootViewController as! UINavigationController
     }
     
     func setupApplication() {
         // Start App Coordinator
-       
+        applicationCoordinator.start()
+    }
+    
+    private func makeCoordinator() -> Coordinator {
+        let rootController = self.window!.rootViewController as! UINavigationController
+        return AppCoordinator(router: Router(rootController: rootController), coordinatorFactory: CoordinatorFactory())
     }
     
 }
+

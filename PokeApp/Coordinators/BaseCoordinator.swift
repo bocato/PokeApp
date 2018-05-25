@@ -2,31 +2,42 @@
 //  BaseCoordinator.swift
 //  PokeApp
 //
-//  Created by Eduardo Sanches Bocato on 24/05/18.
+//  Created by Eduardo Sanches Bocato on 25/05/18.
 //  Copyright © 2018 Bocato. All rights reserved.
 //
 
 import Foundation
-import UIKit
 
 class BaseCoordinator: Coordinator {
     
-    // MARK - Properties
+    // MARK: - Properties
     var childCoordinators: [Coordinator] = []
-    var rootController: UIViewController
-    
-    // MARK: - Initialization
-    init(rootController: UIViewController) {
-        self.rootController = rootController
-    }
     
     // MARK: - Start
     func start() {
         preconditionFailure("This method needs to be overriden by concrete subclass.")
     }
     
-    func finish() {
-        preconditionFailure("This method needs to be overriden by concrete subclass.")
+    // MARK: - Helper Methods
+    func addChildCoordinator(_ coordinator: Coordinator) {
+        for element in childCoordinators {
+            if element === coordinator { return }
+        }
+        childCoordinators.append(coordinator)
+    }
+    
+    func removeChildCoordinator(_ coordinator: Coordinator?) {
+        guard
+            childCoordinators.isEmpty == false,
+            let coordinator = coordinator
+            else { return }
+        
+        for (index, element) in childCoordinators.enumerated() {
+            if element === coordinator {
+                childCoordinators.remove(at: index)
+                break
+            }
+        }
     }
     
 }

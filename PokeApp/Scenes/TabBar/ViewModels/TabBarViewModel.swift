@@ -1,5 +1,5 @@
 //
-//  PokeAppTabBarViewModel.swift
+//  TabBarViewModel.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 25/05/18.
@@ -8,6 +8,13 @@
 
 import Foundation
 
-class PokeAppTabBarViewModel {
+enum TabBarFlowIndex: Int {
+    case homeFlow
+    case favoritesFlow
+}
+
+class TabBarViewModel {
+    
+    
     
 }
