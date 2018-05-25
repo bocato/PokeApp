@@ -10,14 +10,34 @@ import Foundation
 
 protocol CoordinatorFactoryProtocol {
     func createTabBarCoordinator() -> TabBarCoordinator
+    func createFavoritesCoordinator() -> FavoritesCoordinator
+    func createHomeCoordinator() -> HomeCoordinator
+    func createDetailsCordinator(withPokemonId id: Int) -> DetailsCoordinator
 }
 
 class CoordinatorFactory: CoordinatorFactoryProtocol {
 
     func createTabBarCoordinator() -> TabBarCoordinator { //TODO: modify when routers are added? Inject viewModels?
         let pokeAppTabBarController = PokeAppTabBarController.instantiate(viewControllerOfType: PokeAppTabBarController.self, storyboardName: "TabBar")
-        let tabBarCoordinator = TabBarCoordinator(rootController: pokeAppTabBarController)
-        return tabBarCoordinator
+        return pokeAppTabBarViewModel.coordinator
+    }
+    
+    func createFavoritesCoordinator() -> FavoritesCoordinator {
+        let favoritesViewController = FavoritesViewController.instantiate(viewControllerOfType: FavoritesViewController.self, storyboardName: "Favorites")
+        let favoritesCoordinator = FavoritesCoordinator(rootController: favoritesViewController)
+        return favoritesCoordinator
+    }
+    
+    func createHomeCoordinator() -> HomeCoordinator {
+        let homeViewController = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
+        let homeCoordinator = HomeCoordinator(rootController: homeViewController)
+        return homeCoordinator
+    }
+    
+    func createDetailsCordinator(withPokemonId id: Int) -> DetailsCoordinator {
+        let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: id)
+        let detailsCoordinator = DetailsCoordinator(rootController: pokemonDetailsViewController)
+        return detailsCoordinator
     }
     
 }

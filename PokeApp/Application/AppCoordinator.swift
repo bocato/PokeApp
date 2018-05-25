@@ -25,11 +25,14 @@ final class AppCoordinator: RootCoordinatorProtocol {
     
     // MARK: - Coordinator Properties
     var childCoordinators: [Coordinator] = []
-    var rootController: UIViewController?
+    var rootController: UIViewController {
+        guard let rootViewController = window?.rootViewController else { return UIViewController() }
+        return rootViewController
+    }
     var window: UIWindow?
     
     // MARK: - Properties
-    private var instructor: LaunchInstructor {
+    private var launchInstructor: LaunchInstructor {
         return LaunchInstructor.configure()
     }
     private var coordinatorFactory: CoordinatorFactoryProtocol = CoordinatorFactory()
@@ -41,12 +44,20 @@ final class AppCoordinator: RootCoordinatorProtocol {
     
     // MARK: - Start
     func start() {
-        let tabBarCoordinator = coordinatorFactory.createTabBarCoordinator()
-        addDependency(tabBarCoordinator)
-        window?.rootViewController = tabBarCoordinator.rootTabBarController
+        
+        var rootController: UIViewController?
+        
+        switch launchInstructor {
+            case .tabBar:
+                let tabBarCoordinator = coordinatorFactory.createTabBarCoordinator()
+                addChildCoordinator(tabBarCoordinator)
+                rootController = tabBarCoordinator.rootTabBarController
+            default:
+                return
+        }
+        
+        window?.rootViewController = rootController
         window?.makeKeyAndVisible()
     }
-    
-    
     
 }

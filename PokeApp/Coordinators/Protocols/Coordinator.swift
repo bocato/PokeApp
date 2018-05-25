@@ -11,7 +11,7 @@ import UIKit
 
 protocol Coordinator: class {
     var childCoordinators: [Coordinator] { get set }
-    var rootController: UIViewController? { get }
+    var rootController: UIViewController { get }
     func start()
 }
 
@@ -27,14 +27,14 @@ extension Coordinator {
         return navigationController
     }
     
-    func addDependency(_ coordinator: Coordinator) {
+    func addChildCoordinator(_ coordinator: Coordinator) {
         for element in childCoordinators {
             if element === coordinator { return }
         }
         childCoordinators.append(coordinator)
     }
     
-    func removeDependency(_ coordinator: Coordinator?) {
+    func removeChildCoordinator(_ coordinator: Coordinator?) {
         guard childCoordinators.isEmpty == false, let coordinator = coordinator else { return }
         for (index, element) in childCoordinators.enumerated() {
             if element === coordinator {

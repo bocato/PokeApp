@@ -18,6 +18,9 @@
 		E50B734E20B51A0900154FCD /* JSONAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734A20B51A0900154FCD /* JSONAny.swift */; };
 		E50B734F20B51A0900154FCD /* JSONAny+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734B20B51A0900154FCD /* JSONAny+Codable.swift */; };
 		E50B735020B51A0900154FCD /* JSONAny+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */; };
+		E548A32420B7A87600E72954 /* DetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32320B7A87600E72954 /* DetailsCoordinator.swift */; };
+		E548A32620B7A8D800E72954 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32520B7A8D800E72954 /* HomeCoordinator.swift */; };
+		E548A32920B7B04E00E72954 /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32820B7B04E00E72954 /* FavoritesCoordinator.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
 		E551383F20A4469900A5F6EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E551383E20A4469900A5F6EB /* Assets.xcassets */; };
 		E551384220A4469900A5F6EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E551384020A4469900A5F6EB /* LaunchScreen.storyboard */; };
@@ -29,7 +32,6 @@
 		E5583E7A20B774B2003CAFA0 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E7920B774B2003CAFA0 /* BaseCoordinator.swift */; };
 		E5583E7C20B7775C003CAFA0 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E7B20B7775C003CAFA0 /* TabBarCoordinator.swift */; };
 		E5583E7F20B778D9003CAFA0 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E7E20B778D9003CAFA0 /* CoordinatorFactory.swift */; };
-		E5583E8120B77A29003CAFA0 /* PokeAppTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E8020B77A29003CAFA0 /* PokeAppTabBarViewModel.swift */; };
 		E569728020AA57CB00F0B3E5 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */; };
 		E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728120AA5B9E00F0B3E5 /* NetworkError.swift */; };
 		E569728520AA5BD200F0B3E5 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728420AA5BD200F0B3E5 /* JSON.swift */; };
@@ -106,6 +108,9 @@
 		E50B734A20B51A0900154FCD /* JSONAny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONAny.swift; sourceTree = "<group>"; };
 		E50B734B20B51A0900154FCD /* JSONAny+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONAny+Codable.swift"; sourceTree = "<group>"; };
 		E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONAny+Initialization.swift"; sourceTree = "<group>"; };
+		E548A32320B7A87600E72954 /* DetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCoordinator.swift; sourceTree = "<group>"; };
+		E548A32520B7A8D800E72954 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		E548A32820B7B04E00E72954 /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E551383720A4469700A5F6EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E551383E20A4469900A5F6EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,7 +124,6 @@
 		E5583E7920B774B2003CAFA0 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		E5583E7B20B7775C003CAFA0 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		E5583E7E20B778D9003CAFA0 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
-		E5583E8020B77A29003CAFA0 /* PokeAppTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAppTabBarViewModel.swift; sourceTree = "<group>"; };
 		E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		E569728120AA5B9E00F0B3E5 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		E569728420AA5BD200F0B3E5 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -212,6 +216,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		E548A32720B7AAF300E72954 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E5583E6920B7609F003CAFA0 /* RootCoordinator.swift */,
+				E5583E7720B77029003CAFA0 /* Coordinator.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		E551382B20A4469700A5F6EB = {
 			isa = PBXGroup;
 			children = (
@@ -261,7 +274,6 @@
 		E551384B20A4504C00A5F6EB /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
-				E5DCC2AC20B740ED00325D32 /* Coordinator */,
 				E569729420AA6FFC00F0B3E5 /* UI */,
 				E569728920AA5C6300F0B3E5 /* Extensions */,
 				E569728620AA5BEC00F0B3E5 /* Helpers */,
@@ -310,7 +322,6 @@
 		E5583E6420B74C15003CAFA0 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E5583E8020B77A29003CAFA0 /* PokeAppTabBarViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -451,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				E56972BC20ACEA5B00F0B3E5 /* TabBar.storyboard */,
+				E5583E7B20B7775C003CAFA0 /* TabBarCoordinator.swift */,
 				E5583E6320B74C09003CAFA0 /* ViewControlers */,
 				E5583E6420B74C15003CAFA0 /* ViewModels */,
 			);
@@ -461,6 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				E56972BE20ACEA6700F0B3E5 /* Favorites.storyboard */,
+				E548A32820B7B04E00E72954 /* FavoritesCoordinator.swift */,
 				E5DCC29E20B6F34900325D32 /* ViewControllers */,
 				E5DCC29F20B6F35000325D32 /* ViewModels */,
 				E5DCC2A020B6F35600325D32 /* Cells */,
@@ -472,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				E56972C320ACEA9300F0B3E5 /* Home.storyboard */,
+				E548A32520B7A8D800E72954 /* HomeCoordinator.swift */,
 				E56972C720ACEAA800F0B3E5 /* ViewControllers */,
 				E56972CA20ACEACB00F0B3E5 /* ViewModels */,
 				E56D243720B210EF0059B0E0 /* Cells */,
@@ -579,6 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				E5B8183A20B49FE8006F2AB0 /* Details.storyboard */,
+				E548A32320B7A87600E72954 /* DetailsCoordinator.swift */,
 				E5B8183820B49FCE006F2AB0 /* ViewControllers */,
 				E5B8183920B49FD4006F2AB0 /* ViewModels */,
 			);
@@ -629,20 +644,11 @@
 		E5DCC2AB20B740D600325D32 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				E5583E7D20B778CD003CAFA0 /* Factory */,
+				E548A32720B7AAF300E72954 /* Protocols */,
 				E5583E7220B76A6F003CAFA0 /* Common */,
-				E5583E7B20B7775C003CAFA0 /* TabBarCoordinator.swift */,
+				E5583E7D20B778CD003CAFA0 /* Factory */,
 			);
 			path = Coordinators;
-			sourceTree = "<group>";
-		};
-		E5DCC2AC20B740ED00325D32 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				E5583E6920B7609F003CAFA0 /* RootCoordinator.swift */,
-				E5583E7720B77029003CAFA0 /* Coordinator.swift */,
-			);
-			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -773,14 +779,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PokeApp/Pods-PokeApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
@@ -838,6 +842,7 @@
 				E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */,
 				E569728820AA5BFF00F0B3E5 /* URLHelper.swift in Sources */,
 				E56D243420B20ADA0059B0E0 /* HomeViewController.swift in Sources */,
+				E548A32620B7A8D800E72954 /* HomeCoordinator.swift in Sources */,
 				E5583E6820B75AA0003CAFA0 /* AppCoordinator.swift in Sources */,
 				E569728520AA5BD200F0B3E5 /* JSON.swift in Sources */,
 				E56D23F920AF8CD30059B0E0 /* Pokemon.swift in Sources */,
@@ -856,6 +861,7 @@
 				E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */,
 				E551385220A4520900A5F6EB /* NetworkDispatcher.swift in Sources */,
 				E56972B120AA867E00F0B3E5 /* PokemonService.swift in Sources */,
+				E548A32920B7B04E00E72954 /* FavoritesCoordinator.swift in Sources */,
 				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
 				E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */,
 				E56D243920B2110C0059B0E0 /* PokemonTableViewCell.swift in Sources */,
@@ -863,7 +869,7 @@
 				E5583E7820B77029003CAFA0 /* Coordinator.swift in Sources */,
 				E50B734820B5199500154FCD /* TypeElement.swift in Sources */,
 				E5583E6620B74C30003CAFA0 /* PokeAppTabBarController.swift in Sources */,
-				E5583E8120B77A29003CAFA0 /* PokeAppTabBarViewModel.swift in Sources */,
+				E548A32420B7A87600E72954 /* DetailsCoordinator.swift in Sources */,
 				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,
 				E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */,

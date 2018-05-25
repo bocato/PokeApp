@@ -12,7 +12,7 @@
         <!--Poke App Tab Bar Controller-->
         <scene sceneID="5IP-r7-ZEq">
             <objects>
-                <tabBarController storyboardIdentifier="PokeAppTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JxZ-V7-iOo" customClass="PokeAppTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="PokeAppTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JxZ-V7-iOo" customClass="PokeAppTabBarController" customModule="PokeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6kc-hS-1as">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
