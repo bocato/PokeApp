@@ -350,6 +350,7 @@
 		E5583EA620B897E8003CAFA0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E5C238D020B8B778009575BB /* HomeModule */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -624,6 +625,13 @@
 				E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E5C238D020B8B778009575BB /* HomeModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeModule;
 			sourceTree = "<group>";
 		};
 		E5DCC29E20B6F34900325D32 /* ViewControllers */ = {

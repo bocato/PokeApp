@@ -39,7 +39,7 @@ class TabBarCoordinator: BaseCoordinator {
         return { navigationController in
             if navigationController.viewControllers.isEmpty == true {
                 let router = Router(rootController: navigationController)
-                let homeCoordinator = HomeCoordinator(router: router, coordinatorFactory: self.coordinatorFactory)
+                let (homeCoordinator, _) = self.coordinatorFactory.createHomeCoordinator(router: router)
                 homeCoordinator.start()
                 self.addChildCoordinator(homeCoordinator)
             }

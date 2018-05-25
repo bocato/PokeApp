@@ -12,6 +12,7 @@ import RxCocoa
 import Kingfisher
 
 class HomeViewController: UIViewController {
+    
 
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!

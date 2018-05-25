@@ -9,7 +9,7 @@
 import Foundation
 
 protocol HomeCoordinatorActions {
-    func showItemDetailsForPokemonId(pokemonId: Int)
+    func showItemDetailsForPokemonId(pokemonId: Int) -> (Coordinator)
 }
 
 final class HomeCoordinator: BaseCoordinator {
@@ -19,7 +19,7 @@ final class HomeCoordinator: BaseCoordinator {
     private let router: Router
     
     // MARK: - Initialization
-    init(router: Router, coordinatorFactory: CoordinatorFactoryProtocol) {
+    init(router: Router, actionsFactory: HomeCoordinatorActions, coordinatorFactory: CoordinatorFactoryProtocol) {
         self.router = router
         self.coordinatorFactory = coordinatorFactory
     }
@@ -36,7 +36,5 @@ final class HomeCoordinator: BaseCoordinator {
         router.present(controller)
         coordinator.start()
     }
-    
-    
     
 }

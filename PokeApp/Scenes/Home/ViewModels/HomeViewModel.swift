@@ -48,3 +48,11 @@ class HomeViewModel {
     }
     
 }
+
+extension HomeViewModel: HomeCoordinatorActions {
+    
+    func showItemDetailsForPokemonId(pokemonId: Int) {
+        debugPrint("IMPLEMENT")
+    }
+    
+}
