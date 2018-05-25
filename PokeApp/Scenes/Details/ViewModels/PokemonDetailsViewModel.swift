@@ -154,12 +154,11 @@ class PokemonDetailsViewModel {
         self.favoriteButtonTouchUpInsideActionClosure = {
             guard let pokemonData = self.pokemonData else { return }
             if self.isThisPokemonAFavorite {
-                FavoritesManager.shared.add(pokemon: pokemonData)
-                self.favoriteButtonText.value = Constants.removeFromFavoritesButtonText
-            } else {
                 FavoritesManager.shared.remove(pokemon: pokemonData)
-                self.favoriteButtonText.value = Constants.addToFavoritesButtonText
+            } else {
+                FavoritesManager.shared.add(pokemon: pokemonData)
             }
+            self.favoriteButtonText.value = self.getfavoritesButtonText()
         }
         
     }

@@ -140,20 +140,28 @@ private extension PokemonDetailsViewController {
         
 //        viewModel.favoriteButtonText
 //            .asObservable()
-//            .subscribe(onNext: { (buttonText) in
-//                guard let buttonText = buttonText else { return }
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { (text) in
+//                guard let text = text else { return }
 //                DispatchQueue.main.async {
-//                    self.favoritesButton.titleLabel?.text = buttonText // TODO: Set to observe on Main Scheduler
+//                    debugPrint("text = \(text)")
+//                    self.favoritesButton.titleLabel?.text = text
+//                    debugPrint("self.favoritesButton.titleLabel?.text = \(self.favoritesButton.titleLabel?.text)")
+//                    debugPrint("Mudou!")
 //                }
 //            })
 //            .disposed(by: disposeBag)
-        
-        viewModel.favoriteButtonText
-            .asObservable()
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { text in
-                self.favoritesButton.titleLabel?.text = text
-            }).disposed(by: disposeBag)        
+
+//        viewModel.favoriteButtonText
+//            .asObservable()
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { text in
+//                guard let text = text else {return }
+//                debugPrint("text = \(text)")
+//                self.favoritesButton.titleLabel?.text = text
+//                debugPrint("self.favoritesButton.titleLabel?.text = \(self.favoritesButton.titleLabel?.text)")
+//                debugPrint("Mudou!")
+//            }).disposed(by: disposeBag)
     }
     
 }

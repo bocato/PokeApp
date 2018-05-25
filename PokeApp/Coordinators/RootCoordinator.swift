@@ -1,0 +1,16 @@
+//
+//  RootCoordinatorProtocol.swift
+//  PokeApp
+//
+//  Created by Eduardo Sanches Bocato on 24/05/18.
+//  Copyright © 2018 Bocato. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+protocol RootCoordinatorProtocol: Coordinator {
+    var window: UIWindow? { get }
+    init(window: UIWindow?)
+}
+

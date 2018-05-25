@@ -28,35 +28,35 @@
                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Qr9-wL-ily">
                                 <rect key="frame" x="20" y="90" width="335" height="557"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TNX-Nd-XUU" userLabel="Name and Number Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="32"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="TNX-Nd-XUU" userLabel="Name and Number Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2S-tK-efR">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="16"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="17.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bulbassaur" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lPl-PH-2T5">
-                                                <rect key="frame" x="0.0" y="16" width="335" height="16"/>
+                                                <rect key="frame" x="0.0" y="17.5" width="335" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="MyU-by-yHH"/>
+                                            <constraint firstAttribute="height" constant="40" id="MyU-by-yHH"/>
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-5g-Xge" userLabel="Separator View">
-                                        <rect key="frame" x="0.0" y="44" width="335" height="12"/>
+                                        <rect key="frame" x="0.0" y="52" width="335" height="12"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="12" id="nIg-0a-AuP"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uX2-CS-LxL" userLabel="Abitilies and Stats Stack View">
-                                        <rect key="frame" x="0.0" y="68" width="335" height="120"/>
+                                        <rect key="frame" x="0.0" y="76" width="335" height="120"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tS2-9l-Kyo" userLabel="Abilities Border View" customClass="BorderView" customModule="PokeApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="162.5" height="120"/>
@@ -204,10 +204,10 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="wF8-YD-aE1" userLabel="Moves Border View" customClass="BorderView" customModule="PokeApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="200" width="335" height="301"/>
+                                        <rect key="frame" x="0.0" y="208" width="335" height="293"/>
                                         <subviews>
                                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s6X-dK-kNk" userLabel="Moves Stack View">
-                                                <rect key="frame" x="5" y="5" width="325" height="291"/>
+                                                <rect key="frame" x="5" y="5" width="325" height="283"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moves" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19I-a9-bm8">
                                                         <rect key="frame" x="0.0" y="0.0" width="325" height="20"/>
@@ -226,7 +226,7 @@
                                                         </constraints>
                                                     </view>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LpR-la-6U8">
-                                                        <rect key="frame" x="0.0" y="31" width="325" height="260"/>
+                                                        <rect key="frame" x="0.0" y="31" width="325" height="252"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MovesTableViewCell" textLabel="UsE-BU-uJB" style="IBUITableViewCellStyleDefault" id="2nS-PE-Bat">

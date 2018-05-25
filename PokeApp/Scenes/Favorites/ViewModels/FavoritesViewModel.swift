@@ -11,19 +11,24 @@ import RxSwift
 
 class FavoritesViewModel {
     
-    // MARK: - Properties
-    
-    
-    // MARK: - RXProperties
-    var favoritesCellModels = Variable<[FavoriteCollectionViewCellModel]?>([])
-    
-    // MARK: - Initialzation
-    init() {
-        loadFavorites()
+    // MARK: ViewState
+    enum HomeViewState {
+        case loading(Bool)
+        case error(NetworkError)
+        case empty
     }
     
+    // MARK: - Properties
+    
+    // MARK: - RXProperties
+    var viewState = Variable<HomeViewState>(.loading(true))
+    var favoritesCellModels = Variable<[FavoriteCollectionViewCellModel]>([])
+    
+    // MARK: - Initialzation
+    
+    
     // MARK: -
-    private func loadFavorites() { // TODO: Refactor
+    func loadFavorites() { // TODO: Refactor
         favoritesCellModels.value = FavoritesManager.shared.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
             return FavoriteCollectionViewCellModel(data: pokemon)
         })

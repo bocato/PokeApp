@@ -19,8 +19,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="ebW-w9-YzU" kind="relationship" relationship="viewControllers" id="vBr-Kc-Xlq"/>
                         <segue destination="JLh-df-BI4" kind="relationship" relationship="viewControllers" id="agQ-3x-G8v"/>
+                        <segue destination="ebW-w9-YzU" kind="relationship" relationship="viewControllers" id="57J-ov-cMs"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zLr-4L-NWT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -42,7 +42,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qdt-fo-xGU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="-177"/>
+            <point key="canvasLocation" x="289" y="498"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="g2h-8I-TYU">
@@ -52,7 +52,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Hj-uA-SUs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="781" y="-177"/>
+            <point key="canvasLocation" x="765" y="497"/>
         </scene>
         <!--Home-->
         <scene sceneID="I5v-5F-AqJ">
@@ -62,7 +62,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c1Y-WL-C4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="781" y="518"/>
+            <point key="canvasLocation" x="781" y="-178"/>
         </scene>
         <!--Pokémons-->
         <scene sceneID="hoc-rT-MgA">
@@ -79,7 +79,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v5I-uK-8RL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="519"/>
+            <point key="canvasLocation" x="289" y="-177"/>
         </scene>
     </scenes>
     <resources>

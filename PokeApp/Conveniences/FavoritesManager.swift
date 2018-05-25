@@ -21,7 +21,7 @@ class FavoritesManager {
     
     // MARK: - Helpers
     func add(pokemon: Pokemon) {
-        guard let id = pokemon.id, !favorites.contains(where: { $0.id == id }) else {
+        guard let id = pokemon.id, favorites.filter( { $0.id == id } ).first == nil else {
             return
         }
         favorites.append(pokemon)
@@ -35,7 +35,7 @@ class FavoritesManager {
     }
     
     func isFavorite(pokemon: Pokemon) -> Bool {
-        guard let id = pokemon.id, favorites.contains(where: { $0.id == id }) else {
+        guard let id = pokemon.id, let _ = favorites.filter( { $0.id == id } ).first else {
             return false
         }
         return true
