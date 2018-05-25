@@ -52,6 +52,14 @@ class HomeViewController: UIViewController {
     
 }
 
+extension HomeViewController: HomeCoordinatorActions {
+    
+    func showItemDetailsForPokemonId(pokemonId: Int) {
+        debugPrint("IMPLEMENT")
+    }
+    
+}
+
 // MARK: - Binding
 private extension HomeViewController {
     

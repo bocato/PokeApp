@@ -27,7 +27,7 @@ class CoordinatorFactory: CoordinatorFactoryProtocol {
     
     func createHomeCoordinator(router: Router) -> (configurator: Coordinator, presentable: Presentable) {
         let controler = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
-        let coordinator = HomeCoordinator(router: router, actionsFactory: controler.viewModel, coordinatorFactory: CoordinatorFactory())
+        let coordinator = HomeCoordinator(router: router, actionsFactory: controler, coordinatorFactory: CoordinatorFactory())
         return (coordinator, controler)
     }
     
