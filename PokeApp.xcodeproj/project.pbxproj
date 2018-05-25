@@ -208,6 +208,13 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		E548A32F20B8155500E72954 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		E551382B20A4469700A5F6EB = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +242,7 @@
 				E556F94720B3348B0041A64F /* Commons */,
 				E551384B20A4504C00A5F6EB /* Conveniences */,
 				E551384C20A4506700A5F6EB /* Networking */,
+				E548A32F20B8155500E72954 /* Persistence */,
 				E551385320A4521500A5F6EB /* Models */,
 				E56972B720ACEA0200F0B3E5 /* Scenes */,
 				E56972B820ACEA1100F0B3E5 /* Resources */,

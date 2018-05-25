@@ -14,7 +14,7 @@
         <!--Favorites-->
         <scene sceneID="EZV-EY-BIP">
             <objects>
-                <viewController id="d0G-tI-gd9" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavoritesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d0G-tI-gd9" customClass="FavoritesViewController" customModule="PokeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JgU-3p-ipx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -108,6 +108,10 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="d0G-tI-gd9" id="Ih0-gP-f46"/>
+                                    <outlet property="delegate" destination="d0G-tI-gd9" id="WGf-z6-Dft"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -120,6 +124,9 @@
                         <viewLayoutGuide key="safeArea" id="59z-dE-beN"/>
                     </view>
                     <navigationItem key="navigationItem" title="Favorites" largeTitleDisplayMode="always" id="QoA-TJ-xdK"/>
+                    <connections>
+                        <outlet property="collectionView" destination="0Tm-OB-aTf" id="oQv-oE-t0k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbv-bh-BA6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
