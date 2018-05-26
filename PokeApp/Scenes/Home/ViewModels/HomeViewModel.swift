@@ -20,17 +20,24 @@ class HomeViewModel {
     }
     
     // MARK: - Dependencies
-    private let pokemonService = PokemonService()
     private let disposeBag = DisposeBag()
+    let coordinator: HomeCoordinator
+    private let services: PokemonService
     
     // MARK: - Properties
     var pokemonCellModels = Variable<[PokemonTableViewCellModel]>([])
     var viewState = Variable<HomeViewState>(.loading(true))
     
+    // MARK: - Intialization
+    init(coordinator: HomeCoordinator, services: PokemonService) {
+        self.coordinator = coordinator
+        self.services = services
+    }
+    
     // MARK: - API Calls
     func loadPokemons() {
         viewState.value = .loading(true)
-        pokemonService.getPokemonList().subscribe(onNext: { (pokemonListResponse, _) in
+        services.getPokemonList().subscribe(onNext: { (pokemonListResponse, _) in
             guard let results = pokemonListResponse?.results else {
                 self.viewState.value = .empty
                 self.pokemonCellModels.value = []

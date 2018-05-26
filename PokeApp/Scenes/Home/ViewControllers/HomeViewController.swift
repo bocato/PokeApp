@@ -13,12 +13,10 @@ import Kingfisher
 
 class HomeViewController: UIViewController {
     
-
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Properties
-    let viewModel = HomeViewModel()
     let disposeBag = DisposeBag()
     
     // MARK: - Constants
@@ -33,6 +31,26 @@ class HomeViewController: UIViewController {
         // refreshControl.addTarget(self, action: #selector(SearchViewController.reloadViewData), for: .valueChanged) // TODO: Implement on viewModel
         return refreshControl
     })()
+    
+    // MARK: - Instantiation
+    private(set) var viewModel: HomeViewModel // i can do this only if i use xibs
+    init(viewModel: HomeViewModel) { // i can do this only if i use xibs
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //    let viewController = HomeViewController(viewModel: HomeViewModel()) // i can do this only if i use xibs
+    
+//    var viewModel: HomeViewModel!
+//    class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
+//        let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
+//        controller.viewModel = viewModel
+//        return controller
+//    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -52,21 +70,19 @@ class HomeViewController: UIViewController {
     
 }
 
-extension HomeViewController: HomeCoordinatorActions {
-    
-    func showItemDetailsForPokemonId(pokemonId: Int) {
-        debugPrint("IMPLEMENT")
-    }
-    
-}
-
 // MARK: - Binding
 private extension HomeViewController {
     
     func bindAll() {
+        
+        if viewModel == nil {
+            debugPrint("deu merda")
+        }
+        
         bindViewModel()
         bindTableView()
         bindRefreshControl()
+        
     }
     
     func bindViewModel() {
@@ -109,10 +125,15 @@ private extension HomeViewController {
             .subscribe(onNext: { selectedPokemonCellModel in
                 debugPrint("selectedPokemonCellModel = \(selectedPokemonCellModel)")
                 
-                // TODO: Do this with Coordinator/Router/Viewmodel... remove logic from here
+//                // TODO: Do this with Coordinator/Router/Viewmodel... remove logic from here
+//                if let id = selectedPokemonCellModel.pokemonListItem.id {
+//                    let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: id)
+//                    self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
+//                }
+                
+                // calling on coordinator
                 if let id = selectedPokemonCellModel.pokemonListItem.id {
-                    let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: id)
-                    self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
+                    self.viewModel.coordinator.showItemDetailsForPokemonId(pokemonId: id)
                 }
                 
             })

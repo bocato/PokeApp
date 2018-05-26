@@ -26,9 +26,12 @@ class CoordinatorFactory: CoordinatorFactoryProtocol {
     }
     
     func createHomeCoordinator(router: Router) -> (configurator: Coordinator, presentable: Presentable) {
-        let controler = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
-        let coordinator = HomeCoordinator(router: router, actionsFactory: controler, coordinatorFactory: CoordinatorFactory())
-        return (coordinator, controler)
+        let coordinator = HomeCoordinator(router: router, coordinatorFactory: CoordinatorFactory())
+        let services = PokemonService()
+        let viewModel = HomeViewModel(coordinator: coordinator, services: services)
+//        let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
+        let controller = HomeViewController(viewModel: viewModel)
+        return (coordinator, controller)
     }
     
 }
