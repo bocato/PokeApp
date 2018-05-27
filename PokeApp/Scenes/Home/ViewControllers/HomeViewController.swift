@@ -13,18 +13,17 @@ import Kingfisher
 
 class HomeViewController: UIViewController {
     
-
-    // MARK: - IBOutlets
-    @IBOutlet weak var tableView: UITableView!
-    
-    // MARK: - Properties
-    let viewModel = HomeViewModel()
-    let disposeBag = DisposeBag()
-    
     // MARK: - Constants
     private struct ViewConstants {
         static let defaultTableviewCellHeight: CGFloat = 100.0
     }
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Dependencies
+    var viewModel: HomeViewModel!
+    let disposeBag = DisposeBag()
     
     // MARK: - ViewElements
     fileprivate var refreshControl: UIRefreshControl = ({
@@ -33,6 +32,24 @@ class HomeViewController: UIViewController {
         // refreshControl.addTarget(self, action: #selector(SearchViewController.reloadViewData), for: .valueChanged) // TODO: Implement on viewModel
         return refreshControl
     })()
+    
+    // MARK: - Instantiation
+//    private(set) var viewModel: HomeViewModel // i can do this only if i use xibs
+//    init(viewModel: HomeViewModel) { // i can do this only if i use xibs
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    let viewController = HomeViewController(viewModel: HomeViewModel()) // i can do this only if i use xibs
+  
+    class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
+        let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
+        controller.viewModel = viewModel
+        return controller
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -48,14 +65,6 @@ class HomeViewController: UIViewController {
     deinit {
         KingfisherManager.shared.cache.clearMemoryCache()
         KingfisherManager.shared.cache.clearDiskCache()
-    }
-    
-}
-
-extension HomeViewController: HomeCoordinatorActions {
-    
-    func showItemDetailsForPokemonId(pokemonId: Int) {
-        debugPrint("IMPLEMENT")
     }
     
 }
@@ -107,14 +116,7 @@ private extension HomeViewController {
         tableView.rx
             .modelSelected(PokemonTableViewCellModel.self)
             .subscribe(onNext: { selectedPokemonCellModel in
-                debugPrint("selectedPokemonCellModel = \(selectedPokemonCellModel)")
-                
-                // TODO: Do this with Coordinator/Router/Viewmodel... remove logic from here
-                if let id = selectedPokemonCellModel.pokemonListItem.id {
-                    let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: id)
-                    self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
-                }
-                
+                self.viewModel.showItemDetailsForSelectedCellModel(selectedPokemonCellModel)
             })
             .disposed(by: disposeBag)
         

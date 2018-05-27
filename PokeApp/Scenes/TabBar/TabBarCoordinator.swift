@@ -9,49 +9,82 @@
 import Foundation
 import UIKit
 
-protocol TabBarViewActions: class {
-    var onViewDidLoad: ((UINavigationController) -> ())? { get set }
+protocol TabBarControllerActions: class {
     var onFavoritesFlowSelect: ((UINavigationController) -> ())? { get set }
     var onHomeFlowSelect: ((UINavigationController) -> ())? { get set }
 }
 
-class TabBarCoordinator: BaseCoordinator {
+protocol TabBarCoordinatorProtocol:  Coordinator & TabBarControllerActions {}
+
+class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
     // MARK: - Dependencies
-    private let tabBarViewActions: TabBarViewActions
-    private let coordinatorFactory: CoordinatorFactoryProtocol
+//    private let router: RouterProtocol
+//    private let coordinatorFactory: CoordinatorFactoryProtocol
     
     // MARK: - Initialization
-    init(tabBarViewActions: TabBarViewActions, coordinatorFactory: CoordinatorFactoryProtocol) {
-        self.tabBarViewActions = tabBarViewActions
-        self.coordinatorFactory = coordinatorFactory
-    }
+//    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
+//        self.router = router
+//        self.coordinatorFactory = coordinatorFactory
+//    }
+    
+    // MARK: - TabBarControllerActions
+    var onFavoritesFlowSelect: ((UINavigationController) -> ())?
+    var onHomeFlowSelect: ((UINavigationController) -> ())?
     
     // MARK: - Start
     override func start() {
-        tabBarViewActions.onViewDidLoad = runHomeFlow()
-        tabBarViewActions.onHomeFlowSelect = runHomeFlow()
-        tabBarViewActions.onFavoritesFlowSelect = runFavoritesFlow()
+        setupFlows()
     }
     
-    // MARK: - Flows
-    private func runHomeFlow() -> ((UINavigationController) -> ()) {
-        return { navigationController in
+    // MARK: - Flows Setup
+    func setupFlows() {
+        
+        onHomeFlowSelect = { navigationController in
             if navigationController.viewControllers.isEmpty == true {
                 let router = Router(rootController: navigationController)
-                let (homeCoordinator, _) = self.coordinatorFactory.createHomeCoordinator(router: router)
-                homeCoordinator.start()
+                let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
                 self.addChildCoordinator(homeCoordinator)
+                router.setRootModule(controller)
+                homeCoordinator.start()
             }
         }
-    }
     
-    private func runFavoritesFlow() -> ((UINavigationController) -> ()) {
-        return { navigationController in
+        onFavoritesFlowSelect = { navigationController in
             if navigationController.viewControllers.isEmpty == true {
-                //                let  // TODO: Create FavoritesCoordinator
+                debugPrint("coisa")
+                let router = Router(rootController: navigationController)
+                let (favoritesCoordinator, controller) = self.coordinatorFactory.createFavoritesCoordinator(router: router)
+                self.addChildCoordinator(favoritesCoordinator)
+                router.setRootModule(controller)
+                favoritesCoordinator.start()
             }
         }
+        
     }
     
 }
+
+// MARK: - Flows with functions
+//protocol TabBarControllerActions: class {
+//    func onFavoritesFlowSelect(navigationController: UINavigationController)
+//    func onHomeFlowSelect(navigationController: UINavigationController)
+//}
+//
+//extension TabBarCoordinator: TabBarControllerActions {
+//
+//    func onFavoritesFlowSelect(navigationController: UINavigationController) {
+//
+//    }
+//
+//    func onHomeFlowSelect(navigationController: UINavigationController) {
+//        if navigationController.viewControllers.isEmpty == true {
+//            let router = Router(rootController: navigationController)
+//            let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
+//            addChildCoordinator(homeCoordinator)
+//            router.setRootModule(controller)
+//            homeCoordinator.start()
+//        }
+//    }
+//
+//}

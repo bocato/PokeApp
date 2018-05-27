@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0B252FD11A5B4C5E8F23EDF4 /* Pods_PokeAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C62AF7B56FE3EAD9A8C6B66 /* Pods_PokeAppTests.framework */; };
 		9D2646C9921ADE7476511112 /* Pods_PokeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7492A8A39DC6379F9A4DD1DC /* Pods_PokeApp.framework */; };
+		E50540B920B9FF7D004EA46D /* BaseRXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540B820B9FF7D004EA46D /* BaseRXViewController.swift */; };
+		E50540BB20BA6C77004EA46D /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540BA20BA6C77004EA46D /* FavoritesCoordinator.swift */; };
 		E50B734020B293A900154FCD /* PokemonTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B733F20B293A900154FCD /* PokemonTableViewCellModel.swift */; };
 		E50B734220B5197E00154FCD /* VersionGroupDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734120B5197E00154FCD /* VersionGroupDetail.swift */; };
 		E50B734620B5199500154FCD /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734320B5199400154FCD /* Form.swift */; };
@@ -99,6 +101,8 @@
 		7C62AF7B56FE3EAD9A8C6B66 /* Pods_PokeAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PokeAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD436A043DCAC8105CF84CE1 /* Pods-PokeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PokeApp/Pods-PokeApp.debug.xcconfig"; sourceTree = "<group>"; };
 		D70B45FAC8FF174B9CCB3593 /* Pods-PokeAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PokeAppTests/Pods-PokeAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		E50540B820B9FF7D004EA46D /* BaseRXViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRXViewController.swift; sourceTree = "<group>"; };
+		E50540BA20BA6C77004EA46D /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		E50B733F20B293A900154FCD /* PokemonTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCellModel.swift; sourceTree = "<group>"; };
 		E50B734120B5197E00154FCD /* VersionGroupDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionGroupDetail.swift; sourceTree = "<group>"; };
 		E50B734320B5199400154FCD /* Form.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
@@ -216,6 +220,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		E50540B720B9FF62004EA46D /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				E50540B820B9FF7D004EA46D /* BaseRXViewController.swift */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
 		E548A32C20B7BB9100E72954 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,12 +277,12 @@
 			children = (
 				E551384920A44A9900A5F6EB /* Application */,
 				E551384B20A4504C00A5F6EB /* Conveniences */,
+				E50540B720B9FF62004EA46D /* Commons */,
 				E551385320A4521500A5F6EB /* Models */,
 				E551384C20A4506700A5F6EB /* Networking */,
 				E548A32F20B8155500E72954 /* Persistence */,
 				E548A33320B8209100E72954 /* Coordinators */,
 				E5583E9620B86124003CAFA0 /* Routers */,
-				E5583EA620B897E8003CAFA0 /* Modules */,
 				E56972B720ACEA0200F0B3E5 /* Scenes */,
 				E56972B820ACEA1100F0B3E5 /* Resources */,
 			);
@@ -345,14 +357,6 @@
 				E5583E9820B8616C003CAFA0 /* Presentable.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		E5583EA620B897E8003CAFA0 /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				E5C238D020B8B778009575BB /* HomeModule */,
-			);
-			path = Modules;
 			sourceTree = "<group>";
 		};
 		E569727E20AA57BE00F0B3E5 /* Networking */ = {
@@ -486,6 +490,7 @@
 			isa = PBXGroup;
 			children = (
 				E56972BE20ACEA6700F0B3E5 /* Favorites.storyboard */,
+				E50540BA20BA6C77004EA46D /* FavoritesCoordinator.swift */,
 				E5DCC29E20B6F34900325D32 /* ViewControllers */,
 				E5DCC29F20B6F35000325D32 /* ViewModels */,
 				E5DCC2A020B6F35600325D32 /* Cells */,
@@ -625,13 +630,6 @@
 				E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		E5C238D020B8B778009575BB /* HomeModule */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HomeModule;
 			sourceTree = "<group>";
 		};
 		E5DCC29E20B6F34900325D32 /* ViewControllers */ = {
@@ -870,12 +868,14 @@
 				E56972A520AA736B00F0B3E5 /* UIImage+ProjectResources.swift in Sources */,
 				E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */,
 				E551385220A4520900A5F6EB /* NetworkDispatcher.swift in Sources */,
+				E50540BB20BA6C77004EA46D /* FavoritesCoordinator.swift in Sources */,
 				E56972B120AA867E00F0B3E5 /* PokemonService.swift in Sources */,
 				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
 				E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */,
 				E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */,
 				E56D243920B2110C0059B0E0 /* PokemonTableViewCell.swift in Sources */,
 				E5583E9D20B86EB8003CAFA0 /* AppCoordinator.swift in Sources */,
+				E50540B920B9FF7D004EA46D /* BaseRXViewController.swift in Sources */,
 				E50B734820B5199500154FCD /* TypeElement.swift in Sources */,
 				E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */,
 				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,

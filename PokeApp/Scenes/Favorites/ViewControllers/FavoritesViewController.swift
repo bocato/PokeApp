@@ -11,28 +11,38 @@ import RxSwift
 import RxCocoa
 
 class FavoritesViewController: UIViewController {
-
     
     // MARK: - IBOutlets
     @IBOutlet private weak var collectionView: UICollectionView!
     
     // MARK: - Dependencies
-    let viewModel = FavoritesViewModel()
+    var viewModel: FavoritesViewModel!
     let disposeBag = DisposeBag()
     
     // MARK: - Properties
+    
+    // MARK: - Initialization
+    class func newInstanceFromStoryboard(viewModel: FavoritesViewModel) ->  FavoritesViewController {
+        let controller = FavoritesViewController.instantiate(viewControllerOfType: FavoritesViewController.self, storyboardName: "Favorites")
+        controller.viewModel = viewModel
+        return controller
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAll()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.loadFavorites() // TODO: Remove this when persistence is done...
+    }
+    
 }
 
 // MARK: - Binding
 private extension FavoritesViewController {
-    
     
     func bindAll() {
         bindViewModel()
@@ -75,15 +85,8 @@ private extension FavoritesViewController {
         
         collectionView.rx
             .modelSelected(FavoriteCollectionViewCellModel.self)
-            .subscribe(onNext: { selectedFavoriteCellModel in
-                debugPrint("selectedFavoriteCellModel = \(selectedFavoriteCellModel)")
-                
-                // TODO: Do this with Coordinator/Router/Viewmodel... remove logic from here
-                if let id = selectedFavoriteCellModel.pokemonData.id {
-                    let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: id)
-                    self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
-                }
-                
+            .bind(onNext: { selectedFavoriteCellModel in
+                self.viewModel.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: selectedFavoriteCellModel)
             })
             .disposed(by: disposeBag)
         
@@ -95,8 +98,8 @@ extension FavoritesViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
-        let cellWidth = width * 0.8
-        let cellHeight = width * 0.9
+        let cellWidth = width * 0.9
+        let cellHeight = width
         return CGSize(width: cellWidth, height: cellHeight)
     }
     

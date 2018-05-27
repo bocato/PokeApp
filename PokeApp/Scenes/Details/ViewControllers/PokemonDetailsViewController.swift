@@ -25,13 +25,18 @@ class PokemonDetailsViewController: UIViewController {
     var viewModel: PokemonDetailsViewModel!
     private var disposeBag = DisposeBag()
     
+    // MARK: - Instantiation
+    class func newInstanceFromStoryBoard(viewModel: PokemonDetailsViewModel) -> PokemonDetailsViewController {
+        let controller = instantiate(viewControllerOfType: PokemonDetailsViewController.self, storyboardName: "Details")
+        controller.viewModel = viewModel
+        return controller
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAll()
     }
-    
-    // MARK: -
 
 }
 
@@ -70,16 +75,18 @@ private extension PokemonDetailsViewController {
                             self.abilitiesTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
                             self.statsTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
                             self.movesTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
+                            self.favoritesButton.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
                         } else {
                             self.abilitiesTableView.stopLoading()
                             self.statsTableView.stopLoading()
                             self.movesTableView.stopLoading()
+                            self.favoritesButton.stopLoading()
                         }
                     case .error(let networkError):
                         let errorMessage = networkError.message ?? NetworkErrorMessage.unexpected.rawValue
                         AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
                     case .noData:
-                        debugPrint("No Data") // PopViewController... do this with Cooordinator/Router
+                        debugPrint("No Data") // PopViewController... do this with Cooordinator
                 }
             })
             .disposed(by: disposeBag)
@@ -138,30 +145,11 @@ private extension PokemonDetailsViewController {
             self.viewModel.favoriteButtonTouchUpInsideActionClosure?()
         }.disposed(by: disposeBag)
         
-//        viewModel.favoriteButtonText
-//            .asObservable()
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { (text) in
-//                guard let text = text else { return }
-//                DispatchQueue.main.async {
-//                    debugPrint("text = \(text)")
-//                    self.favoritesButton.titleLabel?.text = text
-//                    debugPrint("self.favoritesButton.titleLabel?.text = \(self.favoritesButton.titleLabel?.text)")
-//                    debugPrint("Mudou!")
-//                }
-//            })
-//            .disposed(by: disposeBag)
-
-//        viewModel.favoriteButtonText
-//            .asObservable()
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { text in
-//                guard let text = text else {return }
-//                debugPrint("text = \(text)")
-//                self.favoritesButton.titleLabel?.text = text
-//                debugPrint("self.favoritesButton.titleLabel?.text = \(self.favoritesButton.titleLabel?.text)")
-//                debugPrint("Mudou!")
-//            }).disposed(by: disposeBag)
+        viewModel.favoriteButtonText
+            .asObservable()
+            .bind(to: favoritesButton.rx.title(for: .normal))
+            .disposed(by: disposeBag)
+        
     }
     
 }
@@ -174,16 +162,4 @@ extension PokemonDetailsViewController: UITableViewDelegate {
     }
     
 }
-
-// MARK: - Instantiation
-extension PokemonDetailsViewController {
-    
-    class func instantiateNew(withPokemonId pokemonId: Int) -> PokemonDetailsViewController {
-        let controller = instantiate(viewControllerOfType: PokemonDetailsViewController.self, storyboardName: "Details")
-        controller.viewModel = PokemonDetailsViewModel(pokemonId: pokemonId)
-        return controller
-    }
-    
-}
-
 

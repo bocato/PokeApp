@@ -273,7 +273,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7g-Tw-FQ1" customClass="PrimaryButton" customModule="PokeApp" customModuleProvider="target">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7g-Tw-FQ1" customClass="PrimaryButton" customModule="PokeApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="513" width="335" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="8tL-1x-wab"/>

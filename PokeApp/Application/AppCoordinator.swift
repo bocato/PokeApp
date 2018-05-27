@@ -26,17 +26,17 @@ fileprivate enum LaunchInstructor {
 final class AppCoordinator: BaseCoordinator {
     
     // MARK: - Dependencies
-    private let coordinatorFactory: CoordinatorFactoryProtocol
-    private let router: RouterProtocol
+//    private let coordinatorFactory: CoordinatorFactoryProtocol
+//    private let router: RouterProtocol
     private var instructor: LaunchInstructor {
         return LaunchInstructor.getApplicationStartPoint()
     }
     
     // MARK: - Intialization
-    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
-        self.router = router
-        self.coordinatorFactory = coordinatorFactory
-    }
+//    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
+//        self.router = router
+//        self.coordinatorFactory = coordinatorFactory
+//    }
     
     // MARK: - Start
     override func start() {
@@ -50,7 +50,7 @@ final class AppCoordinator: BaseCoordinator {
     
     // MARK: - Flows
     private func runMainFlow() {
-        let (tabBarCoordinator, tabBarModule) = coordinatorFactory.createTabBarCoordinator()
+        let (tabBarCoordinator, tabBarModule) = coordinatorFactory.createTabBarCoordinator(router: router)
         addChildCoordinator(tabBarCoordinator)
         router.setRootModule(tabBarModule, hideBar: true)
         tabBarCoordinator.start()

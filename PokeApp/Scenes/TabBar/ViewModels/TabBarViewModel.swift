@@ -7,14 +7,23 @@
 //
 
 import Foundation
+import RxSwift
 
-enum TabBarFlowIndex: Int {
+enum TabBarIndex: Int {
     case homeFlow
     case favoritesFlow
 }
 
 class TabBarViewModel {
     
+    // MARK: - Dependencies
+    let coordinator: TabBarCoordinator
     
+    // MARK: - Variables
+    var selectedTab = Variable<TabBarIndex>(.homeFlow)
+    
+    init(coordinator: TabBarCoordinator) {
+        self.coordinator = coordinator
+    }
     
 }

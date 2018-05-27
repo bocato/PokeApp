@@ -9,9 +9,17 @@
 import Foundation
 
 class BaseCoordinator: Coordinator {
-    
+
     // MARK: - Properties
+    private(set) var coordinatorFactory: CoordinatorFactoryProtocol
+    private(set) var router: RouterProtocol
     var childCoordinators: [Coordinator] = []
+    
+    // MARK: - Intialization
+    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
+        self.router = router
+        self.coordinatorFactory = coordinatorFactory
+    }
     
     // MARK: - Start
     func start() {
