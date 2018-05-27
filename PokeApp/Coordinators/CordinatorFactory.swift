@@ -10,12 +10,10 @@ import Foundation
 import UIKit
 
 protocol CoordinatorFactoryProtocol {
-    
     func createTabBarCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable)
     func createHomeCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable)
-    
+    func createFavoritesCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable)
 }
-
 
 class CoordinatorFactory: CoordinatorFactoryProtocol {
     
@@ -40,6 +38,15 @@ class CoordinatorFactory: CoordinatorFactoryProtocol {
         let services = PokemonService()
         let viewModel = HomeViewModel(coordinator: coordinator, services: services)
         let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
+        return (coordinator, controller)
+    }
+    
+    func createFavoritesCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable) {
+        let coordinatorFactory = CoordinatorFactory() // TODO: Use injection...
+        let coordinator = FavoritesCoordinator(router: router, coordinatorFactory: coordinatorFactory)
+        // let services = PokemonService() // TODO: Inject persistence services
+        let viewModel = FavoritesViewModel(coordinator: coordinator) // TODO: Inject Services
+        let controller = FavoritesViewController.newInstanceFromStoryboard(viewModel: viewModel)
         return (coordinator, controller)
     }
     

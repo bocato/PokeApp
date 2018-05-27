@@ -25,7 +25,8 @@ class PokemonDetailsViewModel {
     }
     
     // MARK: - Dependencies
-    private let pokemonService = PokemonService()
+    private(set) var services: PokemonServiceProtocol
+    var coordinator: Coordinator
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
@@ -41,7 +42,7 @@ class PokemonDetailsViewModel {
     // MARK: - Rx Properties
     var isLoadingPokemonImage = Variable<Bool>(true)
     var viewState = Variable<PokemonDetailsViewState>(.loading(true))
-    var favoriteButtonText = Variable<String?>(nil)
+    var favoriteButtonText = Variable<String>("Add to Favorites")
     var pokemonImage = Variable<UIImage?>(nil)
     var pokemonNumber = Variable<String?>(nil)
     var pokemonName = Variable<String?>(nil)
@@ -53,15 +54,17 @@ class PokemonDetailsViewModel {
     var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
 
     // MARK: - Initialization
-    required init(pokemonId: Int) {
+    required init(pokemonId: Int, services: PokemonServiceProtocol, coordinator: Coordinator) {
         self.pokemonId = pokemonId
+        self.services = services
+        self.coordinator = coordinator
         setupActionClosures()
     }
     
     // MARK: - API Calls
     func loadPokemonData() {
         viewState.value = .loading(true)
-        pokemonService.getDetailsForPokemon(withId: pokemonId)
+        services.getDetailsForPokemon(withId: pokemonId)
             .subscribe(onNext: { (pokemonData, _) in
                 
                 guard let pokemonData = pokemonData,
@@ -94,7 +97,7 @@ class PokemonDetailsViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getfavoritesButtonText() -> String? { // TODO: Review when CoreData is implemented
+    func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
         return isThisPokemonAFavorite ? Constants.removeFromFavoritesButtonText : Constants.addToFavoritesButtonText
     }
     

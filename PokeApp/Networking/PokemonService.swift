@@ -10,7 +10,9 @@ import Foundation
 import RxSwift
 
 protocol PokemonServiceProtocol {
+    func getPokemonList() -> Observable<(PokemonListResponse?, NetworkResponse?)>
     func getPokemonList(_ limit: Int) -> Observable<(PokemonListResponse?, NetworkResponse?)>
+    func getDetailsForPokemon(withId id: Int) -> Observable<(Pokemon?, NetworkResponse?)>
 }
 
 class PokemonService: PokemonServiceProtocol {
@@ -30,7 +32,11 @@ class PokemonService: PokemonServiceProtocol {
     }
     
     // MARK: - Services
-    func getPokemonList(_ limit: Int = 150) -> Observable<(PokemonListResponse?, NetworkResponse?)> {
+    func getPokemonList() -> Observable<(PokemonListResponse?, NetworkResponse?)> {
+        return getPokemonList(150)
+    }
+    
+    func getPokemonList(_ limit: Int) -> Observable<(PokemonListResponse?, NetworkResponse?)> {
         
         let queryParameters = URLHelper.escapedParameters(["limit": limit])
         let path = queryParameters

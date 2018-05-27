@@ -14,19 +14,19 @@ protocol TabBarControllerActions: class {
     var onHomeFlowSelect: ((UINavigationController) -> ())? { get set }
 }
 
-class TabBarCoordinator: BaseCoordinator, TabBarControllerActions {
-    
-    
+protocol TabBarCoordinatorProtocol:  Coordinator & TabBarControllerActions {}
+
+class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
     // MARK: - Dependencies
-    private let router: RouterProtocol
-    private let coordinatorFactory: CoordinatorFactoryProtocol
+//    private let router: RouterProtocol
+//    private let coordinatorFactory: CoordinatorFactoryProtocol
     
     // MARK: - Initialization
-    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
-        self.router = router
-        self.coordinatorFactory = coordinatorFactory
-    }
+//    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
+//        self.router = router
+//        self.coordinatorFactory = coordinatorFactory
+//    }
     
     // MARK: - TabBarControllerActions
     var onFavoritesFlowSelect: ((UINavigationController) -> ())?
@@ -51,13 +51,13 @@ class TabBarCoordinator: BaseCoordinator, TabBarControllerActions {
         }
     
         onFavoritesFlowSelect = { navigationController in
-            if navigationController.viewControllers.isEmpty == true { // TODO: Change this...
+            if navigationController.viewControllers.isEmpty == true {
                 debugPrint("coisa")
-//                let router = Router(rootController: navigationController)
-//                let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
-//                self.addChildCoordinator(homeCoordinator)
-//                router.setRootModule(controller)
-//                homeCoordinator.start()
+                let router = Router(rootController: navigationController)
+                let (favoritesCoordinator, controller) = self.coordinatorFactory.createFavoritesCoordinator(router: router)
+                self.addChildCoordinator(favoritesCoordinator)
+                router.setRootModule(controller)
+                favoritesCoordinator.start()
             }
         }
         

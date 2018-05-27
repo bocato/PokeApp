@@ -1,26 +1,26 @@
 //
-//  HomeCoordinator.swift
+//  FavoritesCoordinator.swift
 //  PokeApp
 //
-//  Created by Eduardo Sanches Bocato on 25/05/18.
+//  Created by Eduardo Sanches Bocato on 27/05/18.
 //  Copyright © 2018 Bocato. All rights reserved.
 //
 
 import Foundation
 
-protocol HomeViewControllerActions {
+protocol FavoritesViewControllerActions {
     func showItemDetailsForPokemonWith(id: Int)
 }
 
-protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActions {}
+protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActions {}
 
-class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
+class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     
     // MARK: - Dependencies
-//    private(set) var coordinatorFactory: CoordinatorFactoryProtocol
-//    private(set) var router: RouterProtocol
-    
-    // MARK: - Initialization
+//    private let coordinatorFactory: CoordinatorFactoryProtocol
+//    private let router: RouterProtocol
+//    
+//    // MARK: - Initialization
 //    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
 //        self.router = router
 //        self.coordinatorFactory = coordinatorFactory
@@ -33,7 +33,7 @@ class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     
 }
 
-extension HomeCoordinator: HomeViewControllerActions {
+extension FavoritesCoordinator: FavoritesViewControllerActions {
     
     func showItemDetailsForPokemonWith(id: Int) {
         let services = PokemonService()

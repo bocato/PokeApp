@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: - Properties
+    // MARK: - Dependencies
     var viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
@@ -116,19 +116,7 @@ private extension HomeViewController {
         tableView.rx
             .modelSelected(PokemonTableViewCellModel.self)
             .subscribe(onNext: { selectedPokemonCellModel in
-                debugPrint("selectedPokemonCellModel = \(selectedPokemonCellModel)")
-                
-//                // TODO: Do this with Coordinator/Router/Viewmodel... remove logic from here
-//                if let id = selectedPokemonCellModel.pokemonListItem.id {
-//                    let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: id)
-//                    self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
-//                }
-                
-                // calling on coordinator
-                if let id = selectedPokemonCellModel.pokemonListItem.id {
-                    self.viewModel.coordinator.showItemDetailsForPokemonId(pokemonId: id)
-                }
-                
+                self.viewModel.showItemDetailsForSelectedCellModel(selectedPokemonCellModel)
             })
             .disposed(by: disposeBag)
         
