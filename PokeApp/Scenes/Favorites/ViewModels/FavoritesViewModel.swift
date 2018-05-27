@@ -24,7 +24,7 @@ class FavoritesViewModel {
     // MARK: - Properties
     
     // MARK: - RXProperties
-    var viewState = Variable<HomeViewState>(.loading(true))
+    var viewState = Variable<HomeViewState>(.loading(false))
     var favoritesCellModels = Variable<[FavoriteCollectionViewCellModel]>([])
     
     // MARK: - Initialzation
@@ -34,14 +34,15 @@ class FavoritesViewModel {
     
     // MARK: -
     func loadFavorites() { // TODO: Refactor
+//        self.viewState.value = .loading(true)
         let favoritesCellModels = FavoritesManager.shared.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
             return FavoriteCollectionViewCellModel(data: pokemon)
         })
         self.favoritesCellModels.value = favoritesCellModels
-        self.viewState.value = .loading(false)
-        if favoritesCellModels.count == 0 {
-            self.viewState.value = .empty
-        }
+//        self.viewState.value = .loading(false)
+//        if favoritesCellModels.count == 0 {
+//            self.viewState.value = .empty
+//        }
     }
     
     // MARK: - Actions
