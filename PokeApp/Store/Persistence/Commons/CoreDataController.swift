@@ -16,9 +16,12 @@ enum CoreDataContext {
 
 class CoreDataController {
     
+    // MARK: Singleton
+    static let shared = CoreDataController(modelName: "PokeApp") // TODO: Try not to use a singleton...
+    
     // MARK: Properties
     let persistentContainer: NSPersistentContainer
-    let backgroundContext: NSManagedObjectContext!
+    let backgroundContext:NSManagedObjectContext!
     
     // MARK: Computed Properties
     var viewContext: NSManagedObjectContext {

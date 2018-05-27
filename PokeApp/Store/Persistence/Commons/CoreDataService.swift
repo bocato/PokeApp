@@ -12,6 +12,7 @@ import CoreData
 import RxSwift
 
 protocol CoreDataServiceProtocol {
+    var coreDataController: CoreDataController { get }
 //    func saveObject<T: Codable>(_ codableData: T, binaryData: Data, with entityName: String, using context: CoreDataContext) -> Observable<Void>
     func findObject<T: NSFetchRequestResult>(with id: Int, of type: T.Type, with entityName: String, from context: CoreDataContext) -> Observable<T?>
     func findAll<T: NSFetchRequestResult>(of type: T.Type, with entityName: String, from context: CoreDataContext) -> Observable<[T]?>
@@ -20,12 +21,9 @@ protocol CoreDataServiceProtocol {
 
 class CoreDataService: CoreDataServiceProtocol {
     
-    // MARK: Properties
-    private(set) var coreDataController: CoreDataController
-    
-    // MARK: - Initialization
-    init(coreDataController: CoreDataController) {
-        self.coreDataController = coreDataController
+    // MARK: - Properties
+    var coreDataController: CoreDataController { // remove this, use injection...
+        return CoreDataController.shared
     }
     
     // MARK: - Methods

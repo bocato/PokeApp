@@ -154,11 +154,34 @@ class PokemonDetailsViewModel {
     // MARK: - Action Closures
     func setupActionClosures() {
         
+//        self.favoriteButtonTouchUpInsideActionClosure = {
+//            guard let pokemonData = self.pokemonData else { return }
+//            if self.isThisPokemonAFavorite {
+//                FavoritesManager.shared.remove(pokemon: pokemonData)
+//            } else {
+//                FavoritesManager.shared.add(pokemon: pokemonData)
+//            }
+//            self.favoriteButtonText.value = self.getfavoritesButtonText()
+//        }
+
         self.favoriteButtonTouchUpInsideActionClosure = {
-            guard let pokemonData = self.pokemonData else { return }
+            guard let pokemonData = self.pokemonData, let pokemonImage = self.pokemonImage.value else { return }
             if self.isThisPokemonAFavorite {
                 FavoritesManager.shared.remove(pokemon: pokemonData)
             } else {
+                
+//                let favoritesService = FavoritesService() // NOT WORKING... need to change some stuff on core Data manager...
+//                favoritesService.save(pokemonData, with: pokemonImage)
+//                    .asObservable()
+//                    .subscribe(onNext: { _ in
+//                        debugPrint("Deu bão...")
+//                    }, onError: { (error) in
+//                        debugPrint("onError: \(error)")
+//                    }, onCompleted: {
+//                        debugPrint("onCompleted")
+//                    })
+//                    .disposed(by: self.disposeBag)
+                
                 FavoritesManager.shared.add(pokemon: pokemonData)
             }
             self.favoriteButtonText.value = self.getfavoritesButtonText()
