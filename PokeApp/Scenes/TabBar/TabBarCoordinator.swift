@@ -10,17 +10,13 @@ import Foundation
 import UIKit
 
 protocol TabBarControllerActions: class {
-//    var onViewDidLoad: ((UINavigationController) -> ())? { get set }
-//    var onFavoritesFlowSelect: ((UINavigationController) -> ())? { get set }
-//    var onHomeFlowSelect: ((UINavigationController) -> ())? { get set }
-    
-    func onViewDidLoad(navigationController: UINavigationController)
-    func onFavoritesFlowSelect(navigationController: UINavigationController)
-    func onHomeFlowSelect(navigationController: UINavigationController)
-    
+    var onFavoritesFlowSelect: ((UINavigationController) -> ())? { get set }
+    var onHomeFlowSelect: ((UINavigationController) -> ())? { get set }
 }
 
-class TabBarCoordinator: BaseCoordinator {
+class TabBarCoordinator: BaseCoordinator, TabBarControllerActions {
+    
+    
     
     // MARK: - Dependencies
     private let router: RouterProtocol
@@ -32,55 +28,63 @@ class TabBarCoordinator: BaseCoordinator {
         self.coordinatorFactory = coordinatorFactory
     }
     
+    // MARK: - TabBarControllerActions
+    var onFavoritesFlowSelect: ((UINavigationController) -> ())?
+    var onHomeFlowSelect: ((UINavigationController) -> ())?
+    
     // MARK: - Start
     override func start() {
-//        tabBarViewActions.onViewDidLoad = runHomeFlow()
-//        tabBarViewActions.onHomeFlowSelect = runHomeFlow()
-//        tabBarViewActions.onFavoritesFlowSelect = runFavoritesFlow()
+        setupFlows()
     }
     
-    // MARK: - Flows
-//    private func runHomeFlow() -> ((UINavigationController) -> ()) {
-//        return { navigationController in
-//            if navigationController.viewControllers.isEmpty == true {
+    // MARK: - Flows Setup
+    func setupFlows() {
+        
+        onHomeFlowSelect = { navigationController in
+            if navigationController.viewControllers.isEmpty == true {
+                let router = Router(rootController: navigationController)
+                let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
+                self.addChildCoordinator(homeCoordinator)
+                router.setRootModule(controller)
+                homeCoordinator.start()
+            }
+        }
+    
+        onFavoritesFlowSelect = { navigationController in
+            if navigationController.viewControllers.isEmpty == true { // TODO: Change this...
+                debugPrint("coisa")
 //                let router = Router(rootController: navigationController)
-//                let (homeCoordinator, _) = self.coordinatorFactory.createHomeCoordinator(router: router)
-//                homeCoordinator.start()
+//                let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
 //                self.addChildCoordinator(homeCoordinator)
-//            }
-//        }
-//    }
-//
-//    private func runFavoritesFlow() -> ((UINavigationController) -> ()) {
-//        return { navigationController in
-//            if navigationController.viewControllers.isEmpty == true {
-//                //                let  // TODO: Create FavoritesCoordinator
-//            }
-//        }
-//    }
-    
-}
-
-// MARK: - Flows
-extension TabBarCoordinator: TabBarControllerActions {
-    
-    func onViewDidLoad(navigationController: UINavigationController) {
-        onHomeFlowSelect(navigationController: navigationController)
-    }
-    
-    func onFavoritesFlowSelect(navigationController: UINavigationController) {
+//                router.setRootModule(controller)
+//                homeCoordinator.start()
+            }
+        }
         
     }
     
-    func onHomeFlowSelect(navigationController: UINavigationController) {
-        if navigationController.viewControllers.isEmpty == true {
-            let router = Router(rootController: navigationController)
-            let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
-            addChildCoordinator(homeCoordinator)
-            router.setRootModule(controller)
-            homeCoordinator.start()
-        }
-    }
-    
-    
 }
+
+// MARK: - Flows with functions
+//protocol TabBarControllerActions: class {
+//    func onFavoritesFlowSelect(navigationController: UINavigationController)
+//    func onHomeFlowSelect(navigationController: UINavigationController)
+//}
+//
+//extension TabBarCoordinator: TabBarControllerActions {
+//
+//    func onFavoritesFlowSelect(navigationController: UINavigationController) {
+//
+//    }
+//
+//    func onHomeFlowSelect(navigationController: UINavigationController) {
+//        if navigationController.viewControllers.isEmpty == true {
+//            let router = Router(rootController: navigationController)
+//            let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
+//            addChildCoordinator(homeCoordinator)
+//            router.setRootModule(controller)
+//            homeCoordinator.start()
+//        }
+//    }
+//
+//}

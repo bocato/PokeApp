@@ -12,7 +12,9 @@ import RxCocoa
 
 class TabBarViewController: UITabBarController {
     
-    // MARK: - Properties
+    
+    // MARK: - Dependencies
+    let disposeBag = DisposeBag()
     var viewModel: TabBarViewModel!
     
     // MARK: - Instantiation
@@ -36,15 +38,13 @@ class TabBarViewController: UITabBarController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViewController()
+        setup()
     }
     
-    // MARK: Setup
-    func setupViewController() {
+    // MARK: - Setup
+    func setup() {
         delegate = self
-        if let controller = customizableViewControllers?.first as? UINavigationController {
-            viewModel.coordinator.onViewDidLoad(navigationController: controller)
-        }
+        bindViewModel()
     }
     
 }
@@ -53,15 +53,30 @@ class TabBarViewController: UITabBarController {
 extension TabBarViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        guard let controller = viewControllers?[selectedIndex] as? UINavigationController else { return }
-        switch selectedIndex {
-        case TabBarFlowIndex.homeFlow.rawValue:
-            viewModel.coordinator.onHomeFlowSelect(navigationController: controller)
-        case TabBarFlowIndex.favoritesFlow.rawValue:
-            viewModel.coordinator.onFavoritesFlowSelect(navigationController: controller)
-        default:
-            return
-        }
+        viewModel.selectedTab.value = TabBarIndex(rawValue: tabBarController.selectedIndex)!
+    }
+    
+}
+
+// MARK: - Binding
+private extension TabBarViewController {
+    
+    func bindViewModel() {
+        viewModel.selectedTab
+            .asObservable()
+            .subscribe(onNext: { (selectedTab) in
+                guard let controller = self.viewControllers?[selectedTab.rawValue] as? UINavigationController else { return }
+                switch selectedTab {
+                case .homeFlow:
+                    self.viewModel.coordinator.onHomeFlowSelect?(controller)
+//                    self.viewModel.coordinator.onHomeFlowSelect(navigationController: controller)
+                case .favoritesFlow:
+                    self.viewModel.coordinator.onFavoritesFlowSelect?(controller)
+//                    self.viewModel.coordinator.onFavoritesFlowSelect(navigationController: controller)
+                }
+            })
+            .disposed(by: disposeBag)
+        
     }
     
 }
