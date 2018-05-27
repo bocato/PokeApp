@@ -281,8 +281,6 @@
 				E551385320A4521500A5F6EB /* Models */,
 				E551384C20A4506700A5F6EB /* Networking */,
 				E548A32F20B8155500E72954 /* Persistence */,
-				E548A33320B8209100E72954 /* Coordinators */,
-				E5583E9620B86124003CAFA0 /* Routers */,
 				E56972B720ACEA0200F0B3E5 /* Scenes */,
 				E56972B820ACEA1100F0B3E5 /* Resources */,
 			);
@@ -303,6 +301,8 @@
 		E551384B20A4504C00A5F6EB /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
+				E548A33320B8209100E72954 /* Coordinators */,
+				E5583E9620B86124003CAFA0 /* Routers */,
 				E5583E9720B86155003CAFA0 /* Protocols */,
 				E569729420AA6FFC00F0B3E5 /* UI */,
 				E569728920AA5C6300F0B3E5 /* Extensions */,
