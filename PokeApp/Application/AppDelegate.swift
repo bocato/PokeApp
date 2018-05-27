@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private lazy var applicationCoordinator: Coordinator = makeCoordinator()
+    private lazy var applicationCoordinator: Coordinator? = makeCoordinator()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -52,12 +52,12 @@ private extension AppDelegate {
     
     func setupApplication() {
         // Start App Coordinator
-        applicationCoordinator.start()
+        applicationCoordinator?.start()
     }
     
-    private func makeCoordinator() -> Coordinator {
-        let rootController = self.window!.rootViewController as! UINavigationController
-        return AppCoordinator(router: Router(rootController: rootController), coordinatorFactory: CoordinatorFactory())
+    private func makeCoordinator() -> Coordinator? {
+        guard let window = window else { return nil }
+        return CoordinatorFactory.createAppCoordinator(window: window)
     }
     
 }

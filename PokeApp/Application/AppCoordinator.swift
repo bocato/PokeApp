@@ -50,7 +50,7 @@ final class AppCoordinator: BaseCoordinator {
     
     // MARK: - Flows
     private func runMainFlow() {
-        let (tabBarCoordinator, tabBarModule) = coordinatorFactory.createTabBarCoordinator()
+        let (tabBarCoordinator, tabBarModule) = coordinatorFactory.createTabBarCoordinator(router: router)
         addChildCoordinator(tabBarCoordinator)
         router.setRootModule(tabBarModule, hideBar: true)
         tabBarCoordinator.start()

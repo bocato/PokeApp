@@ -15,6 +15,10 @@ enum TabBarFlowIndex: Int {
 
 class TabBarViewModel {
     
+    let coordinator: TabBarCoordinator
     
+    init(coordinator: TabBarCoordinator) {
+        self.coordinator = coordinator
+    }
     
 }

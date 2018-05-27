@@ -11,26 +11,35 @@ import UIKit
 
 protocol CoordinatorFactoryProtocol {
     
-    func createTabBarCoordinator() -> (configurator: Coordinator, presentable: Presentable)
-    func createHomeCoordinator(router: Router) -> (configurator: Coordinator, presentable: Presentable)
+    func createTabBarCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable)
+    func createHomeCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable)
     
 }
 
 
 class CoordinatorFactory: CoordinatorFactoryProtocol {
     
-    func createTabBarCoordinator() -> (configurator: Coordinator, presentable: Presentable) {
-        let controller = TabBarViewController.instantiate(viewControllerOfType: TabBarViewController.self, storyboardName: "TabBar")
-        let coordinator = TabBarCoordinator(tabBarViewActions: controller, coordinatorFactory: CoordinatorFactory())
+    class func createAppCoordinator(window: UIWindow) -> AppCoordinator {
+        let rootController = window.rootViewController as! UINavigationController
+        let router = Router(rootController: rootController)
+        let coordinatorFactory = CoordinatorFactory() // TODO: Use injection...
+        return AppCoordinator(router: router, coordinatorFactory: coordinatorFactory)
+    }
+    
+    func createTabBarCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable) {
+        let coordinatorFactory = CoordinatorFactory() // TODO: Use injection...
+        let coordinator = TabBarCoordinator(router: router, coordinatorFactory: coordinatorFactory)
+        let viewModel = TabBarViewModel(coordinator: coordinator)
+        let controller = TabBarViewController.newInstanceFromStoryboard(viewModel: viewModel)
         return (coordinator, controller)
     }
     
-    func createHomeCoordinator(router: Router) -> (configurator: Coordinator, presentable: Presentable) {
-        let coordinator = HomeCoordinator(router: router, coordinatorFactory: CoordinatorFactory())
+    func createHomeCoordinator(router: RouterProtocol) -> (configurator: Coordinator, presentable: Presentable) {
+        let coordinatorFactory = CoordinatorFactory() // TODO: Use injection...
+        let coordinator = HomeCoordinator(router: router, coordinatorFactory: coordinatorFactory)
         let services = PokemonService()
         let viewModel = HomeViewModel(coordinator: coordinator, services: services)
-//        let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
-        let controller = HomeViewController(viewModel: viewModel)
+        let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
         return (coordinator, controller)
     }
     

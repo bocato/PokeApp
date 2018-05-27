@@ -13,16 +13,17 @@ import Kingfisher
 
 class HomeViewController: UIViewController {
     
-    // MARK: - IBOutlets
-    @IBOutlet weak var tableView: UITableView!
-    
-    // MARK: - Properties
-    let disposeBag = DisposeBag()
-    
     // MARK: - Constants
     private struct ViewConstants {
         static let defaultTableviewCellHeight: CGFloat = 100.0
     }
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Properties
+    var viewModel: HomeViewModel!
+    let disposeBag = DisposeBag()
     
     // MARK: - ViewElements
     fileprivate var refreshControl: UIRefreshControl = ({
@@ -33,24 +34,22 @@ class HomeViewController: UIViewController {
     })()
     
     // MARK: - Instantiation
-    private(set) var viewModel: HomeViewModel // i can do this only if i use xibs
-    init(viewModel: HomeViewModel) { // i can do this only if i use xibs
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //    let viewController = HomeViewController(viewModel: HomeViewModel()) // i can do this only if i use xibs
-    
-//    var viewModel: HomeViewModel!
-//    class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
-//        let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
-//        controller.viewModel = viewModel
-//        return controller
+//    private(set) var viewModel: HomeViewModel // i can do this only if i use xibs
+//    init(viewModel: HomeViewModel) { // i can do this only if i use xibs
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
 //    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    let viewController = HomeViewController(viewModel: HomeViewModel()) // i can do this only if i use xibs
+  
+    class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
+        let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
+        controller.viewModel = viewModel
+        return controller
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -74,15 +73,9 @@ class HomeViewController: UIViewController {
 private extension HomeViewController {
     
     func bindAll() {
-        
-        if viewModel == nil {
-            debugPrint("deu merda")
-        }
-        
         bindViewModel()
         bindTableView()
         bindRefreshControl()
-        
     }
     
     func bindViewModel() {

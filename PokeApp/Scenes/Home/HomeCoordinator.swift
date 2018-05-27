@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol HomeCoordinatorActions {
+protocol HomeViewControllerActions {
     func showItemDetailsForPokemonId(pokemonId: Int)
 }
 
@@ -16,34 +16,27 @@ final class HomeCoordinator: BaseCoordinator {
     
     // MARK: - Dependencies
     private let coordinatorFactory: CoordinatorFactoryProtocol
-    private let router: Router
+    private let router: RouterProtocol
     
     // MARK: - Initialization
-    init(router: Router, coordinatorFactory: CoordinatorFactoryProtocol) {
+    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
         self.router = router
         self.coordinatorFactory = coordinatorFactory
     }
     
     // MARK: - Start
     override func start() {
-        showPokemonsList()
-    }
-    
-    // MARKL: - Flows
-    private func showPokemonsList() {
-        let (coordinator, controller) = coordinatorFactory.createHomeCoordinator(router: router)
-        addChildCoordinator(coordinator)
-        router.present(controller)
-        coordinator.start()
+        // Configure something if needed
     }
     
 }
 
-extension HomeCoordinator: HomeCoordinatorActions {
+// MARK: - Flows
+extension HomeCoordinator: HomeViewControllerActions {
     
     func showItemDetailsForPokemonId(pokemonId: Int) {
         let pokemonDetailsViewController = PokemonDetailsViewController.instantiateNew(withPokemonId: pokemonId) // change this? inject viewmodel?
-        router.present(pokemonDetailsViewController)
+        router.push(pokemonDetailsViewController)
     }
     
 }

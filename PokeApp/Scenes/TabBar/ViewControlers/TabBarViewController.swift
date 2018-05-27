@@ -10,15 +10,28 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TabBarViewController: UITabBarController, TabBarViewActions {
-    
-    // MARK: - TabBarViewActions
-    var onViewDidLoad: ((UINavigationController) -> ())?
-    var onFavoritesFlowSelect: ((UINavigationController) -> ())?
-    var onHomeFlowSelect: ((UINavigationController) -> ())?
+class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
-    let viewModel = TabBarViewModel()
+    var viewModel: TabBarViewModel!
+    
+    // MARK: - Instantiation
+//    private(set) var viewModel: TabBarViewModel // i can do this only if i use xibs
+//    init(viewModel: TabBarViewModel) { // i can do this only if i use xibs
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    //    let viewController = TabBarViewController(viewModel: TabBarViewModel()) // i can do this only if i use xibs
+    
+    class func newInstanceFromStoryboard(viewModel: TabBarViewModel) ->  TabBarViewController {
+        let controller = TabBarViewController.instantiate(viewControllerOfType: TabBarViewController.self, storyboardName: "TabBar")
+        controller.viewModel = viewModel
+        return controller
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -30,7 +43,7 @@ class TabBarViewController: UITabBarController, TabBarViewActions {
     func setupViewController() {
         delegate = self
         if let controller = customizableViewControllers?.first as? UINavigationController {
-            onViewDidLoad?(controller)
+            viewModel.coordinator.onViewDidLoad(navigationController: controller)
         }
     }
     
@@ -43,9 +56,9 @@ extension TabBarViewController: UITabBarControllerDelegate {
         guard let controller = viewControllers?[selectedIndex] as? UINavigationController else { return }
         switch selectedIndex {
         case TabBarFlowIndex.homeFlow.rawValue:
-            onHomeFlowSelect?(controller)
+            viewModel.coordinator.onHomeFlowSelect(navigationController: controller)
         case TabBarFlowIndex.favoritesFlow.rawValue:
-            onFavoritesFlowSelect?(controller)
+            viewModel.coordinator.onFavoritesFlowSelect(navigationController: controller)
         default:
             return
         }
