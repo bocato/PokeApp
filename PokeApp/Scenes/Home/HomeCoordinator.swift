@@ -16,16 +16,6 @@ protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActions {}
 
 class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     
-    // MARK: - Dependencies
-//    private(set) var coordinatorFactory: CoordinatorFactoryProtocol
-//    private(set) var router: RouterProtocol
-    
-    // MARK: - Initialization
-//    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
-//        self.router = router
-//        self.coordinatorFactory = coordinatorFactory
-//    }
-    
     // MARK: - Start
     override func start() {
         // Configure something if needed...

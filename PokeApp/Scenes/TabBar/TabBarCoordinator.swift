@@ -18,16 +18,6 @@ protocol TabBarCoordinatorProtocol:  Coordinator & TabBarControllerActions {}
 
 class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
-    // MARK: - Dependencies
-//    private let router: RouterProtocol
-//    private let coordinatorFactory: CoordinatorFactoryProtocol
-    
-    // MARK: - Initialization
-//    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
-//        self.router = router
-//        self.coordinatorFactory = coordinatorFactory
-//    }
-    
     // MARK: - TabBarControllerActions
     var onFavoritesFlowSelect: ((UINavigationController) -> ())?
     var onHomeFlowSelect: ((UINavigationController) -> ())?

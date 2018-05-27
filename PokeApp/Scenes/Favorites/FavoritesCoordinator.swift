@@ -16,16 +16,6 @@ protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActi
 
 class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     
-    // MARK: - Dependencies
-//    private let coordinatorFactory: CoordinatorFactoryProtocol
-//    private let router: RouterProtocol
-//    
-//    // MARK: - Initialization
-//    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
-//        self.router = router
-//        self.coordinatorFactory = coordinatorFactory
-//    }
-    
     // MARK: - Start
     override func start() {
         // Configure something if needed...
