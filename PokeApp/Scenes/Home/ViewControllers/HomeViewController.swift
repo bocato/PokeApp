@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     fileprivate var refreshControl: UIRefreshControl = ({
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.lightGray
-        // refreshControl.addTarget(self, action: #selector(SearchViewController.reloadViewData), for: .valueChanged) // TODO: Implement on viewModel
+//         refreshControl.addTarget(self, action: #selector(SearchViewController.reloadViewData), for: .valueChanged) // TODO: Implement on viewModel
         return refreshControl
     })()
     

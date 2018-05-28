@@ -26,17 +26,9 @@ fileprivate enum LaunchInstructor {
 final class AppCoordinator: BaseCoordinator {
     
     // MARK: - Dependencies
-//    private let coordinatorFactory: CoordinatorFactoryProtocol
-//    private let router: RouterProtocol
     private var instructor: LaunchInstructor {
         return LaunchInstructor.getApplicationStartPoint()
     }
-    
-    // MARK: - Intialization
-//    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
-//        self.router = router
-//        self.coordinatorFactory = coordinatorFactory
-//    }
     
     // MARK: - Start
     override func start() {
