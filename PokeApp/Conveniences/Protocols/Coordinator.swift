@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 protocol Coordinator: class {
-    var coordinatorFactory: CoordinatorFactoryProtocol { get }
     var router: RouterProtocol { get }
     func start()
 }

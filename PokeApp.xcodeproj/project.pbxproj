@@ -37,7 +37,6 @@
 		E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9820B8616C003CAFA0 /* Presentable.swift */; };
 		E5583E9B20B868A3003CAFA0 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9A20B868A3003CAFA0 /* Router.swift */; };
 		E5583E9D20B86EB8003CAFA0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */; };
-		E5583E9F20B86FE1003CAFA0 /* CordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9E20B86FE1003CAFA0 /* CordinatorFactory.swift */; };
 		E5583EA220B880C4003CAFA0 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */; };
 		E5583EA420B8857A003CAFA0 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */; };
 		E569728020AA57CB00F0B3E5 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */; };
@@ -137,7 +136,6 @@
 		E5583E9820B8616C003CAFA0 /* Presentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
 		E5583E9A20B868A3003CAFA0 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		E5583E9E20B86FE1003CAFA0 /* CordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CordinatorFactory.swift; sourceTree = "<group>"; };
 		E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
@@ -289,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				E5583E9420B860BF003CAFA0 /* BaseCoordinator.swift */,
-				E5583E9E20B86FE1003CAFA0 /* CordinatorFactory.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -900,7 +897,6 @@
 				E50540C120BAF18B004EA46D /* PokeApp.xcdatamodeld in Sources */,
 				E56D23F920AF8CD30059B0E0 /* Pokemon.swift in Sources */,
 				E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */,
-				E5583E9F20B86FE1003CAFA0 /* CordinatorFactory.swift in Sources */,
 				E50B734020B293A900154FCD /* PokemonTableViewCellModel.swift in Sources */,
 				E50540C520BAF22B004EA46D /* CoreDataController+AutoSaving.swift in Sources */,
 				E50B734220B5197E00154FCD /* VersionGroupDetail.swift in Sources */,

@@ -42,9 +42,11 @@ final class AppCoordinator: BaseCoordinator {
     
     // MARK: - Flows
     private func runMainFlow() {
-        let (tabBarCoordinator, tabBarModule) = coordinatorFactory.createTabBarCoordinator(router: router)
+        let tabBarCoordinator = TabBarCoordinator(router: router)
+        let viewModel = TabBarViewModel(coordinator: tabBarCoordinator)
+        let controller = TabBarViewController.newInstanceFromStoryboard(viewModel: viewModel)
         addChildCoordinator(tabBarCoordinator)
-        router.setRootModule(tabBarModule, hideBar: true)
+        router.setRootModule(controller, hideBar: true)
         tabBarCoordinator.start()
     }
     

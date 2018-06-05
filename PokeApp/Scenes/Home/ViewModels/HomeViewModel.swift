@@ -10,6 +10,23 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+//protocol HomeViewModelProtocol: class {
+//    // MARK: - Dependencies
+//    private let disposeBag: DisposeBag
+//    let coordinator: HomeCoordinatorProtocol
+//    private let services: PokemonServiceProtocol
+//
+//    // MARK: - Properties
+//    var pokemonCellModels: Variable<[PokemonTableViewCellModel]>
+//    var viewState = Variable<HomeViewState>(.loading(true))
+//
+//    // MARK: - API Calls
+//    func loadPokemons()
+//
+//    // MARK: - Actions
+//    func showItemDetailsForSelectedCellModel(_ selectedPokemonCellModel: PokemonTableViewCellModel)
+//}
+
 class HomeViewModel {
     
     // MARK: ViewState

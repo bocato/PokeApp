@@ -33,8 +33,10 @@ class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
         onHomeFlowSelect = { navigationController in
             if navigationController.viewControllers.isEmpty == true {
                 let router = Router(rootController: navigationController)
-                let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
-                self.addChildCoordinator(homeCoordinator)
+                let homeCoordinator = HomeCoordinator(router: router)
+                let services = PokemonService()
+                let viewModel = HomeViewModel(coordinator: homeCoordinator, services: services)
+                let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
                 router.setRootModule(controller)
                 homeCoordinator.start()
             }
@@ -44,7 +46,10 @@ class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
             if navigationController.viewControllers.isEmpty == true {
                 debugPrint("coisa")
                 let router = Router(rootController: navigationController)
-                let (favoritesCoordinator, controller) = self.coordinatorFactory.createFavoritesCoordinator(router: router)
+                let favoritesCoordinator = FavoritesCoordinator(router: router)
+                // let services = PokemonService() // TODO: Inject persistence services
+                let viewModel = FavoritesViewModel(coordinator: favoritesCoordinator) // TODO: Inject Services
+                let controller = FavoritesViewController.newInstanceFromStoryboard(viewModel: viewModel)
                 self.addChildCoordinator(favoritesCoordinator)
                 router.setRootModule(controller)
                 favoritesCoordinator.start()
