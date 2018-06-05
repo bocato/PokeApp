@@ -10,36 +10,38 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-//protocol HomeViewModelProtocol: class {
-//    // MARK: - Dependencies
-//    private let disposeBag: DisposeBag
-//    let coordinator: HomeCoordinatorProtocol
-//    private let services: PokemonServiceProtocol
-//
-//    // MARK: - Properties
-//    var pokemonCellModels: Variable<[PokemonTableViewCellModel]>
-//    var viewState = Variable<HomeViewState>(.loading(true))
-//
-//    // MARK: - API Calls
-//    func loadPokemons()
-//
-//    // MARK: - Actions
-//    func showItemDetailsForSelectedCellModel(_ selectedPokemonCellModel: PokemonTableViewCellModel)
-//}
-
-class HomeViewModel {
-    
-    // MARK: ViewState
-    enum HomeViewState {
-        case loading(Bool)
-        case error(NetworkError)
-        case empty
-    }
+protocol HomeViewModelProtocol {
     
     // MARK: - Dependencies
-    private let disposeBag = DisposeBag()
-    let coordinator: HomeCoordinatorProtocol
-    private let services: PokemonServiceProtocol
+    var disposeBag: DisposeBag { get }
+    var coordinator: HomeCoordinatorProtocol { get }
+    var services: PokemonServiceProtocol { get }
+
+    // MARK: - Properties
+    var pokemonCellModels: Variable<[PokemonTableViewCellModel]> { get }
+    var viewState: Variable<HomeViewState> { get }
+
+    // MARK: - API Calls
+    func loadPokemons()
+
+    // MARK: - Actions
+    func showItemDetailsForSelectedCellModel(_ selectedPokemonCellModel: PokemonTableViewCellModel)
+}
+
+// MARK: ViewState
+enum HomeViewState {
+    case loading(Bool)
+    case error(NetworkError)
+    case empty
+}
+
+// MARK: - ViewModel Implementation
+class HomeViewModel : HomeViewModelProtocol{
+    
+    // MARK: - Dependencies
+    internal var disposeBag = DisposeBag()
+    var coordinator: HomeCoordinatorProtocol
+    internal var services: PokemonServiceProtocol
     
     // MARK: - Properties
     var pokemonCellModels = Variable<[PokemonTableViewCellModel]>([])

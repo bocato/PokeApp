@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Dependencies
-    var viewModel: HomeViewModel!
+    var viewModel: HomeViewModelProtocol!
     let disposeBag = DisposeBag()
     
     // MARK: - ViewElements
