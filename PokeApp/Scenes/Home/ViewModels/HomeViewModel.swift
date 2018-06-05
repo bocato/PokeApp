@@ -54,7 +54,7 @@ class HomeViewModel {
     // MARK: - API Calls
     func loadPokemons() {
         viewState.value = .loading(true)
-        services.getPokemonList().subscribe(onNext: { (pokemonListResponse, _) in
+        services.getPokemonList().subscribe(onNext: { pokemonListResponse in
             guard let results = pokemonListResponse?.results else {
                 self.viewState.value = .empty
                 self.pokemonCellModels.value = []

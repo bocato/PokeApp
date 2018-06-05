@@ -65,7 +65,7 @@ class PokemonDetailsViewModel {
     func loadPokemonData() {
         viewState.value = .loading(true)
         services.getDetailsForPokemon(withId: pokemonId)
-            .subscribe(onNext: { (pokemonData, _) in
+            .subscribe(onNext: { pokemonData in
                 
                 guard let pokemonData = pokemonData,
                     let imageURL = pokemonData.imageURL,
