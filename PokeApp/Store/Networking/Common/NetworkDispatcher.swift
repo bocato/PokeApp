@@ -20,9 +20,9 @@ public enum HTTPMethod: String {
 protocol NetworkDispatcherProtocol {
     var url: URL { get }
     init(url: URL)
-    func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<(T?, NetworkResponse?)>
-    func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<([T]?, NetworkResponse?)>
-    func response(from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<NetworkResponse?>
+    func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<T?>
+    func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<[T]?>
+    func response(from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<Void>
 }
 
 class NetworkDispatcher: NetworkDispatcherProtocol {
@@ -40,7 +40,7 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
     
     // MARK: NetworkDispatcherProtocol
     /// Use this method to serialize object payload
-    func response<T>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<(T?, NetworkResponse?)> where T : Decodable, T : Encodable {
+    func response<T>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<T?> where T : Decodable, T : Encodable {
         
         
         return Observable.create { observable in
@@ -58,14 +58,14 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                     if let data = networkResponse.rawData {
                         do {
                             let serializedObject = try JSONDecoder().decode(T.self, from: data)
-                            observable.onNext((serializedObject, networkResponse))
+                            observable.onNext(serializedObject)
                         } catch let serializationError {
                             debugPrint("*** serializationError ***")
                             debugPrint(serializationError)
                             observable.onError(ErrorFactory.buildNetworkError(with: .serializationError))
                         }
                     } else {
-                        observable.onNext((nil, networkResponse))
+                        observable.onNext(nil)
                     }
                 }
                 
@@ -82,7 +82,7 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
     }
     
     /// Use this method to serialize array payload
-    func response<T>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<([T]?, NetworkResponse?)> where T : Decodable, T : Encodable {
+    func response<T>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<[T]?> where T : Decodable, T : Encodable {
         
         return Observable.create { observable in
             
@@ -99,14 +99,14 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                     if let data = networkResponse.rawData {
                         do {
                             let serializedObject = try JSONDecoder().decode([T].self, from: data)
-                            observable.onNext((serializedObject, networkResponse))
+                            observable.onNext(serializedObject)
                         } catch let serializationError {
                             debugPrint("*** serializationError ***")
                             debugPrint(serializationError)
                             observable.onError(ErrorFactory.buildNetworkError(with: .serializationError))
                         }
                     } else {
-                        observable.onNext((nil, networkResponse))
+                        observable.onNext(nil)
                     }
                 }
                 
@@ -123,7 +123,7 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
     }
     
     /// Use this method when there is no need to serialize service payload
-    func response(from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<NetworkResponse?> {
+    func response(from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<Void> {
         
         return Observable.create { observable in
             
@@ -137,7 +137,7 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                 if let networkError = networkResponse.error {
                     observable.onError(networkError)
                 } else {
-                    observable.onNext(networkResponse)
+                    observable.onNext(())
                 }
                 
                 observable.onCompleted()

@@ -10,9 +10,9 @@ import Foundation
 import RxSwift
 
 protocol PokemonServiceProtocol {
-    func getPokemonList() -> Observable<(PokemonListResponse?, NetworkResponse?)>
-    func getPokemonList(_ limit: Int) -> Observable<(PokemonListResponse?, NetworkResponse?)>
-    func getDetailsForPokemon(withId id: Int) -> Observable<(Pokemon?, NetworkResponse?)>
+    func getPokemonList() -> Observable<PokemonListResponse?>
+    func getPokemonList(_ limit: Int) -> Observable<PokemonListResponse?>
+    func getDetailsForPokemon(withId id: Int) -> Observable<Pokemon?>
 }
 
 class PokemonService: PokemonServiceProtocol {
@@ -32,11 +32,11 @@ class PokemonService: PokemonServiceProtocol {
     }
     
     // MARK: - Services
-    func getPokemonList() -> Observable<(PokemonListResponse?, NetworkResponse?)> {
+    func getPokemonList() -> Observable<PokemonListResponse?> {
         return getPokemonList(150)
     }
     
-    func getPokemonList(_ limit: Int) -> Observable<(PokemonListResponse?, NetworkResponse?)> {
+    func getPokemonList(_ limit: Int) -> Observable<PokemonListResponse?> {
         
         let queryParameters = URLHelper.escapedParameters(["limit": limit])
         let path = queryParameters
@@ -44,7 +44,7 @@ class PokemonService: PokemonServiceProtocol {
         return dispatcher.response(of: PokemonListResponse.self, from: path, method: .get, payload: nil, headers: nil)
     }
     
-    func getDetailsForPokemon(withId id: Int) -> Observable<(Pokemon?, NetworkResponse?)> {
+    func getDetailsForPokemon(withId id: Int) -> Observable<Pokemon?> {
     
         let path = "/\(id)"
         
