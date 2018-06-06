@@ -20,8 +20,8 @@ enum PokemonDetailsViewState {
 protocol PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
-    var services: PokemonServiceProtocol { get }
-    var coordinator: Coordinator { get }
+    var services: PokemonServiceProtocol { get } // declare as weak
+    var coordinator: Coordinator? { get } // declare as weak
     
     // MARK: - Properties
     var pokemonId: Int { get }
@@ -55,7 +55,7 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
     internal var services: PokemonServiceProtocol
-    var coordinator: Coordinator
+    weak var coordinator: Coordinator?
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
