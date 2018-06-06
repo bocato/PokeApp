@@ -29,22 +29,9 @@ class HomeViewController: UIViewController {
     fileprivate var refreshControl: UIRefreshControl = ({
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.lightGray
-//         refreshControl.addTarget(self, action: #selector(SearchViewController.reloadViewData), for: .valueChanged) // TODO: Implement on viewModel
         return refreshControl
     })()
     
-    // MARK: - Instantiation
-//    private(set) var viewModel: HomeViewModel // i can do this only if i use xibs
-//    init(viewModel: HomeViewModel) { // i can do this only if i use xibs
-//        self.viewModel = viewModel
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    let viewController = HomeViewController(viewModel: HomeViewModel()) // i can do this only if i use xibs
-  
     class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
         let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
         controller.viewModel = viewModel
@@ -133,6 +120,7 @@ private extension HomeViewController {
     
 }
 
+// MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

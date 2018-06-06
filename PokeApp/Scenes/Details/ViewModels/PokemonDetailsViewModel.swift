@@ -9,7 +9,43 @@
 import Foundation
 import RxSwift
 
-class PokemonDetailsViewModel {
+// MARK: - ViewState
+enum PokemonDetailsViewState {
+    case loading(Bool)
+    case error(NetworkError)
+    case noData
+}
+
+// MARK: - ViewModel Protocol
+protocol PokemonDetailsViewModelProtocol {
+    
+    // MARK: - Dependencies
+    var services: PokemonServiceProtocol { get }
+    var coordinator: Coordinator { get }
+    
+    // MARK: - Properties
+    var pokemonId: Int { get }
+    
+    // MARK: - Rx Properties
+    var isLoadingPokemonImage: Variable<Bool> { get }
+    var viewState: Variable<PokemonDetailsViewState> { get }
+    var favoriteButtonText: Variable<String> { get }
+    var pokemonImage: Variable<UIImage?> { get }
+    var pokemonNumber: Variable<String?> { get }
+    var pokemonName: Variable<String?> { get }
+    var pokemonAbilities:  Variable<[String]> { get }
+    var pokemonStats: Variable<[String]> { get }
+    var pokemonMoves: Variable<[String]> { get }
+    
+    // MARK: - Action Closures
+    var favoriteButtonTouchUpInsideActionClosure: (()->())? { get }
+    
+    // MARK: - API Calls
+    func loadPokemonData()
+    
+}
+
+class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     // MARK: - Constants
     private struct Constants {
@@ -17,20 +53,13 @@ class PokemonDetailsViewModel {
         static let removeFromFavoritesButtonText = "Remove from Favorites"
     }
     
-    // MARK: - ViewState
-    enum PokemonDetailsViewState {
-        case loading(Bool)
-        case error(NetworkError)
-        case noData
-    }
-    
     // MARK: - Dependencies
-    private(set) var services: PokemonServiceProtocol
+    internal var services: PokemonServiceProtocol
     var coordinator: Coordinator
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
-    private var pokemonId: Int
+    internal var pokemonId: Int
     private var pokemonData: Pokemon?
     private var isThisPokemonAFavorite: Bool {
         guard let pokemonData = pokemonData else {
@@ -97,7 +126,7 @@ class PokemonDetailsViewModel {
             .disposed(by: disposeBag)
     }
     
-    func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
+    private func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
         return isThisPokemonAFavorite ? Constants.removeFromFavoritesButtonText : Constants.addToFavoritesButtonText
     }
     

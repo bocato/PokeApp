@@ -22,11 +22,11 @@ class PokemonDetailsViewController: UIViewController {
     @IBOutlet private weak var favoritesButton: PrimaryButton!
     
     // MARK: - Properties
-    var viewModel: PokemonDetailsViewModel!
+    var viewModel: PokemonDetailsViewModelProtocol!
     private var disposeBag = DisposeBag()
     
     // MARK: - Instantiation
-    class func newInstanceFromStoryBoard(viewModel: PokemonDetailsViewModel) -> PokemonDetailsViewController {
+    class func newInstanceFromStoryBoard(viewModel: PokemonDetailsViewModelProtocol) -> PokemonDetailsViewController {
         let controller = instantiate(viewControllerOfType: PokemonDetailsViewController.self, storyboardName: "Details")
         controller.viewModel = viewModel
         return controller
