@@ -20,7 +20,7 @@ enum PokemonDetailsViewState {
 protocol PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
-    var services: PokemonServiceProtocol { get } // declare as weak
+    var services: PokemonServiceProtocol { get }
     var coordinator: Coordinator? { get } // declare as weak
     
     // MARK: - Properties
