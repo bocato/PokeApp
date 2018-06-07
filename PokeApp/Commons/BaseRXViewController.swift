@@ -28,4 +28,5 @@ class BaseRXViewController<T>: UIViewController {
     }
     
     func configure(viewModel: T) {}
+    
 }
