@@ -46,13 +46,14 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
         return Observable.create { observable in
             
             guard let request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
-                observable.onError(ErrorFactory.buildNetworkError(with: .invalidURL))
+                let networkError = NetworkError(requestError: ErrorFactory.buildNetworkError(with: .invalidURL))
+                observable.onError(networkError)
                 return Disposables.create()
             }
             
-            let task = self.dispatch(urlRequest: request, onCompleted: { (networkResponse) in
+            let task = self.dispatch(urlRequest: request, onCompleted: { (networkResponse, networkError) in
                 
-                if let networkError = networkResponse.error {
+                if let networkError = networkError {
                     observable.onError(networkError)
                 } else {
                     if let data = networkResponse.rawData {
@@ -62,7 +63,12 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                         } catch let serializationError {
                             debugPrint("*** serializationError ***")
                             debugPrint(serializationError)
-                            observable.onError(ErrorFactory.buildNetworkError(with: .serializationError))
+                            guard var networkError = networkError else {
+                                observable.onError(NetworkError(requestError:  ErrorFactory.buildNetworkError(with: .serializationError)))
+                                return
+                            }
+                            networkError.requestError = ErrorFactory.buildNetworkError(with: .serializationError)
+                            observable.onError(networkError)
                         }
                     } else {
                         observable.onNext(nil)
@@ -87,13 +93,14 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
         return Observable.create { observable in
             
             guard let request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
-                observable.onError(ErrorFactory.buildNetworkError(with: .invalidURL))
+                let networkError = NetworkError(requestError: ErrorFactory.buildNetworkError(with: .invalidURL))
+                observable.onError(networkError)
                 return Disposables.create()
             }
             
-            let task = self.dispatch(urlRequest: request, onCompleted: { (networkResponse) in
+            let task = self.dispatch(urlRequest: request, onCompleted: { (networkResponse, networkError) in
                 
-                if let networkError = networkResponse.error {
+                if let networkError = networkError {
                     observable.onError(networkError)
                 } else {
                     if let data = networkResponse.rawData {
@@ -103,7 +110,12 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                         } catch let serializationError {
                             debugPrint("*** serializationError ***")
                             debugPrint(serializationError)
-                            observable.onError(ErrorFactory.buildNetworkError(with: .serializationError))
+                            guard var networkError = networkError else {
+                                observable.onError(NetworkError(requestError:  ErrorFactory.buildNetworkError(with: .serializationError)))
+                                return
+                            }
+                            networkError.requestError = ErrorFactory.buildNetworkError(with: .serializationError)
+                            observable.onError(networkError)
                         }
                     } else {
                         observable.onNext(nil)
@@ -128,13 +140,14 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
         return Observable.create { observable in
             
             guard let request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
-                observable.onError(ErrorFactory.buildNetworkError(with: .invalidURL))
+                let networkError = NetworkError(requestError: ErrorFactory.buildNetworkError(with: .invalidURL))
+                observable.onError(networkError)
                 return Disposables.create()
             }
             
-            let task = self.dispatch(urlRequest: request, onCompleted: { (networkResponse) in
+            let task = self.dispatch(urlRequest: request, onCompleted: { (networkResponse, networkError) in
                 
-                if let networkError = networkResponse.error {
+                if let networkError = networkError {
                     observable.onError(networkError)
                 } else {
                     observable.onNext(())
@@ -201,9 +214,10 @@ private extension NetworkDispatcher {
 // MARK: - Request Dispatcher
 private extension NetworkDispatcher {
     
-    private func dispatch(urlRequest: URLRequest!, onCompleted completion: @escaping (NetworkResponse) -> Void) -> URLSessionDataTask {
+    private func dispatch(urlRequest: URLRequest!, onCompleted completion: @escaping (NetworkResponse, NetworkError?) -> Void) -> URLSessionDataTask {
         
         var networkResponse = NetworkResponse()
+        var networkError: NetworkError?
         
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             
@@ -216,20 +230,23 @@ private extension NetworkDispatcher {
             }
             
             guard let statusCode = networkResponse.response?.statusCode else {
-                self.setUnknowErrorFor(networkResponse: &networkResponse, error: error)
-                completion(networkResponse)
+                networkError = NetworkError(rawError: error, rawErrorData: data, response: response as? HTTPURLResponse, request: urlRequest)
+                self.setUnknowErrorFor(networkError: &networkError)
+                completion(networkResponse, networkError)
                 return
             }
             
             if !(200...299 ~= statusCode) {
-                self.mapErrors(statusCode: statusCode, error: error, networkResponse: &networkResponse)
+                networkError = NetworkError(rawError: error, rawErrorData: data, response: response as? HTTPURLResponse, request: urlRequest)
+                self.mapErrors(statusCode: statusCode, error: error, networkError: &networkError)
             }
             
-            completion(networkResponse)
+            completion(networkResponse, networkError)
             
         }
         
         networkResponse.task = task
+        networkError?.task = task
         
         task.resume()
         
@@ -241,33 +258,33 @@ private extension NetworkDispatcher {
 // MARK: - Error Handlers
 private extension NetworkDispatcher {
     
-    private func setUnknowErrorFor(networkResponse: inout NetworkResponse, error: Error?) {
-        if let error = error, error.isNetworkConnectionError {
-            networkResponse.error = ErrorFactory.buildNetworkError(with: .unexpected)
+    private func setUnknowErrorFor(networkError: inout NetworkError?) {
+        if let error = networkError?.rawError, error.isNetworkConnectionError {
+            networkError?.requestError = ErrorFactory.buildNetworkError(with: .unexpected)
             return
         }
-        networkResponse.error = ErrorFactory.buildNetworkError(with: .unknown)
+        networkError?.requestError = ErrorFactory.buildNetworkError(with: .unexpected)
     }
     
-    private func mapErrors(statusCode: Int, error: Error?, networkResponse: inout NetworkResponse) {
+    private func mapErrors(statusCode: Int, error: Error?, networkError: inout NetworkError?) {
         
         guard error == nil else {
-            setUnknowErrorFor(networkResponse: &networkResponse, error: error)
+            setUnknowErrorFor(networkError: &networkError)
             return
         }
         
-        guard 400...499 ~= statusCode, let data = networkResponse.rawData, let jsonString = String(data: data, encoding: .utf8),
-            let serializedValue = try? JSONDecoder().decode(NetworkError.self, from: data) else {
-                setUnknowErrorFor(networkResponse: &networkResponse, error: error)
+        guard 400...499 ~= statusCode, let data = networkError?.rawErrorData, let jsonString = String(data: data, encoding: .utf8),
+            let serializedValue = try? JSONDecoder().decode(SerializedNetworkError.self, from: data) else {
+                setUnknowErrorFor(networkError: &networkError)
                 return
         }
         
-        networkResponse.rawResponse = jsonString
+        networkError?.rawErrorString = jsonString
         
         if serializedValue.message == nil {
-            setUnknowErrorFor(networkResponse: &networkResponse, error: error)
+            setUnknowErrorFor(networkError: &networkError)
         } else {
-            networkResponse.error = serializedValue
+            networkError?.requestError = serializedValue
         }
     }
     

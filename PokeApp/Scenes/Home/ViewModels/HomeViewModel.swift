@@ -31,7 +31,7 @@ protocol HomeViewModelProtocol {
 // MARK: ViewState
 enum HomeViewState {
     case loading(Bool)
-    case error(NetworkError)
+    case error(SerializedNetworkError?)
     case empty
 }
 
@@ -67,7 +67,7 @@ class HomeViewModel : HomeViewModelProtocol{
             })
         }, onError: { (error) in
             let networkError = error as! NetworkError
-            self.viewState.value = .error(networkError)
+            self.viewState.value = .error(networkError.requestError)
         }, onCompleted: {
             self.viewState.value = .loading(false)
         }).disposed(by: disposeBag)

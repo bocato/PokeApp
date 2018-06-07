@@ -7,22 +7,22 @@
 //
 
 import Foundation
-//import RxSwift
-//
-//class RxCollector<T> {
-//
-//    var bag = DisposeBag()
-//    var items = [T]()
-//    var error: Error?
-//    func collect(from observable: Observable<T>) -> RxCollector {
-//        observable.asObservable()
-//            .subscribe(onNext: ({ (item) in
-//                self.items.append(item)
-//            }), onError: { (error) in
-//                self.error = error
-//            })
-//            .disposed(by: bag)
-//        return self
-//    }
-//
-//}
+import RxSwift
+
+class RxCollector<T> {
+
+    var bag = DisposeBag()
+    var items = [T]()
+    var error: Error?
+    func collect(from observable: Observable<T>) -> RxCollector {
+        observable.asObservable()
+            .subscribe(onNext: ({ (item) in
+                self.items.append(item)
+            }), onError: { (error) in
+                self.error = error
+            })
+            .disposed(by: bag)
+        return self
+    }
+
+}

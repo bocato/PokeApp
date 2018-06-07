@@ -44,7 +44,6 @@ class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
         onFavoritesFlowSelect = { navigationController in
             if navigationController.viewControllers.isEmpty == true {
-                debugPrint("coisa")
                 let router = Router(rootController: navigationController)
                 let favoritesCoordinator = FavoritesCoordinator(router: router)
                 // let services = PokemonService() // TODO: Inject persistence services

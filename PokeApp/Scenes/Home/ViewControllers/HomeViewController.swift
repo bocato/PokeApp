@@ -80,7 +80,7 @@ private extension HomeViewController {
                         self.tableView.stopLoading()
                     }
                 case .error(let networkError):
-                    let errorMessage = networkError.message ?? NetworkErrorMessage.unexpected.rawValue
+                    let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
                     AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
                 case .empty:
                     self.tableView.isHidden = true

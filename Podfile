@@ -10,6 +10,8 @@ end
 
 def testing_dependencies
     # Pods for testing
+    pod 'RxCocoa', '~> 4.0.0'
+    pod 'RxSwift', '~> 4.0.0'
 end
 
 target 'PokeApp' do

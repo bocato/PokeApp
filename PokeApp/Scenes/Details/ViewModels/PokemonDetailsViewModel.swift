@@ -12,7 +12,7 @@ import RxSwift
 // MARK: - ViewState
 enum PokemonDetailsViewState {
     case loading(Bool)
-    case error(NetworkError)
+    case error(SerializedNetworkError?)
     case noData
 }
 
@@ -119,7 +119,7 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
                 
             }, onError: { (error) in
                 let networkError = error as! NetworkError
-                self.viewState.value = .error(networkError)
+                self.viewState.value = .error(networkError.requestError)
             }, onCompleted: {
                 self.viewState.value = .loading(false)
             })

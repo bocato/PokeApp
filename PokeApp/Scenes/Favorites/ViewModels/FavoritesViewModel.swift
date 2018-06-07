@@ -14,7 +14,7 @@ class FavoritesViewModel {
     // MARK: ViewState
     enum HomeViewState {
         case loading(Bool)
-        case error(NetworkError)
+        case error(SerializedNetworkError)
         case empty
     }
     
