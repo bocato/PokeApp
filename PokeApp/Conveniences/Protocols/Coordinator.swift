@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 
 protocol Coordinator: class {
-    associatedtype CoordinatorDelegate
-    var delegate: CoordinatorDelegate { get }
     var router: RouterProtocol { get }
     func start()
 }

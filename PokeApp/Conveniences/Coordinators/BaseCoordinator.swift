@@ -9,7 +9,7 @@
 import Foundation
 
 class BaseCoordinator: Coordinator {
-
+    
     // MARK: - Properties
     private(set) var router: RouterProtocol
     var childCoordinators: [Coordinator] = []
@@ -29,7 +29,7 @@ class BaseCoordinator: Coordinator {
         for element in childCoordinators {
             if element === coordinator { return }
         }
-        //        child.delegate = self //TODO: Implementar delegate do pai.
+        // TODO: Implement delegate from parent to child
         childCoordinators.append(coordinator)
     }
     
@@ -48,3 +48,6 @@ class BaseCoordinator: Coordinator {
     }
     
 }
+
+
+

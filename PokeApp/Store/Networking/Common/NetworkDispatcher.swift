@@ -62,12 +62,9 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                         } catch let serializationError {
                             debugPrint("*** serializationError ***")
                             debugPrint(serializationError)
-                            guard var networkError = networkError else {
-                                observable.onError(NetworkError(requestError:  ErrorFactory.buildNetworkError(with: .serializationError)))
-                                return
-                            }
-                            networkError.requestError = ErrorFactory.buildNetworkError(with: .serializationError)
-                            observable.onError(networkError)
+                            var serializationNetworkError = NetworkError(networkResponse: networkResponse)
+                            serializationNetworkError.requestError = ErrorFactory.buildNetworkError(with: .serializationError)
+                            observable.onError(serializationNetworkError)
                         }
                     } else {
                         observable.onNext(nil)
@@ -259,7 +256,7 @@ private extension NetworkDispatcher {
     
     private func setUnknowErrorFor(networkError: inout NetworkError?) {
         if let error = networkError?.rawError, error.isNetworkConnectionError {
-            networkError?.requestError = ErrorFactory.buildNetworkError(with: .unexpected)
+            networkError?.requestError = ErrorFactory.buildNetworkError(with: .connectivity)
             return
         }
         networkError?.requestError = ErrorFactory.buildNetworkError(with: .unexpected)
@@ -278,7 +275,7 @@ private extension NetworkDispatcher {
                 return
         }
         
-        networkError?.rawErrorString = jsonString
+        networkError?.rawErrorString = jsonString // deletar? realmente preciso?
         
         if serializedValue.message == nil {
             setUnknowErrorFor(networkError: &networkError)
