@@ -9,76 +9,45 @@
 import Foundation
 import UIKit
 
-protocol TabBarControllerActions: class {
-    var onFavoritesFlowSelect: ((UINavigationController) -> ())? { get set }
-    var onHomeFlowSelect: ((UINavigationController) -> ())? { get set }
-}
-
-protocol TabBarCoordinatorProtocol:  Coordinator & TabBarControllerActions {}
+protocol TabBarCoordinatorProtocol:  Coordinator & TabBarViewControllerActionsDelegate {}
 
 class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
     // MARK: - TabBarControllerActions
-    var onFavoritesFlowSelect: ((UINavigationController) -> ())?
-    var onHomeFlowSelect: ((UINavigationController) -> ())?
+    var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())?
     
     // MARK: - Start
     override func start() {
-        setupFlows()
+        setupActions()
     }
     
     // MARK: - Flows Setup
-    func setupFlows() {
+    func setupActions() {
         
-        onHomeFlowSelect = { navigationController in
+        onTabSelect = { selectedTab, navigationController in
             if navigationController.viewControllers.isEmpty == true {
-                let router = Router(rootController: navigationController)
-                let homeCoordinator = HomeCoordinator(router: router)
-                let services = PokemonService()
-                let viewModel = HomeViewModel(coordinator: homeCoordinator, services: services)
-                let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
-                router.setRootModule(controller)
-                homeCoordinator.start()
-            }
-        }
-    
-        onFavoritesFlowSelect = { navigationController in
-            if navigationController.viewControllers.isEmpty == true {
-                let router = Router(rootController: navigationController)
-                let favoritesCoordinator = FavoritesCoordinator(router: router)
-                // let services = PokemonService() // TODO: Inject persistence services
-                let viewModel = FavoritesViewModel(coordinator: favoritesCoordinator) // TODO: Inject Services
-                let controller = FavoritesViewController.newInstanceFromStoryboard(viewModel: viewModel)
-                self.addChildCoordinator(favoritesCoordinator)
-                router.setRootModule(controller)
-                favoritesCoordinator.start()
+                switch selectedTab {
+                case .home:
+                    let router = Router(rootController: navigationController)
+                    let homeCoordinator = HomeCoordinator(router: router)
+                    let services = PokemonService()
+                    let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
+                    let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
+                    router.setRootModule(controller)
+                    homeCoordinator.start()
+                case .favorites:
+                    let router = Router(rootController: navigationController)
+                    let favoritesCoordinator = FavoritesCoordinator(router: router)
+                    // let services = PokemonService() // TODO: Inject persistence services
+                    let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator) // TODO: Inject Services
+                    let controller = FavoritesViewController.newInstanceFromStoryboard(viewModel: viewModel)
+                    self.addChildCoordinator(favoritesCoordinator)
+                    router.setRootModule(controller)
+                    favoritesCoordinator.start()
+                }
             }
         }
         
     }
     
 }
-
-// MARK: - Flows with functions
-//protocol TabBarControllerActions: class {
-//    func onFavoritesFlowSelect(navigationController: UINavigationController)
-//    func onHomeFlowSelect(navigationController: UINavigationController)
-//}
-//
-//extension TabBarCoordinator: TabBarControllerActions {
-//
-//    func onFavoritesFlowSelect(navigationController: UINavigationController) {
-//
-//    }
-//
-//    func onHomeFlowSelect(navigationController: UINavigationController) {
-//        if navigationController.viewControllers.isEmpty == true {
-//            let router = Router(rootController: navigationController)
-//            let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
-//            addChildCoordinator(homeCoordinator)
-//            router.setRootModule(controller)
-//            homeCoordinator.start()
-//        }
-//    }
-//
-//}

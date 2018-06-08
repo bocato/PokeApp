@@ -10,11 +10,15 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol HomeViewControllerActionsDelegate: class {
+    func showItemDetailsForPokemonWith(id: Int)
+}
+
 protocol HomeViewModelProtocol {
     
     // MARK: - Dependencies
     var disposeBag: DisposeBag { get }
-    var coordinator: HomeCoordinatorProtocol { get }
+    var actionsDelegate: HomeViewControllerActionsDelegate? { get }
     var services: PokemonServiceProtocol { get }
 
     // MARK: - Properties
@@ -40,7 +44,7 @@ class HomeViewModel : HomeViewModelProtocol{
     
     // MARK: - Dependencies
     internal var disposeBag = DisposeBag()
-    var coordinator: HomeCoordinatorProtocol
+    weak var actionsDelegate: HomeViewControllerActionsDelegate?
     internal var services: PokemonServiceProtocol
     
     // MARK: - Properties
@@ -48,8 +52,8 @@ class HomeViewModel : HomeViewModelProtocol{
     var viewState = Variable<HomeViewState>(.loading(true))
     
     // MARK: - Intialization
-    init(coordinator: HomeCoordinatorProtocol, services: PokemonServiceProtocol) {
-        self.coordinator = coordinator
+    init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol) {
+        self.actionsDelegate = actionsDelegate
         self.services = services
     }
     
@@ -76,7 +80,7 @@ class HomeViewModel : HomeViewModelProtocol{
     // MARK: - Actions
     func showItemDetailsForSelectedCellModel(_ selectedPokemonCellModel: PokemonTableViewCellModel) {
         guard let id = selectedPokemonCellModel.pokemonListItem.id else { return }
-        coordinator.showItemDetailsForPokemonWith(id: id)
+        actionsDelegate?.showItemDetailsForPokemonWith(id: id)
     }
     
 }

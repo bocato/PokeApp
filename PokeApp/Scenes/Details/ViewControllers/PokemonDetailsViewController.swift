@@ -85,8 +85,6 @@ private extension PokemonDetailsViewController {
                     case .error(let networkError):
                         let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
                         AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
-                    case .noData:
-                        self.viewModel.coordinator?.router.popToRootModule(animated: true)
                 }
             })
             .disposed(by: disposeBag)

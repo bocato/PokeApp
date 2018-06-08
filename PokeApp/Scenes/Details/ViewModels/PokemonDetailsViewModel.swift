@@ -13,7 +13,6 @@ import RxSwift
 enum PokemonDetailsViewState {
     case loading(Bool)
     case error(SerializedNetworkError?)
-    case noData
 }
 
 // MARK: - ViewModel Protocol
@@ -21,7 +20,6 @@ protocol PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
     var services: PokemonServiceProtocol { get }
-    var actionsDelegate: FavoritesActionsDelegate? { get } // declare as weak
     
     // MARK: - Properties
     var pokemonId: Int { get }
@@ -55,7 +53,6 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
     internal var services: PokemonServiceProtocol
-    weak var actionsDelegate: Coordinator?
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
@@ -83,10 +80,9 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
 
     // MARK: - Initialization
-    required init(pokemonId: Int, services: PokemonServiceProtocol, coordinator: Coordinator) {
+    required init(pokemonId: Int, services: PokemonServiceProtocol) {
         self.pokemonId = pokemonId
         self.services = services
-        self.coordinator = coordinator
         setupActionClosures()
     }
     
@@ -103,7 +99,8 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
                     let abilities = pokemonData.abilities,
                     let stats = pokemonData.stats,
                     let moves = pokemonData.moves else {
-                        self.viewState.value = .noData
+                        let error = ErrorFactory.buildNetworkError(with: .unexpected)
+                        self.viewState.value = .error(error)
                     return
                 }
                 

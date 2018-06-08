@@ -8,22 +8,39 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
-enum TabBarIndex: Int {
-    case homeFlow
-    case favoritesFlow
+protocol TabBarViewControllerActionsDelegate: class {
+    var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())? { get set }
 }
 
-class TabBarViewModel {
+enum TabBarIndex: Int {
+    case home
+    case favorites
+}
+
+protocol TabBarViewModelProtocol {
     
     // MARK: - Dependencies
-    let coordinator: TabBarCoordinator
+    var actionsDelegate: TabBarViewControllerActionsDelegate? { get }
+    
+    // MARK: - Properties
+    var selectedTab: Variable<TabBarIndex> { get set }
+}
+
+class TabBarViewModel: TabBarViewModelProtocol {
+    
+    // MARK: - Dependencies
+    var actionsDelegate: TabBarViewControllerActionsDelegate?
     
     // MARK: - Variables
-    var selectedTab = Variable<TabBarIndex>(.homeFlow)
+    var selectedTab = Variable<TabBarIndex>(.home)
     
-    init(coordinator: TabBarCoordinator) {
-        self.coordinator = coordinator
+    // MARK: Action Closures
+    var onTabSelect: ((_ selectedTab: TabBarIndex) -> ())?
+    
+    init(actionsDelegate: TabBarViewControllerActionsDelegate) {
+        self.actionsDelegate = actionsDelegate
     }
     
 }

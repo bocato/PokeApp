@@ -53,26 +53,6 @@ private extension FavoritesViewController {
         
         viewModel.loadFavorites()
         
-        viewModel.viewState
-            .asObservable()
-            .subscribe(onNext: { state in
-                switch state {
-                case .loading(let isLoading):
-                    if isLoading {
-                        self.collectionView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
-                    } else {
-                        self.collectionView.stopLoading()
-                    }
-                case .error(let networkError): // TODO: CHANGE TO PERSISTENCE ERROR
-                    let errorMessage = networkError.message ?? NetworkErrorMessage.unexpected.rawValue
-                    AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
-                case .empty:
-//                    self.collectionView.isHidden = true
-                    debugPrint("empty")
-                }
-            })
-            .disposed(by: disposeBag)
-        
     }
     
     func bindCollectionView() {
