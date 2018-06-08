@@ -15,6 +15,7 @@ enum NetworkErrorCode: Int {
     case serializationError = -333
     case invalidURL = -444
     case jsonParse = -555
+    case connectivity = -666
 }
 
 enum NetworkErrorMessage: String {
@@ -23,6 +24,7 @@ enum NetworkErrorMessage: String {
     case serializationError = "Object serialization error."
     case invalidURL = "Invalid URL."
     case jsonParse = "JSON parsing error."
+    case connectivity = "Network connectivity error."
 }
 
 // MARK: - PersistenceErrors

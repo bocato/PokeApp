@@ -62,9 +62,9 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                         } catch let serializationError {
                             debugPrint("*** serializationError ***")
                             debugPrint(serializationError)
-                            var serializationNetworkError = NetworkError(networkResponse: networkResponse)
-                            serializationNetworkError.requestError = ErrorFactory.buildNetworkError(with: .serializationError)
-                            observable.onError(serializationNetworkError)
+                            let requestError = ErrorFactory.buildNetworkError(with: .serializationError)
+                            let networkErrorForSerialization = NetworkError(networkResponse: networkResponse, rawError: serializationError, requestError: requestError)
+                            observable.onError(networkErrorForSerialization)
                         }
                     } else {
                         observable.onNext(nil)
@@ -106,12 +106,9 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                         } catch let serializationError {
                             debugPrint("*** serializationError ***")
                             debugPrint(serializationError)
-                            guard var networkError = networkError else {
-                                observable.onError(NetworkError(requestError:  ErrorFactory.buildNetworkError(with: .serializationError)))
-                                return
-                            }
-                            networkError.requestError = ErrorFactory.buildNetworkError(with: .serializationError)
-                            observable.onError(networkError)
+                            let requestError = ErrorFactory.buildNetworkError(with: .serializationError)
+                            let networkErrorForSerialization = NetworkError(networkResponse: networkResponse, rawError: serializationError, requestError: requestError)
+                            observable.onError(networkErrorForSerialization)
                         }
                     } else {
                         observable.onNext(nil)

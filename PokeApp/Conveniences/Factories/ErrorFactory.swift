@@ -20,6 +20,8 @@ class ErrorFactory {
             return SerializedNetworkError(message: NetworkErrorMessage.invalidURL.rawValue, code: NetworkErrorCode.invalidURL.rawValue)
         case .jsonParse:
             return SerializedNetworkError(message: NetworkErrorMessage.jsonParse.rawValue, code: NetworkErrorCode.jsonParse.rawValue)
+        case .connectivity:
+            return SerializedNetworkError(message: NetworkErrorMessage.connectivity.rawValue, code: NetworkErrorCode.connectivity.rawValue)
         default:
             return SerializedNetworkError(message: NetworkErrorMessage.unknown.rawValue, code: NetworkErrorCode.unknown.rawValue)
         }

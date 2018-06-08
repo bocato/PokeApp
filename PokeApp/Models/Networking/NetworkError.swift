@@ -26,6 +26,16 @@ struct NetworkError: Error {
         self.requestError = requestError
     }
     
+    init(networkResponse: NetworkResponse, rawError: Error, requestError: SerializedNetworkError) {
+        self.rawError = rawError
+        self.rawErrorString = networkResponse.rawResponse
+        self.rawErrorData = networkResponse.rawData
+        self.requestError = requestError
+        self.response = networkResponse.response
+        self.request = networkResponse.request
+        self.task = networkResponse.task
+    }
+    
     init(rawError: Error?, rawErrorData: Data?, response: HTTPURLResponse?, request: URLRequest?) {
         self.rawError = rawError
         self.rawErrorData = rawErrorData
