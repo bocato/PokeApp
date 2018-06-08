@@ -29,6 +29,7 @@ class BaseCoordinator: Coordinator {
         for element in childCoordinators {
             if element === coordinator { return }
         }
+        //        child.delegate = self //TODO: Implementar delegate do pai.
         childCoordinators.append(coordinator)
     }
     

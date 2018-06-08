@@ -8,11 +8,7 @@
 
 import Foundation
 
-protocol FavoritesViewControllerActions {
-    func showItemDetailsForPokemonWith(id: Int)
-}
-
-protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActions {}
+protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesActionsDelegate {}
 
 class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     
@@ -23,11 +19,11 @@ class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     
 }
 
-extension FavoritesCoordinator: FavoritesViewControllerActions {
+extension FavoritesCoordinator: FavoritesActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
         let services = PokemonService()
-        let viewModel = PokemonDetailsViewModel(pokemonId: id, services: services, coordinator: self)
+        let viewModel = PokemonDetailsViewModel(pokemonId: id, services: services, actionsDelegate: self)
         let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
         router.push(pokemonDetailsViewController)
     }

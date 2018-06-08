@@ -42,7 +42,6 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
     /// Use this method to serialize object payload
     func response<T>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<T?> where T : Decodable, T : Encodable {
         
-        
         return Observable.create { observable in
             
             guard let request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
@@ -214,7 +213,7 @@ private extension NetworkDispatcher {
 // MARK: - Request Dispatcher
 private extension NetworkDispatcher {
     
-    private func dispatch(urlRequest: URLRequest!, onCompleted completion: @escaping (NetworkResponse, NetworkError?) -> Void) -> URLSessionDataTask {
+    private func dispatch(urlRequest: URLRequest, onCompleted completion: @escaping (NetworkResponse, NetworkError?) -> Void) -> URLSessionDataTask { // network response optional?
         
         var networkResponse = NetworkResponse()
         var networkError: NetworkError?

@@ -9,6 +9,10 @@
 import Foundation
 import RxSwift
 
+protocol FavoritesActionsDelegate: class {
+    func showItemDetailsForPokemonWith(id: Int)
+}
+
 class FavoritesViewModel {
     
     // MARK: ViewState
@@ -19,7 +23,7 @@ class FavoritesViewModel {
     }
     
     // MARK: - Dependecies
-    let coordinator: FavoritesCoordinatorProtocol
+    weak var actionsDelegate: FavoritesActionsDelegate?
     
     // MARK: - Properties
     
@@ -28,8 +32,8 @@ class FavoritesViewModel {
     var favoritesCellModels = Variable<[FavoriteCollectionViewCellModel]>([])
     
     // MARK: - Initialzation
-    init(coordinator: FavoritesCoordinatorProtocol) {
-        self.coordinator = coordinator
+    init(actionsDelegate: FavoritesActionsDelegate) {
+        self.actionsDelegate = actionsDelegate
     }
     
     // MARK: -
@@ -48,7 +52,7 @@ class FavoritesViewModel {
     // MARK: - Actions
     func showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: FavoriteCollectionViewCellModel) {
         guard let id = favoriteCellModel.pokemonData.id else { return }
-        self.coordinator.showItemDetailsForPokemonWith(id: id)
+        self.actionsDelegate?.showItemDetailsForPokemonWith(id: id)
     }
     
 }

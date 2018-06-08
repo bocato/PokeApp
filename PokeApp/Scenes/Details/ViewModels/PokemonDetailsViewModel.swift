@@ -21,7 +21,7 @@ protocol PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
     var services: PokemonServiceProtocol { get }
-    var coordinator: Coordinator? { get } // declare as weak
+    var actionsDelegate: FavoritesActionsDelegate? { get } // declare as weak
     
     // MARK: - Properties
     var pokemonId: Int { get }
@@ -55,7 +55,7 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
     internal var services: PokemonServiceProtocol
-    weak var coordinator: Coordinator?
+    weak var actionsDelegate: Coordinator?
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
