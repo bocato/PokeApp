@@ -33,6 +33,7 @@ class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
                     let services = PokemonService()
                     let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
                     let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
+                    self.addChildCoordinator(homeCoordinator)
                     router.setRootModule(controller)
                     homeCoordinator.start()
                 case .favorites:
