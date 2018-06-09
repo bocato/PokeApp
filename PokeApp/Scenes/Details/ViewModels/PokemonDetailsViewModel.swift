@@ -9,6 +9,11 @@
 import Foundation
 import RxSwift
 
+// MARK: - Actions
+protocol PokemonDetailsViewControllerActionsDelegate : class {
+    func didAddFavorite(pokemon: Pokemon) // configure didremove
+}
+
 // MARK: - ViewState
 enum PokemonDetailsViewState {
     case loading(Bool)
@@ -20,6 +25,7 @@ protocol PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
     var services: PokemonServiceProtocol { get }
+    var actionsDelegate: PokemonDetailsViewControllerActionsDelegate? { get }
     
     // MARK: - Properties
     var pokemonId: Int { get }
@@ -53,6 +59,7 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     // MARK: - Dependencies
     internal var services: PokemonServiceProtocol
+    weak var actionsDelegate: PokemonDetailsViewControllerActionsDelegate?
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
@@ -80,9 +87,10 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
 
     // MARK: - Initialization
-    required init(pokemonId: Int, services: PokemonServiceProtocol) {
+    required init(pokemonId: Int, services: PokemonServiceProtocol, actionsDelegate: PokemonDetailsViewControllerActionsDelegate) {
         self.pokemonId = pokemonId
         self.services = services
+        self.actionsDelegate = actionsDelegate
         setupActionClosures()
     }
     
@@ -180,35 +188,13 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     // MARK: - Action Closures
     func setupActionClosures() {
         
-//        self.favoriteButtonTouchUpInsideActionClosure = {
-//            guard let pokemonData = self.pokemonData else { return }
-//            if self.isThisPokemonAFavorite {
-//                FavoritesManager.shared.remove(pokemon: pokemonData)
-//            } else {
-//                FavoritesManager.shared.add(pokemon: pokemonData)
-//            }
-//            self.favoriteButtonText.value = self.getfavoritesButtonText()
-//        }
-
         self.favoriteButtonTouchUpInsideActionClosure = {
-            guard let pokemonData = self.pokemonData, let pokemonImage = self.pokemonImage.value else { return }
+            guard let pokemonData = self.pokemonData else { return }
             if self.isThisPokemonAFavorite {
                 FavoritesManager.shared.remove(pokemon: pokemonData)
             } else {
-                
-//                let favoritesService = FavoritesService() // NOT WORKING... need to change some stuff on core Data manager...
-//                favoritesService.save(pokemonData, with: pokemonImage)
-//                    .asObservable()
-//                    .subscribe(onNext: { _ in
-//                        debugPrint("Deu bão...")
-//                    }, onError: { (error) in
-//                        debugPrint("onError: \(error)")
-//                    }, onCompleted: {
-//                        debugPrint("onCompleted")
-//                    })
-//                    .disposed(by: self.disposeBag)
-                
                 FavoritesManager.shared.add(pokemon: pokemonData)
+                self.actionsDelegate?.didAddFavorite(pokemon: pokemonData)
             }
             self.favoriteButtonText.value = self.getfavoritesButtonText()
         }
