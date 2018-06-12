@@ -9,9 +9,17 @@
 import Foundation
 import UIKit
 
-protocol TabBarCoordinatorProtocol:  Coordinator & TabBarViewControllerActionsDelegate {}
+protocol TabBarCoordinatorProtocol:  Coordinator & TabBarViewControllerActionsDelegate {
+    
+    // MARK: - Dependencies
+    var modulesFactory: TabBarModuleFactoryProtocol { get }
+
+}
 
 class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
+    
+    // MARK: - Dependencies
+    internal var modulesFactory: TabBarModuleFactoryProtocol = TabBarModuleFactory(store: TabBarModuleStore())
     
     // MARK: - TabBarControllerActions
     var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())?
@@ -28,23 +36,15 @@ class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
             if navigationController.viewControllers.isEmpty == true {
                 switch selectedTab {
                 case .home:
-                    let router = Router(rootController: navigationController)
-                    let homeCoordinator = HomeCoordinator(router: router)
-                    let services = PokemonService()
-                    let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
-                    let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
-                    self.addChildCoordinator(homeCoordinator)
-                    router.setRootModule(controller)
-                    homeCoordinator.start()
+                    let (coordinator, controller) = self.modulesFactory.buildHomeModule(with: navigationController)
+                    self.addChildCoordinator(coordinator)
+                    coordinator.router.setRootModule(controller)
+                    coordinator.start()
                 case .favorites:
-                    let router = Router(rootController: navigationController)
-                    let favoritesCoordinator = FavoritesCoordinator(router: router)
-                    // let services = PokemonService() // TODO: Inject persistence services
-                    let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator) // TODO: Inject Services
-                    let controller = FavoritesViewController.newInstanceFromStoryboard(viewModel: viewModel)
-                    self.addChildCoordinator(favoritesCoordinator)
-                    router.setRootModule(controller)
-                    favoritesCoordinator.start()
+                    let (coordinator, controller) = self.modulesFactory.buildFavoritesModule(with: navigationController)
+                    self.addChildCoordinator(coordinator)
+                    coordinator.router.setRootModule(controller)
+                    coordinator.start()
                 }
             }
         }

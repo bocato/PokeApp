@@ -11,7 +11,7 @@ import UIKit
 
 protocol Coordinator: class {
     
-    // MARK: - Depencies
+    // MARK: - Dependencies
     var router: RouterProtocol { get }
     
     // MARK: Functions

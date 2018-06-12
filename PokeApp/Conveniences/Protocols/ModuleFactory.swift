@@ -10,9 +10,26 @@ import Foundation
 
 protocol ModuleFactoryProtocol {
     
+    // MARK: - Associated Types
     associatedtype StoreType
     
     // MARK: - Dependencies
-    var store: StoreType { get set }
+    var store: StoreType? { get set }
     
 }
+
+class BaseModuleFactory<T> {
+    
+    // MARK: - Associated Types
+    typealias StoreType = T
+    
+    // MARK: - Dependencies
+    var store: T?
+    
+    // MARK: - Initialization
+    required init(store: T) {
+        self.store = store
+    }
+    
+}
+

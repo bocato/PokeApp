@@ -15,7 +15,7 @@ class BaseCoordinator: Coordinator {
     var childCoordinators: [String : Coordinator] = [ : ]
     
     // MARK: - Intialization
-    required init(router: RouterProtocol) {
+    internal required init(router: RouterProtocol) {
         self.router = router
     }
     
