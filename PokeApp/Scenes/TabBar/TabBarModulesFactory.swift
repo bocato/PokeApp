@@ -1,5 +1,5 @@
 //
-//  TabBarModuleFactory.swift
+//  TabBarModulesFactory.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 11/06/18.
@@ -8,11 +8,7 @@
 
 import UIKit
 
-struct TabBarModuleStore {
-    
-}
-
-protocol TabBarModuleFactoryProtocol {
+protocol TabBarModulesFactoryProtocol {
     
     // MARK: - Builders
     func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController)
@@ -20,7 +16,7 @@ protocol TabBarModuleFactoryProtocol {
     
 }
 
-class TabBarModuleFactory: BaseModuleFactory<TabBarModuleStore>, TabBarModuleFactoryProtocol {
+class TabBarModulesFactory: BaseModuleFactory<Any>, TabBarModulesFactoryProtocol {
     
     // MARK: - Builders
     func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController) {

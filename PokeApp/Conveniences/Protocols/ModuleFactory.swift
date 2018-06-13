@@ -27,7 +27,7 @@ class BaseModuleFactory<T> {
     var store: T?
     
     // MARK: - Initialization
-    required init(store: T) {
+    init(store: T) {
         self.store = store
     }
     

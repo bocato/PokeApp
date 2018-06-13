@@ -27,7 +27,8 @@
 		E50B734F20B51A0900154FCD /* JSONAny+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734B20B51A0900154FCD /* JSONAny+Codable.swift */; };
 		E50B735020B51A0900154FCD /* JSONAny+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */; };
 		E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E720CF0EB00090D763 /* ModuleFactory.swift */; };
-		E50D15EA20CF11A50090D763 /* TabBarModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarModuleFactory.swift */; };
+		E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */; };
+		E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
 		E551383F20A4469900A5F6EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E551383E20A4469900A5F6EB /* Assets.xcassets */; };
@@ -128,7 +129,8 @@
 		E50B734B20B51A0900154FCD /* JSONAny+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONAny+Codable.swift"; sourceTree = "<group>"; };
 		E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONAny+Initialization.swift"; sourceTree = "<group>"; };
 		E50D15E720CF0EB00090D763 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
-		E50D15E920CF11A50090D763 /* TabBarModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModuleFactory.swift; sourceTree = "<group>"; };
+		E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModulesFactory.swift; sourceTree = "<group>"; };
+		E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E551383720A4469700A5F6EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 			children = (
 				E551383720A4469700A5F6EB /* AppDelegate.swift */,
 				E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */,
+				E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */,
 				E56972AD20AA746400F0B3E5 /* Environment.swift */,
 				E551384320A4469900A5F6EB /* Info.plist */,
 			);
@@ -519,7 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				E56972BC20ACEA5B00F0B3E5 /* TabBar.storyboard */,
-				E50D15E920CF11A50090D763 /* TabBarModuleFactory.swift */,
+				E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */,
 				E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */,
 				E5583E6320B74C09003CAFA0 /* ViewControlers */,
 				E548A32C20B7BB9100E72954 /* ViewModels */,
@@ -939,8 +942,9 @@
 				E551385220A4520900A5F6EB /* NetworkDispatcher.swift in Sources */,
 				E50540BB20BA6C77004EA46D /* FavoritesCoordinator.swift in Sources */,
 				E56972B120AA867E00F0B3E5 /* PokemonService.swift in Sources */,
-				E50D15EA20CF11A50090D763 /* TabBarModuleFactory.swift in Sources */,
+				E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */,
 				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
+				E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */,
 				E50540C320BAF1F3004EA46D /* CoreDataController.swift in Sources */,
 				E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */,
 				E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */,
