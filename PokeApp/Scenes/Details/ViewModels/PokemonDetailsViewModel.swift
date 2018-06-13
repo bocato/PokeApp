@@ -9,7 +9,47 @@
 import Foundation
 import RxSwift
 
-class PokemonDetailsViewModel {
+// MARK: - Actions
+protocol PokemonDetailsViewControllerActionsDelegate : class {
+    func didAddFavorite(pokemon: Pokemon) // configure didremove
+}
+
+// MARK: - ViewState
+enum PokemonDetailsViewState {
+    case loading(Bool)
+    case error(SerializedNetworkError?)
+}
+
+// MARK: - ViewModel Protocol
+protocol PokemonDetailsViewModelProtocol {
+    
+    // MARK: - Dependencies
+    var services: PokemonServiceProtocol { get }
+    var actionsDelegate: PokemonDetailsViewControllerActionsDelegate? { get }
+    
+    // MARK: - Properties
+    var pokemonId: Int { get }
+    
+    // MARK: - Rx Properties
+    var isLoadingPokemonImage: Variable<Bool> { get }
+    var viewState: Variable<PokemonDetailsViewState> { get }
+    var favoriteButtonText: Variable<String> { get }
+    var pokemonImage: Variable<UIImage?> { get }
+    var pokemonNumber: Variable<String?> { get }
+    var pokemonName: Variable<String?> { get }
+    var pokemonAbilities:  Variable<[String]> { get }
+    var pokemonStats: Variable<[String]> { get }
+    var pokemonMoves: Variable<[String]> { get }
+    
+    // MARK: - Action Closures
+    var favoriteButtonTouchUpInsideActionClosure: (()->())? { get }
+    
+    // MARK: - API Calls
+    func loadPokemonData()
+    
+}
+
+class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     // MARK: - Constants
     private struct Constants {
@@ -17,20 +57,13 @@ class PokemonDetailsViewModel {
         static let removeFromFavoritesButtonText = "Remove from Favorites"
     }
     
-    // MARK: - ViewState
-    enum PokemonDetailsViewState {
-        case loading(Bool)
-        case error(NetworkError)
-        case noData
-    }
-    
     // MARK: - Dependencies
-    private(set) var services: PokemonServiceProtocol
-    var coordinator: Coordinator
+    internal var services: PokemonServiceProtocol
+    weak var actionsDelegate: PokemonDetailsViewControllerActionsDelegate?
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
-    private var pokemonId: Int
+    internal var pokemonId: Int
     private var pokemonData: Pokemon?
     private var isThisPokemonAFavorite: Bool {
         guard let pokemonData = pokemonData else {
@@ -54,10 +87,10 @@ class PokemonDetailsViewModel {
     var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
 
     // MARK: - Initialization
-    required init(pokemonId: Int, services: PokemonServiceProtocol, coordinator: Coordinator) {
+    required init(pokemonId: Int, services: PokemonServiceProtocol, actionsDelegate: PokemonDetailsViewControllerActionsDelegate) {
         self.pokemonId = pokemonId
         self.services = services
-        self.coordinator = coordinator
+        self.actionsDelegate = actionsDelegate
         setupActionClosures()
     }
     
@@ -65,7 +98,7 @@ class PokemonDetailsViewModel {
     func loadPokemonData() {
         viewState.value = .loading(true)
         services.getDetailsForPokemon(withId: pokemonId)
-            .subscribe(onNext: { (pokemonData, _) in
+            .subscribe(onNext: { pokemonData in
                 
                 guard let pokemonData = pokemonData,
                     let imageURL = pokemonData.imageURL,
@@ -74,7 +107,8 @@ class PokemonDetailsViewModel {
                     let abilities = pokemonData.abilities,
                     let stats = pokemonData.stats,
                     let moves = pokemonData.moves else {
-                        self.viewState.value = .noData
+                        let error = ErrorFactory.buildNetworkError(with: .unexpected)
+                        self.viewState.value = .error(error)
                     return
                 }
                 
@@ -90,14 +124,14 @@ class PokemonDetailsViewModel {
                 
             }, onError: { (error) in
                 let networkError = error as! NetworkError
-                self.viewState.value = .error(networkError)
+                self.viewState.value = .error(networkError.requestError)
             }, onCompleted: {
                 self.viewState.value = .loading(false)
             })
             .disposed(by: disposeBag)
     }
     
-    func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
+    private func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
         return isThisPokemonAFavorite ? Constants.removeFromFavoritesButtonText : Constants.addToFavoritesButtonText
     }
     
@@ -154,35 +188,13 @@ class PokemonDetailsViewModel {
     // MARK: - Action Closures
     func setupActionClosures() {
         
-//        self.favoriteButtonTouchUpInsideActionClosure = {
-//            guard let pokemonData = self.pokemonData else { return }
-//            if self.isThisPokemonAFavorite {
-//                FavoritesManager.shared.remove(pokemon: pokemonData)
-//            } else {
-//                FavoritesManager.shared.add(pokemon: pokemonData)
-//            }
-//            self.favoriteButtonText.value = self.getfavoritesButtonText()
-//        }
-
         self.favoriteButtonTouchUpInsideActionClosure = {
-            guard let pokemonData = self.pokemonData, let pokemonImage = self.pokemonImage.value else { return }
+            guard let pokemonData = self.pokemonData else { return }
             if self.isThisPokemonAFavorite {
                 FavoritesManager.shared.remove(pokemon: pokemonData)
             } else {
-                
-//                let favoritesService = FavoritesService() // NOT WORKING... need to change some stuff on core Data manager...
-//                favoritesService.save(pokemonData, with: pokemonImage)
-//                    .asObservable()
-//                    .subscribe(onNext: { _ in
-//                        debugPrint("Deu bão...")
-//                    }, onError: { (error) in
-//                        debugPrint("onError: \(error)")
-//                    }, onCompleted: {
-//                        debugPrint("onCompleted")
-//                    })
-//                    .disposed(by: self.disposeBag)
-                
                 FavoritesManager.shared.add(pokemon: pokemonData)
+                self.actionsDelegate?.didAddFavorite(pokemon: pokemonData)
             }
             self.favoriteButtonText.value = self.getfavoritesButtonText()
         }

@@ -9,16 +9,14 @@
 import Foundation
 
 class BaseCoordinator: Coordinator {
-
+    
     // MARK: - Properties
-    private(set) var coordinatorFactory: CoordinatorFactoryProtocol
     private(set) var router: RouterProtocol
-    var childCoordinators: [Coordinator] = []
+    var childCoordinators: [String : Coordinator] = [ : ]
     
     // MARK: - Intialization
-    init(router: RouterProtocol, coordinatorFactory: CoordinatorFactoryProtocol) {
+    internal required init(router: RouterProtocol) {
         self.router = router
-        self.coordinatorFactory = coordinatorFactory
     }
     
     // MARK: - Start
@@ -28,10 +26,11 @@ class BaseCoordinator: Coordinator {
     
     // MARK: - Helper Methods
     func addChildCoordinator(_ coordinator: Coordinator) {
-        for element in childCoordinators {
-            if element === coordinator { return }
+        if let child = childCoordinators[identifier], child === coordinator {
+            return
         }
-        childCoordinators.append(coordinator)
+        childCoordinators[coordinator.identifier] = coordinator
+        debugPrint("\(coordinator.identifier) added")
     }
     
     func removeChildCoordinator(_ coordinator: Coordinator?) {
@@ -39,13 +38,22 @@ class BaseCoordinator: Coordinator {
             childCoordinators.isEmpty == false,
             let coordinator = coordinator
             else { return }
-        
-        for (index, element) in childCoordinators.enumerated() {
-            if element === coordinator {
-                childCoordinators.remove(at: index)
-                break
-            }
+        if let coordinatorToRemove = childCoordinators[coordinator.identifier], coordinator === coordinatorToRemove {
+            childCoordinators.removeValue(forKey: coordinator.identifier)
+            debugPrint("\(coordinator.identifier) removed")
         }
     }
     
 }
+
+extension Finishable where Self: BaseCoordinator {
+    
+    init(router: RouterProtocol, finishClosure: @escaping OutputClosure) {
+        self.init(router: router)
+        self.finish = finishClosure
+    }
+    
+}
+
+
+

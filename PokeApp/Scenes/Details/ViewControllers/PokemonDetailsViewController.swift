@@ -22,11 +22,11 @@ class PokemonDetailsViewController: UIViewController {
     @IBOutlet private weak var favoritesButton: PrimaryButton!
     
     // MARK: - Properties
-    var viewModel: PokemonDetailsViewModel!
+    var viewModel: PokemonDetailsViewModelProtocol!
     private var disposeBag = DisposeBag()
     
     // MARK: - Instantiation
-    class func newInstanceFromStoryBoard(viewModel: PokemonDetailsViewModel) -> PokemonDetailsViewController {
+    class func newInstanceFromStoryBoard(viewModel: PokemonDetailsViewModelProtocol) -> PokemonDetailsViewController {
         let controller = instantiate(viewControllerOfType: PokemonDetailsViewController.self, storyboardName: "Details")
         controller.viewModel = viewModel
         return controller
@@ -83,10 +83,8 @@ private extension PokemonDetailsViewController {
                             self.favoritesButton.stopLoading()
                         }
                     case .error(let networkError):
-                        let errorMessage = networkError.message ?? NetworkErrorMessage.unexpected.rawValue
+                        let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
                         AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
-                    case .noData:
-                        debugPrint("No Data") // PopViewController... do this with Cooordinator
                 }
             })
             .disposed(by: disposeBag)

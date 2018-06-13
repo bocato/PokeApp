@@ -66,14 +66,7 @@ private extension TabBarViewController {
             .asObservable()
             .subscribe(onNext: { (selectedTab) in
                 guard let controller = self.viewControllers?[selectedTab.rawValue] as? UINavigationController else { return }
-                switch selectedTab {
-                case .homeFlow:
-                    self.viewModel.coordinator.onHomeFlowSelect?(controller)
-//                    self.viewModel.coordinator.onHomeFlowSelect(navigationController: controller)
-                case .favoritesFlow:
-                    self.viewModel.coordinator.onFavoritesFlowSelect?(controller)
-//                    self.viewModel.coordinator.onFavoritesFlowSelect(navigationController: controller)
-                }
+                self.viewModel.actionsDelegate?.onTabSelect?(selectedTab, controller)
             })
             .disposed(by: disposeBag)
         

@@ -8,11 +8,8 @@
 
 import Foundation
 
-protocol HomeViewControllerActions {
-    func showItemDetailsForPokemonWith(id: Int)
-}
 
-protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActions {}
+protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegate {}
 
 class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     
@@ -23,13 +20,19 @@ class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     
 }
 
-extension HomeCoordinator: HomeViewControllerActions {
+extension HomeCoordinator: HomeViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
         let services = PokemonService()
-        let viewModel = PokemonDetailsViewModel(pokemonId: id, services: services, coordinator: self)
+        let pokemonDetailsCoordinator = DetailsCoordinator(router: router) { [weak self] (pokemon, coordinator) in
+            coordinator.router.popModule(animated: true)
+            self?.removeChildCoordinator(coordinator)
+        }
+        let viewModel = PokemonDetailsViewModel(pokemonId: id, services: services, actionsDelegate: pokemonDetailsCoordinator)
         let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
+        self.addChildCoordinator(pokemonDetailsCoordinator)
         router.push(pokemonDetailsViewController)
+        pokemonDetailsCoordinator.start()
     }
     
 }

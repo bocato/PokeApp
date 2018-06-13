@@ -19,32 +19,19 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - IBOutlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Dependencies
-    var viewModel: HomeViewModel!
+    var viewModel: HomeViewModelProtocol!
     let disposeBag = DisposeBag()
     
     // MARK: - ViewElements
     fileprivate var refreshControl: UIRefreshControl = ({
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.lightGray
-//         refreshControl.addTarget(self, action: #selector(SearchViewController.reloadViewData), for: .valueChanged) // TODO: Implement on viewModel
         return refreshControl
     })()
     
-    // MARK: - Instantiation
-//    private(set) var viewModel: HomeViewModel // i can do this only if i use xibs
-//    init(viewModel: HomeViewModel) { // i can do this only if i use xibs
-//        self.viewModel = viewModel
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    let viewController = HomeViewController(viewModel: HomeViewModel()) // i can do this only if i use xibs
-  
     class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
         let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
         controller.viewModel = viewModel
@@ -93,11 +80,10 @@ private extension HomeViewController {
                         self.tableView.stopLoading()
                     }
                 case .error(let networkError):
-                    let errorMessage = networkError.message ?? NetworkErrorMessage.unexpected.rawValue
+                    let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
                     AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
                 case .empty:
                     self.tableView.isHidden = true
-//                    self.
                 }
             })
             .disposed(by: disposeBag)
@@ -133,6 +119,7 @@ private extension HomeViewController {
     
 }
 
+// MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

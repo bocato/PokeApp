@@ -10,20 +10,24 @@ import Foundation
 
 class ErrorFactory {
     
-    static func buildNetworkError(with code: NetworkErrorCode!) -> NetworkError {
+    static func buildNetworkError(with code: NetworkErrorCode) -> SerializedNetworkError {
         switch code {
         case .unknown:
-            return NetworkError(message: NetworkErrorMessage.unknown.rawValue, code: NetworkErrorCode.unknown.rawValue)
+            return SerializedNetworkError(message: NetworkErrorMessage.unknown.rawValue, code: NetworkErrorCode.unknown.rawValue)
         case .unexpected:
-            return NetworkError(message: NetworkErrorMessage.unexpected.rawValue, code: NetworkErrorCode.unexpected.rawValue)
+            return SerializedNetworkError(message: NetworkErrorMessage.unexpected.rawValue, code: NetworkErrorCode.unexpected.rawValue)
         case .invalidURL:
-            return NetworkError(message: NetworkErrorMessage.invalidURL.rawValue, code: NetworkErrorCode.invalidURL.rawValue)
+            return SerializedNetworkError(message: NetworkErrorMessage.invalidURL.rawValue, code: NetworkErrorCode.invalidURL.rawValue)
+        case .jsonParse:
+            return SerializedNetworkError(message: NetworkErrorMessage.jsonParse.rawValue, code: NetworkErrorCode.jsonParse.rawValue)
+        case .connectivity:
+            return SerializedNetworkError(message: NetworkErrorMessage.connectivity.rawValue, code: NetworkErrorCode.connectivity.rawValue)
         default:
-            return NetworkError(message: NetworkErrorMessage.unknown.rawValue, code: NetworkErrorCode.unknown.rawValue)
+            return SerializedNetworkError(message: NetworkErrorMessage.unknown.rawValue, code: NetworkErrorCode.unknown.rawValue)
         }
     }
     
-    static func buildPersistenceError(with code: PersistenceErrorCode!) -> PersistenceError {
+    static func buildPersistenceError(with code: PersistenceErrorCode) -> PersistenceError {
         switch code {
         case .unknown:
             return PersistenceError(message: PersistenceErrorMessage.unknown.rawValue, code: PersistenceErrorCode.unknown.rawValue)
@@ -31,8 +35,6 @@ class ErrorFactory {
             return PersistenceError(message: PersistenceErrorMessage.unexpected.rawValue, code: PersistenceErrorCode.unexpected.rawValue)
         case .notFound:
             return PersistenceError(message: PersistenceErrorMessage.notFound.rawValue, code: PersistenceErrorCode.notFound.rawValue)
-        default:
-            return PersistenceError(message: PersistenceErrorMessage.unknown.rawValue, code: PersistenceErrorCode.unknown.rawValue)
         }
     }
     

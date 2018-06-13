@@ -9,72 +9,46 @@
 import Foundation
 import UIKit
 
-protocol TabBarControllerActions: class {
-    var onFavoritesFlowSelect: ((UINavigationController) -> ())? { get set }
-    var onHomeFlowSelect: ((UINavigationController) -> ())? { get set }
-}
+protocol TabBarCoordinatorProtocol:  Coordinator & TabBarViewControllerActionsDelegate {
+    
+    // MARK: - Dependencies
+    var modulesFactory: TabBarModulesFactoryProtocol { get }
 
-protocol TabBarCoordinatorProtocol:  Coordinator & TabBarControllerActions {}
+}
 
 class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
+    // MARK: - Dependencies
+    internal var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory(store: Int())
+    
     // MARK: - TabBarControllerActions
-    var onFavoritesFlowSelect: ((UINavigationController) -> ())?
-    var onHomeFlowSelect: ((UINavigationController) -> ())?
+    var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())?
     
     // MARK: - Start
     override func start() {
-        setupFlows()
+        setupActions()
     }
     
     // MARK: - Flows Setup
-    func setupFlows() {
+    func setupActions() {
         
-        onHomeFlowSelect = { navigationController in
+        onTabSelect = { selectedTab, navigationController in
             if navigationController.viewControllers.isEmpty == true {
-                let router = Router(rootController: navigationController)
-                let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
-                self.addChildCoordinator(homeCoordinator)
-                router.setRootModule(controller)
-                homeCoordinator.start()
-            }
-        }
-    
-        onFavoritesFlowSelect = { navigationController in
-            if navigationController.viewControllers.isEmpty == true {
-                debugPrint("coisa")
-                let router = Router(rootController: navigationController)
-                let (favoritesCoordinator, controller) = self.coordinatorFactory.createFavoritesCoordinator(router: router)
-                self.addChildCoordinator(favoritesCoordinator)
-                router.setRootModule(controller)
-                favoritesCoordinator.start()
+                switch selectedTab {
+                case .home:
+                    let (coordinator, controller) = self.modulesFactory.buildHomeModule(with: navigationController)
+                    self.addChildCoordinator(coordinator)
+                    coordinator.router.setRootModule(controller)
+                    coordinator.start()
+                case .favorites:
+                    let (coordinator, controller) = self.modulesFactory.buildFavoritesModule(with: navigationController)
+                    self.addChildCoordinator(coordinator)
+                    coordinator.router.setRootModule(controller)
+                    coordinator.start()
+                }
             }
         }
         
     }
     
 }
-
-// MARK: - Flows with functions
-//protocol TabBarControllerActions: class {
-//    func onFavoritesFlowSelect(navigationController: UINavigationController)
-//    func onHomeFlowSelect(navigationController: UINavigationController)
-//}
-//
-//extension TabBarCoordinator: TabBarControllerActions {
-//
-//    func onFavoritesFlowSelect(navigationController: UINavigationController) {
-//
-//    }
-//
-//    func onHomeFlowSelect(navigationController: UINavigationController) {
-//        if navigationController.viewControllers.isEmpty == true {
-//            let router = Router(rootController: navigationController)
-//            let (homeCoordinator, controller) = self.coordinatorFactory.createHomeCoordinator(router: router)
-//            addChildCoordinator(homeCoordinator)
-//            router.setRootModule(controller)
-//            homeCoordinator.start()
-//        }
-//    }
-//
-//}

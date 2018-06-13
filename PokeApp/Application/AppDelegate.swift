@@ -57,7 +57,9 @@ private extension AppDelegate {
     
     private func makeCoordinator() -> Coordinator? {
         guard let window = window else { return nil }
-        return CoordinatorFactory.createAppCoordinator(window: window)
+        let rootController = window.rootViewController as! UINavigationController
+        let router = Router(rootController: rootController)
+        return AppCoordinator(router: router)
     }
     
 }

@@ -10,12 +10,18 @@ import Foundation
 import RxSwift
 import Kingfisher
 
-class PokemonTableViewCellModel {
+// MARK: - Model State
+enum PokemonTableViewCellModelState {
+    case loading(Bool)
+}
+
+// MARK: - PokemonTableViewCellModelProtocol
+protocol PokemonTableViewCellModelProtocol {
     
-    // MARK: - Model State
-    enum PokemonTableViewCellModelState {
-        case loading(Bool)
-    }
+}
+
+// MARK: - PokemonTableViewCellModel Implementation
+class PokemonTableViewCellModel: PokemonTableViewCellModelProtocol {
     
     // MARK: - Properties
     var pokemonListItem: PokemonListResult!

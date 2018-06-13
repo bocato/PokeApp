@@ -10,12 +10,25 @@ import Foundation
 import UIKit
 
 protocol Coordinator: class {
-    var coordinatorFactory: CoordinatorFactoryProtocol { get }
+    
+    // MARK: - Dependencies
     var router: RouterProtocol { get }
+    
+    // MARK: Functions
     func start()
+    
 }
 
-protocol CoordinatorOutput {
+extension Coordinator {
+    
+    var identifier: String {
+        return String(describing: self)
+    }
+    
+}
+
+protocol Finishable {
     associatedtype OutputObject
-    var finish: ((OutputObject) ->  Void)? { get set }
+    typealias OutputClosure = ((_ output: OutputObject, _ coordinator: Self) ->  Void)
+    var finish: OutputClosure? { get set } // this self needs to be weak and
 }
