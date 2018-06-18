@@ -31,7 +31,10 @@ extension HomeCoordinator: HomeViewControllerActionsDelegate {
         let viewModel = PokemonDetailsViewModel(pokemonId: id, services: services, actionsDelegate: pokemonDetailsCoordinator)
         let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
         self.addChildCoordinator(pokemonDetailsCoordinator)
-        router.push(pokemonDetailsViewController)
+        router.push(pokemonDetailsViewController, animated: true) { // completion runs on back button pressed...
+            weak var weakSelf = self
+            weakSelf?.removeChildCoordinator(pokemonDetailsCoordinator)
+        }
         pokemonDetailsCoordinator.start()
     }
     
