@@ -20,7 +20,7 @@ class TabBarModulesFactory: BaseModuleFactory<Any>, TabBarModulesFactoryProtocol
     
     // MARK: - Builders
     func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController) {
-        let router = Router(rootController: navigationController)
+        let router = Router(navigationController: navigationController)
         let homeCoordinator = HomeCoordinator(router: router)
         let services = PokemonService()
         let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
@@ -29,7 +29,7 @@ class TabBarModulesFactory: BaseModuleFactory<Any>, TabBarModulesFactoryProtocol
     }
     
     func buildFavoritesModule(with navigationController: UINavigationController) -> (coordinator: FavoritesCoordinatorProtocol, controller: FavoritesViewController) {
-        let router = Router(rootController: navigationController)
+        let router = Router(navigationController: navigationController)
         let favoritesCoordinator = FavoritesCoordinator(router: router)
         // let services = PokemonService() // TODO: Inject persistence services
         let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator) // TODO: Inject Services

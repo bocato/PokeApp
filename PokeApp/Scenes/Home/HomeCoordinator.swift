@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegate {}
+protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegate  {}
 
 class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     
