@@ -48,7 +48,7 @@ class BaseCoordinator: Coordinator {
 
 extension Finishable where Self: BaseCoordinator {
     
-    init(router: RouterProtocol, finishClosure: @escaping OutputClosure) {
+    init(router: RouterProtocol, finishClosure: OutputClosure?) {
         self.init(router: router)
         self.finish = finishClosure
     }

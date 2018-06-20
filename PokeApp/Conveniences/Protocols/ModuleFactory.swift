@@ -32,4 +32,3 @@ class BaseModuleFactory<T> {
     }
     
 }
-

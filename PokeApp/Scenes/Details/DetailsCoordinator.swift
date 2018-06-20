@@ -8,7 +8,9 @@
 
 import UIKit
 
-final class  DetailsCoordinator: BaseCoordinator & Finishable {
+protocol DetailsCoordinatorProtocol: Coordinator & Finishable {}
+
+final class DetailsCoordinator: BaseCoordinator, DetailsCoordinatorProtocol {
     
     // MARK: Finishable Properties
     typealias OutputObject = Pokemon
