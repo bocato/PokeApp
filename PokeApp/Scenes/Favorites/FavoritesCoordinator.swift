@@ -8,9 +8,15 @@
 
 import UIKit
 
-protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActionsDelegate {}
+protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActionsDelegate {
+    // MARK: - Dependencies
+    var modulesFactory: FavoritesModulesFactoryProtocol { get }
+}
 
 class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
+    
+    // MARK: - Dependencies
+    var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
     
     // MARK: - Start
     override func start() {
@@ -22,16 +28,13 @@ class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
 extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
-        let services = PokemonService()
-        let pokemonDetailsCoordinator = DetailsCoordinator(router: router) { [weak self] (pokemon, coordinator) in
-            coordinator.router.popModule(animated: true)
-            self?.removeChildCoordinator(coordinator)
+        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router) { [weak self] (output, detailsCoordinator) in
+            detailsCoordinator.router.popModule(animated: true)
+            self?.removeChildCoordinator(detailsCoordinator)
         }
-        let viewModel = PokemonDetailsViewModel(pokemonId: id, services: services, actionsDelegate: pokemonDetailsCoordinator)
-        let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
-        self.addChildCoordinator(pokemonDetailsCoordinator)
-        router.push(pokemonDetailsViewController)
-        pokemonDetailsCoordinator.start()
+        self.addChildCoordinator(coordinator)
+        router.push(controller)
+        coordinator.start()
     }
     
 }

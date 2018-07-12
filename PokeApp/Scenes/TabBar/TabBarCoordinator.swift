@@ -12,7 +12,7 @@ import UIKit
 protocol TabBarCoordinatorProtocol: Coordinator & TabBarViewControllerActionsDelegate {
     
     // MARK: - Dependencies
-    var modulesFactory: TabBarModuleFactoryProtocol { get }
+    var modulesFactory: TabBarModulesFactoryProtocol { get }
 
     // MARK: - Flows Setup
     func setupActions()
@@ -22,7 +22,7 @@ protocol TabBarCoordinatorProtocol: Coordinator & TabBarViewControllerActionsDel
 class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
     // MARK: - Dependencies
-    internal var modulesFactory: TabBarModuleFactoryProtocol = TabBarModuleFactory()
+    internal var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory()
     
     // MARK: - TabBarControllerActions
     var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())?

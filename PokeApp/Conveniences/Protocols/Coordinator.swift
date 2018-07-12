@@ -27,8 +27,8 @@ extension Coordinator {
     
 }
 
-protocol Finishable {
-    associatedtype OutputObject
-    typealias OutputClosure = ((_ output: OutputObject, _ coordinator: Self) ->  Void)
-    var finish: OutputClosure? { get set } // this self needs to be weak and
-}
+//protocol Finishable: class {
+//    associatedtype OutputObject
+//    typealias OutputClosure = ((_ output: OutputObject, _ coordinator: Self) ->  Void)
+//    var finish: OutputClosure? { get set } // this self needs to be weak and
+//}

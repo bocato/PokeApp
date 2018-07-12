@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TabBarModuleFactoryProtocol {
+protocol TabBarModulesFactoryProtocol {
     
     // MARK: - Builders
     func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController)
@@ -16,7 +16,7 @@ protocol TabBarModuleFactoryProtocol {
     
 }
 
-class TabBarModuleFactory: TabBarModuleFactoryProtocol {
+class TabBarModulesFactory: TabBarModulesFactoryProtocol {
     
     // MARK: - Builders
     func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController) {

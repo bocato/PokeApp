@@ -1,8 +1,8 @@
 //
-//  FavoritesModuleFactory.swift
+//  DetailsModuleFactory.swift
 //  PokeApp
 //
-//  Created by Eduardo Sanches Bocato on 20/06/18.
+//  Created by Eduardo Sanches Bocato on 12/07/18.
 //  Copyright © 2018 Bocato. All rights reserved.
 //
 
