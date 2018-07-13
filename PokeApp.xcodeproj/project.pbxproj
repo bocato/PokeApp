@@ -30,7 +30,6 @@
 		E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */; };
 		E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */; };
 		E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */; };
-		E532EE1F20F7FEF300475447 /* DetailsModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE1E20F7FEF300475447 /* DetailsModuleFactory.swift */; };
 		E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
@@ -135,7 +134,6 @@
 		E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModulesFactory.swift; sourceTree = "<group>"; };
 		E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModulesFactory.swift; sourceTree = "<group>"; };
 		E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModulesFactory.swift; sourceTree = "<group>"; };
-		E532EE1E20F7FEF300475447 /* DetailsModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModuleFactory.swift; sourceTree = "<group>"; };
 		E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -664,7 +662,6 @@
 			children = (
 				E5B8183A20B49FE8006F2AB0 /* Details.storyboard */,
 				E5A454D420CB5F030060FD85 /* DetailsCoordinator.swift */,
-				E532EE1E20F7FEF300475447 /* DetailsModuleFactory.swift */,
 				E5B8183820B49FCE006F2AB0 /* ViewControllers */,
 				E5B8183920B49FD4006F2AB0 /* ViewModels */,
 			);
@@ -969,7 +966,6 @@
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,
 				E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */,
 				E5B8184120B4AAEE006F2AB0 /* BorderView.swift in Sources */,
-				E532EE1F20F7FEF300475447 /* DetailsModuleFactory.swift in Sources */,
 				E56D243D20B21DAD0059B0E0 /* StringExtension.swift in Sources */,
 				E56972A320AA733A00F0B3E5 /* UITableViewExtension.swift in Sources */,
 				E569728B20AA5C7500F0B3E5 /* ErrorExtension.swift in Sources */,

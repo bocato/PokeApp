@@ -13,6 +13,7 @@ struct DetailsCoordinatorOutput {
 }
 
 protocol DetailsCoordinatorProtocol: Coordinator {
+
     // MARK: Finishable Properties
     var finish: ((_ output: DetailsCoordinatorOutput, _ coordinator: DetailsCoordinatorProtocol) ->  Void)? { get set } // this self needs to be weak and
 }
