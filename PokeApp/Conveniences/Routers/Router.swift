@@ -11,47 +11,61 @@ import UIKit
 
 protocol RouterProtocol: Presentable { // maybe i have to refactor / change this router...
     
+    // MARK: - Properties
+    var navigationController: UINavigationController { get }
+    var rootViewController: UIViewController? { get }
+    
+    // MARK: - Present / Dismiss
     func present(_ module: Presentable?)
     func present(_ module: Presentable?, animated: Bool)
+    func dismissModule()
+    func dismissModule(animated: Bool, completion: (() -> Void)?) // this completion block runs when the viewcontroller is beeing dismissed
     
+    // MARK: - Push / Pop
     func push(_ module: Presentable?)
     func push(_ module: Presentable?, animated: Bool)
-    func push(_ module: Presentable?, animated: Bool, completion: (() -> Void)?)
-    
+    func push(_ module: Presentable?, animated: Bool, completion: (() -> Void)?) // this completion block runs when the viewcontroller is beeing popped
     func popModule()
     func popModule(animated: Bool)
     
-    func dismissModule()
-    func dismissModule(animated: Bool, completion: (() -> Void)?)
-    
+    // MARK: - Modules
     func setRootModule(_ module: Presentable?)
     func setRootModule(_ module: Presentable?, hideBar: Bool)
-    
     func popToRootModule(animated: Bool)
     
 }
 
 final class Router: NSObject, RouterProtocol {
     
-    private weak var rootController: UINavigationController?
+    // MARK: - Properties
     private var completions: [UIViewController : () -> Void]
+    public let navigationController: UINavigationController
     
-    init(rootController: UINavigationController) {
-        self.rootController = rootController
-        completions = [:]
+    // MARK: - Computed Properties
+    public var rootViewController: UIViewController? {
+        return navigationController.viewControllers.first
     }
     
-    func toPresent() -> UIViewController? {
-        return rootController
+    public var hasRootController: Bool {
+        return rootViewController != nil
     }
     
+    // MARK: - Initializers
+    public init(navigationController: UINavigationController = UINavigationController()) {
+        self.navigationController = navigationController
+        self.completions = [:]
+        super.init()
+        self.navigationController.delegate = self
+    }
+    
+    // MARK: - Present / Dismiss
     func present(_ module: Presentable?) {
         present(module, animated: true)
     }
     
     func present(_ module: Presentable?, animated: Bool) {
-        guard let controller = module?.toPresent() else { return }
-        rootController?.present(controller, animated: animated, completion: nil)
+        guard let controller = module?.toPresentable() else { return }
+        rootViewController?.present(controller, animated: animated, completion: nil)
     }
     
     func dismissModule() {
@@ -59,9 +73,10 @@ final class Router: NSObject, RouterProtocol {
     }
     
     func dismissModule(animated: Bool, completion: (() -> Void)?) {
-        rootController?.dismiss(animated: animated, completion: completion)
+        rootViewController?.dismiss(animated: animated, completion: completion)
     }
     
+    // MARK: - Push / Pop
     func push(_ module: Presentable?)  {
         push(module, animated: true)
     }
@@ -72,14 +87,14 @@ final class Router: NSObject, RouterProtocol {
     
     func push(_ module: Presentable?, animated: Bool, completion: (() -> Void)?) {
         guard
-            let controller = module?.toPresent(),
+            let controller = module?.toPresentable(),
             (controller is UINavigationController == false)
             else { assertionFailure("Deprecated push UINavigationController."); return }
         
         if let completion = completion {
             completions[controller] = completion
         }
-        rootController?.pushViewController(controller, animated: animated)
+        navigationController.pushViewController(controller, animated: animated)
     }
     
     func popModule()  {
@@ -87,7 +102,7 @@ final class Router: NSObject, RouterProtocol {
     }
     
     func popModule(animated: Bool)  {
-        if let controller = rootController?.popViewController(animated: animated) {
+        if let controller = navigationController.popViewController(animated: animated) {
             runCompletion(for: controller)
         }
     }
@@ -97,23 +112,44 @@ final class Router: NSObject, RouterProtocol {
     }
     
     func setRootModule(_ module: Presentable?, hideBar: Bool) {
-        guard let controller = module?.toPresent() else { return }
-        rootController?.setViewControllers([controller], animated: false)
-        rootController?.isNavigationBarHidden = hideBar
+        guard let controller = module?.toPresentable() else { return }
+        navigationController.setViewControllers([controller], animated: false)
+        navigationController.isNavigationBarHidden = hideBar
     }
     
     func popToRootModule(animated: Bool) {
-        if let controllers = rootController?.popToRootViewController(animated: animated) {
+        if let controllers = navigationController.popToRootViewController(animated: animated) {
             controllers.forEach { controller in
                 runCompletion(for: controller)
             }
         }
     }
     
+    // MARK: - Helpers
     private func runCompletion(for controller: UIViewController) {
         guard let completion = completions[controller] else { return }
         completion()
         completions.removeValue(forKey: controller)
+    }
+    
+    // MARK: Presentable
+    func toPresentable() -> UIViewController? {
+        return navigationController
+    }
+    
+}
+
+extension Router: UINavigationControllerDelegate {
+    
+    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        
+        // Ensure the view controller is popping
+        guard let poppedViewController = navigationController.transitionCoordinator?.viewController(forKey: .from),
+            !navigationController.viewControllers.contains(poppedViewController) else {
+                return
+        }
+        
+        runCompletion(for: poppedViewController)
     }
     
 }

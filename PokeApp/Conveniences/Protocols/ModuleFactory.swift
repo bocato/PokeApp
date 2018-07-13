@@ -1,5 +1,5 @@
 //
-//  ModuleFactory.swift
+//  ModulesFactory.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 11/06/18.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol ModuleFactoryProtocol {
-    
-    // MARK: - Associated Types
-    associatedtype StoreType
-    
-    // MARK: - Dependencies
-    var store: StoreType? { get set }
-    
-}
+//protocol ModulesFactoryProtocol {
+//
+//    // MARK: - Associated Types
+//    associatedtype StoreType
+//
+//    // MARK: - Dependencies
+//    var store: StoreType? { get set }
+//
+//}
 
-class BaseModuleFactory<T> {
+class BaseModulesFactory<T> {
     
     // MARK: - Associated Types
     typealias StoreType = T
@@ -32,4 +32,3 @@ class BaseModuleFactory<T> {
     }
     
 }
-

@@ -9,9 +9,15 @@
 import Foundation
 
 
-protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegate {}
+protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegate {
+    // MARK: - Dependencies
+    var modulesFactory: HomeModulesFactoryProtocol { get }
+}
 
 class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
+    
+    // MARK: - Dependencies
+    var modulesFactory: HomeModulesFactoryProtocol = HomeModulesFactory()
     
     // MARK: - Start
     override func start() {
@@ -23,16 +29,16 @@ class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
 extension HomeCoordinator: HomeViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
-        let services = PokemonService()
-        let pokemonDetailsCoordinator = DetailsCoordinator(router: router) { [weak self] (pokemon, coordinator) in
-            coordinator.router.popModule(animated: true)
-            self?.removeChildCoordinator(coordinator)
+        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router) { [weak self] (output, detailsCoordinator) in
+            detailsCoordinator.router.popModule(animated: true)
+            self?.removeChildCoordinator(detailsCoordinator)
         }
-        let viewModel = PokemonDetailsViewModel(pokemonId: id, services: services, actionsDelegate: pokemonDetailsCoordinator)
-        let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
-        self.addChildCoordinator(pokemonDetailsCoordinator)
-        router.push(pokemonDetailsViewController)
-        pokemonDetailsCoordinator.start()
+        addChildCoordinator(coordinator)
+        router.push(controller, animated: true) { // completion runs on back button pressed...
+            weak var weakSelf = self
+            weakSelf?.removeChildCoordinator(coordinator)
+        }
+        coordinator.start()
     }
     
 }

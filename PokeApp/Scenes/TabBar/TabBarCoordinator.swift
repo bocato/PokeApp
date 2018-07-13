@@ -9,17 +9,20 @@
 import Foundation
 import UIKit
 
-protocol TabBarCoordinatorProtocol:  Coordinator & TabBarViewControllerActionsDelegate {
+protocol TabBarCoordinatorProtocol: Coordinator & TabBarViewControllerActionsDelegate {
     
     // MARK: - Dependencies
     var modulesFactory: TabBarModulesFactoryProtocol { get }
 
+    // MARK: - Flows Setup
+    func setupActions()
+    
 }
 
 class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     
     // MARK: - Dependencies
-    internal var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory(store: Int())
+    internal var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory()
     
     // MARK: - TabBarControllerActions
     var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())?
@@ -33,7 +36,7 @@ class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     func setupActions() {
         
         onTabSelect = { selectedTab, navigationController in
-            if navigationController.viewControllers.isEmpty == true {
+            if navigationController.viewControllers.isEmpty {
                 switch selectedTab {
                 case .home:
                     let (coordinator, controller) = self.modulesFactory.buildHomeModule(with: navigationController)

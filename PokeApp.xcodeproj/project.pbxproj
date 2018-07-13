@@ -29,6 +29,8 @@
 		E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E720CF0EB00090D763 /* ModuleFactory.swift */; };
 		E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */; };
 		E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */; };
+		E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */; };
+		E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
 		E551383F20A4469900A5F6EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E551383E20A4469900A5F6EB /* Assets.xcassets */; };
@@ -131,6 +133,8 @@
 		E50D15E720CF0EB00090D763 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
 		E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModulesFactory.swift; sourceTree = "<group>"; };
 		E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModulesFactory.swift; sourceTree = "<group>"; };
+		E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModulesFactory.swift; sourceTree = "<group>"; };
+		E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E551383720A4469700A5F6EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -534,6 +538,7 @@
 			isa = PBXGroup;
 			children = (
 				E56972BE20ACEA6700F0B3E5 /* Favorites.storyboard */,
+				E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */,
 				E50540BA20BA6C77004EA46D /* FavoritesCoordinator.swift */,
 				E5DCC29E20B6F34900325D32 /* ViewControllers */,
 				E5DCC29F20B6F35000325D32 /* ViewModels */,
@@ -547,6 +552,7 @@
 			children = (
 				E56972C320ACEA9300F0B3E5 /* Home.storyboard */,
 				E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */,
+				E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */,
 				E56972C720ACEAA800F0B3E5 /* ViewControllers */,
 				E56972CA20ACEACB00F0B3E5 /* ViewModels */,
 				E56D243720B210EF0059B0E0 /* Cells */,
@@ -945,7 +951,9 @@
 				E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */,
 				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
 				E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */,
+				E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */,
 				E50540C320BAF1F3004EA46D /* CoreDataController.swift in Sources */,
+				E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */,
 				E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */,
 				E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */,
 				E50540C920BAF28A004EA46D /* CoreDataService.swift in Sources */,
