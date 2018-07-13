@@ -53,7 +53,7 @@ struct NetworkError: Error {
     
 }
 
-struct SerializedNetworkError: Codable {
+struct SerializedNetworkError: Codable, Error {
     
     // MARK: - Properties
     var message: String?

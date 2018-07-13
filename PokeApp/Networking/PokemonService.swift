@@ -18,8 +18,8 @@ protocol PokemonServiceProtocol {
 class PokemonService: PokemonServiceProtocol {
     
     // MARK: - Properties
-    private let endpoint = "pokemon"
-    private var dispatcher: NetworkDispatcherProtocol
+    public let endpoint = "pokemon"
+    private(set) var dispatcher: NetworkDispatcherProtocol
     
     // MARK: - Initializers
     init() {
