@@ -46,14 +46,14 @@ class BaseCoordinator: Coordinator {
     
 }
 
-extension Finishable where Self: BaseCoordinator {
-    
-    init(router: RouterProtocol, finishClosure: OutputClosure?) {
-        self.init(router: router)
-        self.finish = finishClosure
-    }
-    
-}
+//extension Finishable where Self: BaseCoordinator {
+//    
+//    init(router: RouterProtocol, finishClosure: OutputClosure?) {
+//        self.init(router: router)
+//        self.finish = finishClosure
+//    }
+//    
+//}
 
 
 
