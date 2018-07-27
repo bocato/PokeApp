@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -53,6 +54,10 @@ private extension AppDelegate {
     func setupApplication() {
         // Start App Coordinator
         applicationCoordinator?.start()
+        // Start Firebase
+        FirebaseApp.configure()
+        // Fetch Remote Configs
+        RemoteConfigs.shared.fetchConfigs()
     }
     
     private func makeCoordinator() -> Coordinator? {

@@ -49,6 +49,19 @@ class HomeViewController: UIViewController {
         view.endEditing(true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // tests
+        if RemoteConfigs.shared.areRefactorTestsEnabled {
+           AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are ENABLED!")
+        } else {
+          AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are DISABLED!")
+        }
+        
+        
+    }
+    
     deinit {
         KingfisherManager.shared.cache.clearMemoryCache()
         KingfisherManager.shared.cache.clearDiskCache()

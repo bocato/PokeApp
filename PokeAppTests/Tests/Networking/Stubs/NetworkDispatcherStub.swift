@@ -12,31 +12,28 @@ import RxSwift
 class NetworkDispatcherStub: NetworkDispatcherProtocol {
     
     // MARK: - Properties
-    
     private(set) var url: URL
     
     // MARK: - Lifecycle
-    
     required init(url: URL) {
         self.url = url
     }
     
     // MARK: - Mocked responses
-    
     func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<[T]?> {
         
         return Observable.create { observable in
             
             guard var request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
-                observable.onError(ErrorFactory.buildNetworkError(with: .invalidURL))
+                observable.onError(NetworkError(requestError: ErrorFactory.buildNetworkError(with: .invalidURL), request: nil))
                 return Disposables.create()
             }
             
             request.httpMethod = method.rawValue
             request.httpBody = payload
             
-            let error = ErrorFactory.buildNetworkError(with: .jsonParse)
-            observable.onError(error)
+            let networkErrorForSerialization = NetworkError(requestError: ErrorFactory.buildNetworkError(with: .jsonParse), request: request)
+            observable.onError(networkErrorForSerialization)
             
             return Disposables.create()
         }
@@ -47,15 +44,15 @@ class NetworkDispatcherStub: NetworkDispatcherProtocol {
         return Observable.create { observable in
             
             guard var request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
-                observable.onError(ErrorFactory.buildNetworkError(with: .invalidURL))
+                observable.onError(NetworkError(requestError: ErrorFactory.buildNetworkError(with: .invalidURL), request: nil))
                 return Disposables.create()
             }
             
             request.httpMethod = method.rawValue
             request.httpBody = payload
             
-            let error = ErrorFactory.buildNetworkError(with: .jsonParse)
-            observable.onError(error)
+            let networkErrorForSerialization = NetworkError(requestError: ErrorFactory.buildNetworkError(with: .jsonParse), request: request)
+            observable.onError(networkErrorForSerialization)
             
             return Disposables.create()
         }
@@ -66,15 +63,15 @@ class NetworkDispatcherStub: NetworkDispatcherProtocol {
         return Observable.create { observable in
             
             guard var request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
-                observable.onError(ErrorFactory.buildNetworkError(with: .invalidURL))
+                observable.onError(NetworkError(requestError: ErrorFactory.buildNetworkError(with: .invalidURL), request: nil))
                 return Disposables.create()
             }
             
             request.httpMethod = method.rawValue
             request.httpBody = payload
             
-            let error = ErrorFactory.buildNetworkError(with: .jsonParse)
-            observable.onError(error)
+            let networkErrorForSerialization = NetworkError(requestError: ErrorFactory.buildNetworkError(with: .jsonParse), request: request)
+            observable.onError(networkErrorForSerialization)
             
             return Disposables.create()
         }

@@ -29,7 +29,11 @@
 		E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E720CF0EB00090D763 /* ModuleFactory.swift */; };
 		E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */; };
 		E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */; };
+		E51490772109FAA40000C3EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490762109FAA40000C3EB /* GoogleService-Info.plist */; };
+		E51490792109FEF10000C3EB /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */; };
+		E514907C2109FF490000C3EB /* RemoteConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514907B2109FF490000C3EB /* RemoteConfigs.swift */; };
 		E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */; };
+		E532EE2920F9458900475447 /* BaseCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE2820F9458900475447 /* BaseCoordinatorTest.swift */; };
 		E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
@@ -133,7 +137,11 @@
 		E50D15E720CF0EB00090D763 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
 		E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModulesFactory.swift; sourceTree = "<group>"; };
 		E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModulesFactory.swift; sourceTree = "<group>"; };
+		E51490762109FAA40000C3EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
+		E514907B2109FF490000C3EB /* RemoteConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigs.swift; sourceTree = "<group>"; };
 		E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModulesFactory.swift; sourceTree = "<group>"; };
+		E532EE2820F9458900475447 /* BaseCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinatorTest.swift; sourceTree = "<group>"; };
 		E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,6 +288,30 @@
 			path = Commons;
 			sourceTree = "<group>";
 		};
+		E514907A2109FF330000C3EB /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				E514907B2109FF490000C3EB /* RemoteConfigs.swift */,
+			);
+			path = Singletons;
+			sourceTree = "<group>";
+		};
+		E532EE2520F9453900475447 /* Conveniences */ = {
+			isa = PBXGroup;
+			children = (
+				E532EE2720F9456B00475447 /* Coordinators */,
+			);
+			path = Conveniences;
+			sourceTree = "<group>";
+		};
+		E532EE2720F9456B00475447 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				E532EE2820F9458900475447 /* BaseCoordinatorTest.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 		E548A32C20B7BB9100E72954 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +378,7 @@
 		E551384B20A4504C00A5F6EB /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
+				E514907A2109FF330000C3EB /* Singletons */,
 				E548A33320B8209100E72954 /* Coordinators */,
 				E5583E9620B86124003CAFA0 /* Routers */,
 				E5583E9720B86155003CAFA0 /* Protocols */,
@@ -518,6 +551,8 @@
 			children = (
 				E551383E20A4469900A5F6EB /* Assets.xcassets */,
 				E551384020A4469900A5F6EB /* LaunchScreen.storyboard */,
+				E51490762109FAA40000C3EB /* GoogleService-Info.plist */,
+				E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -610,6 +645,7 @@
 		E56D242720B201020059B0E0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				E532EE2520F9453900475447 /* Conveniences */,
 				E56D242820B2010D0059B0E0 /* Networking */,
 			);
 			path = Tests;
@@ -800,6 +836,8 @@
 				E551383F20A4469900A5F6EB /* Assets.xcassets in Resources */,
 				E56972C420ACEA9300F0B3E5 /* Home.storyboard in Resources */,
 				E56972BF20ACEA6700F0B3E5 /* Favorites.storyboard in Resources */,
+				E51490792109FEF10000C3EB /* RemoteConfigDefaults.plist in Resources */,
+				E51490772109FAA40000C3EB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,15 +896,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PokeApp/Pods-PokeApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -901,6 +945,7 @@
 				E56972A020AA730200F0B3E5 /* UIColorExtension.swift in Sources */,
 				E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */,
 				E56D240220AF8D610059B0E0 /* Move.swift in Sources */,
+				E514907C2109FF490000C3EB /* RemoteConfigs.swift in Sources */,
 				E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */,
 				E5A454D520CB5F030060FD85 /* DetailsCoordinator.swift in Sources */,
 				E50540CF20BB1C99004EA46D /* PersistenceError.swift in Sources */,
@@ -984,6 +1029,7 @@
 				E56D242420B200A70059B0E0 /* URLExtension.swift in Sources */,
 				E56D242620B200DE0059B0E0 /* RxCollector.swift in Sources */,
 				E56D242A20B201270059B0E0 /* NetworkDispatcherTests.swift in Sources */,
+				E532EE2920F9458900475447 /* BaseCoordinatorTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

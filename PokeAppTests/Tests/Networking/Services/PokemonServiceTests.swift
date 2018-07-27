@@ -12,23 +12,21 @@ import XCTest
 class PokemonServiceTests: XCTestCase {
     
     // MARK: Properties
-    let url = URL(string: Environment.shared.baseURL!)?.appendingPathComponent("pokemon")
+    var url: URL!
+    var service: PokemonService!
     
     // MARK: - Setup
     override func setUp() {
         super.setUp()
+        url = URL(string: Environment.shared.baseURL!)?.appendingPathComponent("pokemon")
+        let dispatcher = NetworkDispatcherStub(url: url!)
+        service = PokemonService(dispatcher : dispatcher)
     }
     
     override func tearDown() {
         super.tearDown()
-    }
-    
-    // MARK: - Performance
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        url = nil
+        service = nil
     }
     
     // MARK: - Tests
@@ -38,28 +36,24 @@ class PokemonServiceTests: XCTestCase {
     }
     
     func testGetPokemonList() {
-        
-        let dispatcher = NetworkDispatcherStub(url: url!)
-        let service = PokemonService(dispatcher : dispatcher)
+
         let response = service.getPokemonList()
         let collector = RxCollector<PokemonListResponse?>()
             .collect(from: response)
-        
+
         guard let error = collector.error as? NetworkError,
             let _ = error.request?.url else {
                 XCTAssert(false, "Request url not found")
                 return
         }
-        
+
     }
     
-    func testGetPokemonList(_ limit: Int) {
+    func testGetPokemonListLimit50() {
         
         let limit = 50
-        let limitComponentIndex = 0
+        let limitComponentIndex = 3
         
-        let dispatcher = NetworkDispatcherStub(url: url!)
-        let service = PokemonService(dispatcher : dispatcher)
         let response = service.getPokemonList(limit)
         let collector = RxCollector<PokemonListResponse?>()
             .collect(from: response)
@@ -76,13 +70,11 @@ class PokemonServiceTests: XCTestCase {
         
     }
     
-    func testGetDetailsForPokemon(withId id: Int) {
+    func testGetDetailsForPokemonWithId10() {
         
         let pokemonId = 10
-        let idComponentIndex = 0
+        let idComponentIndex = 3
         
-        let dispatcher = NetworkDispatcherStub(url: url!)
-        let service = PokemonService(dispatcher : dispatcher)
         let response = service.getDetailsForPokemon(withId: pokemonId)
         let collector = RxCollector<Pokemon?>()
             .collect(from: response)
