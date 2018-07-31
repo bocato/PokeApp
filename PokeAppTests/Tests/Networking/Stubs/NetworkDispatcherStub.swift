@@ -13,10 +13,12 @@ class NetworkDispatcherStub: NetworkDispatcherProtocol {
     
     // MARK: - Properties
     private(set) var url: URL
+    private(set) var session: URLSessionProtocol
     
     // MARK: - Lifecycle
-    required init(url: URL) {
+    required init(url: URL, session: URLSessionProtocol) {
         self.url = url
+        self.session = session
     }
     
     // MARK: - Mocked responses

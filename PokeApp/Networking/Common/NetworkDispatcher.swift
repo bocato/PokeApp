@@ -17,25 +17,50 @@ public enum HTTPMethod: String {
     case delete = "DELETE"
 }
 
+protocol URLSessionProtocol {
+    typealias DataTaskResult = (Data?, URLResponse?, Error?) -> Void
+    func dataTask(with request: NSURLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTaskProtocol
+}
+
+protocol URLSessionDataTaskProtocol {
+    func resume()
+    func cancel()
+}
+
 protocol NetworkDispatcherProtocol {
     var url: URL { get }
-    init(url: URL)
+    var session: URLSessionProtocol { get }
+    init(url: URL, session: URLSessionProtocol)
     func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<T?>
     func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<[T]?>
     func response(from path: String?, method: HTTPMethod, payload: Data?, headers: [String: String]?) -> Observable<Void>
+}
+
+// MARK: URLSessionDataTaskProtocol
+extension URLSessionDataTask: URLSessionDataTaskProtocol {}
+
+// MARK: - URLSessionProtocol
+extension URLSession: URLSessionProtocol {
+    func dataTask(with request: NSURLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTaskProtocol {
+        let urlRequest = request as URLRequest
+        let task = dataTask(with: urlRequest, completionHandler: completionHandler)
+        return task as URLSessionDataTaskProtocol
+    }
 }
 
 class NetworkDispatcher: NetworkDispatcherProtocol {
     
     // MARK: - Properties
     private(set) var url: URL
+    private(set) var session: URLSessionProtocol
     var defaultHeaders: [String: String] = [
         "content-type": "application/json"
     ]
     
     // MARK: - Initializers
-    required init(url: URL) {
+    required init(url: URL, session: URLSessionProtocol = URLSession.shared) {
         self.url = url
+        self.session = session
     }
     
     // MARK: NetworkDispatcherProtocol
@@ -207,12 +232,14 @@ private extension NetworkDispatcher {
 // MARK: - Request Dispatcher
 private extension NetworkDispatcher {
     
-    private func dispatch(urlRequest: URLRequest, onCompleted completion: @escaping (NetworkResponse, NetworkError?) -> Void) -> URLSessionDataTask { // network response optional?
+    private func dispatch(urlRequest: URLRequest, onCompleted completion: @escaping (NetworkResponse, NetworkError?) -> Void) -> URLSessionDataTaskProtocol {
         
         var networkResponse = NetworkResponse()
         var networkError: NetworkError?
         
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        let nsURLRequest = urlRequest as NSURLRequest
+        
+        let task = session.dataTask(with: nsURLRequest) { data, response, error in
             
             networkResponse.response = response as? HTTPURLResponse
             networkResponse.request = urlRequest

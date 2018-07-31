@@ -16,6 +16,6 @@ struct NetworkResponse {
     
     var response: HTTPURLResponse?
     var request: URLRequest?
-    var task: URLSessionDataTask?
+    var task: URLSessionDataTaskProtocol?
     
 }
