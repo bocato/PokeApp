@@ -52,7 +52,6 @@ class PokemonServiceTests: XCTestCase {
     func testGetPokemonListLimit50() {
         
         let limit = 50
-        let limitComponentIndex = 3
         
         let response = service.getPokemonList(limit)
         let collector = RxCollector<PokemonListResponse?>()
@@ -64,7 +63,7 @@ class PokemonServiceTests: XCTestCase {
                 return
         }
         
-        XCTAssertEqual(requestURL.pathComponents[limitComponentIndex], "limit", "limit path component not found")
+        XCTAssertTrue(requestURL.contains(key: "limit"), "limit path component not found")
         
         XCTAssertEqual(requestURL.valueOf("limit"), "\(limit)", "Invalid limit")
         
@@ -73,7 +72,6 @@ class PokemonServiceTests: XCTestCase {
     func testGetDetailsForPokemonWithId10() {
         
         let pokemonId = 10
-        let idComponentIndex = 3
         
         let response = service.getDetailsForPokemon(withId: pokemonId)
         let collector = RxCollector<Pokemon?>()
@@ -85,9 +83,21 @@ class PokemonServiceTests: XCTestCase {
                 return
         }
         
-        XCTAssertEqual(requestURL.pathComponents[idComponentIndex], "\(pokemonId)", "id path component not found")
+        XCTAssertEqual(requestURL.lastPathComponent, "\(pokemonId)", "invalid id")
         
     }
     
     
 }
+
+
+
+
+
+
+
+
+
+
+
+

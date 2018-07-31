@@ -53,7 +53,7 @@ class TabBarViewController: UITabBarController {
 extension TabBarViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        viewModel.selectedTab.value = TabBarIndex(rawValue: tabBarController.selectedIndex)!
+        viewModel.selectedTab.accept(TabBarViewModel.TabIndex(rawValue: tabBarController.selectedIndex)!)
     }
     
 }
@@ -66,7 +66,7 @@ private extension TabBarViewController {
             .asObservable()
             .subscribe(onNext: { (selectedTab) in
                 guard let controller = self.viewControllers?[selectedTab.rawValue] as? UINavigationController else { return }
-                self.viewModel.actionsDelegate?.onTabSelect?(selectedTab, controller)
+                self.viewModel.actionsDelegate?.actOnSelectedTab(selectedTab, controller)
             })
             .disposed(by: disposeBag)
         

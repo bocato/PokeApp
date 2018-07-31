@@ -10,13 +10,8 @@ import Foundation
 import UIKit
 
 protocol TabBarCoordinatorProtocol: Coordinator & TabBarViewControllerActionsDelegate {
-    
     // MARK: - Dependencies
     var modulesFactory: TabBarModulesFactoryProtocol { get }
-
-    // MARK: - Flows Setup
-    func setupActions()
-    
 }
 
 class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
@@ -24,34 +19,25 @@ class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
     // MARK: - Dependencies
     internal var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory()
     
-    // MARK: - TabBarControllerActions
-    var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())?
-    
     // MARK: - Start
-    override func start() {
-        setupActions()
-    }
+    override func start() {}
     
-    // MARK: - Flows Setup
-    func setupActions() {
-        
-        onTabSelect = { selectedTab, navigationController in
-            if navigationController.viewControllers.isEmpty {
-                switch selectedTab {
-                case .home:
-                    let (coordinator, controller) = self.modulesFactory.buildHomeModule(with: navigationController)
-                    self.addChildCoordinator(coordinator)
-                    coordinator.router.setRootModule(controller)
-                    coordinator.start()
-                case .favorites:
-                    let (coordinator, controller) = self.modulesFactory.buildFavoritesModule(with: navigationController)
-                    self.addChildCoordinator(coordinator)
-                    coordinator.router.setRootModule(controller)
-                    coordinator.start()
-                }
+    // MARK: - TabBarViewControllerActionsDelegate
+    func actOnSelectedTab(_ selectedTab: TabBarViewModel.TabIndex, _ navigationController: UINavigationController) {
+        if navigationController.viewControllers.isEmpty {
+            switch selectedTab {
+            case .home:
+                let (coordinator, controller) = self.modulesFactory.buildHomeModule(with: navigationController)
+                self.addChildCoordinator(coordinator)
+                coordinator.router.setRootModule(controller)
+                coordinator.start()
+            case .favorites:
+                let (coordinator, controller) = self.modulesFactory.buildFavoritesModule(with: navigationController)
+                self.addChildCoordinator(coordinator)
+                coordinator.router.setRootModule(controller)
+                coordinator.start()
             }
         }
-        
     }
     
 }

@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Dependencies
-    var viewModel: HomeViewModelProtocol!
+    var viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
     // MARK: - ViewElements
@@ -41,6 +41,7 @@ class HomeViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tableView.refreshControl = refreshControl
         bindAll()
     }
     
@@ -49,18 +50,18 @@ class HomeViewController: UIViewController {
         view.endEditing(true)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // tests
-        if RemoteConfigs.shared.areRefactorTestsEnabled {
-           AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are ENABLED!")
-        } else {
-          AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are DISABLED!")
-        }
-        
-        
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        // tests
+//        if RemoteConfigs.shared.areRefactorTestsEnabled {
+//           AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are ENABLED!")
+//        } else {
+//          AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are DISABLED!")
+//        }
+//
+//
+//    }
     
     deinit {
         KingfisherManager.shared.cache.clearMemoryCache()
@@ -75,7 +76,7 @@ private extension HomeViewController {
     func bindAll() {
         bindViewModel()
         bindTableView()
-        bindRefreshControl()
+//        bindRefreshControl()
     }
     
     func bindViewModel() {
@@ -114,7 +115,7 @@ private extension HomeViewController {
         
         tableView.rx
             .modelSelected(PokemonTableViewCellModel.self)
-            .subscribe(onNext: { selectedPokemonCellModel in
+            .subscribe(onNext: { (selectedPokemonCellModel) in
                 self.viewModel.showItemDetailsForSelectedCellModel(selectedPokemonCellModel)
             })
             .disposed(by: disposeBag)
@@ -122,12 +123,15 @@ private extension HomeViewController {
     }
     
     func bindRefreshControl() {
-        self.refreshControl.rx
+        
+        refreshControl.rx
             .controlEvent(.valueChanged)
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { _ in
                 self.viewModel.loadPokemons()
             })
             .disposed(by: disposeBag)
+        
     }
     
 }

@@ -32,8 +32,9 @@
 		E51490772109FAA40000C3EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490762109FAA40000C3EB /* GoogleService-Info.plist */; };
 		E51490792109FEF10000C3EB /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */; };
 		E514907C2109FF490000C3EB /* RemoteConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514907B2109FF490000C3EB /* RemoteConfigs.swift */; };
+		E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DC521109DB600323C84 /* TabBarViewModelTests.swift */; };
+		E5238DD02110DE0800323C84 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DCF2110DE0800323C84 /* HomeViewModelTests.swift */; };
 		E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */; };
-		E532EE2920F9458900475447 /* BaseCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE2820F9458900475447 /* BaseCoordinatorTest.swift */; };
 		E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
@@ -80,7 +81,6 @@
 		E56D240820AF8D9E0059B0E0 /* Stat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D240720AF8D9E0059B0E0 /* Stat.swift */; };
 		E56D242420B200A70059B0E0 /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D242320B200A70059B0E0 /* URLExtension.swift */; };
 		E56D242620B200DE0059B0E0 /* RxCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D242520B200DE0059B0E0 /* RxCollector.swift */; };
-		E56D242A20B201270059B0E0 /* NetworkDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D242920B201270059B0E0 /* NetworkDispatcherTests.swift */; };
 		E56D243220B206360059B0E0 /* PokemonServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D243120B206360059B0E0 /* PokemonServiceTests.swift */; };
 		E56D243420B20ADA0059B0E0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D243320B20ADA0059B0E0 /* HomeViewController.swift */; };
 		E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D243520B20E830059B0E0 /* HomeViewModel.swift */; };
@@ -140,8 +140,9 @@
 		E51490762109FAA40000C3EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		E514907B2109FF490000C3EB /* RemoteConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigs.swift; sourceTree = "<group>"; };
+		E5238DC521109DB600323C84 /* TabBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModelTests.swift; sourceTree = "<group>"; };
+		E5238DCF2110DE0800323C84 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModulesFactory.swift; sourceTree = "<group>"; };
-		E532EE2820F9458900475447 /* BaseCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinatorTest.swift; sourceTree = "<group>"; };
 		E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,7 +193,6 @@
 		E56D241C20B200770059B0E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E56D242320B200A70059B0E0 /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
 		E56D242520B200DE0059B0E0 /* RxCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollector.swift; sourceTree = "<group>"; };
-		E56D242920B201270059B0E0 /* NetworkDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcherTests.swift; sourceTree = "<group>"; };
 		E56D243120B206360059B0E0 /* PokemonServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceTests.swift; sourceTree = "<group>"; };
 		E56D243320B20ADA0059B0E0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E56D243520B20E830059B0E0 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -296,20 +296,29 @@
 			path = Singletons;
 			sourceTree = "<group>";
 		};
-		E532EE2520F9453900475447 /* Conveniences */ = {
+		E5238DC321109CFA00323C84 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				E532EE2720F9456B00475447 /* Coordinators */,
+				E5238DC421109D9B00323C84 /* TabBar */,
+				E5238DCC2110C8CD00323C84 /* Home */,
 			);
-			path = Conveniences;
+			path = Scenes;
 			sourceTree = "<group>";
 		};
-		E532EE2720F9456B00475447 /* Coordinators */ = {
+		E5238DC421109D9B00323C84 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				E532EE2820F9458900475447 /* BaseCoordinatorTest.swift */,
+				E5238DC521109DB600323C84 /* TabBarViewModelTests.swift */,
 			);
-			path = Coordinators;
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		E5238DCC2110C8CD00323C84 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E5238DCF2110DE0800323C84 /* HomeViewModelTests.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		E548A32C20B7BB9100E72954 /* ViewModels */ = {
@@ -645,8 +654,8 @@
 		E56D242720B201020059B0E0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				E532EE2520F9453900475447 /* Conveniences */,
 				E56D242820B2010D0059B0E0 /* Networking */,
+				E5238DC321109CFA00323C84 /* Scenes */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -655,18 +664,9 @@
 			isa = PBXGroup;
 			children = (
 				E5712E7C20C9626E000A3782 /* Stubs */,
-				E56D242F20B205FA0059B0E0 /* Common */,
 				E56D243020B206050059B0E0 /* Services */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		E56D242F20B205FA0059B0E0 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				E56D242920B201270059B0E0 /* NetworkDispatcherTests.swift */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		E56D243020B206050059B0E0 /* Services */ = {
@@ -1026,10 +1026,10 @@
 			files = (
 				E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */,
 				E56D243220B206360059B0E0 /* PokemonServiceTests.swift in Sources */,
+				E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */,
 				E56D242420B200A70059B0E0 /* URLExtension.swift in Sources */,
 				E56D242620B200DE0059B0E0 /* RxCollector.swift in Sources */,
-				E56D242A20B201270059B0E0 /* NetworkDispatcherTests.swift in Sources */,
-				E532EE2920F9458900475447 /* BaseCoordinatorTest.swift in Sources */,
+				E5238DD02110DE0800323C84 /* HomeViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

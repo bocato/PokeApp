@@ -14,42 +14,24 @@ protocol HomeViewControllerActionsDelegate: class {
     func showItemDetailsForPokemonWith(id: Int)
 }
 
-protocol HomeViewModelProtocol {
-    
-    // MARK: - Dependencies
-    var disposeBag: DisposeBag { get }
-    var actionsDelegate: HomeViewControllerActionsDelegate? { get }
-    var services: PokemonServiceProtocol { get }
-
-    // MARK: - Properties
-    var pokemonCellModels: Variable<[PokemonTableViewCellModel]> { get }
-    var viewState: Variable<HomeViewState> { get }
-
-    // MARK: - API Calls
-    func loadPokemons()
-
-    // MARK: - Actions
-    func showItemDetailsForSelectedCellModel(_ selectedPokemonCellModel: PokemonTableViewCellModel)
-}
-
-// MARK: ViewState
-enum HomeViewState {
-    case loading(Bool)
-    case error(SerializedNetworkError?)
-    case empty
-}
-
 // MARK: - ViewModel Implementation
-class HomeViewModel : HomeViewModelProtocol{
+class HomeViewModel {
+    
+    // MARK: - States
+    enum State {
+        case loading(Bool)
+        case error(SerializedNetworkError?)
+        case empty
+    }
     
     // MARK: - Dependencies
-    internal var disposeBag = DisposeBag()
-    weak var actionsDelegate: HomeViewControllerActionsDelegate?
-    internal var services: PokemonServiceProtocol
+    private let disposeBag = DisposeBag()
+    private(set) weak var actionsDelegate: HomeViewControllerActionsDelegate?
+    private let services: PokemonServiceProtocol
     
     // MARK: - Properties
-    var pokemonCellModels = Variable<[PokemonTableViewCellModel]>([])
-    var viewState = Variable<HomeViewState>(.loading(true))
+    private(set) var pokemonCellModels = BehaviorRelay<[PokemonTableViewCellModel]>(value: [])
+    private(set) var viewState = BehaviorRelay<State>(value: .loading(true))
     
     // MARK: - Intialization
     init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol) {
@@ -59,21 +41,21 @@ class HomeViewModel : HomeViewModelProtocol{
     
     // MARK: - API Calls
     func loadPokemons() {
-        viewState.value = .loading(true)
+        viewState.accept(.loading(true))
         services.getPokemonList().subscribe(onNext: { pokemonListResponse in
-            guard let results = pokemonListResponse?.results else {
-                self.viewState.value = .empty
-                self.pokemonCellModels.value = []
+            guard let results = pokemonListResponse?.results, results.count > 0 else {
+                self.viewState.accept(.empty)
                 return
             }
-            self.pokemonCellModels.value = results.map({ (listItem) -> PokemonTableViewCellModel in
+            let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
                 return PokemonTableViewCellModel(listItem: listItem)
             })
+            self.pokemonCellModels.accept(viewModelsForResult)
         }, onError: { (error) in
             let networkError = error as! NetworkError
-            self.viewState.value = .error(networkError.requestError)
+            self.viewState.accept(.error(networkError.requestError))
         }, onCompleted: {
-            self.viewState.value = .loading(false)
+            self.viewState.accept(.loading(false))
         }).disposed(by: disposeBag)
     }
     
