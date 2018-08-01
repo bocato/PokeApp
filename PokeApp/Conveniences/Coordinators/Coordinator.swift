@@ -35,49 +35,6 @@ protocol Coordinator: class, CoordinatorDelegate {
     
 }
 
-extension Coordinator {
-    
-    // MARK: - Functions
-    func start() {
-        delegate?.childCoordinatorDidStart(self)
-    }
-    
-    func finish() {
-        delegate?.childCoordinatorDidFinish(self)
-    }
-    
-    // MARK: - Helper Methods
-    func addChildCoordinator(_ coordinator: Coordinator) {
-        if let child = childCoordinators[identifier], child === coordinator {
-            return
-        }
-        coordinator.parentCoordinator = self
-        coordinator.delegate = self
-        childCoordinators[coordinator.identifier] = coordinator
-        coordinator.start()
-    }
-    
-    func removeChildCoordinator(_ coordinator: Coordinator?) {
-        guard
-            childCoordinators.isEmpty == false,
-            let coordinator = coordinator
-            else { return }
-        if let coordinatorToRemove = childCoordinators[coordinator.identifier], coordinator === coordinatorToRemove {
-            childCoordinators.removeValue(forKey: coordinator.identifier)
-            coordinatorToRemove.finish()
-        }
-    }
-    
-    func sendOutput(_ output: CoordinatorInfo) {
-        parentCoordinator?.receiveChildOutput(child: self, output: output)
-    }
-    
-    func receiveChildOutput(child: Coordinator, output: CoordinatorInfo) {
-        parentCoordinator?.receiveChildOutput(child: child, output: output)
-    }
-    
-}
-
 extension CoordinatorDelegate {
     func childCoordinatorDidStart(_ cordinator: Coordinator) {}
     func finish(_ coordinator: Coordinator, output: CoordinatorInfo) {}

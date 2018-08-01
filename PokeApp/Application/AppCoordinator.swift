@@ -62,5 +62,13 @@ class AppCoordinator: Coordinator {
         tabBarCoordinator.start()
     }
     
+    func receiveChildOutput() {
+        <#code#>
+    }
+    
+    func sendChildOutput() {
+        <#code#>
+    }
+    
 }
 
