@@ -14,7 +14,7 @@ protocol FavoritesModulesFactoryProtocol {
     // MARK: - Builders
     func buildPokemonDetailsModule(pokemonId: Int,
                                    router: RouterProtocol,
-                                   flowFinishClosure: ((DetailsCoordinatorOutput, DetailsCoordinatorProtocol) -> Void)?)
+                                   parentCoordinator: Coordinator)
         -> (coordinator: DetailsCoordinatorProtocol, controller: PokemonDetailsViewController)
     
 }
@@ -24,10 +24,10 @@ class FavoritesModulesFactory: FavoritesModulesFactoryProtocol {
     
     func buildPokemonDetailsModule(pokemonId: Int,
                                    router: RouterProtocol,
-                                   flowFinishClosure: ((DetailsCoordinatorOutput, DetailsCoordinatorProtocol) -> Void)?)
+                                   parentCoordinator: Coordinator)
         -> (coordinator: DetailsCoordinatorProtocol, controller: PokemonDetailsViewController) {
             
-        let pokemonDetailsCoordinator = DetailsCoordinator(router: router, flowFinishClosure: flowFinishClosure)
+        let pokemonDetailsCoordinator = DetailsCoordinator(router: router)
         let viewModel = PokemonDetailsViewModel(pokemonId: pokemonId, services: PokemonService(), actionsDelegate: pokemonDetailsCoordinator)
         let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
             

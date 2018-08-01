@@ -13,14 +13,29 @@ protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActi
     var modulesFactory: FavoritesModulesFactoryProtocol { get }
 }
 
-class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
+class FavoritesCoordinator: FavoritesCoordinatorProtocol {
     
     // MARK: - Dependencies
-    var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
+    private(set) var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
+    internal(set) var router: RouterProtocol
+    internal(set) var delegate: CoordinatorDelegate?
     
-    // MARK: - Start
-    override func start() {
-        // Configure something if needed...
+    // MARK: - Properties
+    var childCoordinators: [String : Coordinator] = [:]
+    var parentCoordinator: Coordinator?
+    internal(set) var identifier: String = "FavoritesCoordinator"
+    
+    // MARK: - Initialization
+    required init(router: RouterProtocol) {
+        self.router = router
+    }
+    
+}
+
+extension FavoritesCoordinator: CoordinatorDelegate {
+    
+    func finish(_ coordinator: Coordinator, output: CoordinatorInfo) {
+        debugPrint("coisa")
     }
     
 }
@@ -28,10 +43,12 @@ class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
 extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
-        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router) { [weak self] (output, detailsCoordinator) in
-            detailsCoordinator.router.popModule(animated: true)
-            self?.removeChildCoordinator(detailsCoordinator)
-        }
+        let router = self.router
+        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router, parentCoordinator: self)
+//        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router) { [weak self] (output, detailsCoordinator) in
+//            detailsCoordinator.router.popModule(animated: true)
+//            self?.removeChildCoordinator(detailsCoordinator)
+//        }
         self.addChildCoordinator(coordinator)
         router.push(controller)
         coordinator.start()

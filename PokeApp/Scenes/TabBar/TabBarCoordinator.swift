@@ -14,13 +14,26 @@ protocol TabBarCoordinatorProtocol: Coordinator & TabBarViewControllerActionsDel
     var modulesFactory: TabBarModulesFactoryProtocol { get }
 }
 
-class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorProtocol {
+class TabBarCoordinator: TabBarCoordinatorProtocol {
     
     // MARK: - Dependencies
-    internal var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory()
+    private(set) var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory()
+    internal(set) var router: RouterProtocol
+    internal(set) var delegate: CoordinatorDelegate?
     
-    // MARK: - Start
-    override func start() {}
+    // MARK: - Properties
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) var parentCoordinator: Coordinator?
+    internal(set) var identifier: String = "TabBarCoordinator"
+    
+    // MARK: - Initialization
+    required init(router: RouterProtocol) {
+        self.router = router
+    }
+    
+}
+
+extension TabBarCoordinator : TabBarViewControllerActionsDelegate {
     
     // MARK: - TabBarViewControllerActionsDelegate
     func actOnSelectedTab(_ selectedTab: TabBarViewModel.TabIndex, _ navigationController: UINavigationController) {

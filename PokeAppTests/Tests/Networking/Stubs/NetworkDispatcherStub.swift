@@ -16,7 +16,7 @@ class NetworkDispatcherStub: NetworkDispatcherProtocol {
     private(set) var session: URLSessionProtocol
     
     // MARK: - Lifecycle
-    required init(url: URL, session: URLSessionProtocol) {
+    required init(url: URL, session: URLSessionProtocol = URLSession.shared) {
         self.url = url
         self.session = session
     }

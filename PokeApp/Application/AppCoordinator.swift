@@ -23,15 +23,27 @@ fileprivate enum LaunchInstructor {
     
 }
 
-final class AppCoordinator: BaseCoordinator {
+class AppCoordinator: Coordinator {
     
     // MARK: - Dependencies
     private var instructor: LaunchInstructor {
         return LaunchInstructor.getApplicationStartPoint()
     }
+    internal(set) var router: RouterProtocol
+    var delegate: CoordinatorDelegate?
+    
+    // MARK: - Properties
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) var parentCoordinator: Coordinator? = nil
+    internal(set) var identifier: String = "AppCoordinator"
+   
+    // MARK: - Initialization
+    init(router: RouterProtocol) {
+        self.router = router
+    }
     
     // MARK: - Start
-    override func start() {
+    func start() {
         switch instructor {
         case .tabBar:
             runMainFlow()
