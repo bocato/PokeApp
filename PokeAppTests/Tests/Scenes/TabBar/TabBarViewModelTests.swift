@@ -24,7 +24,8 @@ class TabBarViewModelTests: XCTestCase {
     
     // MARK: - Tests
     func testInit() {
-        XCTAssertNotNil(sut.actionsDelegate)
+        XCTAssertNotNil(sut, "initalization failed")
+        XCTAssertNotNil(sut.actionsDelegate, "ActionsDelegate was not set")
         XCTAssertEqual(sut.selectedTab.value, .home, "default selected tab is not Home")
     }
     

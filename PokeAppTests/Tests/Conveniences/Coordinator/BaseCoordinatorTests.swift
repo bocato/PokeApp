@@ -22,8 +22,12 @@ class BaseCoordinatorTests: XCTestCase {
     
     // MARK: Tests
     func testInit() {
-        XCTAssertTrue(sut.initWasCalled, "Init was not called")
-        XCTAssertNotNil(sut.router, "Router not set")
+        // Given
+        let sut: BaseCoordinator?
+        // When
+        sut = BaseCoordinator(router: Router())
+        // Then
+        XCTAssertNotNil(sut, "initalization failed")
     }
     
     func testStart() {
@@ -76,6 +80,16 @@ class BaseCoordinatorTests: XCTestCase {
         XCTAssertTrue(sut.numberOfChildCoordinators == 1, "Wrong number of childs, whe should have one")
     }
     
+    func testRemoveNilCoordinator() {
+        // Given
+        testAddChildCoordinatorThatDoesntExist()
+        // When
+        let didRemoveChild = sut.removeChildCoordinator(nil)
+        // Then
+        XCTAssertFalse(didRemoveChild, "Child was removed, but shouldn't be since it doesn't exist")
+        XCTAssertTrue(sut.numberOfChildCoordinators == 1, "Wrong number of childs, whe should have one")
+    }
+    
     func testRemoveChildCoordinatorThatExists() {
         // Given
         let childCoordinator = BaseCoordinatorSpy(router: Router())
@@ -118,16 +132,13 @@ class BaseCoordinatorSpy: BaseCoordinator {
     var lastReceivedOutput: CoordinatorOutput?
     
     // MARK: - Methods
-    override init(router: RouterProtocol) {
-        super.init(router: router)
-        initWasCalled = true
-    }
-    
     override func start() {
+        super.start()
         startWasCalled = true
     }
     
     override func finish() {
+        super.finish()
         finishWasCalled = true
     }
     

@@ -47,10 +47,9 @@ class BaseCoordinator: Coordinator {
     
     @discardableResult
     func removeChildCoordinator(_ coordinator: Coordinator?) -> Bool {
-        guard
-            childCoordinators.isEmpty == false,
-            let coordinator = coordinator
-            else { return  false }
+        guard childCoordinators.isEmpty == false, let coordinator = coordinator else {
+            return false
+        }
         if let coordinatorToRemove = childCoordinators[coordinator.identifier], coordinator === coordinatorToRemove {
             childCoordinators.removeValue(forKey: coordinator.identifier)
             coordinatorToRemove.finish()
