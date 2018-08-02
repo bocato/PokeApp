@@ -23,27 +23,16 @@ fileprivate enum LaunchInstructor {
     
 }
 
-class AppCoordinator: Coordinator {
+class AppCoordinator: BaseCoordinator {
     
     // MARK: - Dependencies
     private var instructor: LaunchInstructor {
         return LaunchInstructor.getApplicationStartPoint()
     }
-    internal(set) var router: RouterProtocol
-    var delegate: CoordinatorDelegate?
-    
-    // MARK: - Properties
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) var parentCoordinator: Coordinator? = nil
-    internal(set) var identifier: String = "AppCoordinator"
-   
-    // MARK: - Initialization
-    init(router: RouterProtocol) {
-        self.router = router
-    }
     
     // MARK: - Start
-    func start() {
+    override func start() {
+        super.start()
         switch instructor {
         case .tabBar:
             runMainFlow()
@@ -59,16 +48,10 @@ class AppCoordinator: Coordinator {
         let controller = TabBarViewController.newInstanceFromStoryboard(viewModel: viewModel)
         addChildCoordinator(tabBarCoordinator)
         router.setRootModule(controller, hideBar: true)
-        tabBarCoordinator.start()
     }
     
-    func receiveChildOutput() {
-        <#code#>
-    }
+    // MARK: - Messages
     
-    func sendChildOutput() {
-        <#code#>
-    }
     
 }
 

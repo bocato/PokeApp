@@ -8,37 +8,31 @@
 
 import Foundation
 
-
 protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegate {
     // MARK: - Dependencies
     var modulesFactory: HomeModulesFactoryProtocol { get }
 }
 
-class HomeCoordinator: HomeCoordinatorProtocol {
+class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     
     // MARK: - Dependencies
     private(set) var modulesFactory: HomeModulesFactoryProtocol = HomeModulesFactory()
-    internal(set) var router: RouterProtocol
-    internal(set) var delegate: CoordinatorDelegate?
     
-    // MARK: - Properties
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) var parentCoordinator: Coordinator?
-    internal(set) var identifier: String = "HomeCoordinator"
-    
-    // MARK: - Initialization
-    required init(router: RouterProtocol) {
-        self.router = router
-    }
-    
-}
-
-extension HomeCoordinator: CoordinatorDelegate {
-    
-    func finish(_ coordinator: Coordinator, output: CoordinatorInfo) {
-        if coordinator.identifier == "DetailsCoordinator" {
-            coordinator.router.popModule(animated: true)
-            removeChildCoordinator(coordinator)
+    // MARK: - Dealing with ouputs
+    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+        switch (child, output) {
+        case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
+            switch output {
+            case .didAddPokemon(let pokemon):
+                FavoritesManager.shared.add(pokemon: pokemon)
+                self.removeChildCoordinator(detailsCoordinator)
+                self.router.popModule(animated: true)
+            case .didRemovePokemon(let pokemon):
+                FavoritesManager.shared.remove(pokemon: pokemon)
+                self.removeChildCoordinator(detailsCoordinator)
+                self.router.popModule(animated: true)
+            }
+        default: return
         }
     }
     
@@ -54,7 +48,6 @@ extension HomeCoordinator: HomeViewControllerActionsDelegate {
             weak var weakSelf = self
             weakSelf?.removeChildCoordinator(coordinator)
         }
-        coordinator.start()
     }
     
 }

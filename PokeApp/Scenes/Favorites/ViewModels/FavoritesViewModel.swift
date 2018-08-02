@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 protocol FavoritesViewControllerActionsDelegate: class {
     func showItemDetailsForPokemonWith(id: Int)
@@ -15,13 +16,19 @@ protocol FavoritesViewControllerActionsDelegate: class {
 
 class FavoritesViewModel {
 
-    // MARK: - Dependecies
+    // MARK: - State
+    enum State {
+        case loading(Bool)
+        case loaded
+        case empty
+    }
+    
+    // MARK: - Dependencies
     var actionsDelegate: FavoritesViewControllerActionsDelegate? // need to make this weak
     
-    // MARK: - Properties
-    
     // MARK: - RXProperties
-    var favoritesCellModels = Variable<[FavoriteCollectionViewCellModel]>([])
+    var viewState = BehaviorRelay<State>(value: .loading(true))
+    var favoritesCellModels = PublishSubject<[FavoriteCollectionViewCellModel]>()
     
     // MARK: - Initialzation
     init(actionsDelegate: FavoritesViewControllerActionsDelegate) {
@@ -29,16 +36,14 @@ class FavoritesViewModel {
     }
     
     // MARK: -
-    func loadFavorites() { // TODO: Refactor
-//        self.viewState.value = .loading(true)
+    func loadFavorites() {
+        self.viewState.accept(.loading(true))
         let favoritesCellModels = FavoritesManager.shared.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
             return FavoriteCollectionViewCellModel(data: pokemon)
         })
-        self.favoritesCellModels.value = favoritesCellModels
-//        self.viewState.value = .loading(false)
-//        if favoritesCellModels.count == 0 {
-//            self.viewState.value = .empty
-//        }
+        self.favoritesCellModels.onNext(favoritesCellModels)
+        self.viewState.accept(.loading(false))
+        self.viewState.accept(favoritesCellModels.count == 0 ? .empty : .loaded)
     }
     
     // MARK: - Actions

@@ -11,16 +11,12 @@ import Foundation
 class BaseCoordinator: Coordinator {
     
     // MARK: - Dependencies
-    private var instructor: LaunchInstructor {
-        return LaunchInstructor.getApplicationStartPoint()
-    }
     internal(set) var router: RouterProtocol
-    var delegate: CoordinatorDelegate?
+    internal(set) var delegate: CoordinatorDelegate?
     
     // MARK: - Properties
     internal(set) var childCoordinators: [String : Coordinator] = [:]
     internal(set) var parentCoordinator: Coordinator? = nil
-    internal(set) var identifier: String = "AppCoordinator"
     
     // MARK: - Initialization
     init(router: RouterProtocol) {
@@ -38,7 +34,7 @@ class BaseCoordinator: Coordinator {
     
     // MARK: - Helper Methods
     func addChildCoordinator(_ coordinator: Coordinator) {
-        if let child = childCoordinators[identifier], child === coordinator {
+        if let child = childCoordinators[coordinator.identifier], child === coordinator {
             return
         }
         coordinator.parentCoordinator = self
@@ -58,11 +54,11 @@ class BaseCoordinator: Coordinator {
         }
     }
     
-    func sendOutput(_ output: CoordinatorInfo) {
+    func sendOutput(_ output: CoordinatorOutput) {
         parentCoordinator?.receiveChildOutput(child: self, output: output)
     }
     
-    func receiveChildOutput(child: Coordinator, output: CoordinatorInfo) {
+    func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
         parentCoordinator?.receiveChildOutput(child: child, output: output)
     }
     

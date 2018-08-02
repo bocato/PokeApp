@@ -13,29 +13,24 @@ protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActi
     var modulesFactory: FavoritesModulesFactoryProtocol { get }
 }
 
-class FavoritesCoordinator: FavoritesCoordinatorProtocol {
+class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     
     // MARK: - Dependencies
     private(set) var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
-    internal(set) var router: RouterProtocol
-    internal(set) var delegate: CoordinatorDelegate?
     
-    // MARK: - Properties
-    var childCoordinators: [String : Coordinator] = [:]
-    var parentCoordinator: Coordinator?
-    internal(set) var identifier: String = "FavoritesCoordinator"
-    
-    // MARK: - Initialization
-    required init(router: RouterProtocol) {
-        self.router = router
-    }
-    
-}
-
-extension FavoritesCoordinator: CoordinatorDelegate {
-    
-    func finish(_ coordinator: Coordinator, output: CoordinatorInfo) {
-        debugPrint("coisa")
+    // MARK: - Dealing with ouputs
+    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+        switch (child, output) {
+        case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
+            switch output {
+            case .didRemovePokemon(let pokemon):
+                FavoritesManager.shared.remove(pokemon: pokemon)
+                self.removeChildCoordinator(detailsCoordinator)
+                self.router.popModule(animated: true)
+            default: break
+            }
+        default: return
+        }
     }
     
 }
@@ -45,13 +40,8 @@ extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate {
     func showItemDetailsForPokemonWith(id: Int) {
         let router = self.router
         let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router, parentCoordinator: self)
-//        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router) { [weak self] (output, detailsCoordinator) in
-//            detailsCoordinator.router.popModule(animated: true)
-//            self?.removeChildCoordinator(detailsCoordinator)
-//        }
-        self.addChildCoordinator(coordinator)
+        addChildCoordinator(coordinator)
         router.push(controller)
-        coordinator.start()
     }
     
 }

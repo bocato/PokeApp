@@ -14,26 +14,14 @@ protocol TabBarCoordinatorProtocol: Coordinator & TabBarViewControllerActionsDel
     var modulesFactory: TabBarModulesFactoryProtocol { get }
 }
 
-class TabBarCoordinator: TabBarCoordinatorProtocol {
+class TabBarCoordinator: BaseCoordinator {
     
     // MARK: - Dependencies
     private(set) var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory()
-    internal(set) var router: RouterProtocol
-    internal(set) var delegate: CoordinatorDelegate?
-    
-    // MARK: - Properties
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) var parentCoordinator: Coordinator?
-    internal(set) var identifier: String = "TabBarCoordinator"
-    
-    // MARK: - Initialization
-    required init(router: RouterProtocol) {
-        self.router = router
-    }
     
 }
 
-extension TabBarCoordinator : TabBarViewControllerActionsDelegate {
+extension TabBarCoordinator: TabBarViewControllerActionsDelegate {
     
     // MARK: - TabBarViewControllerActionsDelegate
     func actOnSelectedTab(_ selectedTab: TabBarViewModel.TabIndex, _ navigationController: UINavigationController) {
@@ -43,12 +31,10 @@ extension TabBarCoordinator : TabBarViewControllerActionsDelegate {
                 let (coordinator, controller) = self.modulesFactory.buildHomeModule(with: navigationController)
                 self.addChildCoordinator(coordinator)
                 coordinator.router.setRootModule(controller)
-                coordinator.start()
             case .favorites:
                 let (coordinator, controller) = self.modulesFactory.buildFavoritesModule(with: navigationController)
                 self.addChildCoordinator(coordinator)
                 coordinator.router.setRootModule(controller)
-                coordinator.start()
             }
         }
     }

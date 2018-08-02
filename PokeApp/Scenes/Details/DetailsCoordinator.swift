@@ -8,26 +8,13 @@
 
 import UIKit
 
-struct DetailsCoordinatorInfo: CoordinatorInfo {
-    var pokemon: Pokemon!
-}
+protocol DetailsCoordinatorProtocol: Coordinator, PokemonDetailsViewControllerActionsDelegate {}
 
-protocol DetailsCoordinatorProtocol: Coordinator {}
-
-class DetailsCoordinator: DetailsCoordinatorProtocol {
+class DetailsCoordinator: BaseCoordinator, DetailsCoordinatorProtocol {
     
-    // MARK: - Dependencies
-    internal(set) var router: RouterProtocol
-    internal(set) var delegate: CoordinatorDelegate?
-    
-    // MARK: - Properties
-    var childCoordinators: [String : Coordinator] = [:]
-    var parentCoordinator: Coordinator?
-    internal(set) var identifier: String = "DetailsCoordinator"
-    
-    // MARK: - Initialization
-    required init(router: RouterProtocol) {
-        self.router = router
+    enum Output: CoordinatorOutput {
+        case didAddPokemon(Pokemon)
+        case didRemovePokemon(Pokemon)
     }
     
 }
@@ -35,13 +22,13 @@ class DetailsCoordinator: DetailsCoordinatorProtocol {
 extension DetailsCoordinator: PokemonDetailsViewControllerActionsDelegate {
     
     func didAddFavorite(pokemon: Pokemon) {
-        let alertController = UIAlertController(title: "Favorite", message: "\(pokemon.name ?? "Pokemon") added as favorite!", preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "OK", style: .default) { _ in
-            let output = DetailsCoordinatorInfo(pokemon: pokemon)
-            self.delegate?.finish(self, output: output)
-        }
-        alertController.addAction(action)
-        router.present(alertController, animated: true)
+        let output: DetailsCoordinator.Output = .didAddPokemon(pokemon)
+        self.sendOutput(output)
+    }
+    
+    func didRemoveFavorite(pokemon: Pokemon) {
+        let output: DetailsCoordinator.Output = .didRemovePokemon(pokemon)
+        self.sendOutput(output)
     }
     
 }
