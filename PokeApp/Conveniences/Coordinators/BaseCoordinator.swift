@@ -34,24 +34,29 @@ class BaseCoordinator: Coordinator {
     }
     
     // MARK: - Helper Methods
-    func addChildCoordinator(_ coordinator: Coordinator) {
+    @discardableResult
+    func addChildCoordinator(_ coordinator: Coordinator) -> Bool {
         if let child = childCoordinators[coordinator.identifier], child === coordinator {
-            return
+            return false
         }
         coordinator.parentCoordinator = self
         childCoordinators[coordinator.identifier] = coordinator
         coordinator.start()
+        return true
     }
     
-    func removeChildCoordinator(_ coordinator: Coordinator?) {
+    @discardableResult
+    func removeChildCoordinator(_ coordinator: Coordinator?) -> Bool {
         guard
             childCoordinators.isEmpty == false,
             let coordinator = coordinator
-            else { return }
+            else { return  false }
         if let coordinatorToRemove = childCoordinators[coordinator.identifier], coordinator === coordinatorToRemove {
             childCoordinators.removeValue(forKey: coordinator.identifier)
             coordinatorToRemove.finish()
+            return true
         }
+        return false
     }
     
     func sendOutputToParent(_ output: CoordinatorOutput) {

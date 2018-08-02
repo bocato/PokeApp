@@ -39,13 +39,13 @@ extension TabBarCoordinator: TabBarViewControllerActionsDelegate {
         if navigationController.viewControllers.isEmpty {
             switch selectedTab {
             case .home:
-                let (coordinator, controller) = self.modulesFactory.buildHomeModule(with: navigationController)
+                let (coordinator, controller) = modulesFactory.buildHomeModule(with: navigationController)
                 self.addChildCoordinator(coordinator)
                 coordinator.router.setRootModule(controller)
             case .favorites:
-                let (coordinator, controller) = self.modulesFactory.buildFavoritesModule(with: navigationController)
-                self.delegate = controller.viewModel as? CoordinatorDelegate // this is so we can send a message to the viewmodel from the coordinator
-                self.addChildCoordinator(coordinator)
+                let (coordinator, controller) = modulesFactory.buildFavoritesModule(with: navigationController)
+                delegate = controller.viewModel // this is so we can send a message to the viewmodel from the coordinator
+                addChildCoordinator(coordinator)
                 coordinator.router.setRootModule(controller)
             }
         }
