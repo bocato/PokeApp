@@ -32,7 +32,6 @@ class AppCoordinator: BaseCoordinator {
     
     // MARK: - Start
     override func start() {
-        super.start()
         switch instructor {
         case .tabBar:
             runMainFlow()

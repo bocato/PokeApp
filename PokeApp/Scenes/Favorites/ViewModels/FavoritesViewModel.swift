@@ -53,3 +53,23 @@ class FavoritesViewModel {
     }
     
 }
+
+extension FavoritesViewModel: CoordinatorDelegate {
+    
+    func receiveOutput(_ output: CoordinatorOutput, fromCoordinator coordinator: Coordinator) {
+        switch (coordinator, output) {
+        case let (_, output as HomeCoordinator.Output):
+            switch output {
+            case .shouldReloadFavorites:
+                loadFavorites()
+            }
+        case let (_, output as FavoritesCoordinator.Output):
+            switch output {
+            case .shouldReloadFavorites:
+                loadFavorites()
+            }
+        default: break
+        }
+    }
+    
+}

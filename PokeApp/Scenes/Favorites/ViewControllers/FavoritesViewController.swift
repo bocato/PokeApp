@@ -32,11 +32,12 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAll()
+        viewModel.loadFavorites()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.loadFavorites() // TODO: Remove this when persistence is done...
+//        viewModel.loadFavorites() // TODO: Remove this when persistence is done...
     }
     
 }

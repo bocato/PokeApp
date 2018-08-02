@@ -15,6 +15,11 @@ protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegat
 
 class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     
+    // MARK: - Outputs
+    enum Output: CoordinatorOutput {
+        case shouldReloadFavorites
+    }
+    
     // MARK: - Dependencies
     private(set) var modulesFactory: HomeModulesFactoryProtocol = HomeModulesFactory()
     
@@ -25,12 +30,16 @@ class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
             switch output {
             case .didAddPokemon(let pokemon):
                 FavoritesManager.shared.add(pokemon: pokemon)
-                self.removeChildCoordinator(detailsCoordinator)
-                self.router.popModule(animated: true)
+                removeChildCoordinator(detailsCoordinator)
+                router.popModule(animated: true)
+                let outputToSend: Output = .shouldReloadFavorites
+                sendOutputToParent(outputToSend)
             case .didRemovePokemon(let pokemon):
                 FavoritesManager.shared.remove(pokemon: pokemon)
-                self.removeChildCoordinator(detailsCoordinator)
-                self.router.popModule(animated: true)
+                removeChildCoordinator(detailsCoordinator)
+                router.popModule(animated: true)
+                let outputToSend: Output = .shouldReloadFavorites
+                sendOutputToParent(outputToSend)
             }
         default: return
         }

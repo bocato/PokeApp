@@ -15,6 +15,11 @@ protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActi
 
 class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     
+    // MARK: - Outputs
+    enum Output: CoordinatorOutput {
+        case shouldReloadFavorites
+    }
+    
     // MARK: - Dependencies
     private(set) var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
     
@@ -25,8 +30,10 @@ class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
             switch output {
             case .didRemovePokemon(let pokemon):
                 FavoritesManager.shared.remove(pokemon: pokemon)
-                self.removeChildCoordinator(detailsCoordinator)
-                self.router.popModule(animated: true)
+                removeChildCoordinator(detailsCoordinator)
+                router.popModule(animated: true)
+                let outputToSend: Output = .shouldReloadFavorites
+                sendOutputToParent(outputToSend)
             default: break
             }
         default: return

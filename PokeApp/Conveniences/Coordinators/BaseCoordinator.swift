@@ -12,11 +12,12 @@ class BaseCoordinator: Coordinator {
     
     // MARK: - Dependencies
     internal(set) var router: RouterProtocol
-    internal(set) var delegate: CoordinatorDelegate?
+    weak internal(set) var delegate: CoordinatorDelegate?
     
     // MARK: - Properties
     internal(set) var childCoordinators: [String : Coordinator] = [:]
     internal(set) var parentCoordinator: Coordinator? = nil
+    internal(set) var context: CoordinatorContext? // This is an struct
     
     // MARK: - Initialization
     init(router: RouterProtocol) {
@@ -25,11 +26,11 @@ class BaseCoordinator: Coordinator {
     
     // MARK: - Functions
     func start() {
-        delegate?.childCoordinatorDidStart(self)
+        debugPrint("Override if you need it!")
     }
     
-    func finish() {
-        delegate?.childCoordinatorDidFinish(self)
+    func finish() { 
+        debugPrint("Override if you need it!")
     }
     
     // MARK: - Helper Methods
@@ -38,7 +39,6 @@ class BaseCoordinator: Coordinator {
             return
         }
         coordinator.parentCoordinator = self
-        coordinator.delegate = self
         childCoordinators[coordinator.identifier] = coordinator
         coordinator.start()
     }
@@ -54,7 +54,7 @@ class BaseCoordinator: Coordinator {
         }
     }
     
-    func sendOutput(_ output: CoordinatorOutput) {
+    func sendOutputToParent(_ output: CoordinatorOutput) {
         parentCoordinator?.receiveChildOutput(child: self, output: output)
     }
     

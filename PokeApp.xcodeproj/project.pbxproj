@@ -50,6 +50,7 @@
 		E5583E9D20B86EB8003CAFA0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */; };
 		E5583EA220B880C4003CAFA0 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */; };
 		E5583EA420B8857A003CAFA0 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */; };
+		E564DD272113160C00307A15 /* ApplicationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E564DD262113160C00307A15 /* ApplicationContext.swift */; };
 		E569728020AA57CB00F0B3E5 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */; };
 		E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728120AA5B9E00F0B3E5 /* NetworkError.swift */; };
 		E569728520AA5BD200F0B3E5 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728420AA5BD200F0B3E5 /* JSON.swift */; };
@@ -163,6 +164,7 @@
 		E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		E564DD262113160C00307A15 /* ApplicationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationContext.swift; sourceTree = "<group>"; };
 		E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		E569728120AA5B9E00F0B3E5 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		E569728420AA5BD200F0B3E5 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				E514907B2109FF490000C3EB /* RemoteConfigs.swift */,
+				E564DD262113160C00307A15 /* ApplicationContext.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -983,6 +986,7 @@
 				E50B734E20B51A0900154FCD /* JSONAny.swift in Sources */,
 				E569729620AA700500F0B3E5 /* PrimaryButton.swift in Sources */,
 				E56D240820AF8D9E0059B0E0 /* Stat.swift in Sources */,
+				E564DD272113160C00307A15 /* ApplicationContext.swift in Sources */,
 				E5DCC2A220B6F37000325D32 /* FavoritesViewController.swift in Sources */,
 				E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */,
 				E5583EA420B8857A003CAFA0 /* HomeCoordinator.swift in Sources */,

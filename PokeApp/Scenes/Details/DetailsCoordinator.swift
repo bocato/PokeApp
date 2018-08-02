@@ -12,6 +12,7 @@ protocol DetailsCoordinatorProtocol: Coordinator, PokemonDetailsViewControllerAc
 
 class DetailsCoordinator: BaseCoordinator, DetailsCoordinatorProtocol {
     
+    // MARK: - Outputs
     enum Output: CoordinatorOutput {
         case didAddPokemon(Pokemon)
         case didRemovePokemon(Pokemon)
@@ -22,13 +23,13 @@ class DetailsCoordinator: BaseCoordinator, DetailsCoordinatorProtocol {
 extension DetailsCoordinator: PokemonDetailsViewControllerActionsDelegate {
     
     func didAddFavorite(pokemon: Pokemon) {
-        let output: DetailsCoordinator.Output = .didAddPokemon(pokemon)
-        self.sendOutput(output)
+        let outputToSend: DetailsCoordinator.Output = .didAddPokemon(pokemon)
+        self.sendOutputToParent(outputToSend)
     }
     
     func didRemoveFavorite(pokemon: Pokemon) {
-        let output: DetailsCoordinator.Output = .didRemovePokemon(pokemon)
-        self.sendOutput(output)
+        let outputToSend: DetailsCoordinator.Output = .didRemovePokemon(pokemon)
+        self.sendOutputToParent(outputToSend)
     }
     
 }
