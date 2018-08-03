@@ -66,21 +66,21 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
     }
     
-    func testEmptyState() { // this is wrong
-        // Given
-        let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
-        let mockURL = URL(string: "http://someurl.com")!
-        let mockedSession = MockURLSession(data: nil, response: nil, error: nil)
-        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
-        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
-        
-        // When
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
-        
-        
-        
-        sut.loadPokemons()
-        
+//    func testEmptyState() { // this is wrong
+//        // Given
+//        let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
+//        let mockURL = URL(string: "http://someurl.com")!
+//        let mockedSession = MockURLSession(data: nil, response: nil, error: nil)
+//        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
+//        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
+//
+//        // When
+//        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
+//
+//
+//
+//        sut.loadPokemons()
+    
         // Then
 //        let collectedState = stateCollector.items.last!
 //        let expectedState: HomeViewModel.State = .empty
@@ -88,7 +88,7 @@ class HomeViewModelTests: XCTestCase {
 //
 //        let collectedPokemonCellModels = pokemonCellModelsCollector.items.last!
 //        XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
-    }
+//    }
     
 }
 
