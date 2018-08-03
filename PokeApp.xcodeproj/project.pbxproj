@@ -679,6 +679,7 @@
 		E56D242220B2008D0059B0E0 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				E5974F012114A0F800D48F25 /* Networking */,
 				E56D242320B200A70059B0E0 /* URLExtension.swift */,
 				E56D242520B200DE0059B0E0 /* RxCollector.swift */,
 			);
@@ -698,8 +699,6 @@
 		E56D242820B2010D0059B0E0 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E5238DD4211111B300323C84 /* Mocks */,
-				E5712E7C20C9626E000A3782 /* Stubs */,
 				E56D243020B206050059B0E0 /* Services */,
 			);
 			path = Networking;
@@ -727,6 +726,15 @@
 				E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */,
 			);
 			path = Stubs;
+			sourceTree = "<group>";
+		};
+		E5974F012114A0F800D48F25 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E5238DD4211111B300323C84 /* Mocks */,
+				E5712E7C20C9626E000A3782 /* Stubs */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		E5B8183720B49FBF006F2AB0 /* Details */ = {
