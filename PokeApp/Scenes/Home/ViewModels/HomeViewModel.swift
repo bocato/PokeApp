@@ -50,6 +50,9 @@ class HomeViewModel {
             let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
                 return PokemonTableViewCellModel(listItem: listItem)
             })
+            if viewModelsForResult.count == 0 {
+                self.viewState.accept(.empty)
+            }
             self.pokemonCellModels.accept(viewModelsForResult)
         }, onError: { (error) in
             let networkError = error as! NetworkError

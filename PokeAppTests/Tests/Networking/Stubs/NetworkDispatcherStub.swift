@@ -23,20 +23,20 @@ class NetworkDispatcherStub: NetworkDispatcherProtocol {
     
     // MARK: - Mocked responses
     func response<T: Codable>(of type: T.Type, from path: String?, method: HTTPMethod, payload: Data?, headers: [String : String]?) -> Observable<[T]?> {
-        
+
         return Observable.create { observable in
-            
+
             guard var request = self.buildURLRequest(httpMethod: method, url: self.url, path: path, payload: payload, headers: headers) else {
                 observable.onError(NetworkError(requestError: ErrorFactory.buildNetworkError(with: .invalidURL), request: nil))
                 return Disposables.create()
             }
-            
+
             request.httpMethod = method.rawValue
             request.httpBody = payload
-            
+
             let networkErrorForSerialization = NetworkError(requestError: ErrorFactory.buildNetworkError(with: .jsonParse), request: request)
             observable.onError(networkErrorForSerialization)
-            
+
             return Disposables.create()
         }
     }

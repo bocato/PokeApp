@@ -13,23 +13,93 @@ import RxSwift
 class HomeViewModelTests: XCTestCase {
     
     // MARK: - Properties
-    var sut: HomeViewModelTests!
-    var actionsDelegateStub: HomeViewControllerActionsDelegateStub!
-    var pokemonServices: PokemonService!
-    
+
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        actionsDelegateStub = HomeViewControllerActionsDelegateStub()
-        pokemonServices = PokemonService()
-//        sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: pokemonServices)
     }
     
     // MARK: - Tests
+    func testInit() {
+        // Given
+        let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
+        let mockURL = URL(string: "http://someurl.com")!
+        let mockedSession = MockURLSession(jsonDict: [:])!
+        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
+        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
+        // When
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
+        // Then
+        XCTAssertNotNil(sut, "invalid viewModel instance")
+        XCTAssertNotNil(sut.actionsDelegate, "ActionsDelegate was not set")
+    }
     
+    func testInitialState() {
+        // Given
+        let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
+        let mockURL = URL(string: "http://someurl.com")!
+        let mockedSession = MockURLSession(jsonDict: [:])!
+        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
+        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
+        
+        // When
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
+        
+        let stateCollector = RxCollector<HomeViewModel.State>()
+                                .collect(from: sut.viewState.asObservable())
+        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
+                                            .collect(from: sut.pokemonCellModels.asObservable())
+        
+        // Then
+        let firstCollectedState = stateCollector.items.first!
+        let expectedState: HomeViewModel.State = .loading(true)
+        XCTAssertEqual(firstCollectedState, expectedState, "First viewState is != loading(true)")
+        
+        let collectedPokemonCellModels = pokemonCellModelsCollector.items.first!
+        XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
+    }
+    
+    func testEmptyState() { // this is wrong
+        // Given
+        let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
+        let mockURL = URL(string: "http://someurl.com")!
+        let mockedSession = MockURLSession(data: nil, response: nil, error: nil)
+        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
+        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
+        
+        // When
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
+        
+        let stateCollector = RxCollector<HomeViewModel.State>()
+            .collect(from: sut.viewState.asObservable())
+        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
+            .collect(from: sut.pokemonCellModels.asObservable())
+
+        sut.loadPokemons()
+
+        // Then
+        let collectedState = stateCollector.items.last!
+        let expectedState: HomeViewModel.State = .loading(true)
+        XCTAssertEqual(collectedState, expectedState, "viewState is != loading(true)")
+
+        let collectedPokemonCellModels = pokemonCellModelsCollector.items.last!
+        XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
+    }
     
 }
 
+extension HomeViewModel.State: Equatable {
+    
+    public static func ==(lhs: HomeViewModel.State, rhs: HomeViewModel.State) -> Bool {
+        switch (lhs, rhs) {
+        case let (.loading(l), .loading(r)): return l == r
+        case (.empty, .empty): return true
+        case let (.error(l), .error(r)): return l.debugDescription == r.debugDescription // check this, conform objects to equatable
+        default: return false
+        }
+    }
+    
+}
 
 class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
     
@@ -39,24 +109,6 @@ class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
     func showItemDetailsForPokemonWith(id: Int) {
         showItemDetailsForPokemonWithIdWasCalled = true
         pokemonIdToShowDetails = id
-    }
-    
-}
-
-class PokemonServiceStub: PokemonServiceProtocol {
-    
-    func getPokemonList() -> Observable<PokemonListResponse?> {
-        let pokemonListResults = [PokemonListResult(url: "http://www.pokemon.com", name: "Pokemon Name")]
-        let pokemonListResponse = PokemonListResponse(count: 1, previous: "previous", results: pokemonListResults, next: "next")
-        return Observable.just(pokemonListResponse)
-    }
-    
-    func getPokemonList(_ limit: Int) -> Observable<PokemonListResponse?> {
-        return Observable.just(nil)
-    }
-    
-    func getDetailsForPokemon(withId id: Int) -> Observable<Pokemon?> {
-        return Observable.just(nil)
     }
     
 }

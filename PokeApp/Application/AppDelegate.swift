@@ -18,7 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setupApplication()
-        return true
+        if ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil { // this means that we are running unit tests
+            return false
+        } else {
+            return true
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
