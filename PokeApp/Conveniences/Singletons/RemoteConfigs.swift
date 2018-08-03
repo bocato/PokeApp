@@ -35,7 +35,7 @@ class RemoteConfigs {
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
     }
     
-    func fetchConfigs() {
+    func fetchConfigs(success: @escaping (()->()), failure: ((_ error: Error?)->())?) {
     
         var expirationDuration = Constants.defaultExpirationDuration
     
@@ -45,11 +45,12 @@ class RemoteConfigs {
     
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
-                debugPrint("Configs fetched!")
-                    self.remoteConfig.activateFetched()
-                } else {
-                    debugPrint("Configs not fetched")
-                    debugPrint("Error: \(error?.localizedDescription ?? "No error available.")")
+                self.remoteConfig.activateFetched()
+                success()
+            } else {
+                debugPrint("Configs not fetched")
+                debugPrint("Error: \(error?.localizedDescription ?? "No error available.")")
+                failure?(error)
             }
         }
         

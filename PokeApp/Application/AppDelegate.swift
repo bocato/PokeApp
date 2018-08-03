@@ -13,16 +13,12 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private lazy var applicationCoordinator: Coordinator? = makeCoordinator()
+    private lazy var applicationCoordinator: Coordinator? = makeAppCoordinator()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setupApplication()
-        if ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil { // this means that we are running unit tests
-            return false
-        } else {
-            return true
-        }
+        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -56,20 +52,30 @@ private extension AppDelegate {
     }
     
     func setupApplication() {
-        // Start App Coordinator
-        applicationCoordinator?.start()
-        // Start Firebase
-        FirebaseApp.configure()
-        // Fetch Remote Configs
-        RemoteConfigs.shared.fetchConfigs()
+        if isRunningTests {
+            window = UIWindow()
+            window?.rootViewController = UIViewController()
+            window?.makeKeyAndVisible()
+        } else {
+            // Start App Coordinator
+            applicationCoordinator?.start()
+            // Start Firebase
+            FirebaseApp.configure()
+        }
     }
     
-    private func makeCoordinator() -> Coordinator? {
+    private func makeAppCoordinator() -> Coordinator? {
         guard let window = window else { return nil }
         let rootController = window.rootViewController as! UINavigationController
         let router = Router(navigationController: rootController)
         return AppCoordinator(router: router)
     }
     
+}
+
+private extension AppDelegate {
+    var isRunningTests: Bool {
+        return ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil // this means that we are running unit tests
+    }
 }
 

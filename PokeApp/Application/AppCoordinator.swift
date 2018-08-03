@@ -14,8 +14,8 @@ fileprivate enum LaunchInstructor {
     
     case resourceLoader, tabBar
     
-    static func getApplicationStartPoint(showResourceLoader: Bool = showResourceLoader) -> LaunchInstructor {
-        if !showResourceLoader {
+    static func getApplicationStartPoint(showResourcesLoader: Bool = showResourceLoader) -> LaunchInstructor {
+        if !showResourcesLoader {
             return .tabBar
         }
         return .resourceLoader
@@ -36,7 +36,7 @@ class AppCoordinator: BaseCoordinator {
         case .tabBar:
             runMainFlow()
         case .resourceLoader:
-            debugPrint("Not implemented")
+            debugPrint("Not implemented.")
         }
     }
     
@@ -47,10 +47,16 @@ class AppCoordinator: BaseCoordinator {
         let controller = TabBarViewController.newInstanceFromStoryboard(viewModel: viewModel)
         addChildCoordinator(tabBarCoordinator)
         router.setRootModule(controller, hideBar: true)
+        loadRemoteConfigs() // Review this...
     }
     
-    // MARK: - Messages
-    
+    private func loadRemoteConfigs() {
+        RemoteConfigs.shared.fetchConfigs(success: {
+            debugPrint("RemoteConfigs loaded")
+        }, failure: { error in
+            debugPrint("RemoteConfigs.fetchConfigs failed with error: \n\(error?.localizedDescription ?? "Unknown")")
+        })
+    }
     
 }
 

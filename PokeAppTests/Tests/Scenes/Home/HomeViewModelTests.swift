@@ -79,8 +79,8 @@ class HomeViewModelTests: XCTestCase {
 
         // Then
         let collectedState = stateCollector.items.last!
-        let expectedState: HomeViewModel.State = .loading(true)
-        XCTAssertEqual(collectedState, expectedState, "viewState is != loading(true)")
+        let expectedState: HomeViewModel.State = .empty
+            XCTAssertEqual(collectedState, expectedState, "viewState is != loading(true)")
 
         let collectedPokemonCellModels = pokemonCellModelsCollector.items.last!
         XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
