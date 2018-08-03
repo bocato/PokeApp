@@ -77,7 +77,7 @@ class HomeViewModelTests: XCTestCase {
 //        // When
 //        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
 //
-//
+//    
 //
 //        sut.loadPokemons()
     
