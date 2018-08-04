@@ -22,8 +22,16 @@ class TabBarModulesFactory: TabBarModulesFactoryProtocol {
     func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController) {
         let router = Router(navigationController: navigationController)
         let homeCoordinator = HomeCoordinator(router: router)
-        let services = PokemonService()
-        let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
+//        let services = PokemonService()
+//        let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
+        
+        let mockURL = URL(string: "http://someurl.com")!
+        let mockedURLResponse = HTTPURLResponse(url: mockURL, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: nil)!
+        let mockedSession = MockedURLSession(data: nil, response: mockedURLResponse, error: nil)
+        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
+        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
+        let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: mockedPokemonServices)
+        
         let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
         return (homeCoordinator, controller)
     }

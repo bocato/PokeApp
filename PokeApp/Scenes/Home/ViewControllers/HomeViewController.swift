@@ -81,7 +81,10 @@ private extension HomeViewController {
     
     func bindViewModel() {
         
-        viewModel.loadPokemons()
+        let _ = viewModel.loadPokemons()
+            .subscribeOn(MainScheduler.instance)
+            .subscribe()
+            .disposed(by: disposeBag)
         
         viewModel.viewState
             .asObservable()

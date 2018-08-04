@@ -7,23 +7,26 @@
 //
 
 import XCTest
-import RxSwift
 @testable import PokeApp
+import RxSwift
+import RxTest
+import RxBlocking
 
 class HomeViewModelTests: XCTestCase {
     
     // MARK: - Properties
-    var disposeBag: DisposeBag
-
+    var disposeBag = DisposeBag()
+    var testScheduler: TestScheduler!
+    
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
+        testScheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
     }
     
     override func tearDown() {
         super.tearDown()
-        disposeBag = nil
     }
     
     // MARK: - Tests
@@ -31,7 +34,7 @@ class HomeViewModelTests: XCTestCase {
         // Given
         let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
         let mockURL = URL(string: "http://someurl.com")!
-        let mockedSession = MockURLSession(jsonDict: [:])!
+        let mockedSession = MockedURLSession(jsonDict: [:])!
         let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
         let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
         // When
@@ -45,7 +48,7 @@ class HomeViewModelTests: XCTestCase {
         // Given
         let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
         let mockURL = URL(string: "http://someurl.com")!
-        let mockedSession = MockURLSession(jsonDict: [:])!
+        let mockedSession = MockedURLSession(jsonDict: [:])!
         let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
         let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
         
@@ -66,29 +69,34 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
     }
     
-//    func testEmptyState() { // this is wrong
-//        // Given
-//        let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
-//        let mockURL = URL(string: "http://someurl.com")!
-//        let mockedSession = MockURLSession(data: nil, response: nil, error: nil)
-//        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
-//        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
-//
-//        // When
-//        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
-//
-//    
-//
-//        sut.loadPokemons()
-    
+    func testEmptyState() {
+        // Given
+        let actionsDelegateStub = HomeViewControllerActionsDelegateStub()
+        let mockURL = URL(string: "http://someurl.com")!
+        let mockedSession = MockedURLSession(data: nil, response: nil, error: nil)
+        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
+        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
+        
+        // When
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
+        let viewStateResults = testScheduler.createObserver(HomeViewModel.State.self)
+        
+        testScheduler.scheduleAt(0) {
+            sut.viewState.subscribe(viewStateResults.asObserver()).disposed(by: self.disposeBag)
+            let _ = sut.loadPokemons().subscribe().disposed(by: self.disposeBag)
+        }
+        
+        testScheduler.start()
+        
         // Then
-//        let collectedState = stateCollector.items.last!
-//        let expectedState: HomeViewModel.State = .empty
-//        XCTAssertEqual(collectedState, expectedState, "viewState is != .empty")
-//
-//        let collectedPokemonCellModels = pokemonCellModelsCollector.items.last!
-//        XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
-//    }
+        let viewStateExpectedResults: [HomeViewModel.State] = [.loading(true), .loading(true), .loading(false), .empty]
+        var colectedViewStates = [HomeViewModel.State]()
+        for event in viewStateResults.events {
+            guard let element = event.value.element else { return }
+            colectedViewStates.append(element)
+        }
+        XCTAssertEqual(viewStateExpectedResults, colectedViewStates)
+    }
     
 }
 
