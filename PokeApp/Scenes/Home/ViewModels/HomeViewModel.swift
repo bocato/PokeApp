@@ -40,6 +40,7 @@ class HomeViewModel {
     }
     
     // MARK: - API Calls
+    @discardableResult
     func loadPokemons() -> Observable<PokemonListResponse?> {
         viewState.accept(.loading(true))
         let serviceObservable = services.getPokemonList()
@@ -51,9 +52,6 @@ class HomeViewModel {
                 let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
                     return PokemonTableViewCellModel(listItem: listItem)
                 })
-                if viewModelsForResult.count == 0 {
-                    self.viewState.accept(.empty)
-                }
                 self.pokemonCellModels.accept(viewModelsForResult)
             }, onError: { (error) in
                 let networkError = error as! NetworkError
@@ -61,26 +59,6 @@ class HomeViewModel {
             }, onCompleted: {
                 self.viewState.accept(.loading(false))
             })
-//            .subscribeOn(MainScheduler.instance)
-//            .subscribe(onNext: { pokemonListResponse in
-//                guard let results = pokemonListResponse?.results, results.count > 0 else {
-//                    self.viewState.accept(.empty)
-//                    return
-//                }
-//                let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
-//                    return PokemonTableViewCellModel(listItem: listItem)
-//                })
-//                if viewModelsForResult.count == 0 {
-//                    self.viewState.accept(.empty)
-//                }
-//                self.pokemonCellModels.accept(viewModelsForResult)
-//            }, onError: { (error) in
-//                let networkError = error as! NetworkError
-//                self.viewState.accept(.error(networkError.requestError))
-//            }, onCompleted: {
-//                self.viewState.accept(.loading(false))
-//            })
-//            .disposed(by: disposeBag)
         return serviceObservable
     }
     

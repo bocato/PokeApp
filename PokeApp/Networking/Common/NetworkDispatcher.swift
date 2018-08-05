@@ -58,13 +58,9 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
     ]
     
     // MARK: - Initializers
-    required init(url: URL, session: URLSessionProtocol) {
+    required init(url: URL, session: URLSessionProtocol = URLSession.shared) {
         self.url = url
         self.session = session
-    }
-    
-    convenience init(url: URL) {
-        self.init(url: url, session: URLSession.shared)
     }
     
     // MARK: NetworkDispatcherProtocol

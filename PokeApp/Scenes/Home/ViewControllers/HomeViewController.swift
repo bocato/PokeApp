@@ -81,12 +81,13 @@ private extension HomeViewController {
     
     func bindViewModel() {
         
-        let _ = viewModel.loadPokemons()
+        viewModel.loadPokemons()
             .subscribeOn(MainScheduler.instance)
             .subscribe()
             .disposed(by: disposeBag)
         
         viewModel.viewState
+            .observeOn(MainScheduler.instance)
             .asObservable()
             .subscribe(onNext: { state in
                 switch state {
@@ -110,6 +111,7 @@ private extension HomeViewController {
     func bindTableView()  {
         
         viewModel.pokemonCellModels
+            .observeOn(MainScheduler.instance)
             .asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: PokemonTableViewCell.identifier, cellType: PokemonTableViewCell.self)) { (rowIndex, pokemonCellModel, cell) in
                 cell.configure(with: pokemonCellModel)
