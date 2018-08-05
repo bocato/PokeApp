@@ -90,6 +90,17 @@
 		E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */; };
 		E5974ED421125F2800D48F25 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5974ED321125F2800D48F25 /* BaseCoordinator.swift */; };
 		E5974F022116399D00D48F25 /* MockedURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DD52111126C00323C84 /* MockedURLSession.swift */; };
+		E59DFB2C211713530052B678 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */; };
+		E59DFB45211715C30052B678 /* MockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB41211715C20052B678 /* MockResponse.swift */; };
+		E59DFB4F21171B950052B678 /* DefaultRequestMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */; };
+		E59DFB5221171EAC0052B678 /* URLRequest+NSURLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5121171EAC0052B678 /* URLRequest+NSURLSessionMock.swift */; };
+		E59DFB5521171F730052B678 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5421171F730052B678 /* Logging.swift */; };
+		E59DFB57211727580052B678 /* DefaultSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB56211727580052B678 /* DefaultSessionMock.swift */; };
+		E59DFB5921172F360052B678 /* MockRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5821172F360052B678 /* MockRegister.swift */; };
+		E59DFB5B211731050052B678 /* MockSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5A211731050052B678 /* MockSessionDataTask.swift */; };
+		E59DFB5D2117318F0052B678 /* NSURLSession+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5C2117318F0052B678 /* NSURLSession+Mock.swift */; };
+		E59DFB5F211736AE0052B678 /* SessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5E211736AE0052B678 /* SessionMock.swift */; };
+		E59DFB61211736D80052B678 /* NSURLSession+Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB60211736D80052B678 /* NSURLSession+Swizzling.swift */; };
 		E5A454D520CB5F030060FD85 /* DetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A454D420CB5F030060FD85 /* DetailsCoordinator.swift */; };
 		E5B8183B20B49FE8006F2AB0 /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5B8183A20B49FE8006F2AB0 /* Details.storyboard */; };
 		E5B8183D20B49FFD006F2AB0 /* PokemonDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8183C20B49FFD006F2AB0 /* PokemonDetailsViewController.swift */; };
@@ -205,6 +216,17 @@
 		E56D243C20B21DAD0059B0E0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcherStub.swift; sourceTree = "<group>"; };
 		E5974ED321125F2800D48F25 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
+		E59DFB41211715C20052B678 /* MockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResponse.swift; sourceTree = "<group>"; };
+		E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRequestMatcher.swift; sourceTree = "<group>"; };
+		E59DFB5121171EAC0052B678 /* URLRequest+NSURLSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+NSURLSessionMock.swift"; sourceTree = "<group>"; };
+		E59DFB5421171F730052B678 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		E59DFB56211727580052B678 /* DefaultSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSessionMock.swift; sourceTree = "<group>"; };
+		E59DFB5821172F360052B678 /* MockRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRegister.swift; sourceTree = "<group>"; };
+		E59DFB5A211731050052B678 /* MockSessionDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionDataTask.swift; sourceTree = "<group>"; };
+		E59DFB5C2117318F0052B678 /* NSURLSession+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Mock.swift"; sourceTree = "<group>"; };
+		E59DFB5E211736AE0052B678 /* SessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMock.swift; sourceTree = "<group>"; };
+		E59DFB60211736D80052B678 /* NSURLSession+Swizzling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Swizzling.swift"; sourceTree = "<group>"; };
 		E5A454D420CB5F030060FD85 /* DetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCoordinator.swift; sourceTree = "<group>"; };
 		E5B8183A20B49FE8006F2AB0 /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		E5B8183C20B49FFD006F2AB0 /* PokemonDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsViewController.swift; sourceTree = "<group>"; };
@@ -328,14 +350,6 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		E5238DD4211111B300323C84 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				E5238DD52111126C00323C84 /* MockedURLSession.swift */,
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
 		E548A32C20B7BB9100E72954 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +417,8 @@
 		E551384B20A4504C00A5F6EB /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
+				E59DFB5321171F5F0052B678 /* Utils */,
+				E59DFB29211711430052B678 /* Networking */,
 				E514907A2109FF330000C3EB /* Singletons */,
 				E548A33320B8209100E72954 /* Coordinators */,
 				E5583E9620B86124003CAFA0 /* Routers */,
@@ -413,7 +429,6 @@
 				E569728320AA5BBE00F0B3E5 /* JSON */,
 				E569729920AA71CD00F0B3E5 /* Factories */,
 				E569729C20AA720200F0B3E5 /* Enums */,
-				E5238DD4211111B300323C84 /* Mocks */,
 				E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */,
 			);
 			path = Conveniences;
@@ -509,6 +524,7 @@
 		E569728920AA5C6300F0B3E5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */,
 				E569728A20AA5C7500F0B3E5 /* ErrorExtension.swift */,
 				E569728C20AA6ED500F0B3E5 /* UIView+Loading.swift */,
 				E569728E20AA6F6600F0B3E5 /* EncodableExtension.swift */,
@@ -732,6 +748,63 @@
 				E5712E7C20C9626E000A3782 /* Stubs */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		E59DFB29211711430052B678 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E5238DD52111126C00323C84 /* MockedURLSession.swift */,
+				E59DFB2A211711550052B678 /* NSURLSessionMock */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		E59DFB2A211711550052B678 /* NSURLSessionMock */ = {
+			isa = PBXGroup;
+			children = (
+				E59DFB5021171E7E0052B678 /* Extensions */,
+				E59DFB4D21171B460052B678 /* Models */,
+				E59DFB4C21171B3F0052B678 /* Matchers */,
+				E59DFB56211727580052B678 /* DefaultSessionMock.swift */,
+				E59DFB5821172F360052B678 /* MockRegister.swift */,
+				E59DFB5A211731050052B678 /* MockSessionDataTask.swift */,
+			);
+			path = NSURLSessionMock;
+			sourceTree = "<group>";
+		};
+		E59DFB4C21171B3F0052B678 /* Matchers */ = {
+			isa = PBXGroup;
+			children = (
+				E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */,
+			);
+			path = Matchers;
+			sourceTree = "<group>";
+		};
+		E59DFB4D21171B460052B678 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E59DFB41211715C20052B678 /* MockResponse.swift */,
+				E59DFB5E211736AE0052B678 /* SessionMock.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E59DFB5021171E7E0052B678 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E59DFB5121171EAC0052B678 /* URLRequest+NSURLSessionMock.swift */,
+				E59DFB5C2117318F0052B678 /* NSURLSession+Mock.swift */,
+				E59DFB60211736D80052B678 /* NSURLSession+Swizzling.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E59DFB5321171F5F0052B678 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E59DFB5421171F730052B678 /* Logging.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		E5B8183720B49FBF006F2AB0 /* Details */ = {
@@ -990,11 +1063,13 @@
 				E56972A020AA730200F0B3E5 /* UIColorExtension.swift in Sources */,
 				E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */,
 				E56D240220AF8D610059B0E0 /* Move.swift in Sources */,
+				E59DFB5921172F360052B678 /* MockRegister.swift in Sources */,
 				E514907C2109FF490000C3EB /* RemoteConfigs.swift in Sources */,
 				E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */,
 				E5A454D520CB5F030060FD85 /* DetailsCoordinator.swift in Sources */,
 				E50540CF20BB1C99004EA46D /* PersistenceError.swift in Sources */,
 				E56972B620AA87B200F0B3E5 /* PokemonListResult.swift in Sources */,
+				E59DFB57211727580052B678 /* DefaultSessionMock.swift in Sources */,
 				E56972B420AA872D00F0B3E5 /* PokemonListResponse.swift in Sources */,
 				E5B8183F20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift in Sources */,
 				E569728020AA57CB00F0B3E5 /* NetworkResponse.swift in Sources */,
@@ -1008,23 +1083,28 @@
 				E569728F20AA6F6600F0B3E5 /* EncodableExtension.swift in Sources */,
 				E56D23FB20AF8D130059B0E0 /* Ability.swift in Sources */,
 				E50540D420BB25A8004EA46D /* FavoritesService.swift in Sources */,
+				E59DFB5B211731050052B678 /* MockSessionDataTask.swift in Sources */,
 				E50B734E20B51A0900154FCD /* JSONAny.swift in Sources */,
 				E569729620AA700500F0B3E5 /* PrimaryButton.swift in Sources */,
 				E56D240820AF8D9E0059B0E0 /* Stat.swift in Sources */,
 				E564DD272113160C00307A15 /* ApplicationContext.swift in Sources */,
 				E5974F022116399D00D48F25 /* MockedURLSession.swift in Sources */,
 				E5DCC2A220B6F37000325D32 /* FavoritesViewController.swift in Sources */,
+				E59DFB5521171F730052B678 /* Logging.swift in Sources */,
+				E59DFB45211715C30052B678 /* MockResponse.swift in Sources */,
 				E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */,
 				E5583EA420B8857A003CAFA0 /* HomeCoordinator.swift in Sources */,
 				E569728820AA5BFF00F0B3E5 /* URLHelper.swift in Sources */,
 				E56D243420B20ADA0059B0E0 /* HomeViewController.swift in Sources */,
 				E5583E9B20B868A3003CAFA0 /* Router.swift in Sources */,
 				E569728520AA5BD200F0B3E5 /* JSON.swift in Sources */,
+				E59DFB61211736D80052B678 /* NSURLSession+Swizzling.swift in Sources */,
 				E50540C120BAF18B004EA46D /* PokeApp.xcdatamodeld in Sources */,
 				E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */,
 				E56D23F920AF8CD30059B0E0 /* Pokemon.swift in Sources */,
 				E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */,
 				E50B734020B293A900154FCD /* PokemonTableViewCellModel.swift in Sources */,
+				E59DFB4F21171B950052B678 /* DefaultRequestMatcher.swift in Sources */,
 				E50540C520BAF22B004EA46D /* CoreDataController+AutoSaving.swift in Sources */,
 				E50B734220B5197E00154FCD /* VersionGroupDetail.swift in Sources */,
 				E50B735020B51A0900154FCD /* JSONAny+Initialization.swift in Sources */,
@@ -1044,6 +1124,7 @@
 				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
 				E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */,
 				E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */,
+				E59DFB5F211736AE0052B678 /* SessionMock.swift in Sources */,
 				E50540C320BAF1F3004EA46D /* CoreDataController.swift in Sources */,
 				E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */,
 				E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */,
@@ -1054,11 +1135,14 @@
 				E50540B920B9FF7D004EA46D /* BaseRXViewController.swift in Sources */,
 				E50B734820B5199500154FCD /* TypeElement.swift in Sources */,
 				E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */,
+				E59DFB5D2117318F0052B678 /* NSURLSession+Mock.swift in Sources */,
 				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,
 				E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */,
+				E59DFB5221171EAC0052B678 /* URLRequest+NSURLSessionMock.swift in Sources */,
 				E5B8184120B4AAEE006F2AB0 /* BorderView.swift in Sources */,
 				E56D243D20B21DAD0059B0E0 /* StringExtension.swift in Sources */,
+				E59DFB2C211713530052B678 /* NSObject+Swizzle.swift in Sources */,
 				E56972A320AA733A00F0B3E5 /* UITableViewExtension.swift in Sources */,
 				E569728B20AA5C7500F0B3E5 /* ErrorExtension.swift in Sources */,
 				E50B734620B5199500154FCD /* Form.swift in Sources */,
