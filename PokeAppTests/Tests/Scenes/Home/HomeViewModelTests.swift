@@ -63,7 +63,7 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
     }
     
-    func testEmptyStateUsingRxCollectorA() { // USE THIS...
+    func testEmptyStateUsingRxCollector() {
         // Given
         let body1 = "{}".data(using: String.Encoding.utf8)!
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!
