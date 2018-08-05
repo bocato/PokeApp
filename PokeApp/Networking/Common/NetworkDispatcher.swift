@@ -85,8 +85,8 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                             let serializedObject = try JSONDecoder().decode(T.self, from: data)
                             observable.onNext(serializedObject)
                         } catch let serializationError {
-                            debugPrint("*** serializationError ***")
-                            debugPrint(serializationError)
+                            DebugLog(prefix: "[NetworkDispatcher]", format: "*** serializationError ***")
+                            DebugLog(prefix: "[NetworkDispatcher]", format: serializationError.localizedDescription)
                             let requestError = ErrorFactory.buildNetworkError(with: .serializationError)
                             let networkErrorForSerialization = NetworkError(networkResponse: networkResponse, rawError: serializationError, requestError: requestError)
                             observable.onError(networkErrorForSerialization)
@@ -129,8 +129,8 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                             let serializedObject = try JSONDecoder().decode([T].self, from: data)
                             observable.onNext(serializedObject)
                         } catch let serializationError {
-                            debugPrint("*** serializationError ***")
-                            debugPrint(serializationError)
+                            DebugLog(prefix: "[NetworkDispatcher]", format: "*** serializationError ***")
+                            DebugLog(prefix: "[NetworkDispatcher]", format: serializationError.localizedDescription)
                             let requestError = ErrorFactory.buildNetworkError(with: .serializationError)
                             let networkErrorForSerialization = NetworkError(networkResponse: networkResponse, rawError: serializationError, requestError: requestError)
                             observable.onError(networkErrorForSerialization)

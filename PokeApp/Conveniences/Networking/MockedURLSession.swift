@@ -30,29 +30,34 @@ public final class MockedURLSession : URLSessionProtocol {
         return self.mockedURLSessionDataTask
     }
     
-    final private class MockedURLSessionDataTask : URLSessionDataTask {
-        
-        typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
-        var completionHandler: CompletionHandler?
-        var taskResponse: (Data?, URLResponse?, Error?)?
-        private(set) var resumeWasCalled = false
-        private(set) var cancelWasCalled = false
-        
-        override func resume() {
-            DispatchQueue.main.async {
-                self.resumeWasCalled = true
-                self.completionHandler?(self.taskResponse?.0, self.taskResponse?.1, self.taskResponse?.2)
-            }
+}
+
+class MockedURLSessionDataTask : URLSessionDataTask {
+    
+    typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
+    var completionHandler: CompletionHandler?
+    var taskResponse: (Data?, URLResponse?, Error?)?
+    private(set) var resumeWasCalled = false
+    private(set) var cancelWasCalled = false
+    
+    override func resume() {
+        DispatchQueue.main.async {
+            self.resumeWasCalled = true
+            self.completionHandler?(self.taskResponse?.0, self.taskResponse?.1, self.taskResponse?.2)
         }
-        
-        override func cancel() {
-            cancelWasCalled = true
-        }
-        
+    }
+    
+    override func cancel() {
+        cancelWasCalled = true
     }
     
 }
 
+/// Usage with NetworkDispatcher
+// let mockedResponse = HTTPURLResponse(url: mockURL, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: nil)
+// let mockedSession = MockedURLSession(data: nil, response: mockedResponse, error: nil)
+// let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
+// let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
 
 
 
