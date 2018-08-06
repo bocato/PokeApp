@@ -9,16 +9,12 @@
 import XCTest
 @testable import PokeApp
 import RxSwift
-import RxTest
-//import NURLSessionMock
 
 class HomeViewModelTests: XCTestCase {
     
     // MARK: - Properties
     var disposeBag = DisposeBag()
     var actionsDelegateStub: HomeViewControllerActionsDelegateStub!
-    var testScheduler: TestScheduler! // TODO: Delete this
-    let mockURL = URL(string: "http://someurl.com")! // TODO: Delete this
     
     // MARK: - Lifecycle
     override func setUp() {
