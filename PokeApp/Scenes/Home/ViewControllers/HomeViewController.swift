@@ -102,6 +102,7 @@ private extension HomeViewController {
                     AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
                 case .empty:
                     self.tableView.isHidden = true
+                default: return
                 }
             })
             .disposed(by: disposeBag)

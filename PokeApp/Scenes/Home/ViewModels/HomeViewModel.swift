@@ -22,6 +22,7 @@ class HomeViewModel {
         case loading(Bool)
         case error(SerializedNetworkError?)
         case empty
+        case loaded
     }
     
     // MARK: - Dependencies
@@ -52,6 +53,7 @@ class HomeViewModel {
                 let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
                     return PokemonTableViewCellModel(listItem: listItem)
                 })
+                self.viewState.accept(.loaded)
                 self.pokemonCellModels.accept(viewModelsForResult)
             }, onError: { (error) in
                 let networkError = error as! NetworkError

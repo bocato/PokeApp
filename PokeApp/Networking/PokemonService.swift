@@ -33,7 +33,7 @@ class PokemonService: PokemonServiceProtocol {
     
     // MARK: - Services
     func getPokemonList() -> Observable<PokemonListResponse?> {
-        return getPokemonList(150)
+        return getPokemonList(1)
     }
     
     func getPokemonList(_ limit: Int) -> Observable<PokemonListResponse?> {
@@ -47,7 +47,7 @@ class PokemonService: PokemonServiceProtocol {
     func getDetailsForPokemon(withId id: Int) -> Observable<Pokemon?> {
     
         let path = "/\(id)"
-        
+
         return dispatcher.response(of: Pokemon.self, from: path, method: .get, payload: nil, headers: nil)
     }
     

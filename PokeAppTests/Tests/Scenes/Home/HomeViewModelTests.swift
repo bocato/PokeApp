@@ -63,7 +63,7 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
     }
     
-    func testEmptyStateUsingRxCollector() {
+    func testEmptyState() {
         // Given
         let body1 = "{}".data(using: String.Encoding.utf8)!
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!
@@ -92,13 +92,12 @@ class HomeViewModelTests: XCTestCase {
     
     func testErrorState() { // TODO: Test error with URLSession.mockNext
         // Given
-        let mockedResponse = HTTPURLResponse(url: mockURL, statusCode: 404, httpVersion: "HTTP/1.1", headerFields: nil)
-        let mockedSession = MockedURLSession(jsonDict: [:], response: mockedResponse, error: nil)!
-        let mockedNetworkDispatcher = NetworkDispatcher(url: mockURL, session: mockedSession)
-        let mockedPokemonServices = PokemonService(dispatcher: mockedNetworkDispatcher)
+        let body = "{}".data(using: String.Encoding.utf8)!
+        let request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!)
+        URLSession.mockNext(request: request, body: body, headers: [:], statusCode: 404, delay: 1)
         
         // When
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: mockedPokemonServices)
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
         let viewStateCollector = RxCollector<HomeViewModel.State>()
             .collect(from: sut.viewState.asObservable())
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
@@ -119,6 +118,41 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
     }
     
+    func testLoadedStateWithOnePokemon() {
+        // Given
+        let jsonDictionary: [String: Any] =
+            ["count": 949,
+             "results": [
+                ["url": "https://pokeapi.co/api/v2/pokemon/1/",
+                "name" :"bulbasaur"]
+                ],
+             "next": "https://pokeapi.co/api/v2/pokemon/?limit=1&offset=1"]
+        let data = try! JSONSerialization.data(withJSONObject: jsonDictionary, options: .prettyPrinted)
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!
+        let request = URLRequest(url: url)
+        URLSession.mockNext(request: request, body: data, delay: 1)
+        
+        // When
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+        let viewStateCollector = RxCollector<HomeViewModel.State>()
+            .collect(from: sut.viewState.asObservable())
+        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
+            .collect(from: sut.pokemonCellModels.asObservable())
+        
+        let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
+        sut.loadPokemons().subscribe(onCompleted: {
+            loadPokemonsExpectation.fulfill()
+        }).disposed(by: self.disposeBag)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        // Then
+        let viewStateExpectedResults: [HomeViewModel.State] = [.loading(true), .loading(true), .loaded, .loading(false)]
+        XCTAssertEqual(viewStateExpectedResults, viewStateCollector.items, "Invalid events for .loaded state.")
+        XCTAssertTrue(pokemonCellModelsCollector.items.count == 2, "pokemonCellModels.count is not 2")
+        XCTAssertTrue(pokemonCellModelsCollector.items[1].count == 1, "pokemonCellModelsCollector.items[1].count != 1")
+        XCTAssertTrue(pokemonCellModelsCollector.items[1].first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
+    }
     
 }
 
@@ -129,6 +163,7 @@ extension HomeViewModel.State: Equatable {
         case let (.loading(l), .loading(r)): return l == r
         case (.empty, .empty): return true
         case let (.error(l), .error(r)): return l.debugDescription == r.debugDescription // check this, conform objects to equatable
+        case (.loaded, .loaded): return true
         default: return false
         }
     }

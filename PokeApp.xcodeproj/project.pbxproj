@@ -88,6 +88,7 @@
 		E56D243920B2110C0059B0E0 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D243820B2110C0059B0E0 /* PokemonTableViewCell.swift */; };
 		E56D243D20B21DAD0059B0E0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D243C20B21DAD0059B0E0 /* StringExtension.swift */; };
 		E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */; };
+		E5825F112117E837008948E3 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5825F102117E837008948E3 /* DictionaryExtension.swift */; };
 		E5974ED421125F2800D48F25 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5974ED321125F2800D48F25 /* BaseCoordinator.swift */; };
 		E5974F022116399D00D48F25 /* MockedURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DD52111126C00323C84 /* MockedURLSession.swift */; };
 		E59DFB2C211713530052B678 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */; };
@@ -215,6 +216,7 @@
 		E56D243820B2110C0059B0E0 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		E56D243C20B21DAD0059B0E0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcherStub.swift; sourceTree = "<group>"; };
+		E5825F102117E837008948E3 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		E5974ED321125F2800D48F25 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		E59DFB41211715C20052B678 /* MockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResponse.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 				E56972A820AA740A00F0B3E5 /* UICollectionViewExtension.swift */,
 				E56972AB20AA743200F0B3E5 /* DateExtension.swift */,
 				E56D243C20B21DAD0059B0E0 /* StringExtension.swift */,
+				E5825F102117E837008948E3 /* DictionaryExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1148,6 +1151,7 @@
 				E50B734620B5199500154FCD /* Form.swift in Sources */,
 				E569729120AA6F8600F0B3E5 /* UICollectionViewCellExtension.swift in Sources */,
 				E50B734D20B51A0900154FCD /* JSONError.swift in Sources */,
+				E5825F112117E837008948E3 /* DictionaryExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
