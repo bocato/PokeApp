@@ -60,22 +60,16 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.6.0)
-  - RxBlocking (4.2.0):
-    - RxSwift (~> 4.0)
   - RxCocoa (4.2.0):
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
-  - RxTest (4.2.0):
-    - RxSwift (~> 4.0)
 
 DEPENDENCIES:
   - Firebase/Core
   - Firebase/RemoteConfig
   - Kingfisher (~> 4.6.1)
-  - RxBlocking (= 4.2.0)
   - RxCocoa (= 4.2.0)
   - RxSwift (= 4.2.0)
-  - RxTest (= 4.2.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -90,10 +84,8 @@ SPEC REPOS:
     - Kingfisher
     - nanopb
     - Protobuf
-    - RxBlocking
     - RxCocoa
     - RxSwift
-    - RxTest
 
 SPEC CHECKSUMS:
   Firebase: 8c957f9cb3852b519180fb378801b7eeeba4d288
@@ -107,11 +99,9 @@ SPEC CHECKSUMS:
   Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
-  RxBlocking: e339d8a6e752e25ade95ff858466c55436668f59
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
-  RxTest: 8da864c0ee47534f586ff18fb0c7e5b2f1fe5023
 
-PODFILE CHECKSUM: 5036c98c99cf80d75df130088ba4262a03de1b40
+PODFILE CHECKSUM: 22ad6b24f2ba9b3b511a464e61372ce648513934
 
 COCOAPODS: 1.5.3

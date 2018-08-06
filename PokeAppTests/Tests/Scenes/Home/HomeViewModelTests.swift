@@ -19,7 +19,6 @@ class HomeViewModelTests: XCTestCase {
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        testScheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
         actionsDelegateStub = HomeViewControllerActionsDelegateStub()
     }
