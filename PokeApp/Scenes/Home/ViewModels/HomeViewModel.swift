@@ -18,21 +18,8 @@ protocol HomeViewControllerActionsDelegate: class {
 class HomeViewModel {
     
     // MARK: - States
-//    enum State {
-//        case defaultState(state: DefaultState)
-//        case other
-//    }
-//    enum DefaultState {
-//        case loading(Bool)
-//        case error(SerializedNetworkError?)
-//        case empty
-//        case loaded
-//    }
     enum State {
-        case loading(Bool)
-        case error(SerializedNetworkError?)
-        case empty
-        case loaded
+        case common(CommonViewModelState)
     }
     
     // MARK: - Dependencies
@@ -53,24 +40,25 @@ class HomeViewModel {
     // MARK: - API Calls
     @discardableResult
     func loadPokemons() -> Observable<PokemonListResponse?> {
-        viewState.onNext(.loading(true))
+        viewState.onNext(.common(.loading(true)))
         return services.getPokemonList()
             .do(onNext: { (pokemonListResponse) in
                 guard let results = pokemonListResponse?.results, results.count > 0 else {
-                    self.viewState.accept(.empty)
+                    self.viewState.onNext(.common(.empty))
                     return
                 }
                 let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
                     return PokemonTableViewCellModel(listItem: listItem)
                 })
-                self.viewState.onNext(.loaded)
+                self.viewState.onNext(.common(.loaded))
                 self.pokemonCellModels.accept(viewModelsForResult)
             }, onError: { (error) in
                 let networkError = error as! NetworkError
-                self.viewState.onNext(.error(networkError.requestError))
+                self.viewState.onNext(.common(.error(networkError.requestError)))
             }, onCompleted: {
-                self.viewState.onNext(.loading(false))
-            }).fireSingleEvent(on: MainScheduler.instance, disposedBy: disposeBag)
+                self.viewState.onNext(.common(.loading(false)))
+            })
+            .fireSingleEvent(on: MainScheduler.instance, disposedBy: disposeBag)
     }
     
     // MARK: - Actions

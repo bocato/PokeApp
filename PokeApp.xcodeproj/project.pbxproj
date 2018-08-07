@@ -108,7 +108,8 @@
 		E5B8183F20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */; };
 		E5B8184120B4AAEE006F2AB0 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8184020B4AAEE006F2AB0 /* BorderView.swift */; };
 		E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8184220B4AB71006F2AB0 /* RoundedImageView.swift */; };
-		E5CFBFF42119CDC300038BF5 /* ObservableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFBFF32119CDC300038BF5 /* ObservableExtension.swift */; };
+		E5CFBFF42119CDC300038BF5 /* ObservableTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFBFF32119CDC300038BF5 /* ObservableTypeExtension.swift */; };
+		E5CFBFF62119DD0400038BF5 /* CommonViewModelStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFBFF52119DD0400038BF5 /* CommonViewModelStates.swift */; };
 		E5DCC2A220B6F37000325D32 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A120B6F37000325D32 /* FavoritesViewController.swift */; };
 		E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A320B6F37C00325D32 /* FavoritesViewModel.swift */; };
 		E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */; };
@@ -236,7 +237,8 @@
 		E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsViewModel.swift; sourceTree = "<group>"; };
 		E5B8184020B4AAEE006F2AB0 /* BorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
 		E5B8184220B4AB71006F2AB0 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
-		E5CFBFF32119CDC300038BF5 /* ObservableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableExtension.swift; sourceTree = "<group>"; };
+		E5CFBFF32119CDC300038BF5 /* ObservableTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTypeExtension.swift; sourceTree = "<group>"; };
+		E5CFBFF52119DD0400038BF5 /* CommonViewModelStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModelStates.swift; sourceTree = "<group>"; };
 		E5DCC2A120B6F37000325D32 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		E5DCC2A320B6F37C00325D32 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -542,7 +544,7 @@
 				E56972AB20AA743200F0B3E5 /* DateExtension.swift */,
 				E56D243C20B21DAD0059B0E0 /* StringExtension.swift */,
 				E5825F102117E837008948E3 /* DictionaryExtension.swift */,
-				E5CFBFF32119CDC300038BF5 /* ObservableExtension.swift */,
+				E5CFBFF32119CDC300038BF5 /* ObservableTypeExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -569,6 +571,7 @@
 			isa = PBXGroup;
 			children = (
 				E569729D20AA721C00F0B3E5 /* ErrorEnums.swift */,
+				E5CFBFF52119DD0400038BF5 /* CommonViewModelStates.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1078,7 +1081,7 @@
 				E5583E8F20B851EE003CAFA0 /* Coordinator.swift in Sources */,
 				E569729B20AA71DF00F0B3E5 /* ErrorFactory.swift in Sources */,
 				E569728D20AA6ED500F0B3E5 /* UIView+Loading.swift in Sources */,
-				E5CFBFF42119CDC300038BF5 /* ObservableExtension.swift in Sources */,
+				E5CFBFF42119CDC300038BF5 /* ObservableTypeExtension.swift in Sources */,
 				E569729320AA6FA500F0B3E5 /* UITableViewCellExtension.swift in Sources */,
 				E5B8183D20B49FFD006F2AB0 /* PokemonDetailsViewController.swift in Sources */,
 				E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */,
@@ -1140,6 +1143,7 @@
 				E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */,
 				E59DFB5D2117318F0052B678 /* NSURLSession+Mock.swift in Sources */,
 				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,
+				E5CFBFF62119DD0400038BF5 /* CommonViewModelStates.swift in Sources */,
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,
 				E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */,
 				E59DFB5221171EAC0052B678 /* URLRequest+NSURLSessionMock.swift in Sources */,

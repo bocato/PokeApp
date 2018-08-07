@@ -44,16 +44,10 @@ class HomeViewModelTests: XCTestCase {
         let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: PokemonService())
         
         // When
-        let stateCollector = RxCollector<HomeViewModel.State>()
-            .collect(from: sut.viewState.asObservable())
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
             .collect(from: sut.pokemonCellModels.asObservable())
         
         // Then
-        let firstCollectedState = stateCollector.items.first!
-        let expectedState: HomeViewModel.State = .loading(true)
-        XCTAssertEqual(firstCollectedState, expectedState, "First viewState is != loading(true)")
-        
         let collectedPokemonCellModels = pokemonCellModelsCollector.items.first!
         XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
     }
@@ -71,14 +65,14 @@ class HomeViewModelTests: XCTestCase {
             .collect(from: sut.pokemonCellModels.asObservable())
         
         let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-        sut.loadPokemons().subscribe(onCompleted: {
+        _ = sut.loadPokemons().do(onCompleted: {
             loadPokemonsExpectation.fulfill()
-        }).disposed(by: self.disposeBag)
+        })
         
         waitForExpectations(timeout: 1, handler: nil)
         
         // Then
-        let viewStateExpectedResults: [HomeViewModel.State] = [.loading(true), .loading(true), .empty, .loading(false)]
+        let viewStateExpectedResults: [HomeViewModel.State] = [.common(.loading(true)), .common(.empty), .common(.loading(false))]
         XCTAssertEqual(viewStateExpectedResults, viewStateCollector.items, "Invalid events for .empty state.")
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
     }
@@ -98,16 +92,19 @@ class HomeViewModelTests: XCTestCase {
             .collect(from: sut.pokemonCellModels.asObservable())
         
         let loadPokemonsOnErrorExpectation = expectation(description: "loadPokemons() reached OnError")
-        sut.loadPokemons().subscribe(onError: { (_) in
+        _ = sut.loadPokemons().do(onError: { (_) in
             loadPokemonsOnErrorExpectation.fulfill()
-        }).disposed(by: self.disposeBag)
+        })
         waitForExpectations(timeout: 1, handler: nil)
         
         // Then
         switch viewStateCollector.items.last! {
-        case .error(let serializedError): XCTAssertNotNil(serializedError, "The error is nil!")
-            break
-        default: XCTFail("The last viewState is not an error!")
+        case .common(let commonState):
+            switch commonState {
+            case .error(let serializedError): XCTAssertNotNil(serializedError, "The error is nil!")
+                break
+            default: XCTFail("The last viewState is not an error!")
+            }
         }
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
     }
@@ -134,60 +131,17 @@ class HomeViewModelTests: XCTestCase {
             .collect(from: sut.pokemonCellModels.asObservable())
         
         let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-        sut.loadPokemons().subscribe(onCompleted: {
+        _ = sut.loadPokemons().do(onCompleted: {
             loadPokemonsExpectation.fulfill()
-        }).disposed(by: self.disposeBag)
+        })
         
         waitForExpectations(timeout: 1, handler: nil)
         
         // Then
-        let viewStateExpectedResults: [HomeViewModel.State] = [.loading(true), .loading(true), .loaded, .loading(false)]
-        XCTAssertEqual(viewStateExpectedResults, viewStateCollector.items, "Invalid events for .loaded state.")
+        XCTAssertTrue(viewStateCollector.items.contains(where: { $0 == .common(.loaded) }), ".loaded State not reached")
         XCTAssertTrue(pokemonCellModelsCollector.items.count == 2, "pokemonCellModels.count is not 2")
         XCTAssertTrue(pokemonCellModelsCollector.items.last!.count == 1, "pokemonCellModelsCollector.items[1].count != 1")
         XCTAssertTrue(pokemonCellModelsCollector.items.last!.first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
-    }
-    
-    func testSinglePerformance() {
-        
-        let data = "{}".data(using: String.Encoding.utf8)!
-        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-    
-        measure {
-            let onCompletedExpectation = expectation(description: "onCompletedExpectation")
-            let onDisposedExpectation = expectation(description: "onDisposedExpectation")
-            sut.loadPokemons().single().subscribe(onCompleted: {
-                onCompletedExpectation.fulfill()
-            }, onDisposed: {
-                onDisposedExpectation.fulfill()
-            })
-            .disposed(by: self.disposeBag)
-            waitForExpectations(timeout: 1, handler: nil)
-        }
-        
-        debugPrint("hiuashuidshidhsiaads")
-    }
-    
-    func testSubscribePerformance() {
-        
-        let data = "{}".data(using: String.Encoding.utf8)!
-        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-        
-        measure {
-            let onCompletedExpectation = expectation(description: "onCompletedExpectation")
-            let onDisposedExpectation = expectation(description: "onDisposedExpectation")
-            sut.loadPokemons().subscribe(onCompleted: {
-                onCompletedExpectation.fulfill()
-            }, onDisposed: {
-                onDisposedExpectation.fulfill()
-            })
-                .disposed(by: self.disposeBag)
-            waitForExpectations(timeout: 1, handler: nil)
-        }
-        
-        debugPrint("hiuashuidshidhsiaads")
     }
     
 }
@@ -196,11 +150,7 @@ extension HomeViewModel.State: Equatable {
     
     public static func ==(lhs: HomeViewModel.State, rhs: HomeViewModel.State) -> Bool {
         switch (lhs, rhs) {
-        case let (.loading(l), .loading(r)): return l == r
-        case (.empty, .empty): return true
-        case let (.error(l), .error(r)): return l.debugDescription == r.debugDescription // check this, conform objects to equatable
-        case (.loaded, .loaded): return true
-        default: return false
+        case let (.common(l), .common(r)): return l == r
         }
     }
     
@@ -233,7 +183,7 @@ class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
 //        .collect(from: sut.pokemonCellModels.asObservable())
 //
 //    let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-//    sut.loadPokemons().subscribe(onCompleted: {
+//    _ = sut.loadPokemons().do(onCompleted: {
 //        loadPokemonsExpectation.fulfill()
 //    }).disposed(by: self.disposeBag)
 //
@@ -264,7 +214,7 @@ class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
 //    testScheduler.start()
 //
 //    let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-//    sut.loadPokemons().subscribe(onCompleted: {
+//    _ = sut.loadPokemons().do(onCompleted: {
 //        loadPokemonsExpectation.fulfill()
 //    }).disposed(by: self.disposeBag)
 //

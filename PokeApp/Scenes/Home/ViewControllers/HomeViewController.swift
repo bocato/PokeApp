@@ -25,13 +25,7 @@ class HomeViewController: UIViewController {
     var viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
-    // MARK: - ViewElements
-    fileprivate var refreshControl: UIRefreshControl = ({
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = UIColor.lightGray
-        return refreshControl
-    })()
-    
+    // MARK: - Instantiation
     class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
         let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
         controller.viewModel = viewModel
@@ -41,7 +35,6 @@ class HomeViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.refreshControl = refreshControl
         viewModel.loadPokemons()
         bindAll()
     }
@@ -53,15 +46,12 @@ class HomeViewController: UIViewController {
     
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
-//
 //        // tests
 //        if RemoteConfigs.shared.areRefactorTestsEnabled {
 //           AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are ENABLED!")
 //        } else {
 //          AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are DISABLED!")
 //        }
-//
-//
 //    }
     
     deinit {
@@ -77,7 +67,6 @@ private extension HomeViewController {
     func bindAll() {
         bindViewModel()
         bindTableView()
-//        bindRefreshControl()
     }
     
     func bindViewModel() {
@@ -87,21 +76,29 @@ private extension HomeViewController {
             .asObservable()
             .subscribe(onNext: { state in
                 switch state {
-                case .loading(let isLoading):
-                    if isLoading {
-                        self.tableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
-                    } else {
-                        self.tableView.stopLoading()
-                    }
-                case .error(let networkError):
-                    let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
-                    AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
-                case .empty:
-                    self.tableView.isHidden = true
-                default: return
+                case .common(let commonState):
+                    handleCommonViewState(commonState)
                 }
             })
             .disposed(by: disposeBag)
+        
+        func handleCommonViewState(_ state: CommonViewModelState) {
+            switch state {
+            case .loading(let isLoading):
+//                if isLoading { // tá bugando, consertar depois
+//                    self.tableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
+//                } else {
+//                    self.tableView.stopLoading()
+//                }
+                DebugLog(format: "\(isLoading)")
+            case .error(let networkError):
+                let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
+                AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
+            case .empty:
+                self.tableView.isHidden = true
+            default: return
+            }
+        }
         
     }
     
@@ -119,18 +116,6 @@ private extension HomeViewController {
             .modelSelected(PokemonTableViewCellModel.self)
             .subscribe(onNext: { (selectedPokemonCellModel) in
                 self.viewModel.showItemDetailsForSelectedCellModel(selectedPokemonCellModel)
-            })
-            .disposed(by: disposeBag)
-        
-    }
-    
-    func bindRefreshControl() {
-        
-        refreshControl.rx
-            .controlEvent(.valueChanged)
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                self.viewModel.loadPokemons()
             })
             .disposed(by: disposeBag)
         

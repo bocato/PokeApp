@@ -13,10 +13,10 @@ extension ObservableType {
     
     func fireSingleEvent(on scheduler: SerialDispatchQueueScheduler? = nil, disposedBy disposeBag: DisposeBag) -> Self {
         guard let scheduler = scheduler else {
-            self.asSingle().subscribe().disposed(by: disposeBag)
+            self.subscribe().disposed(by: disposeBag)
             return self
         }
-        observeOn(scheduler).asSingle().debug().subscribe().disposed(by: disposeBag)
+        subscribeOn(scheduler).subscribe().disposed(by: disposeBag)
         return self
     }
     
