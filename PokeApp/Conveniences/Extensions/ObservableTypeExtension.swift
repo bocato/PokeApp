@@ -11,13 +11,12 @@ import RxSwift
 
 extension ObservableType {
     
-    func fireSingleEvent(on scheduler: SerialDispatchQueueScheduler? = nil, disposedBy disposeBag: DisposeBag) -> Self {
+    func fireSingleEvent(on scheduler: SerialDispatchQueueScheduler? = nil, disposedBy disposeBag: DisposeBag) {
         guard let scheduler = scheduler else {
-            self.subscribe().disposed(by: disposeBag)
-            return self
+            self.single().subscribe().disposed(by: disposeBag)
+            return
         }
-        subscribeOn(scheduler).subscribe().disposed(by: disposeBag)
-        return self
+        single().subscribeOn(scheduler).subscribe().disposed(by: disposeBag)
     }
     
 }

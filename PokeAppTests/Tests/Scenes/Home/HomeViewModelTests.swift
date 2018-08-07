@@ -65,11 +65,10 @@ class HomeViewModelTests: XCTestCase {
             .collect(from: sut.pokemonCellModels.asObservable())
         
         let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-        _ = sut.loadPokemons().do(onCompleted: {
+        sut.loadPokemonsObservable().do(onCompleted: {
             loadPokemonsExpectation.fulfill()
-        })
-        
-        waitForExpectations(timeout: 1, handler: nil)
+        }).fireSingleEvent(disposedBy: disposeBag)
+        waitForExpectations(timeout: 2, handler: nil)
         
         // Then
         let viewStateExpectedResults: [HomeViewModel.State] = [.common(.loading(true)), .common(.empty), .common(.loading(false))]
@@ -92,9 +91,9 @@ class HomeViewModelTests: XCTestCase {
             .collect(from: sut.pokemonCellModels.asObservable())
         
         let loadPokemonsOnErrorExpectation = expectation(description: "loadPokemons() reached OnError")
-        _ = sut.loadPokemons().do(onError: { (_) in
+        sut.loadPokemonsObservable().do(onError: { _ in
             loadPokemonsOnErrorExpectation.fulfill()
-        })
+        }).fireSingleEvent(disposedBy: disposeBag)
         waitForExpectations(timeout: 1, handler: nil)
         
         // Then
@@ -130,10 +129,10 @@ class HomeViewModelTests: XCTestCase {
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
             .collect(from: sut.pokemonCellModels.asObservable())
         
-        let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-        _ = sut.loadPokemons().do(onCompleted: {
+        let loadPokemonsExpectation = expectation(description: "loadPokemonsObservable() fetched a result")
+        _ = sut.loadPokemonsObservable().do(onCompleted: {
             loadPokemonsExpectation.fulfill()
-        })
+        }).fireSingleEvent(disposedBy: disposeBag)
         
         waitForExpectations(timeout: 1, handler: nil)
         
@@ -144,14 +143,62 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(pokemonCellModelsCollector.items.last!.first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
     }
     
+    func testLoadPokemons() {
+        // Given
+        let data = "{}".data(using: String.Encoding.utf8)!
+        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+        
+        // When
+        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+        sut.loadPokemons(using: disposeBag)
+        
+        // Then
+        XCTAssertTrue(sut.loadPokemonsDidRun, "loadPokemons() did not run")
+    }
+    
+    func testShowItemDetailsForSelectedCellModelCalledWithValidPokemonCellModel() {
+        // Given
+        let data = "{}".data(using: String.Encoding.utf8)!
+        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+        let pokemonListItem = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbassaur")
+        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
+        
+        // When
+        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+        sut.showItemDetailsForSelectedCellModel(cellModel)
+        
+        // Then
+        XCTAssertTrue(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was not called")
+        XCTAssertNotNil(actionsDelegateStub.pokemonIdToShowDetails, "Invalid pokemon id")
+        XCTAssertEqual(actionsDelegateStub.pokemonIdToShowDetails!, pokemonListItem.id!, "Invalid pokemon id")
+    }
+    
+    func testShowItemDetailsForSelectedCellModelCalledWithInvalidPokemonCellModel() {
+        // Given
+        let data = "{}".data(using: String.Encoding.utf8)!
+        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+        let pokemonListItem = PokemonListResult()
+        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
+        
+        // When
+        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+        sut.showItemDetailsForSelectedCellModel(cellModel)
+        
+        // Then
+        XCTAssertFalse(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was called")
+        XCTAssertNil(actionsDelegateStub.pokemonIdToShowDetails, "The pokemon id should be nil")
+    }
+    
 }
 
-extension HomeViewModel.State: Equatable {
+// MARK: - Stubs
+class HomeViewModelStub: HomeViewModel {
     
-    public static func ==(lhs: HomeViewModel.State, rhs: HomeViewModel.State) -> Bool {
-        switch (lhs, rhs) {
-        case let (.common(l), .common(r)): return l == r
-        }
+    var loadPokemonsDidRun = false
+    
+    override func loadPokemons(using disposeBag: DisposeBag) {
+        super.loadPokemons(using: disposeBag)
+        loadPokemonsDidRun = true
     }
     
 }
@@ -164,6 +211,17 @@ class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
     func showItemDetailsForPokemonWith(id: Int) {
         showItemDetailsForPokemonWithIdWasCalled = true
         pokemonIdToShowDetails = id
+    }
+    
+}
+
+// MARK: - Helpers
+extension HomeViewModel.State: Equatable {
+    
+    public static func ==(lhs: HomeViewModel.State, rhs: HomeViewModel.State) -> Bool {
+        switch (lhs, rhs) {
+        case let (.common(l), .common(r)): return l == r
+        }
     }
     
 }
@@ -182,8 +240,8 @@ class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
 //    let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
 //        .collect(from: sut.pokemonCellModels.asObservable())
 //
-//    let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-//    _ = sut.loadPokemons().do(onCompleted: {
+//    let loadPokemonsExpectation = expectation(description: "loadPokemonsObservable() fetched a result")
+//    _ = sut.loadPokemonsObservable().do(onCompleted: {
 //        loadPokemonsExpectation.fulfill()
 //    }).disposed(by: self.disposeBag)
 //
@@ -213,8 +271,8 @@ class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
 //    }
 //    testScheduler.start()
 //
-//    let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-//    _ = sut.loadPokemons().do(onCompleted: {
+//    let loadPokemonsExpectation = expectation(description: "loadPokemonsObservable() fetched a result")
+//    _ = sut.loadPokemonsObservable().do(onCompleted: {
 //        loadPokemonsExpectation.fulfill()
 //    }).disposed(by: self.disposeBag)
 //

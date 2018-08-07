@@ -23,7 +23,7 @@ class HomeViewModel {
     }
     
     // MARK: - Dependencies
-    private let disposeBag = DisposeBag()
+    private let disposeBag: DisposeBag!
     private(set) weak var actionsDelegate: HomeViewControllerActionsDelegate?
     private let services: PokemonServiceProtocol
     
@@ -32,14 +32,14 @@ class HomeViewModel {
     private(set) var viewState = PublishSubject<State>()
     
     // MARK: - Intialization
-    init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol) {
+    init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol, disposeBag: DisposeBag = DisposeBag()) {
         self.actionsDelegate = actionsDelegate
         self.services = services
+        self.disposeBag = disposeBag
     }
     
     // MARK: - API Calls
-    @discardableResult
-    func loadPokemons() -> Observable<PokemonListResponse?> {
+    func loadPokemonsObservable() -> Observable<PokemonListResponse?> {
         viewState.onNext(.common(.loading(true)))
         return services.getPokemonList()
             .do(onNext: { (pokemonListResponse) in
@@ -58,7 +58,10 @@ class HomeViewModel {
             }, onCompleted: {
                 self.viewState.onNext(.common(.loading(false)))
             })
-            .fireSingleEvent(on: MainScheduler.instance, disposedBy: disposeBag)
+    }
+    
+    func loadPokemons(using disposeBag: DisposeBag) {
+        loadPokemonsObservable().fireSingleEvent(disposedBy: disposeBag)
     }
     
     // MARK: - Actions
