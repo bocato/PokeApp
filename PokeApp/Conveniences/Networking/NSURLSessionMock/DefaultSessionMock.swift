@@ -65,25 +65,6 @@ extension DefaultSessionMock {
     
 }
 
-// MARK: - Completion Handler responder
-private extension DefaultSessionMock {
-    
-    func respondToCompletionHandler(request: URLRequest, extractions: [String], completionHandler: @escaping CompletionHandler) -> (MockSessionDataTask) -> Void {
-        return { task in
-            let response = self.mockResponse(request.url!, extractions)
-            switch response {
-            case .success(let statusCode, let headers, let body):
-                let urlResponse = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "HTTP/1.1", headerFields: headers)!
-                completionHandler(body, urlResponse, nil)
-            case .failure(let error):
-                let urlResponse = HTTPURLResponse(url: request.url!, statusCode: 500, httpVersion: "HTTP/1.1", headerFields: [:])!
-                completionHandler(nil, urlResponse, error)
-            }
-        }
-    }
-    
-}
-
 // MARK: - Equatable
 extension DefaultSessionMock: Equatable {
     

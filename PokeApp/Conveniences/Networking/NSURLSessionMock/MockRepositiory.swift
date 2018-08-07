@@ -1,5 +1,5 @@
 //
-//  MockRegister.swift
+//  MockRepositiory.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 05/08/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MockRegister<T: SessionMock> {
+class MockRepositiory<T: SessionMock> {
     
     private var permanentMocks: [T] = []
     private var temporaryMocks: [T] = []
@@ -61,7 +61,7 @@ class MockRegister<T: SessionMock> {
 }
 
 
-extension MockRegister where T: Equatable {
+extension MockRepositiory where T: Equatable {
     
     func contains(temporary mock: T) -> Bool {
         return self.temporaryMocks.contains(mock)

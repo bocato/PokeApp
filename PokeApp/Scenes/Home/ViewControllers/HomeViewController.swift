@@ -42,6 +42,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        tableView.refreshControl = refreshControl
+        viewModel.loadPokemons()
         bindAll()
     }
     
@@ -80,11 +81,6 @@ private extension HomeViewController {
     }
     
     func bindViewModel() {
-        
-        viewModel.loadPokemons()
-            .subscribeOn(MainScheduler.instance)
-            .subscribe()
-            .disposed(by: disposeBag)
         
         viewModel.viewState
             .observeOn(MainScheduler.instance)

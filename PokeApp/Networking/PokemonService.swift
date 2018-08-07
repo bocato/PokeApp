@@ -33,7 +33,7 @@ class PokemonService: PokemonServiceProtocol {
     
     // MARK: - Services
     func getPokemonList() -> Observable<PokemonListResponse?> {
-        return getPokemonList(1)
+        return getPokemonList(150)
     }
     
     func getPokemonList(_ limit: Int) -> Observable<PokemonListResponse?> {

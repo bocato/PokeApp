@@ -21,7 +21,7 @@ public struct MockReference { // this can be passed back in to determine the sta
 
 extension URLSession {
     
-    internal static let currentMocks = MockRegister<DefaultSessionMock>()
+    internal static let currentMocks = MockRepositiory<DefaultSessionMock>()
     
     /**
      The next call exactly matching `request` will successfully return `body`
@@ -121,6 +121,7 @@ extension URLSession {
      */
     public class func removeAllMocks() {
         currentMocks.removeAllMocks()
+        DebugLog(prefix: "MockedURLSession", format: "All mocks are removed")
     }
     
     /**
@@ -129,6 +130,7 @@ extension URLSession {
      */
     public class func removeAllMocks(of request: URLRequest) {
         currentMocks.removeAllMocks(of: request)
+        DebugLog(prefix: "MockedURLSession", format: "\(request.url!) mocks are removed")
     }
     
     /**

@@ -18,6 +18,16 @@ protocol HomeViewControllerActionsDelegate: class {
 class HomeViewModel {
     
     // MARK: - States
+//    enum State {
+//        case defaultState(state: DefaultState)
+//        case other
+//    }
+//    enum DefaultState {
+//        case loading(Bool)
+//        case error(SerializedNetworkError?)
+//        case empty
+//        case loaded
+//    }
     enum State {
         case loading(Bool)
         case error(SerializedNetworkError?)
@@ -32,7 +42,7 @@ class HomeViewModel {
     
     // MARK: - Properties
     private(set) var pokemonCellModels = BehaviorRelay<[PokemonTableViewCellModel]>(value: [])
-    private(set) var viewState = BehaviorRelay<State>(value: .loading(true))
+    private(set) var viewState = PublishSubject<State>()
     
     // MARK: - Intialization
     init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol) {
@@ -43,8 +53,8 @@ class HomeViewModel {
     // MARK: - API Calls
     @discardableResult
     func loadPokemons() -> Observable<PokemonListResponse?> {
-        viewState.accept(.loading(true))
-        let serviceObservable = services.getPokemonList()
+        viewState.onNext(.loading(true))
+        return services.getPokemonList()
             .do(onNext: { (pokemonListResponse) in
                 guard let results = pokemonListResponse?.results, results.count > 0 else {
                     self.viewState.accept(.empty)
@@ -53,15 +63,14 @@ class HomeViewModel {
                 let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
                     return PokemonTableViewCellModel(listItem: listItem)
                 })
-                self.viewState.accept(.loaded)
+                self.viewState.onNext(.loaded)
                 self.pokemonCellModels.accept(viewModelsForResult)
             }, onError: { (error) in
                 let networkError = error as! NetworkError
-                self.viewState.accept(.error(networkError.requestError))
+                self.viewState.onNext(.error(networkError.requestError))
             }, onCompleted: {
-                self.viewState.accept(.loading(false))
-            })
-        return serviceObservable
+                self.viewState.onNext(.loading(false))
+            }).fireSingleEvent(on: MainScheduler.instance, disposedBy: disposeBag)
     }
     
     // MARK: - Actions

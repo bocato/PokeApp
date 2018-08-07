@@ -60,10 +60,8 @@ class HomeViewModelTests: XCTestCase {
     
     func testEmptyState() {
         // Given
-        let body1 = "{}".data(using: String.Encoding.utf8)!
-        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!
-        let request = URLRequest(url: url)
-        URLSession.mockNext(request: request, body: body1, delay: 1)
+        let data = "{}".data(using: String.Encoding.utf8)!
+        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
         
         // When
         let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
@@ -85,11 +83,12 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
     }
     
-    func testErrorState() { // TODO: Test error with URLSession.mockNext
+    func testErrorState() {
         // Given
-        let body = "{}".data(using: String.Encoding.utf8)!
-        let request = URLRequest(url: URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!)
-        URLSession.mockNext(request: request, body: body, headers: [:], statusCode: 404, delay: 1)
+        try! URLSession.mockEvery(expression: "v2/pokemon") { (url, headers) -> MockResponse in
+            let error = NSError(domain: "test", code: 404, userInfo: nil)
+            return .failure(error: error)
+        }
         
         // When
         let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
@@ -145,8 +144,50 @@ class HomeViewModelTests: XCTestCase {
         let viewStateExpectedResults: [HomeViewModel.State] = [.loading(true), .loading(true), .loaded, .loading(false)]
         XCTAssertEqual(viewStateExpectedResults, viewStateCollector.items, "Invalid events for .loaded state.")
         XCTAssertTrue(pokemonCellModelsCollector.items.count == 2, "pokemonCellModels.count is not 2")
-        XCTAssertTrue(pokemonCellModelsCollector.items[1].count == 1, "pokemonCellModelsCollector.items[1].count != 1")
-        XCTAssertTrue(pokemonCellModelsCollector.items[1].first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
+        XCTAssertTrue(pokemonCellModelsCollector.items.last!.count == 1, "pokemonCellModelsCollector.items[1].count != 1")
+        XCTAssertTrue(pokemonCellModelsCollector.items.last!.first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
+    }
+    
+    func testSinglePerformance() {
+        
+        let data = "{}".data(using: String.Encoding.utf8)!
+        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+    
+        measure {
+            let onCompletedExpectation = expectation(description: "onCompletedExpectation")
+            let onDisposedExpectation = expectation(description: "onDisposedExpectation")
+            sut.loadPokemons().single().subscribe(onCompleted: {
+                onCompletedExpectation.fulfill()
+            }, onDisposed: {
+                onDisposedExpectation.fulfill()
+            })
+            .disposed(by: self.disposeBag)
+            waitForExpectations(timeout: 1, handler: nil)
+        }
+        
+        debugPrint("hiuashuidshidhsiaads")
+    }
+    
+    func testSubscribePerformance() {
+        
+        let data = "{}".data(using: String.Encoding.utf8)!
+        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+        
+        measure {
+            let onCompletedExpectation = expectation(description: "onCompletedExpectation")
+            let onDisposedExpectation = expectation(description: "onDisposedExpectation")
+            sut.loadPokemons().subscribe(onCompleted: {
+                onCompletedExpectation.fulfill()
+            }, onDisposed: {
+                onDisposedExpectation.fulfill()
+            })
+                .disposed(by: self.disposeBag)
+            waitForExpectations(timeout: 1, handler: nil)
+        }
+        
+        debugPrint("hiuashuidshidhsiaads")
     }
     
 }

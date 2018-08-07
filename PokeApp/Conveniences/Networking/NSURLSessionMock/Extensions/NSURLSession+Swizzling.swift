@@ -48,9 +48,9 @@ extension URLSession {
                     try URLSession.swizzle(replace: "dataTaskWithURL:", with: "swizzledDataTaskWithURL:")
                     try URLSession.swizzle(replace: "dataTaskWithRequest:completionHandler:", with: "swizzledDataTaskWithRequest:completionHandler:")
                     try URLSession.swizzle(replace: "dataTaskWithURL:completionHandler:", with: "swizzledDataTaskWithURL:completionHandler:")
-                    DebugLog(prefix: "[MockedURLSession]", format: "NSURLSession now mocked")
+                    DebugLog(prefix: "MockedURLSession", format: "NSURLSession now mocked")
                 } catch let e {
-                    DebugLog(prefix: "[MockedURLSession]", format: "ERROR: Swizzling failed")
+                    DebugLog(prefix: "MockedURLSession", format: "ERROR: Swizzling failed")
                 }
                 return true
             }()
@@ -92,7 +92,7 @@ extension URLSession {
         if let task = task(for: request, completionHandler: completionHandler) {
             switch (URLSession.debugMockRequests) {
             case .all, .mocked:
-                DebugLog(prefix: "[MockedURLSession]", format: "request: \(request.debugMockDescription) mocked")
+                DebugLog(prefix: "MockedURLSession", format: "request: \(request.debugMockDescription) mocked")
             default:
                 break
             }
@@ -109,7 +109,7 @@ extension URLSession {
         
         switch (URLSession.debugMockRequests) {
         case .all, .unmocked:
-            DebugLog(prefix: "[MockedURLSession]", format: "request: \(request.debugMockDescription) not mocked")
+            DebugLog(prefix: "MockedURLSession", format: "request: \(request.debugMockDescription) not mocked")
         default:
             break
         }
