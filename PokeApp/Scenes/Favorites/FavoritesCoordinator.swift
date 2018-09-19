@@ -15,12 +15,29 @@ protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActi
 
 class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     
-    // MARK: - Dependencies
-    var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
+    // MARK: - Outputs
+    enum Output: CoordinatorOutput {
+        case shouldReloadFavorites
+    }
     
-    // MARK: - Start
-    override func start() {
-        // Configure something if needed...
+    // MARK: - Dependencies
+    private(set) var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
+    
+    // MARK: - Dealing with ouputs
+    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+        switch (child, output) {
+        case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
+            switch output {
+            case .didRemovePokemon(let pokemon):
+                FavoritesManager.shared.remove(pokemon: pokemon)
+                removeChildCoordinator(detailsCoordinator)
+                router.popModule(animated: true)
+                let outputToSend: Output = .shouldReloadFavorites
+                sendOutputToParent(outputToSend)
+            default: break
+            }
+        default: return
+        }
     }
     
 }
@@ -28,13 +45,10 @@ class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
 extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
-        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router) { [weak self] (output, detailsCoordinator) in
-            detailsCoordinator.router.popModule(animated: true)
-            self?.removeChildCoordinator(detailsCoordinator)
-        }
-        self.addChildCoordinator(coordinator)
+        let router = self.router
+        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router, parentCoordinator: self)
+        addChildCoordinator(coordinator)
         router.push(controller)
-        coordinator.start()
     }
     
 }

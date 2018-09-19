@@ -8,10 +8,12 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 // MARK: - Actions
 protocol PokemonDetailsViewControllerActionsDelegate : class {
     func didAddFavorite(pokemon: Pokemon) // configure didremove
+    func didRemoveFavorite(pokemon: Pokemon)
 }
 
 // MARK: - ViewState
@@ -20,36 +22,7 @@ enum PokemonDetailsViewState {
     case error(SerializedNetworkError?)
 }
 
-// MARK: - ViewModel Protocol
-protocol PokemonDetailsViewModelProtocol {
-    
-    // MARK: - Dependencies
-    var services: PokemonServiceProtocol { get }
-    var actionsDelegate: PokemonDetailsViewControllerActionsDelegate? { get }
-    
-    // MARK: - Properties
-    var pokemonId: Int { get }
-    
-    // MARK: - Rx Properties
-    var isLoadingPokemonImage: Variable<Bool> { get }
-    var viewState: Variable<PokemonDetailsViewState> { get }
-    var favoriteButtonText: Variable<String> { get }
-    var pokemonImage: Variable<UIImage?> { get }
-    var pokemonNumber: Variable<String?> { get }
-    var pokemonName: Variable<String?> { get }
-    var pokemonAbilities:  Variable<[String]> { get }
-    var pokemonStats: Variable<[String]> { get }
-    var pokemonMoves: Variable<[String]> { get }
-    
-    // MARK: - Action Closures
-    var favoriteButtonTouchUpInsideActionClosure: (()->())? { get }
-    
-    // MARK: - API Calls
-    func loadPokemonData()
-    
-}
-
-class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
+class PokemonDetailsViewModel {
     
     // MARK: - Constants
     private struct Constants {
@@ -58,13 +31,14 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     }
     
     // MARK: - Dependencies
-    internal var services: PokemonServiceProtocol
+    private var services: PokemonServiceProtocol
     weak var actionsDelegate: PokemonDetailsViewControllerActionsDelegate?
+    
     private let disposeBag = DisposeBag()
     
     // MARK: - Properties
-    internal var pokemonId: Int
-    private var pokemonData: Pokemon?
+    private var pokemonId: Int
+    private(set) var pokemonData: Pokemon?
     private var isThisPokemonAFavorite: Bool {
         guard let pokemonData = pokemonData else {
             return false
@@ -73,15 +47,15 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     }
     
     // MARK: - Rx Properties
-    var isLoadingPokemonImage = Variable<Bool>(true)
-    var viewState = Variable<PokemonDetailsViewState>(.loading(true))
-    var favoriteButtonText = Variable<String>("Add to Favorites")
-    var pokemonImage = Variable<UIImage?>(nil)
-    var pokemonNumber = Variable<String?>(nil)
-    var pokemonName = Variable<String?>(nil)
-    var pokemonAbilities = Variable<[String]>([])
-    var pokemonStats = Variable<[String]>([])
-    var pokemonMoves = Variable<[String]>([])
+    private(set) var isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
+    private(set) var viewState = BehaviorRelay<PokemonDetailsViewState>(value: .loading(true))
+    private(set) var favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
+    private(set) var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
+    private(set) var pokemonNumber = BehaviorRelay<String?>(value: nil)
+    private(set) var pokemonName = BehaviorRelay<String?>(value: nil)
+    private(set) var pokemonAbilities = BehaviorRelay<[String]>(value: [])
+    private(set) var pokemonStats = BehaviorRelay<[String]>(value: [])
+    private(set) var pokemonMoves = BehaviorRelay<[String]>(value: [])
     
     // MARK: - Action Closures
     var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
@@ -96,7 +70,7 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     // MARK: - API Calls
     func loadPokemonData() {
-        viewState.value = .loading(true)
+        viewState.accept(.loading(true))
         services.getDetailsForPokemon(withId: pokemonId)
             .subscribe(onNext: { pokemonData in
                 
@@ -108,25 +82,25 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
                     let stats = pokemonData.stats,
                     let moves = pokemonData.moves else {
                         let error = ErrorFactory.buildNetworkError(with: .unexpected)
-                        self.viewState.value = .error(error)
+                        self.viewState.accept(.error(error))
                     return
                 }
                 
                 self.pokemonData = pokemonData
                 
-                self.favoriteButtonText.value = self.getfavoritesButtonText()
+                self.favoriteButtonText.accept(self.getfavoritesButtonText())
                 self.downloadImage(from: imageURL)
-                self.pokemonNumber.value = "#\(number)"
-                self.pokemonName.value = name.capitalizingFirstLetter()
-                self.pokemonAbilities.value = self.extractAbilityNames(from: abilities)
-                self.pokemonStats.value = self.extractStatStrings(from: stats)
-                self.pokemonMoves.value = self.extractMoveStrings(from: moves)
+                self.pokemonNumber.accept("#\(number)")
+                self.pokemonName.accept(name.capitalizingFirstLetter())
+                self.pokemonAbilities.accept(self.extractAbilityNames(from: abilities))
+                self.pokemonStats.accept(self.extractStatStrings(from: stats))
+                self.pokemonMoves.accept(self.extractMoveStrings(from: moves))
                 
             }, onError: { (error) in
                 let networkError = error as! NetworkError
-                self.viewState.value = .error(networkError.requestError)
+                self.viewState.accept(.error(networkError.requestError))
             }, onCompleted: {
-                self.viewState.value = .loading(false)
+                self.viewState.accept(.loading(false))
             })
             .disposed(by: disposeBag)
     }
@@ -137,16 +111,16 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
     
     private func downloadImage(from itemURL: String?) {
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.value = UIImage.fromResource(withName: .openPokeball)
-            self.isLoadingPokemonImage.value = false
+            pokemonImage.accept(UIImage.fromResource(withName: .openPokeball))
+            self.isLoadingPokemonImage.accept(false)
             return
         }
         DispatchQueue.main.async {
             let pokemonImageViewHolder = UIImageView()
             pokemonImageViewHolder.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
                 guard error != nil else {
-                    self.pokemonImage.value = image
-                    self.isLoadingPokemonImage.value = false
+                    self.pokemonImage.accept(image)
+                    self.isLoadingPokemonImage.accept(false)
                     return
                 }
             }
@@ -191,12 +165,11 @@ class PokemonDetailsViewModel: PokemonDetailsViewModelProtocol {
         self.favoriteButtonTouchUpInsideActionClosure = {
             guard let pokemonData = self.pokemonData else { return }
             if self.isThisPokemonAFavorite {
-                FavoritesManager.shared.remove(pokemon: pokemonData)
+                self.actionsDelegate?.didRemoveFavorite(pokemon: pokemonData)
             } else {
-                FavoritesManager.shared.add(pokemon: pokemonData)
                 self.actionsDelegate?.didAddFavorite(pokemon: pokemonData)
             }
-            self.favoriteButtonText.value = self.getfavoritesButtonText()
+            self.favoriteButtonText.accept(self.getfavoritesButtonText())
         }
         
     }

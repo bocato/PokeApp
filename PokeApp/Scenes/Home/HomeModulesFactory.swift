@@ -11,8 +11,7 @@ import Foundation
 protocol HomeModulesFactoryProtocol { // TODO: Refactor...
     // MARK: - Builders
     func buildPokemonDetailsModule(pokemonId: Int,
-                                   router: RouterProtocol,
-                                   flowFinishClosure: ((DetailsCoordinatorOutput, DetailsCoordinatorProtocol) -> Void)?)
+                                   router: RouterProtocol)
         -> (coordinator: DetailsCoordinatorProtocol, controller: PokemonDetailsViewController)
 
 }
@@ -21,11 +20,10 @@ protocol HomeModulesFactoryProtocol { // TODO: Refactor...
 class HomeModulesFactory: HomeModulesFactoryProtocol {
     
     func buildPokemonDetailsModule(pokemonId: Int,
-                                   router: RouterProtocol,
-                                   flowFinishClosure: ((DetailsCoordinatorOutput, DetailsCoordinatorProtocol) -> Void)?)
+                                   router: RouterProtocol)
         -> (coordinator: DetailsCoordinatorProtocol, controller: PokemonDetailsViewController) {
             
-            let pokemonDetailsCoordinator = DetailsCoordinator(router: router, flowFinishClosure: flowFinishClosure)
+            let pokemonDetailsCoordinator = DetailsCoordinator(router: router)
             let viewModel = PokemonDetailsViewModel(pokemonId: pokemonId, services: PokemonService(), actionsDelegate: pokemonDetailsCoordinator)
             let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
             

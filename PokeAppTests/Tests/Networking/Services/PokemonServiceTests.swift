@@ -7,29 +7,97 @@
 //
 
 import XCTest
+@testable import PokeApp
 
 class PokemonServiceTests: XCTestCase {
     
+    // MARK: Properties
+    var url: URL!
+    var service: PokemonService!
+    
+    // MARK: - Setup
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        url = URL(string: Environment.shared.baseURL!)?.appendingPathComponent("pokemon")
+        let dispatcher = NetworkDispatcherStub(url: url!)
+        service = PokemonService(dispatcher : dispatcher)
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        url = nil
+        service = nil
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    // MARK: - Tests
+    func testInit() {
+        let service = PokemonService()
+        XCTAssertEqual(service.dispatcher.url, url, "Wrong url")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGetPokemonList() {
+
+        let response = service.getPokemonList()
+        let collector = RxCollector<PokemonListResponse?>()
+            .collect(from: response)
+
+        guard let error = collector.error as? NetworkError,
+            let _ = error.request?.url else {
+                XCTAssert(false, "Request url not found")
+                return
         }
+
     }
+    
+    func testGetPokemonListLimit50() {
+        
+        let limit = 50
+        
+        let response = service.getPokemonList(limit)
+        let collector = RxCollector<PokemonListResponse?>()
+            .collect(from: response)
+        
+        guard let error = collector.error as? NetworkError,
+            let requestURL = error.request?.url else {
+                XCTAssert(false, "Request url not found")
+                return
+        }
+        
+        XCTAssertTrue(requestURL.contains(key: "limit"), "limit path component not found")
+        
+        XCTAssertEqual(requestURL.valueOf("limit"), "\(limit)", "Invalid limit")
+        
+    }
+    
+    func testGetDetailsForPokemonWithId10() {
+        
+        let pokemonId = 10
+        
+        let response = service.getDetailsForPokemon(withId: pokemonId)
+        let collector = RxCollector<Pokemon?>()
+            .collect(from: response)
+        
+        guard let error = collector.error as? NetworkError,
+            let requestURL = error.request?.url else {
+                XCTAssert(false, "Request url not found")
+                return
+        }
+        
+        XCTAssertEqual(requestURL.lastPathComponent, "\(pokemonId)", "invalid id")
+        
+    }
+    
     
 }
+
+
+
+
+
+
+
+
+
+
+
+

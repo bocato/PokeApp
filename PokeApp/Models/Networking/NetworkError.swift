@@ -18,7 +18,7 @@ struct NetworkError: Error {
     
     var response: HTTPURLResponse?
     var request: URLRequest?
-    var task: URLSessionDataTask?
+    var task: URLSessionDataTaskProtocol?
     
     init(){}
     
@@ -26,14 +26,14 @@ struct NetworkError: Error {
         self.requestError = requestError
     }
     
-    init(networkResponse: NetworkResponse, rawError: Error, requestError: SerializedNetworkError) {
+    init(networkResponse: NetworkResponse?, rawError: Error?, requestError: SerializedNetworkError) {
         self.rawError = rawError
-        self.rawErrorString = networkResponse.rawResponse
-        self.rawErrorData = networkResponse.rawData
+        self.rawErrorString = networkResponse?.rawResponse
+        self.rawErrorData = networkResponse?.rawData
         self.requestError = requestError
-        self.response = networkResponse.response
-        self.request = networkResponse.request
-        self.task = networkResponse.task
+        self.response = networkResponse?.response
+        self.request = networkResponse?.request
+        self.task = networkResponse?.task
     }
     
     init(rawError: Error?, rawErrorData: Data?, response: HTTPURLResponse?, request: URLRequest?) {
@@ -51,9 +51,14 @@ struct NetworkError: Error {
         self.request = request
     }
     
+    init(requestError: SerializedNetworkError?, request: URLRequest?) {
+        self.requestError = requestError
+        self.request = request
+    }
+    
 }
 
-struct SerializedNetworkError: Codable {
+public struct SerializedNetworkError: Codable, Error {
     
     // MARK: - Properties
     var message: String?

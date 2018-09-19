@@ -18,8 +18,8 @@ protocol PokemonServiceProtocol {
 class PokemonService: PokemonServiceProtocol {
     
     // MARK: - Properties
-    private let endpoint = "pokemon"
-    private var dispatcher: NetworkDispatcherProtocol
+    public let endpoint = "pokemon"
+    private(set) var dispatcher: NetworkDispatcherProtocol
     
     // MARK: - Initializers
     init() {
@@ -47,7 +47,7 @@ class PokemonService: PokemonServiceProtocol {
     func getDetailsForPokemon(withId id: Int) -> Observable<Pokemon?> {
     
         let path = "/\(id)"
-        
+
         return dispatcher.response(of: Pokemon.self, from: path, method: .get, payload: nil, headers: nil)
     }
     

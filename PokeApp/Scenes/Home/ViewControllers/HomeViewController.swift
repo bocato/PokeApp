@@ -22,16 +22,10 @@ class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Dependencies
-    var viewModel: HomeViewModelProtocol!
+    var viewModel: HomeViewModel!
     let disposeBag = DisposeBag()
     
-    // MARK: - ViewElements
-    fileprivate var refreshControl: UIRefreshControl = ({
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = UIColor.lightGray
-        return refreshControl
-    })()
-    
+    // MARK: - Instantiation
     class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
         let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
         controller.viewModel = viewModel
@@ -41,6 +35,7 @@ class HomeViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewModel.loadPokemons(using: disposeBag)
         bindAll()
     }
     
@@ -48,6 +43,16 @@ class HomeViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        // tests
+//        if RemoteConfigs.shared.areRefactorTestsEnabled {
+//           AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are ENABLED!")
+//        } else {
+//          AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are DISABLED!")
+//        }
+//    }
     
     deinit {
         KingfisherManager.shared.cache.clearMemoryCache()
@@ -62,37 +67,45 @@ private extension HomeViewController {
     func bindAll() {
         bindViewModel()
         bindTableView()
-        bindRefreshControl()
     }
     
     func bindViewModel() {
         
-        viewModel.loadPokemons()
-        
         viewModel.viewState
+            .observeOn(MainScheduler.instance)
             .asObservable()
             .subscribe(onNext: { state in
                 switch state {
-                case .loading(let isLoading):
-                    if isLoading {
-                        self.tableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
-                    } else {
-                        self.tableView.stopLoading()
-                    }
-                case .error(let networkError):
-                    let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
-                    AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
-                case .empty:
-                    self.tableView.isHidden = true
+                case .common(let commonState):
+                    handleCommonViewState(commonState)
                 }
             })
             .disposed(by: disposeBag)
+        
+        func handleCommonViewState(_ state: CommonViewModelState) {
+            switch state {
+            case .loading(let isLoading):
+//                if isLoading { // tá bugando, consertar depois
+//                    self.tableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
+//                } else {
+//                    self.tableView.stopLoading()
+//                }
+                DebugLog(format: "\(isLoading)")
+            case .error(let networkError):
+                let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
+                AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
+            case .empty:
+                self.tableView.isHidden = true
+            default: return
+            }
+        }
         
     }
     
     func bindTableView()  {
         
         viewModel.pokemonCellModels
+            .observeOn(MainScheduler.instance)
             .asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: PokemonTableViewCell.identifier, cellType: PokemonTableViewCell.self)) { (rowIndex, pokemonCellModel, cell) in
                 cell.configure(with: pokemonCellModel)
@@ -101,20 +114,11 @@ private extension HomeViewController {
         
         tableView.rx
             .modelSelected(PokemonTableViewCellModel.self)
-            .subscribe(onNext: { selectedPokemonCellModel in
+            .subscribe(onNext: { (selectedPokemonCellModel) in
                 self.viewModel.showItemDetailsForSelectedCellModel(selectedPokemonCellModel)
             })
             .disposed(by: disposeBag)
         
-    }
-    
-    func bindRefreshControl() {
-        self.refreshControl.rx
-            .controlEvent(.valueChanged)
-            .subscribe(onNext: { _ in
-                self.viewModel.loadPokemons()
-            })
-            .disposed(by: disposeBag)
     }
     
 }

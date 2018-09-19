@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol RouterProtocol: Presentable { // maybe i have to refactor / change this router...
+protocol RouterProtocol: class, Presentable { // maybe i have to refactor / change this router...
     
     // MARK: - Properties
     var navigationController: UINavigationController { get }

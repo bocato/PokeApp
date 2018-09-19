@@ -14,67 +14,54 @@ protocol HomeViewControllerActionsDelegate: class {
     func showItemDetailsForPokemonWith(id: Int)
 }
 
-protocol HomeViewModelProtocol {
-    
-    // MARK: - Dependencies
-    var disposeBag: DisposeBag { get }
-    var actionsDelegate: HomeViewControllerActionsDelegate? { get }
-    var services: PokemonServiceProtocol { get }
-
-    // MARK: - Properties
-    var pokemonCellModels: Variable<[PokemonTableViewCellModel]> { get }
-    var viewState: Variable<HomeViewState> { get }
-
-    // MARK: - API Calls
-    func loadPokemons()
-
-    // MARK: - Actions
-    func showItemDetailsForSelectedCellModel(_ selectedPokemonCellModel: PokemonTableViewCellModel)
-}
-
-// MARK: ViewState
-enum HomeViewState {
-    case loading(Bool)
-    case error(SerializedNetworkError?)
-    case empty
-}
-
 // MARK: - ViewModel Implementation
-class HomeViewModel : HomeViewModelProtocol{
+class HomeViewModel {
+    
+    // MARK: - States
+    enum State {
+        case common(CommonViewModelState)
+    }
     
     // MARK: - Dependencies
-    internal var disposeBag = DisposeBag()
-    weak var actionsDelegate: HomeViewControllerActionsDelegate?
-    internal var services: PokemonServiceProtocol
+    private let disposeBag: DisposeBag!
+    private(set) weak var actionsDelegate: HomeViewControllerActionsDelegate?
+    private let services: PokemonServiceProtocol
     
     // MARK: - Properties
-    var pokemonCellModels = Variable<[PokemonTableViewCellModel]>([])
-    var viewState = Variable<HomeViewState>(.loading(true))
+    private(set) var pokemonCellModels = BehaviorRelay<[PokemonTableViewCellModel]>(value: [])
+    private(set) var viewState = PublishSubject<State>()
     
     // MARK: - Intialization
-    init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol) {
+    init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol, disposeBag: DisposeBag = DisposeBag()) {
         self.actionsDelegate = actionsDelegate
         self.services = services
+        self.disposeBag = disposeBag
     }
     
     // MARK: - API Calls
-    func loadPokemons() {
-        viewState.value = .loading(true)
-        services.getPokemonList().subscribe(onNext: { pokemonListResponse in
-            guard let results = pokemonListResponse?.results else {
-                self.viewState.value = .empty
-                self.pokemonCellModels.value = []
-                return
-            }
-            self.pokemonCellModels.value = results.map({ (listItem) -> PokemonTableViewCellModel in
-                return PokemonTableViewCellModel(listItem: listItem)
+    func loadPokemonsObservable() -> Observable<PokemonListResponse?> {
+        viewState.onNext(.common(.loading(true)))
+        return services.getPokemonList()
+            .do(onNext: { (pokemonListResponse) in
+                guard let results = pokemonListResponse?.results, results.count > 0 else {
+                    self.viewState.onNext(.common(.empty))
+                    return
+                }
+                let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
+                    return PokemonTableViewCellModel(listItem: listItem)
+                })
+                self.viewState.onNext(.common(.loaded))
+                self.pokemonCellModels.accept(viewModelsForResult)
+            }, onError: { (error) in
+                let networkError = error as! NetworkError
+                self.viewState.onNext(.common(.error(networkError.requestError)))
+            }, onCompleted: {
+                self.viewState.onNext(.common(.loading(false)))
             })
-        }, onError: { (error) in
-            let networkError = error as! NetworkError
-            self.viewState.value = .error(networkError.requestError)
-        }, onCompleted: {
-            self.viewState.value = .loading(false)
-        }).disposed(by: disposeBag)
+    }
+    
+    func loadPokemons(using disposeBag: DisposeBag) {
+        loadPokemonsObservable().fireSingleEvent(disposedBy: disposeBag)
     }
     
     // MARK: - Actions

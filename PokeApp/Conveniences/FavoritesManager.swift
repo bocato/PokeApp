@@ -25,6 +25,7 @@ class FavoritesManager {
             return
         }
         favorites.append(pokemon)
+        favorites.sort(by: { $0.id! < $1.id! })
     }
     
     func remove(pokemon: Pokemon) {

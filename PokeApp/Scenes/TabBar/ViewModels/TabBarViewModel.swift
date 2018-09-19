@@ -8,36 +8,25 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import UIKit
 
 protocol TabBarViewControllerActionsDelegate: class {
-    var onTabSelect: ((_ selectedTab: TabBarIndex, _ navigationController: UINavigationController) -> ())? { get set }
+    func actOnSelectedTab(_ selectedTab: TabBarViewModel.TabIndex, _ navigationController: UINavigationController)
 }
 
-enum TabBarIndex: Int {
-    case home
-    case favorites
-}
-
-protocol TabBarViewModelProtocol {
+class TabBarViewModel {
+    
+    enum TabIndex: Int {
+        case home
+        case favorites
+    }
     
     // MARK: - Dependencies
-    var actionsDelegate: TabBarViewControllerActionsDelegate? { get }
-    
-    // MARK: - Properties
-    var selectedTab: Variable<TabBarIndex> { get set }
-}
-
-class TabBarViewModel: TabBarViewModelProtocol {
-    
-    // MARK: - Dependencies
-    var actionsDelegate: TabBarViewControllerActionsDelegate?
+    private(set) weak var actionsDelegate: TabBarViewControllerActionsDelegate?
     
     // MARK: - Variables
-    var selectedTab = Variable<TabBarIndex>(.home)
-    
-    // MARK: Action Closures
-    var onTabSelect: ((_ selectedTab: TabBarIndex) -> ())?
+    private(set) var selectedTab = BehaviorRelay<TabIndex>(value: .home)
     
     init(actionsDelegate: TabBarViewControllerActionsDelegate) {
         self.actionsDelegate = actionsDelegate
