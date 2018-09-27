@@ -20,7 +20,6 @@ class HomeViewController: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet weak var textField: UITextField!
     
     // MARK: - Dependencies
     var viewModel: HomeViewModel!
