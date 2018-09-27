@@ -20,6 +20,9 @@ class HomeViewController: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet weak var textField: UITextField!
+    
+    var textOutput = BehaviorRelay<String>()
     
     // MARK: - Dependencies
     var viewModel: HomeViewModel!
@@ -37,6 +40,16 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.viewModel.loadPokemons(using: disposeBag)
         bindAll()
+        
+        
+        
+        textOutput.b
+        
+        textField.rx.text
+        
+        textField.rx.controlEvent([.editingChanged]).bind(to: <#T##(ControlEvent<()>) -> (R1) -> R2#>, curriedArgument: <#T##R1#>)
+        
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

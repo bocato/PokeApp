@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nLZ-uz-mdY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nLZ-uz-mdY">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -37,17 +37,29 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bhashiasdhuhsaiasd" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Nq-o6-EWC">
+                                        <rect key="frame" x="20" y="0.0" width="335" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="kdQ-Kb-8g5"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="YaC-nm-mnt" firstAttribute="height" secondItem="jOd-rd-tmF" secondAttribute="height" multiplier="0.5" id="60j-i6-4Xb"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Nq-o6-EWC" secondAttribute="trailing" constant="20" id="AF9-om-sEx"/>
                                     <constraint firstItem="YaC-nm-mnt" firstAttribute="width" secondItem="jOd-rd-tmF" secondAttribute="width" multiplier="0.75" id="Bmq-KY-avc"/>
+                                    <constraint firstItem="6Nq-o6-EWC" firstAttribute="leading" secondItem="jOd-rd-tmF" secondAttribute="leading" constant="20" id="NkK-cc-Bed"/>
                                     <constraint firstItem="YaC-nm-mnt" firstAttribute="centerY" secondItem="jOd-rd-tmF" secondAttribute="centerY" id="ZMZ-pf-rjC"/>
                                     <constraint firstItem="YaC-nm-mnt" firstAttribute="centerX" secondItem="jOd-rd-tmF" secondAttribute="centerX" id="cbF-cE-4K1"/>
+                                    <constraint firstItem="6Nq-o6-EWC" firstAttribute="top" secondItem="jOd-rd-tmF" secondAttribute="top" id="tjP-3D-ePD"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2Il-y5-qdA">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2Il-y5-qdA">
+                                <rect key="frame" x="0.0" y="167" width="375" height="500"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PokemonTableViewCell" rowHeight="100" id="tSL-7c-EnE" customClass="PokemonTableViewCell" customModule="PokeApp" customModuleProvider="target">
@@ -97,7 +109,7 @@
                             <constraint firstItem="2Il-y5-qdA" firstAttribute="leading" secondItem="63r-0h-gXg" secondAttribute="leading" id="aTP-Fi-UsI"/>
                             <constraint firstItem="63r-0h-gXg" firstAttribute="trailing" secondItem="jOd-rd-tmF" secondAttribute="trailing" id="hts-3n-4Ln"/>
                             <constraint firstItem="63r-0h-gXg" firstAttribute="bottom" secondItem="2Il-y5-qdA" secondAttribute="bottom" id="qIS-W8-ovF"/>
-                            <constraint firstItem="2Il-y5-qdA" firstAttribute="top" secondItem="63r-0h-gXg" secondAttribute="top" id="qN0-qH-z0E"/>
+                            <constraint firstItem="2Il-y5-qdA" firstAttribute="top" secondItem="63r-0h-gXg" secondAttribute="top" constant="200" id="qN0-qH-z0E"/>
                             <constraint firstItem="jOd-rd-tmF" firstAttribute="leading" secondItem="63r-0h-gXg" secondAttribute="leading" id="zBB-Cc-cEJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="63r-0h-gXg"/>
@@ -105,6 +117,7 @@
                     <navigationItem key="navigationItem" title="Pokémons" id="VEv-W2-XiF"/>
                     <connections>
                         <outlet property="tableView" destination="2Il-y5-qdA" id="z24-sB-WqK"/>
+                        <outlet property="textField" destination="6Nq-o6-EWC" id="pFt-N4-L1Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQY-YP-wzA" userLabel="First Responder" sceneMemberID="firstResponder"/>
