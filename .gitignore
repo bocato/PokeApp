@@ -16,7 +16,7 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
-xcshareddata/
+#xcshareddata/ #commented to enable bitrise tests
 
 ## Other
 *.moved-aside
