@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupApplication()
         
         // Coisas
+        // Coisas
         
         return true
     }
