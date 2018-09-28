@@ -19,8 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         setupApplication()
         
-        // Coisas
-        // Coisas
+        // Teste do Matheusao
         
         return true
     }
