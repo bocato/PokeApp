@@ -24,10 +24,12 @@ class AppCoordinatorModulesFactoryTests: XCTestCase {
         // Given
         let router = Router()
         // When
-        let (tabBarCoordinator, tabBarController) = sut.build(.tabBar(router: router))
+        let (coordinator, controller) = sut.build(.tabBar(router: router))
+        let tabBarCoordinator = coordinator as? TabBarCoordinator
+        let tabBarController = controller as? TabBarViewController
         // Then
-//        XCTAssertEqual(type(of: tabBarCoordinator), type(of: TabBarCoordinator), "Invalid types.")
-//        XCTAssertEqual(type(of: tabBarController), type(of: TabBarViewController))
+        XCTAssertNotNil(tabBarCoordinator)
+        XCTAssertNotNil(tabBarController)
     }
     
 }

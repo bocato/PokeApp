@@ -1,5 +1,5 @@
 //
-//  TabBarModulesFactory.swift
+//  TabBarCoordinatorModulesFactory.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 11/06/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabBarModulesFactory: ModuleFactory {
+class TabBarCoordinatorModulesFactory: ModuleFactory {
     
     // MARK: Aliases
     typealias ModulesEnum = Modules
@@ -20,7 +20,7 @@ class TabBarModulesFactory: ModuleFactory {
     }
     
     // MARK: Builders
-    func build(_ module: TabBarModulesFactory.Modules) -> (Coordinator, UIViewController) {
+    func build(_ module: TabBarCoordinatorModulesFactory.Modules) -> (Coordinator, UIViewController) {
         switch module {
         case .home(let navigationController):
             return buildHomeModule(with: navigationController)

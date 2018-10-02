@@ -27,7 +27,7 @@
 		E50B734F20B51A0900154FCD /* JSONAny+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734B20B51A0900154FCD /* JSONAny+Codable.swift */; };
 		E50B735020B51A0900154FCD /* JSONAny+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */; };
 		E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E720CF0EB00090D763 /* ModuleFactory.swift */; };
-		E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */; };
+		E50D15EA20CF11A50090D763 /* TabBarCoordinatorModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarCoordinatorModulesFactory.swift */; };
 		E50D15EC20D15EC70090D763 /* AppCoordinatorModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppCoordinatorModulesFactory.swift */; };
 		E51490772109FAA40000C3EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490762109FAA40000C3EB /* GoogleService-Info.plist */; };
 		E51490792109FEF10000C3EB /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */; };
@@ -41,6 +41,7 @@
 		E5363FB72163BF3E00788873 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB62163BF3E00788873 /* DateExtensionTests.swift */; };
 		E5363FB92163BF7A00788873 /* IdentifiableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */; };
 		E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */; };
+		E5363FBF2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */; };
 		E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
@@ -156,7 +157,7 @@
 		E50B734B20B51A0900154FCD /* JSONAny+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONAny+Codable.swift"; sourceTree = "<group>"; };
 		E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONAny+Initialization.swift"; sourceTree = "<group>"; };
 		E50D15E720CF0EB00090D763 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
-		E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModulesFactory.swift; sourceTree = "<group>"; };
+		E50D15E920CF11A50090D763 /* TabBarCoordinatorModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorModulesFactory.swift; sourceTree = "<group>"; };
 		E50D15EB20D15EC70090D763 /* AppCoordinatorModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactory.swift; sourceTree = "<group>"; };
 		E51490762109FAA40000C3EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
@@ -171,6 +172,7 @@
 		E5363FB62163BF3E00788873 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableExtensionTests.swift; sourceTree = "<group>"; };
 		E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
+		E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
 		E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -352,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				E5238DC521109DB600323C84 /* TabBarViewModelTests.swift */,
+				E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -669,7 +672,7 @@
 			isa = PBXGroup;
 			children = (
 				E56972BC20ACEA5B00F0B3E5 /* TabBar.storyboard */,
-				E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */,
+				E50D15E920CF11A50090D763 /* TabBarCoordinatorModulesFactory.swift */,
 				E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */,
 				E5583E6320B74C09003CAFA0 /* ViewControlers */,
 				E548A32C20B7BB9100E72954 /* ViewModels */,
@@ -1170,7 +1173,7 @@
 				E551385220A4520900A5F6EB /* NetworkDispatcher.swift in Sources */,
 				E50540BB20BA6C77004EA46D /* FavoritesCoordinator.swift in Sources */,
 				E56972B120AA867E00F0B3E5 /* PokemonService.swift in Sources */,
-				E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */,
+				E50D15EA20CF11A50090D763 /* TabBarCoordinatorModulesFactory.swift in Sources */,
 				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
 				E50D15EC20D15EC70090D763 /* AppCoordinatorModulesFactory.swift in Sources */,
 				E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */,
@@ -1208,6 +1211,7 @@
 			files = (
 				E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */,
 				E56D243220B206360059B0E0 /* PokemonServiceTests.swift in Sources */,
+				E5363FBF2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift in Sources */,
 				E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */,
 				E5363FB72163BF3E00788873 /* DateExtensionTests.swift in Sources */,
 				E5363FAB2163A4C600788873 /* NetworkDispatcherTests.swift in Sources */,

@@ -12,7 +12,7 @@ import UIKit
 class TabBarCoordinator: BaseCoordinator {
     
     // MARK: - Dependencies
-    private(set) var modulesFactory: TabBarModulesFactory = TabBarModulesFactory()
+    private(set) var modulesFactory: TabBarCoordinatorModulesFactory = TabBarCoordinatorModulesFactory()
     
     // MARK: - Outputs
     override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
