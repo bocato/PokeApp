@@ -17,7 +17,7 @@ class BaseCoordinator: Coordinator {
     // MARK: - Properties
     internal(set) var childCoordinators: [String : Coordinator] = [:]
     internal(set) var parentCoordinator: Coordinator? = nil
-    internal(set) var context: CoordinatorContext? // This is an struct
+    internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Initialization
     init(router: RouterProtocol) {
