@@ -9,15 +9,10 @@
 import Foundation
 import UIKit
 
-protocol TabBarCoordinatorProtocol: Coordinator & TabBarViewControllerActionsDelegate {
-    // MARK: - Dependencies
-    var modulesFactory: TabBarModulesFactoryProtocol { get }
-}
-
 class TabBarCoordinator: BaseCoordinator {
     
     // MARK: - Dependencies
-    private(set) var modulesFactory: TabBarModulesFactoryProtocol = TabBarModulesFactory()
+    private(set) var modulesFactory: TabBarModulesFactory = TabBarModulesFactory()
     
     // MARK: - Outputs
     override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
@@ -39,12 +34,12 @@ extension TabBarCoordinator: TabBarViewControllerActionsDelegate {
         if navigationController.viewControllers.isEmpty {
             switch selectedTab {
             case .home:
-                let (coordinator, controller) = modulesFactory.buildHomeModule(with: navigationController)
+                let (coordinator, controller) = modulesFactory.build(.home(navigationController))
                 self.addChildCoordinator(coordinator)
                 coordinator.router.setRootModule(controller)
             case .favorites:
-                let (coordinator, controller) = modulesFactory.buildFavoritesModule(with: navigationController)
-                delegate = controller.viewModel // this is so we can send a message to the viewmodel from the coordinator
+                let (coordinator, controller) = modulesFactory.build(.favorites(navigationController))
+                delegate = (controller as? FavoritesViewController)?.viewModel // this is so we can send a message to the viewmodel from the coordinator
                 addChildCoordinator(coordinator)
                 coordinator.router.setRootModule(controller)
             }

@@ -28,13 +28,19 @@
 		E50B735020B51A0900154FCD /* JSONAny+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */; };
 		E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E720CF0EB00090D763 /* ModuleFactory.swift */; };
 		E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */; };
-		E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */; };
+		E50D15EC20D15EC70090D763 /* AppCoordinatorModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppCoordinatorModulesFactory.swift */; };
 		E51490772109FAA40000C3EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490762109FAA40000C3EB /* GoogleService-Info.plist */; };
 		E51490792109FEF10000C3EB /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */; };
 		E514907C2109FF490000C3EB /* RemoteConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514907B2109FF490000C3EB /* RemoteConfigs.swift */; };
 		E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DC521109DB600323C84 /* TabBarViewModelTests.swift */; };
 		E5238DD02110DE0800323C84 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DCF2110DE0800323C84 /* HomeViewModelTests.swift */; };
 		E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */; };
+		E5363FAB2163A4C600788873 /* NetworkDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FAA2163A4C600788873 /* NetworkDispatcherTests.swift */; };
+		E5363FB32163A67E00788873 /* EncodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB22163A67E00788873 /* EncodableExtensionTests.swift */; };
+		E5363FB52163BEB800788873 /* IdentifiableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB42163BEB800788873 /* IdentifiableExtension.swift */; };
+		E5363FB72163BF3E00788873 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB62163BF3E00788873 /* DateExtensionTests.swift */; };
+		E5363FB92163BF7A00788873 /* IdentifiableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */; };
+		E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */; };
 		E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
@@ -57,8 +63,6 @@
 		E569728B20AA5C7500F0B3E5 /* ErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728A20AA5C7500F0B3E5 /* ErrorExtension.swift */; };
 		E569728D20AA6ED500F0B3E5 /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728C20AA6ED500F0B3E5 /* UIView+Loading.swift */; };
 		E569728F20AA6F6600F0B3E5 /* EncodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728E20AA6F6600F0B3E5 /* EncodableExtension.swift */; };
-		E569729120AA6F8600F0B3E5 /* UICollectionViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729020AA6F8600F0B3E5 /* UICollectionViewCellExtension.swift */; };
-		E569729320AA6FA500F0B3E5 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729220AA6FA500F0B3E5 /* UITableViewCellExtension.swift */; };
 		E569729620AA700500F0B3E5 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729520AA700500F0B3E5 /* PrimaryButton.swift */; };
 		E569729820AA719E00F0B3E5 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729720AA719E00F0B3E5 /* AlertHelper.swift */; };
 		E569729B20AA71DF00F0B3E5 /* ErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729A20AA71DF00F0B3E5 /* ErrorFactory.swift */; };
@@ -153,7 +157,7 @@
 		E50B734C20B51A0900154FCD /* JSONAny+Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONAny+Initialization.swift"; sourceTree = "<group>"; };
 		E50D15E720CF0EB00090D763 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
 		E50D15E920CF11A50090D763 /* TabBarModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModulesFactory.swift; sourceTree = "<group>"; };
-		E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModulesFactory.swift; sourceTree = "<group>"; };
+		E50D15EB20D15EC70090D763 /* AppCoordinatorModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactory.swift; sourceTree = "<group>"; };
 		E51490762109FAA40000C3EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		E514907B2109FF490000C3EB /* RemoteConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigs.swift; sourceTree = "<group>"; };
@@ -161,6 +165,12 @@
 		E5238DCF2110DE0800323C84 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		E5238DD52111126C00323C84 /* MockedURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedURLSession.swift; sourceTree = "<group>"; };
 		E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModulesFactory.swift; sourceTree = "<group>"; };
+		E5363FAA2163A4C600788873 /* NetworkDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcherTests.swift; sourceTree = "<group>"; };
+		E5363FB22163A67E00788873 /* EncodableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableExtensionTests.swift; sourceTree = "<group>"; };
+		E5363FB42163BEB800788873 /* IdentifiableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableExtension.swift; sourceTree = "<group>"; };
+		E5363FB62163BF3E00788873 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
+		E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableExtensionTests.swift; sourceTree = "<group>"; };
+		E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
 		E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,8 +195,6 @@
 		E569728A20AA5C7500F0B3E5 /* ErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExtension.swift; sourceTree = "<group>"; };
 		E569728C20AA6ED500F0B3E5 /* UIView+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
 		E569728E20AA6F6600F0B3E5 /* EncodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableExtension.swift; sourceTree = "<group>"; };
-		E569729020AA6F8600F0B3E5 /* UICollectionViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCellExtension.swift; sourceTree = "<group>"; };
-		E569729220AA6FA500F0B3E5 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		E569729520AA700500F0B3E5 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		E569729720AA719E00F0B3E5 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		E569729A20AA71DF00F0B3E5 /* ErrorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorFactory.swift; sourceTree = "<group>"; };
@@ -356,6 +364,38 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		E5363FB02163A62C00788873 /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Routers;
+			sourceTree = "<group>";
+		};
+		E5363FB12163A63500788873 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E5363FB22163A67E00788873 /* EncodableExtensionTests.swift */,
+				E5363FB62163BF3E00788873 /* DateExtensionTests.swift */,
+				E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E5363FBA2163E0DF00788873 /* ResourceLoader */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ResourceLoader;
+			sourceTree = "<group>";
+		};
+		E5363FBB2163E7BB00788873 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		E548A32C20B7BB9100E72954 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,7 +453,7 @@
 			children = (
 				E551383720A4469700A5F6EB /* AppDelegate.swift */,
 				E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */,
-				E50D15EB20D15EC70090D763 /* AppModulesFactory.swift */,
+				E50D15EB20D15EC70090D763 /* AppCoordinatorModulesFactory.swift */,
 				E56972AD20AA746400F0B3E5 /* Environment.swift */,
 				E551384320A4469900A5F6EB /* Info.plist */,
 			);
@@ -488,17 +528,19 @@
 		E564DD282113239700307A15 /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
-				E564DD29211323A100307A15 /* Coordinator */,
+				E564DD29211323A100307A15 /* Coordinators */,
+				E5363FB02163A62C00788873 /* Routers */,
+				E5363FB12163A63500788873 /* Extensions */,
 			);
 			path = Conveniences;
 			sourceTree = "<group>";
 		};
-		E564DD29211323A100307A15 /* Coordinator */ = {
+		E564DD29211323A100307A15 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
 				E564DD2A2113253800307A15 /* BaseCoordinatorTests.swift */,
 			);
-			path = Coordinator;
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		E569727E20AA57BE00F0B3E5 /* Networking */ = {
@@ -534,8 +576,6 @@
 				E569728A20AA5C7500F0B3E5 /* ErrorExtension.swift */,
 				E569728C20AA6ED500F0B3E5 /* UIView+Loading.swift */,
 				E569728E20AA6F6600F0B3E5 /* EncodableExtension.swift */,
-				E569729020AA6F8600F0B3E5 /* UICollectionViewCellExtension.swift */,
-				E569729220AA6FA500F0B3E5 /* UITableViewCellExtension.swift */,
 				E569729F20AA730200F0B3E5 /* UIColorExtension.swift */,
 				E56972A220AA733A00F0B3E5 /* UITableViewExtension.swift */,
 				E56972A420AA736B00F0B3E5 /* UIImage+ProjectResources.swift */,
@@ -545,6 +585,7 @@
 				E56D243C20B21DAD0059B0E0 /* StringExtension.swift */,
 				E5825F102117E837008948E3 /* DictionaryExtension.swift */,
 				E5CFBFF32119CDC300038BF5 /* ObservableTypeExtension.swift */,
+				E5363FB42163BEB800788873 /* IdentifiableExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -604,6 +645,7 @@
 		E56972B720ACEA0200F0B3E5 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E5363FBA2163E0DF00788873 /* ResourceLoader */,
 				E56972B920ACEA3100F0B3E5 /* TabBar */,
 				E56972BB20ACEA4900F0B3E5 /* Favorites */,
 				E56972C220ACEA8800F0B3E5 /* Home */,
@@ -712,6 +754,7 @@
 		E56D242720B201020059B0E0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				E5363FBB2163E7BB00788873 /* Application */,
 				E564DD282113239700307A15 /* Conveniences */,
 				E56D242820B2010D0059B0E0 /* Networking */,
 				E5238DC321109CFA00323C84 /* Scenes */,
@@ -722,17 +765,18 @@
 		E56D242820B2010D0059B0E0 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E56D243020B206050059B0E0 /* Services */,
+				E56D243020B206050059B0E0 /* Common */,
+				E56D243120B206360059B0E0 /* PokemonServiceTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		E56D243020B206050059B0E0 /* Services */ = {
+		E56D243020B206050059B0E0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				E56D243120B206360059B0E0 /* PokemonServiceTests.swift */,
+				E5363FAA2163A4C600788873 /* NetworkDispatcherTests.swift */,
 			);
-			path = Services;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		E56D243720B210EF0059B0E0 /* Cells */ = {
@@ -1082,7 +1126,6 @@
 				E569729B20AA71DF00F0B3E5 /* ErrorFactory.swift in Sources */,
 				E569728D20AA6ED500F0B3E5 /* UIView+Loading.swift in Sources */,
 				E5CFBFF42119CDC300038BF5 /* ObservableTypeExtension.swift in Sources */,
-				E569729320AA6FA500F0B3E5 /* UITableViewCellExtension.swift in Sources */,
 				E5B8183D20B49FFD006F2AB0 /* PokemonDetailsViewController.swift in Sources */,
 				E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */,
 				E569729820AA719E00F0B3E5 /* AlertHelper.swift in Sources */,
@@ -1107,6 +1150,7 @@
 				E59DFB61211736D80052B678 /* NSURLSession+Swizzling.swift in Sources */,
 				E50540C120BAF18B004EA46D /* PokeApp.xcdatamodeld in Sources */,
 				E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */,
+				E5363FB52163BEB800788873 /* IdentifiableExtension.swift in Sources */,
 				E56D23F920AF8CD30059B0E0 /* Pokemon.swift in Sources */,
 				E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */,
 				E50B734020B293A900154FCD /* PokemonTableViewCellModel.swift in Sources */,
@@ -1128,7 +1172,7 @@
 				E56972B120AA867E00F0B3E5 /* PokemonService.swift in Sources */,
 				E50D15EA20CF11A50090D763 /* TabBarModulesFactory.swift in Sources */,
 				E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */,
-				E50D15EC20D15EC70090D763 /* AppModulesFactory.swift in Sources */,
+				E50D15EC20D15EC70090D763 /* AppCoordinatorModulesFactory.swift in Sources */,
 				E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */,
 				E59DFB5F211736AE0052B678 /* SessionMock.swift in Sources */,
 				E50540C320BAF1F3004EA46D /* CoreDataController.swift in Sources */,
@@ -1153,7 +1197,6 @@
 				E56972A320AA733A00F0B3E5 /* UITableViewExtension.swift in Sources */,
 				E569728B20AA5C7500F0B3E5 /* ErrorExtension.swift in Sources */,
 				E50B734620B5199500154FCD /* Form.swift in Sources */,
-				E569729120AA6F8600F0B3E5 /* UICollectionViewCellExtension.swift in Sources */,
 				E50B734D20B51A0900154FCD /* JSONError.swift in Sources */,
 				E5825F112117E837008948E3 /* DictionaryExtension.swift in Sources */,
 			);
@@ -1166,10 +1209,15 @@
 				E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */,
 				E56D243220B206360059B0E0 /* PokemonServiceTests.swift in Sources */,
 				E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */,
+				E5363FB72163BF3E00788873 /* DateExtensionTests.swift in Sources */,
+				E5363FAB2163A4C600788873 /* NetworkDispatcherTests.swift in Sources */,
 				E56D242420B200A70059B0E0 /* URLExtension.swift in Sources */,
 				E56D242620B200DE0059B0E0 /* RxCollector.swift in Sources */,
+				E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */,
+				E5363FB32163A67E00788873 /* EncodableExtensionTests.swift in Sources */,
 				E5238DD02110DE0800323C84 /* HomeViewModelTests.swift in Sources */,
 				E564DD2B2113253800307A15 /* BaseCoordinatorTests.swift in Sources */,
+				E5363FB92163BF7A00788873 /* IdentifiableExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

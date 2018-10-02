@@ -18,9 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setupApplication()
-        
-        // Teste do Matheusao
-        
         return true
     }
 
@@ -68,10 +65,7 @@ private extension AppDelegate {
     }
     
     private func makeAppCoordinator() -> Coordinator? {
-        guard let window = window else { return nil }
-        let rootController = window.rootViewController as! UINavigationController
-        let router = Router(navigationController: rootController)
-        return AppCoordinator(router: router)
+        return AppCoordinator.build(window: window)
     }
     
 }

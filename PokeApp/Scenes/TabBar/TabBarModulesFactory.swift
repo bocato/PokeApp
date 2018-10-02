@@ -8,18 +8,28 @@
 
 import UIKit
 
-protocol TabBarModulesFactoryProtocol {
+class TabBarModulesFactory: ModuleFactory {
     
-    // MARK: - Builders
-    func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController)
-    func buildFavoritesModule(with navigationController: UINavigationController) -> (coordinator: FavoritesCoordinatorProtocol, controller: FavoritesViewController)
+    // MARK: Aliases
+    typealias ModulesEnum = Modules
     
-}
-
-class TabBarModulesFactory: TabBarModulesFactoryProtocol {
+    // MARK: - ModulesEnum
+    enum Modules {
+        case home(UINavigationController)
+        case favorites(UINavigationController)
+    }
     
-    // MARK: - Builders
-    func buildHomeModule(with navigationController: UINavigationController) -> (coordinator: HomeCoordinatorProtocol, controller: HomeViewController) {
+    // MARK: Builders
+    func build(_ module: TabBarModulesFactory.Modules) -> (Coordinator, UIViewController) {
+        switch module {
+        case .home(let navigationController):
+            return buildHomeModule(with: navigationController)
+        case .favorites(let navigationController):
+            return buildFavoritesModule(with: navigationController)
+        }
+    }
+    
+    private func  buildHomeModule(with navigationController: UINavigationController) -> (Coordinator, UIViewController) {
         let router = Router(navigationController: navigationController)
         let homeCoordinator = HomeCoordinator(router: router)
         let services = PokemonService()
@@ -28,7 +38,7 @@ class TabBarModulesFactory: TabBarModulesFactoryProtocol {
         return (homeCoordinator, controller)
     }
     
-    func buildFavoritesModule(with navigationController: UINavigationController) -> (coordinator: FavoritesCoordinatorProtocol, controller: FavoritesViewController) {
+    private func buildFavoritesModule(with navigationController: UINavigationController) -> (Coordinator, UIViewController) {
         let router = Router(navigationController: navigationController)
         let favoritesCoordinator = FavoritesCoordinator(router: router)
         // let services = PokemonService() // TODO: Inject persistence services
@@ -38,5 +48,4 @@ class TabBarModulesFactory: TabBarModulesFactoryProtocol {
     }
     
 }
-
 

@@ -6,8 +6,15 @@
 //  Copyright © 2018 Bocato. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
+protocol ModuleFactory {
+    associatedtype ModulesEnum
+    func build(_ module: ModulesEnum) -> (Coordinator, UIViewController)
+}
+
+
+//// IDEA WITH DATA STORE...
 //protocol ModulesFactoryProtocol {
 //
 //    // MARK: - Associated Types
@@ -18,17 +25,17 @@ import Foundation
 //
 //}
 
-class BaseModulesFactory<T> {
-    
-    // MARK: - Associated Types
-    typealias StoreType = T
-    
-    // MARK: - Dependencies
-    var store: T?
-    
-    // MARK: - Initialization
-    init(store: T) {
-        self.store = store
-    }
-    
-}
+//class BaseModulesFactory<T> {
+//
+//    // MARK: - Associated Types
+//    typealias StoreType = T
+//
+//    // MARK: - Dependencies
+//    var store: T?
+//
+//    // MARK: - Initialization
+//    init(store: T) {
+//        self.store = store
+//    }
+//
+//}
