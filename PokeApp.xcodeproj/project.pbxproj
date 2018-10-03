@@ -42,6 +42,7 @@
 		E5363FB92163BF7A00788873 /* IdentifiableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */; };
 		E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */; };
 		E5363FBF2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */; };
+		E5363FC321650C9800788873 /* MockRepositioryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FC221650C9800788873 /* MockRepositioryTests.swift */; };
 		E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
@@ -173,6 +174,7 @@
 		E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableExtensionTests.swift; sourceTree = "<group>"; };
 		E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
 		E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
+		E5363FC221650C9800788873 /* MockRepositioryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepositioryTests.swift; sourceTree = "<group>"; };
 		E543D79320DAA35B00E4E506 /* FavoritesModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModulesFactory.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -399,6 +401,22 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		E5363FC02164F1E800788873 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E5363FC12164F1F900788873 /* NSURLSessionMock */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		E5363FC12164F1F900788873 /* NSURLSessionMock */ = {
+			isa = PBXGroup;
+			children = (
+				E5363FC221650C9800788873 /* MockRepositioryTests.swift */,
+			);
+			path = NSURLSessionMock;
+			sourceTree = "<group>";
+		};
 		E548A32C20B7BB9100E72954 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,6 +549,7 @@
 		E564DD282113239700307A15 /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
+				E5363FC02164F1E800788873 /* Networking */,
 				E564DD29211323A100307A15 /* Coordinators */,
 				E5363FB02163A62C00788873 /* Routers */,
 				E5363FB12163A63500788873 /* Extensions */,
@@ -1212,6 +1231,7 @@
 				E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */,
 				E56D243220B206360059B0E0 /* PokemonServiceTests.swift in Sources */,
 				E5363FBF2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift in Sources */,
+				E5363FC321650C9800788873 /* MockRepositioryTests.swift in Sources */,
 				E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */,
 				E5363FB72163BF3E00788873 /* DateExtensionTests.swift in Sources */,
 				E5363FAB2163A4C600788873 /* NetworkDispatcherTests.swift in Sources */,

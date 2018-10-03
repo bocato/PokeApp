@@ -21,7 +21,7 @@ public struct MockReference { // this can be passed back in to determine the sta
 
 extension URLSession {
     
-    internal static let currentMocks = MockRepositiory<DefaultSessionMock>()
+    internal static let currentMocks = MockRepository<DefaultSessionMock>()
     
     /**
      The next call exactly matching `request` will successfully return `body`

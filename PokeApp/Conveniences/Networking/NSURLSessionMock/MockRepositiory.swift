@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MockRepositiory<T: SessionMock> {
+class MockRepository<T: SessionMock> {
     
     private var permanentMocks: [T] = []
     private var temporaryMocks: [T] = []
@@ -61,9 +61,10 @@ class MockRepositiory<T: SessionMock> {
 }
 
 
-extension MockRepositiory where T: Equatable {
+extension MockRepository where T: Equatable {
     
     func contains(temporary mock: T) -> Bool {
         return self.temporaryMocks.contains(mock)
     }
+    
 }
