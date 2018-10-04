@@ -9,13 +9,6 @@
 import Foundation
 import RxSwift
 
-
-protocol Bindable {
-    
-    
-    
-}
-
 protocol RxControllable {
     
     // MARK: Types
@@ -25,15 +18,13 @@ protocol RxControllable {
     var disposeBag: DisposeBag { get }
     var viewModel: ViewModelType! { get set }
     
-    // MARK: Instantiation
-//    static func newInstance(fromStoryboardNamed: String, viewModel: ViewModelType) -> Self
-    
     // MARK: Binding
-    func bindViewModel()
+    func bindAll()
     
 }
 extension RxControllable {
     
+    // MARK: Instantiation
     static func newInstance(fromStoryboard storyboard: Storyboards, viewModel: ViewModelType) -> Self {
         var viewController = UIViewController.instantiate(viewControllerOfType: self, storyboardName: storyboard.name) 
         viewController.viewModel = viewModel

@@ -28,7 +28,7 @@ class TabBarViewController: UITabBarController, RxControllable {
     // MARK: - Setup
     func setup() {
         delegate = self
-        bindViewModel()
+        bindAll()
     }
     
 }
@@ -45,7 +45,7 @@ extension TabBarViewController: UITabBarControllerDelegate {
 // MARK: - Binding
 extension TabBarViewController {
     
-    internal func bindViewModel() {
+    internal func bindAll() {
         viewModel.selectedTab
             .asObservable()
             .subscribe(onNext: { (selectedTab) in

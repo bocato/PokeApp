@@ -45,7 +45,7 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
         let favoritesManager = SimpleFavoritesManager.shared
         let favoritesCoordinator = FavoritesCoordinator(router: router, modulesFactory: favoritesCoordinatorModulesFactory, favoritesManager: favoritesManager)
         let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator, favoritesManager: favoritesManager)
-        let controller = FavoritesViewController.newInstanceFromStoryboard(viewModel: viewModel)
+        let controller = FavoritesViewController.newInstance(fromStoryboard: .favorites, viewModel: viewModel)
         return (favoritesCoordinator, controller)
     }
     

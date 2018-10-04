@@ -10,23 +10,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class FavoritesViewController: UIViewController {
+class FavoritesViewController: UIViewController, RxControllable {
+    
+    // MARK: - Aliases
+    typealias ViewModelType = FavoritesViewModel
     
     // MARK: - IBOutlets
     @IBOutlet private weak var collectionView: UICollectionView!
     
     // MARK: - Dependencies
-    var viewModel: FavoritesViewModel!
-    let disposeBag = DisposeBag()
-    
-    // MARK: - Properties
-    
-    // MARK: - Initialization
-    class func newInstanceFromStoryboard(viewModel: FavoritesViewModel) ->  FavoritesViewController {
-        let controller = FavoritesViewController.instantiate(viewControllerOfType: FavoritesViewController.self, storyboardName: "Favorites")
-        controller.viewModel = viewModel
-        return controller
-    }
+    internal(set) var viewModel: FavoritesViewModel!
+    internal(set) var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -35,29 +29,12 @@ class FavoritesViewController: UIViewController {
         viewModel.loadFavorites()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        viewModel.loadFavorites() // TODO: Remove this when persistence is done...
-    }
-    
 }
 
 // MARK: - Binding
-private extension FavoritesViewController {
+extension FavoritesViewController {
     
-    func bindAll() {
-        bindViewModel()
-        bindCollectionView()
-    }
-    
-    func bindViewModel() {
-        
-        viewModel.loadFavorites()
-        
-    }
-    
-    func bindCollectionView() {
-        
+    internal func bindAll() {
         viewModel.favoritesCellModels
             .asObservable()
             .bind(to: collectionView.rx.items(cellIdentifier: FavoriteCollectionViewCell.identifier, cellType: FavoriteCollectionViewCell.self)) { (rowIndex, favoriteCellModel, cell) in
@@ -71,7 +48,6 @@ private extension FavoritesViewController {
                 self.viewModel.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: selectedFavoriteCellModel)
             })
             .disposed(by: disposeBag)
-        
     }
     
 }

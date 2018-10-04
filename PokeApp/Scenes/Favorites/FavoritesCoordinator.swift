@@ -48,7 +48,6 @@ class FavoritesCoordinator: BaseCoordinator {
 extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
-        let router = self.router
         let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router, self))
         addChildCoordinator(coordinator)
         router.push(controller)
