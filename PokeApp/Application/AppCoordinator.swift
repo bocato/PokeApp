@@ -53,15 +53,6 @@ class AppCoordinator: BaseCoordinator {
         let (tabBarCoordinator, tabBarController) = modulesFactory.build(.tabBar(router: router))
         addChildCoordinator(tabBarCoordinator)
         router.setRootModule(tabBarController, hideBar: true)
-        loadRemoteConfigs() // Review this...
-    }
-    
-    private func loadRemoteConfigs() {
-        RemoteConfigs.shared.fetchConfigs(success: {
-            debugPrint("RemoteConfigs loaded")
-        }, failure: { error in
-            debugPrint("RemoteConfigs.fetchConfigs failed with error: \n\(error?.localizedDescription ?? "Unknown")")
-        })
     }
     
 }

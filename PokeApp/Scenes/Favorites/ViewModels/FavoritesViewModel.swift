@@ -24,11 +24,11 @@ class FavoritesViewModel {
     }
     
     // MARK: - Dependencies
-    var actionsDelegate: FavoritesViewControllerActionsDelegate? // need to make this weak
+    weak var actionsDelegate: FavoritesViewControllerActionsDelegate? // need to make this weak
     
     // MARK: - RXProperties
-    var viewState = BehaviorRelay<State>(value: .loading(true))
-    var favoritesCellModels = PublishSubject<[FavoriteCollectionViewCellModel]>()
+    let viewState = BehaviorRelay<State>(value: .loading(true))
+    let favoritesCellModels = PublishSubject<[FavoriteCollectionViewCellModel]>()
     
     // MARK: - Initialzation
     init(actionsDelegate: FavoritesViewControllerActionsDelegate) {

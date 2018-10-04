@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+protocol CoordinatorInput {}
 protocol CoordinatorOutput {}
 protocol CoordinatorContext {}
 protocol CoordinatorRoutes {}

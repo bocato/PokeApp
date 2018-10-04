@@ -14,7 +14,6 @@ protocol HomeViewControllerActionsDelegate: class {
     func showItemDetailsForPokemonWith(id: Int)
 }
 
-// MARK: - ViewModel Implementation
 class HomeViewModel {
     
     // MARK: - States
@@ -28,8 +27,8 @@ class HomeViewModel {
     private let services: PokemonServiceProtocol
     
     // MARK: - Properties
-    private(set) var pokemonCellModels = BehaviorRelay<[PokemonTableViewCellModel]>(value: [])
-    private(set) var viewState = PublishSubject<State>()
+    let pokemonCellModels = BehaviorRelay<[PokemonTableViewCellModel]>(value: [])
+    let viewState = PublishSubject<State>()
     
     // MARK: - Intialization
     init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol, disposeBag: DisposeBag = DisposeBag()) {

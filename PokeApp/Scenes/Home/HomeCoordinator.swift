@@ -53,7 +53,7 @@ extension HomeCoordinator: HomeViewControllerActionsDelegate {
         let router = self.router
         let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router)
         addChildCoordinator(coordinator)
-        router.push(controller, animated: true) { // completion runs on back button pressed...
+        router.push(controller, animated: true) { // completion runs on back button touched...
             weak var weakSelf = self
             weakSelf?.removeChildCoordinator(coordinator)
         }

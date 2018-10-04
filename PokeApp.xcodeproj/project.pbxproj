@@ -12,11 +12,7 @@
 		E50540B920B9FF7D004EA46D /* BaseRXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540B820B9FF7D004EA46D /* BaseRXViewController.swift */; };
 		E50540BB20BA6C77004EA46D /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540BA20BA6C77004EA46D /* FavoritesCoordinator.swift */; };
 		E50540C120BAF18B004EA46D /* PokeApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E50540BF20BAF18B004EA46D /* PokeApp.xcdatamodeld */; };
-		E50540C320BAF1F3004EA46D /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540C220BAF1F3004EA46D /* CoreDataController.swift */; };
-		E50540C520BAF22B004EA46D /* CoreDataController+AutoSaving.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540C420BAF22B004EA46D /* CoreDataController+AutoSaving.swift */; };
-		E50540C920BAF28A004EA46D /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540C820BAF28A004EA46D /* CoreDataService.swift */; };
 		E50540CF20BB1C99004EA46D /* PersistenceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540CE20BB1C99004EA46D /* PersistenceError.swift */; };
-		E50540D420BB25A8004EA46D /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50540D320BB25A8004EA46D /* FavoritesService.swift */; };
 		E50B734020B293A900154FCD /* PokemonTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B733F20B293A900154FCD /* PokemonTableViewCellModel.swift */; };
 		E50B734220B5197E00154FCD /* VersionGroupDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734120B5197E00154FCD /* VersionGroupDetail.swift */; };
 		E50B734620B5199500154FCD /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B734320B5199400154FCD /* Form.swift */; };
@@ -31,7 +27,6 @@
 		E50D15EC20D15EC70090D763 /* AppCoordinatorModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50D15EB20D15EC70090D763 /* AppCoordinatorModulesFactory.swift */; };
 		E51490772109FAA40000C3EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490762109FAA40000C3EB /* GoogleService-Info.plist */; };
 		E51490792109FEF10000C3EB /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */; };
-		E514907C2109FF490000C3EB /* RemoteConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514907B2109FF490000C3EB /* RemoteConfigs.swift */; };
 		E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DC521109DB600323C84 /* TabBarViewModelTests.swift */; };
 		E5238DD02110DE0800323C84 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5238DCF2110DE0800323C84 /* HomeViewModelTests.swift */; };
 		E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532EE1C20F7FD8A00475447 /* HomeModulesFactory.swift */; };
@@ -143,11 +138,7 @@
 		E50540B820B9FF7D004EA46D /* BaseRXViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRXViewController.swift; sourceTree = "<group>"; };
 		E50540BA20BA6C77004EA46D /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		E50540C020BAF18B004EA46D /* PokeApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PokeApp.xcdatamodel; sourceTree = "<group>"; };
-		E50540C220BAF1F3004EA46D /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
-		E50540C420BAF22B004EA46D /* CoreDataController+AutoSaving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataController+AutoSaving.swift"; sourceTree = "<group>"; };
-		E50540C820BAF28A004EA46D /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		E50540CE20BB1C99004EA46D /* PersistenceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceError.swift; sourceTree = "<group>"; };
-		E50540D320BB25A8004EA46D /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		E50B733F20B293A900154FCD /* PokemonTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCellModel.swift; sourceTree = "<group>"; };
 		E50B734120B5197E00154FCD /* VersionGroupDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionGroupDetail.swift; sourceTree = "<group>"; };
 		E50B734320B5199400154FCD /* Form.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
@@ -162,7 +153,6 @@
 		E50D15EB20D15EC70090D763 /* AppCoordinatorModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactory.swift; sourceTree = "<group>"; };
 		E51490762109FAA40000C3EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E51490782109FEF10000C3EB /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
-		E514907B2109FF490000C3EB /* RemoteConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigs.swift; sourceTree = "<group>"; };
 		E5238DC521109DB600323C84 /* TabBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModelTests.swift; sourceTree = "<group>"; };
 		E5238DCF2110DE0800323C84 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		E5238DD52111126C00323C84 /* MockedURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedURLSession.swift; sourceTree = "<group>"; };
@@ -306,15 +296,6 @@
 			path = Commons;
 			sourceTree = "<group>";
 		};
-		E50540BC20BAF15A004EA46D /* Persistence */ = {
-			isa = PBXGroup;
-			children = (
-				E50540C620BAF263004EA46D /* Commons */,
-				E50540D320BB25A8004EA46D /* FavoritesService.swift */,
-			);
-			path = Persistence;
-			sourceTree = "<group>";
-		};
 		E50540BE20BAF170004EA46D /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,21 +305,11 @@
 			path = Persistence;
 			sourceTree = "<group>";
 		};
-		E50540C620BAF263004EA46D /* Commons */ = {
-			isa = PBXGroup;
-			children = (
-				E50540C220BAF1F3004EA46D /* CoreDataController.swift */,
-				E50540C420BAF22B004EA46D /* CoreDataController+AutoSaving.swift */,
-				E50540C820BAF28A004EA46D /* CoreDataService.swift */,
-			);
-			path = Commons;
-			sourceTree = "<group>";
-		};
 		E514907A2109FF330000C3EB /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
-				E514907B2109FF490000C3EB /* RemoteConfigs.swift */,
 				E564DD262113160C00307A15 /* ApplicationContext.swift */,
+				E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -384,13 +355,6 @@
 				E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		E5363FBA2163E0DF00788873 /* ResourceLoader */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ResourceLoader;
 			sourceTree = "<group>";
 		};
 		E5363FBB2163E7BB00788873 /* Application */ = {
@@ -462,7 +426,6 @@
 				E50540B720B9FF62004EA46D /* Commons */,
 				E551385320A4521500A5F6EB /* Models */,
 				E551384C20A4506700A5F6EB /* Networking */,
-				E50540BC20BAF15A004EA46D /* Persistence */,
 				E56972B720ACEA0200F0B3E5 /* Scenes */,
 				E56972B820ACEA1100F0B3E5 /* Resources */,
 			);
@@ -496,7 +459,6 @@
 				E569728320AA5BBE00F0B3E5 /* JSON */,
 				E569729920AA71CD00F0B3E5 /* Factories */,
 				E569729C20AA720200F0B3E5 /* Enums */,
-				E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */,
 			);
 			path = Conveniences;
 			sourceTree = "<group>";
@@ -667,7 +629,6 @@
 		E56972B720ACEA0200F0B3E5 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				E5363FBA2163E0DF00788873 /* ResourceLoader */,
 				E56972B920ACEA3100F0B3E5 /* TabBar */,
 				E56972BB20ACEA4900F0B3E5 /* Favorites */,
 				E56972C220ACEA8800F0B3E5 /* Home */,
@@ -1135,7 +1096,6 @@
 				E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */,
 				E56D240220AF8D610059B0E0 /* Move.swift in Sources */,
 				E59DFB5921172F360052B678 /* MockRepositiory.swift in Sources */,
-				E514907C2109FF490000C3EB /* RemoteConfigs.swift in Sources */,
 				E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */,
 				E5A454D520CB5F030060FD85 /* DetailsCoordinator.swift in Sources */,
 				E50540CF20BB1C99004EA46D /* PersistenceError.swift in Sources */,
@@ -1153,7 +1113,6 @@
 				E569729820AA719E00F0B3E5 /* AlertHelper.swift in Sources */,
 				E569728F20AA6F6600F0B3E5 /* EncodableExtension.swift in Sources */,
 				E56D23FB20AF8D130059B0E0 /* Ability.swift in Sources */,
-				E50540D420BB25A8004EA46D /* FavoritesService.swift in Sources */,
 				E59DFB5B211731050052B678 /* MockSessionDataTask.swift in Sources */,
 				E50B734E20B51A0900154FCD /* JSONAny.swift in Sources */,
 				E569729620AA700500F0B3E5 /* PrimaryButton.swift in Sources */,
@@ -1177,7 +1136,6 @@
 				E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */,
 				E50B734020B293A900154FCD /* PokemonTableViewCellModel.swift in Sources */,
 				E59DFB4F21171B950052B678 /* DefaultRequestMatcher.swift in Sources */,
-				E50540C520BAF22B004EA46D /* CoreDataController+AutoSaving.swift in Sources */,
 				E50B734220B5197E00154FCD /* VersionGroupDetail.swift in Sources */,
 				E50B735020B51A0900154FCD /* JSONAny+Initialization.swift in Sources */,
 				E5DCC2AA20B6F7D900325D32 /* FavoritesManager.swift in Sources */,
@@ -1197,11 +1155,9 @@
 				E50D15EC20D15EC70090D763 /* AppCoordinatorModulesFactory.swift in Sources */,
 				E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */,
 				E59DFB5F211736AE0052B678 /* SessionMock.swift in Sources */,
-				E50540C320BAF1F3004EA46D /* CoreDataController.swift in Sources */,
 				E543D79420DAA35B00E4E506 /* FavoritesModulesFactory.swift in Sources */,
 				E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */,
 				E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */,
-				E50540C920BAF28A004EA46D /* CoreDataService.swift in Sources */,
 				E56D243920B2110C0059B0E0 /* PokemonTableViewCell.swift in Sources */,
 				E5583E9D20B86EB8003CAFA0 /* AppCoordinator.swift in Sources */,
 				E50540B920B9FF7D004EA46D /* BaseRXViewController.swift in Sources */,
