@@ -66,7 +66,7 @@ class TabBarViewModelTests: XCTestCase {
 
 class TabBarViewControllerActionsDelegateStub: TabBarViewControllerActionsDelegate {
     
-    // MARK: Control Vars
+    // MARK: Control Variables
     var actOnSelectedTabWasCalled = false
     var lastSelectedTab: TabBarViewModel.TabIndex?
     

@@ -31,8 +31,7 @@ class FavoritesCoordinator: BaseCoordinator {
         switch (child, output) {
         case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
             switch output {
-            case .didRemovePokemon(let pokemon):
-                favoritesManager.remove(pokemon: pokemon)
+            case .didRemovePokemon:
                 removeChildCoordinator(detailsCoordinator)
                 router.popModule(animated: true)
                 let outputToSend: Output = .shouldReloadFavorites

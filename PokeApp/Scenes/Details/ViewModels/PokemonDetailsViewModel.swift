@@ -12,8 +12,8 @@ import RxCocoa
 
 // MARK: - Actions
 protocol PokemonDetailsViewControllerActionsDelegate : class {
-    func didAddFavorite(pokemon: Pokemon)
-    func didRemoveFavorite(pokemon: Pokemon)
+    func didAddFavorite()
+    func didRemoveFavorite()
 }
 
 // MARK: - ViewState
@@ -116,7 +116,7 @@ class PokemonDetailsViewModel {
     private func downloadImage(from itemURL: String?) {
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
             pokemonImage.accept(UIImage.fromResource(withName: .openPokeball))
-            self.isLoadingPokemonImage.accept(false)
+            isLoadingPokemonImage.accept(false)
             return
         }
         DispatchQueue.main.async {
@@ -166,12 +166,14 @@ class PokemonDetailsViewModel {
     // MARK: - Actions
     func actOnFavoritesButtonTouch() {
         guard let pokemonData = self.pokemonData else { return }
-        if self.isThisPokemonAFavorite {
-            self.actionsDelegate?.didRemoveFavorite(pokemon: pokemonData)
+        if isThisPokemonAFavorite {
+            dataSources.favoritesManager.remove(pokemon: pokemonData)
+            actionsDelegate?.didRemoveFavorite()
         } else {
-            self.actionsDelegate?.didAddFavorite(pokemon: pokemonData)
+            dataSources.favoritesManager.add(pokemon: pokemonData)
+            actionsDelegate?.didAddFavorite()
         }
-        self.favoriteButtonText.accept(self.getfavoritesButtonText())
+        favoriteButtonText.accept(getfavoritesButtonText())
     }
     
 }

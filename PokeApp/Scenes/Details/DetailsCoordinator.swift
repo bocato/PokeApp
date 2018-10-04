@@ -12,21 +12,21 @@ class DetailsCoordinator: BaseCoordinator {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
-        case didAddPokemon(Pokemon)
-        case didRemovePokemon(Pokemon)
+        case didAddPokemon
+        case didRemovePokemon
     }
     
 }
 
 extension DetailsCoordinator: PokemonDetailsViewControllerActionsDelegate {
     
-    func didAddFavorite(pokemon: Pokemon) {
-        let outputToSend: DetailsCoordinator.Output = .didAddPokemon(pokemon)
+    func didAddFavorite() {
+        let outputToSend: DetailsCoordinator.Output = .didAddPokemon
         sendOutputToParent(outputToSend)
     }
     
-    func didRemoveFavorite(pokemon: Pokemon) {
-        let outputToSend: DetailsCoordinator.Output = .didRemovePokemon(pokemon)
+    func didRemoveFavorite() {
+        let outputToSend: DetailsCoordinator.Output = .didRemovePokemon
         sendOutputToParent(outputToSend)
     }
     

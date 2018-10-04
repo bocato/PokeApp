@@ -21,7 +21,7 @@ class FavoritesViewModel {
     internal(set) var favoritesManager: FavoritesManager
     
     // MARK: - RXProperties
-    let viewState = BehaviorRelay<CommonViewModelState>(value: .loading(true))
+    let viewState = PublishSubject<CommonViewModelState>()
     let favoritesCellModels = PublishSubject<[FavoriteCollectionViewCellModel]>()
     
     // MARK: - Initialzation
@@ -32,13 +32,13 @@ class FavoritesViewModel {
     
     // MARK: -
     func loadFavorites() {
-        self.viewState.accept(.loading(true))
+        viewState.onNext(.loading(true))
         let favoritesCellModels = favoritesManager.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
             return FavoriteCollectionViewCellModel(data: pokemon)
         })
         self.favoritesCellModels.onNext(favoritesCellModels)
-        self.viewState.accept(.loading(false))
-        self.viewState.accept(favoritesCellModels.count == 0 ? .empty : .loaded)
+        self.viewState.onNext(.loading(false))
+        self.viewState.onNext(favoritesCellModels.count == 0 ? .empty : .loaded)
     }
     
     // MARK: - Actions

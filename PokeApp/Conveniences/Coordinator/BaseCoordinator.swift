@@ -16,7 +16,7 @@ class BaseCoordinator: Coordinator {
     
     // MARK: - Properties
     internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) var parentCoordinator: Coordinator? = nil
+    internal(set) weak var parentCoordinator: Coordinator? = nil
     internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Initialization
