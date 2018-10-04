@@ -11,13 +11,23 @@
 
 import Foundation
 
-class FavoritesManager {
+protocol FavoritesManager {
+    // MARK: - Properties
+    var favorites: [Pokemon] { get set }
     
-    // MARK: - Singleton
-    static let shared = FavoritesManager()
+    // MARK: - Functions
+    func add(pokemon: Pokemon)
+    func remove(pokemon: Pokemon)
+    func isFavorite(pokemon: Pokemon) -> Bool
+}
+
+class SimpleFavoritesManager: FavoritesManager {
+    
+    // MARK: Singleton
+    static let shared = SimpleFavoritesManager()
     
     // MARK: - Properties
-    var favorites = [Pokemon]()
+    internal(set) var favorites = [Pokemon]()
     
     // MARK: - Helpers
     func add(pokemon: Pokemon) {

@@ -8,12 +8,7 @@
 
 import UIKit
 
-protocol FavoritesCoordinatorProtocol: Coordinator & FavoritesViewControllerActionsDelegate {
-    // MARK: - Dependencies
-    var modulesFactory: FavoritesModulesFactoryProtocol { get }
-}
-
-class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
+class FavoritesCoordinator: BaseCoordinator {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
@@ -21,7 +16,15 @@ class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
     }
     
     // MARK: - Dependencies
-    private(set) var modulesFactory: FavoritesModulesFactoryProtocol = FavoritesModulesFactory()
+    private(set) var modulesFactory: FavoritesCoordinatorModulesFactory
+    private(set) var favoritesManager: FavoritesManager
+    
+    // MARK: - Initialization
+    init(router: RouterProtocol, modulesFactory: FavoritesCoordinatorModulesFactory, favoritesManager: FavoritesManager) {
+        self.modulesFactory = modulesFactory
+        self.favoritesManager = favoritesManager
+        super.init(router: router)
+    }
     
     // MARK: - Dealing with ouputs
     override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
@@ -29,7 +32,7 @@ class FavoritesCoordinator: BaseCoordinator, FavoritesCoordinatorProtocol {
         case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
             switch output {
             case .didRemovePokemon(let pokemon):
-                FavoritesManager.shared.remove(pokemon: pokemon)
+                favoritesManager.remove(pokemon: pokemon)
                 removeChildCoordinator(detailsCoordinator)
                 router.popModule(animated: true)
                 let outputToSend: Output = .shouldReloadFavorites
@@ -46,7 +49,7 @@ extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
         let router = self.router
-        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router, parentCoordinator: self)
+        let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router, self))
         addChildCoordinator(coordinator)
         router.push(controller)
     }

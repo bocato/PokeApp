@@ -31,7 +31,8 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
     
     private func  buildHomeModule(with navigationController: UINavigationController) -> (Coordinator, UIViewController) {
         let router = Router(navigationController: navigationController)
-        let homeCoordinator = HomeCoordinator(router: router)
+        let homeCoordinatorModulesFactory = HomeCoordinatorModulesFactory()
+        let homeCoordinator = HomeCoordinator(router: router, favoritesManager: SimpleFavoritesManager.shared, modulesFactory: homeCoordinatorModulesFactory)
         let services = PokemonService()
         let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
         let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
@@ -40,9 +41,10 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
     
     private func buildFavoritesModule(with navigationController: UINavigationController) -> (Coordinator, UIViewController) {
         let router = Router(navigationController: navigationController)
-        let favoritesCoordinator = FavoritesCoordinator(router: router)
-        // let services = PokemonService() // TODO: Inject persistence services
-        let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator) // TODO: Inject Services
+        let favoritesCoordinatorModulesFactory = FavoritesCoordinatorModulesFactory()
+        let favoritesManager = SimpleFavoritesManager.shared
+        let favoritesCoordinator = FavoritesCoordinator(router: router, modulesFactory: favoritesCoordinatorModulesFactory, favoritesManager: favoritesManager)
+        let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator, favoritesManager: favoritesManager)
         let controller = FavoritesViewController.newInstanceFromStoryboard(viewModel: viewModel)
         return (favoritesCoordinator, controller)
     }

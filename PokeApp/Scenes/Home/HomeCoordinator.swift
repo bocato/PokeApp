@@ -8,12 +8,7 @@
 
 import Foundation
 
-protocol HomeCoordinatorProtocol: Coordinator & HomeViewControllerActionsDelegate {
-    // MARK: - Dependencies
-    var modulesFactory: HomeModulesFactoryProtocol { get }
-}
-
-class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
+class HomeCoordinator: BaseCoordinator {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
@@ -21,7 +16,15 @@ class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
     }
     
     // MARK: - Dependencies
-    private(set) var modulesFactory: HomeModulesFactoryProtocol = HomeModulesFactory()
+    private let favoritesManager: FavoritesManager
+    private let modulesFactory: HomeCoordinatorModulesFactory
+    
+    // MARK: Initialization
+    init(router: RouterProtocol, favoritesManager: FavoritesManager, modulesFactory: HomeCoordinatorModulesFactory){
+        self.favoritesManager = favoritesManager
+        self.modulesFactory = modulesFactory
+        super.init(router: router)
+    }
     
     // MARK: - Dealing with ouputs
     override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
@@ -29,13 +32,13 @@ class HomeCoordinator: BaseCoordinator, HomeCoordinatorProtocol {
         case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
             switch output {
             case .didAddPokemon(let pokemon):
-                FavoritesManager.shared.add(pokemon: pokemon)
+                favoritesManager.add(pokemon: pokemon)
                 removeChildCoordinator(detailsCoordinator)
                 router.popModule(animated: true)
                 let outputToSend: Output = .shouldReloadFavorites
                 sendOutputToParent(outputToSend)
             case .didRemovePokemon(let pokemon):
-                FavoritesManager.shared.remove(pokemon: pokemon)
+                favoritesManager.remove(pokemon: pokemon)
                 removeChildCoordinator(detailsCoordinator)
                 router.popModule(animated: true)
                 let outputToSend: Output = .shouldReloadFavorites
@@ -51,7 +54,7 @@ extension HomeCoordinator: HomeViewControllerActionsDelegate {
     
     func showItemDetailsForPokemonWith(id: Int) {
         let router = self.router
-        let (coordinator, controller) = modulesFactory.buildPokemonDetailsModule(pokemonId: id, router: router)
+        let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router))
         addChildCoordinator(coordinator)
         router.push(controller, animated: true) { // completion runs on back button touched...
             weak var weakSelf = self

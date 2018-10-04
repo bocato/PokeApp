@@ -31,10 +31,14 @@ class PokemonDetailsViewModel {
     }
     
     // MARK: - Dependencies
-    private var services: PokemonServiceProtocol
-    weak var actionsDelegate: PokemonDetailsViewControllerActionsDelegate?
+    struct DataSources {
+        let pokemonService: PokemonServiceProtocol
+        let favoritesManager: FavoritesManager
+    }
     
     private let disposeBag = DisposeBag()
+    private let dataSources: DataSources
+    weak var actionsDelegate: PokemonDetailsViewControllerActionsDelegate?
     
     // MARK: - Properties
     private var pokemonId: Int
@@ -43,7 +47,7 @@ class PokemonDetailsViewModel {
         guard let pokemonData = pokemonData else {
             return false
         }
-        return FavoritesManager.shared.isFavorite(pokemon: pokemonData)
+        return dataSources.favoritesManager.isFavorite(pokemon: pokemonData)
     }
     
     // MARK: - Rx Properties
@@ -61,9 +65,9 @@ class PokemonDetailsViewModel {
     var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
 
     // MARK: - Initialization
-    required init(pokemonId: Int, services: PokemonServiceProtocol, actionsDelegate: PokemonDetailsViewControllerActionsDelegate) {
+    required init(pokemonId: Int, dataSources: DataSources, actionsDelegate: PokemonDetailsViewControllerActionsDelegate) {
         self.pokemonId = pokemonId
-        self.services = services
+        self.dataSources = dataSources
         self.actionsDelegate = actionsDelegate
         setupActionClosures()
     }
@@ -71,7 +75,7 @@ class PokemonDetailsViewModel {
     // MARK: - API Calls
     func loadPokemonData() {
         viewState.accept(.loading(true))
-        services.getDetailsForPokemon(withId: pokemonId)
+        dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId)
             .subscribe(onNext: { pokemonData in
                 
                 guard let pokemonData = pokemonData,

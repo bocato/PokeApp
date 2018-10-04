@@ -15,30 +15,25 @@ protocol FavoritesViewControllerActionsDelegate: class {
 }
 
 class FavoritesViewModel {
-
-    // MARK: - State
-    enum State {
-        case loading(Bool)
-        case loaded
-        case empty
-    }
     
     // MARK: - Dependencies
-    weak var actionsDelegate: FavoritesViewControllerActionsDelegate? // need to make this weak
+    weak var actionsDelegate: FavoritesViewControllerActionsDelegate?
+    internal(set) var favoritesManager: FavoritesManager
     
     // MARK: - RXProperties
-    let viewState = BehaviorRelay<State>(value: .loading(true))
+    let viewState = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     let favoritesCellModels = PublishSubject<[FavoriteCollectionViewCellModel]>()
     
     // MARK: - Initialzation
-    init(actionsDelegate: FavoritesViewControllerActionsDelegate) {
+    init(actionsDelegate: FavoritesViewControllerActionsDelegate, favoritesManager: FavoritesManager) {
         self.actionsDelegate = actionsDelegate
+        self.favoritesManager = favoritesManager
     }
     
     // MARK: -
     func loadFavorites() {
         self.viewState.accept(.loading(true))
-        let favoritesCellModels = FavoritesManager.shared.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
+        let favoritesCellModels = favoritesManager.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
             return FavoriteCollectionViewCellModel(data: pokemon)
         })
         self.favoritesCellModels.onNext(favoritesCellModels)
