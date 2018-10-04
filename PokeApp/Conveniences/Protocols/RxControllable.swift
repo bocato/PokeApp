@@ -22,7 +22,7 @@ protocol RxControllable {
     func bindAll()
     
 }
-extension RxControllable {
+extension RxControllable where Self: UIViewController {
     
     // MARK: Instantiation
     static func newInstance(fromStoryboard storyboard: Storyboards, viewModel: ViewModelType) -> Self {

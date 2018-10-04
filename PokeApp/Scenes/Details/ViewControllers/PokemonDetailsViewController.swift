@@ -10,8 +10,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class PokemonDetailsViewController: UIViewController {
+class PokemonDetailsViewController: UIViewController, RxControllable {
 
+    // MARK: Aliases
+    typealias ViewModelType = PokemonDetailsViewModel
+    
     // MARK: - IBOutlets
     @IBOutlet private weak var pokemonImageView: UIImageView!
     @IBOutlet private weak var numberLabel: UILabel!
@@ -22,28 +25,22 @@ class PokemonDetailsViewController: UIViewController {
     @IBOutlet private weak var favoritesButton: PrimaryButton!
     
     // MARK: - Properties
-    var viewModel: PokemonDetailsViewModel!
-    private var disposeBag = DisposeBag()
-    
-    // MARK: - Instantiation
-    class func newInstanceFromStoryBoard(viewModel: PokemonDetailsViewModel) -> PokemonDetailsViewController {
-        let controller = instantiate(viewControllerOfType: PokemonDetailsViewController.self, storyboardName: "Details")
-        controller.viewModel = viewModel
-        return controller
-    }
+    internal(set) var viewModel: PokemonDetailsViewModel!
+    internal(set) var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAll()
+        viewModel.loadPokemonData()
     }
 
 }
 
 // MARK: - Binding
-private extension PokemonDetailsViewController {
+extension PokemonDetailsViewController {
     
-    func bindAll() {
+    internal func bindAll() {
         bindViewModel()
         bindImage()
         bindLabels()
@@ -51,9 +48,7 @@ private extension PokemonDetailsViewController {
         bindButtons()
     }
     
-    func bindViewModel() {
-        
-        viewModel.loadPokemonData()
+    private func bindViewModel() {
         
         viewModel.isLoadingPokemonImage
             .asObservable()
@@ -70,35 +65,26 @@ private extension PokemonDetailsViewController {
             .asObservable()
             .subscribe(onNext: { state in
                 switch state {
-                    case .loading(let isLoading):
-                        if isLoading {
-                            self.abilitiesTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
-                            self.statsTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
-                            self.movesTableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
-                            self.favoritesButton.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
-                        } else {
-                            self.abilitiesTableView.stopLoading()
-                            self.statsTableView.stopLoading()
-                            self.movesTableView.stopLoading()
-                            self.favoritesButton.stopLoading()
-                        }
                     case .error(let networkError):
                         let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
-                        AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
+                        AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet, action: UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                default: return
                 }
             })
             .disposed(by: disposeBag)
         
     }
     
-    func bindImage() {
+    private func bindImage() {
         viewModel.pokemonImage
             .asObservable()
             .bind(to: pokemonImageView.rx.image)
             .disposed(by: disposeBag)
     }
     
-    func bindLabels(){
+    private func bindLabels() {
         
         viewModel.pokemonNumber
             .asObservable()
@@ -112,7 +98,7 @@ private extension PokemonDetailsViewController {
         
     }
     
-    func bindTableViews() {
+    private func bindTableViews() {
         
         viewModel.pokemonAbilities
             .asObservable()
@@ -137,10 +123,10 @@ private extension PokemonDetailsViewController {
         
     }
     
-    func bindButtons() {
+    private func bindButtons() {
         
         favoritesButton.rx.tap.subscribe { onTap in
-            self.viewModel.favoriteButtonTouchUpInsideActionClosure?()
+            self.viewModel.actOnFavoritesButtonTouch()
         }.disposed(by: disposeBag)
         
         viewModel.favoriteButtonText

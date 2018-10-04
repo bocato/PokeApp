@@ -59,7 +59,7 @@ class HomeViewModelTests: XCTestCase {
         
         // When
         let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-        let viewStateCollector = RxCollector<HomeViewModel.State>()
+        let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
             .collect(from: sut.pokemonCellModels.asObservable())
@@ -71,7 +71,7 @@ class HomeViewModelTests: XCTestCase {
         waitForExpectations(timeout: 2, handler: nil)
         
         // Then
-        let viewStateExpectedResults: [HomeViewModel.State] = [.common(.loading(true)), .common(.empty), .common(.loading(false))]
+        let viewStateExpectedResults: [CommonViewModelState] = [.loading(true), .empty, .loading(false)]
         XCTAssertEqual(viewStateExpectedResults, viewStateCollector.items, "Invalid events for .empty state.")
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
     }
@@ -85,7 +85,7 @@ class HomeViewModelTests: XCTestCase {
         
         // When
         let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-        let viewStateCollector = RxCollector<HomeViewModel.State>()
+        let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
             .collect(from: sut.pokemonCellModels.asObservable())
@@ -98,12 +98,9 @@ class HomeViewModelTests: XCTestCase {
         
         // Then
         switch viewStateCollector.items.last! {
-        case .common(let commonState):
-            switch commonState {
             case .error(let serializedError): XCTAssertNotNil(serializedError, "The error is nil!")
                 break
             default: XCTFail("The last viewState is not an error!")
-            }
         }
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
     }
@@ -124,7 +121,7 @@ class HomeViewModelTests: XCTestCase {
         
         // When
         let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-        let viewStateCollector = RxCollector<HomeViewModel.State>()
+        let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
             .collect(from: sut.pokemonCellModels.asObservable())
@@ -137,7 +134,7 @@ class HomeViewModelTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
         
         // Then
-        XCTAssertTrue(viewStateCollector.items.contains(where: { $0 == .common(.loaded) }), ".loaded State not reached")
+        XCTAssertTrue(viewStateCollector.items.contains(where: { $0 == .loaded }), ".loaded State not reached")
         XCTAssertTrue(pokemonCellModelsCollector.items.count == 2, "pokemonCellModels.count is not 2")
         XCTAssertTrue(pokemonCellModelsCollector.items.last!.count == 1, "pokemonCellModelsCollector.items[1].count != 1")
         XCTAssertTrue(pokemonCellModelsCollector.items.last!.first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
@@ -211,17 +208,6 @@ class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
     func showItemDetailsForPokemonWith(id: Int) {
         showItemDetailsForPokemonWithIdWasCalled = true
         pokemonIdToShowDetails = id
-    }
-    
-}
-
-// MARK: - Helpers
-extension HomeViewModel.State: Equatable {
-    
-    public static func ==(lhs: HomeViewModel.State, rhs: HomeViewModel.State) -> Bool {
-        switch (lhs, rhs) {
-        case let (.common(l), .common(r)): return l == r
-        }
     }
     
 }

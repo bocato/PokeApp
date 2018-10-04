@@ -32,7 +32,7 @@ class FavoritesCoordinatorModulesFactory: ModuleFactory {
         let pokemonService = PokemonService()
         let viewModelDataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: SimpleFavoritesManager.shared)
         let viewModel = PokemonDetailsViewModel(pokemonId: pokemonId, dataSources: viewModelDataSources, actionsDelegate: pokemonDetailsCoordinator)
-        let pokemonDetailsViewController = PokemonDetailsViewController.newInstanceFromStoryBoard(viewModel: viewModel)
+        let pokemonDetailsViewController = PokemonDetailsViewController.newInstance(fromStoryboard: .details, viewModel: viewModel)
         
         return (pokemonDetailsCoordinator, pokemonDetailsViewController)
     }

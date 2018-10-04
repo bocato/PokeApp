@@ -10,16 +10,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-protocol HomeViewControllerActionsDelegate: class {
+protocol HomeViewControllerActionsDelegate: class { // This is related to the user interactions
     func showItemDetailsForPokemonWith(id: Int)
 }
 
 class HomeViewModel {
-    
-    // MARK: - States
-    enum State {
-        case common(CommonViewModelState)
-    }
     
     // MARK: - Dependencies
     private let disposeBag: DisposeBag!
@@ -28,7 +23,7 @@ class HomeViewModel {
     
     // MARK: - Properties
     let pokemonCellModels = BehaviorRelay<[PokemonTableViewCellModel]>(value: [])
-    let viewState = PublishSubject<State>()
+    let viewState = PublishSubject<CommonViewModelState>()
     
     // MARK: - Intialization
     init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol, disposeBag: DisposeBag = DisposeBag()) {
@@ -39,23 +34,23 @@ class HomeViewModel {
     
     // MARK: - API Calls
     func loadPokemonsObservable() -> Observable<PokemonListResponse?> {
-        viewState.onNext(.common(.loading(true)))
+        viewState.onNext(.loading(true))
         return services.getPokemonList()
             .do(onNext: { (pokemonListResponse) in
                 guard let results = pokemonListResponse?.results, results.count > 0 else {
-                    self.viewState.onNext(.common(.empty))
+                    self.viewState.onNext(.empty)
                     return
                 }
                 let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
                     return PokemonTableViewCellModel(listItem: listItem)
                 })
-                self.viewState.onNext(.common(.loaded))
+                self.viewState.onNext(.loaded)
                 self.pokemonCellModels.accept(viewModelsForResult)
             }, onError: { (error) in
                 let networkError = error as! NetworkError
-                self.viewState.onNext(.common(.error(networkError.requestError)))
+                self.viewState.onNext(.error(networkError.requestError))
             }, onCompleted: {
-                self.viewState.onNext(.common(.loading(false)))
+                self.viewState.onNext(.loading(false))
             })
     }
     

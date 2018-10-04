@@ -11,7 +11,10 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, RxControllable {
+    
+    // MARK: - Aliases
+    typealias ViewModelType = HomeViewModel
     
     // MARK: - Constants
     private struct ViewConstants {
@@ -22,20 +25,13 @@ class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Dependencies
-    var viewModel: HomeViewModel!
-    let disposeBag = DisposeBag()
-    
-    // MARK: - Instantiation
-    class func newInstanceFromStoryboard(viewModel: HomeViewModel) ->  HomeViewController {
-        let controller = HomeViewController.instantiate(viewControllerOfType: HomeViewController.self, storyboardName: "Home")
-        controller.viewModel = viewModel
-        return controller
-    }
+    internal(set) var viewModel: HomeViewModel!
+    internal(set) var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel.loadPokemons(using: disposeBag)
+        self.viewModel.loadPokemonsObservable().single().subscribe().disposed(by: disposeBag)
         bindAll()
     }
     
@@ -44,61 +40,48 @@ class HomeViewController: UIViewController {
         view.endEditing(true)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        // tests
-//        if RemoteConfigs.shared.areRefactorTestsEnabled {
-//           AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are ENABLED!")
-//        } else {
-//          AlertHelper.showAlert(in: self, withTitle: "TEST!", message: "Refactor tests are DISABLED!")
-//        }
-//    }
-    
     deinit {
         KingfisherManager.shared.cache.clearMemoryCache()
         KingfisherManager.shared.cache.clearDiskCache()
     }
     
+    // MARK: - Helpers
+    private func showTableViewLoader(_ show: Bool) {
+        if show {
+            tableView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
+        } else {
+            tableView.stopLoading()
+        }
+    }
+    
 }
 
 // MARK: - Binding
-private extension HomeViewController {
+extension HomeViewController {
     
-    func bindAll() {
+    internal func bindAll() {
         bindViewModel()
         bindTableView()
     }
     
-    func bindViewModel() {
+    private func bindViewModel() {
         
         viewModel.viewState
             .observeOn(MainScheduler.instance)
             .asObservable()
             .subscribe(onNext: { state in
                 switch state {
-                case .common(let commonState):
-                    handleCommonViewState(commonState)
+                case .loading(let isLoading):
+                    self.showTableViewLoader(isLoading)
+                case .error(let networkError):
+                    let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
+                    AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
+                case .empty:
+                    self.tableView.isHidden = true
+                default: return
                 }
             })
             .disposed(by: disposeBag)
-        
-        func handleCommonViewState(_ state: CommonViewModelState) {
-            switch state {
-            case .loading(let isLoading):
-//                if isLoading { // tá bugando, consertar depois
-//                    self.tableView.startLoading(backgroundColor: UIColor.white, activityIndicatorViewStyle: .whiteLarge, activityIndicatorColor: UIColor.lightGray)
-//                } else {
-//                    self.tableView.stopLoading()
-//                }
-                DebugLog(format: "\(isLoading)")
-            case .error(let networkError):
-                let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
-                AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
-            case .empty:
-                self.tableView.isHidden = true
-            default: return
-            }
-        }
         
     }
     

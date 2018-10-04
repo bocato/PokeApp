@@ -13,11 +13,6 @@ import RxCocoa
 
 class FavoriteCollectionViewCellModel {
     
-    // MARK: - Model State
-    enum PokemonTableViewCellModelState {
-        case loading(Bool)
-    }
-    
     // MARK: - Properties
     var pokemonData: Pokemon!
     var pokemonName: String {
@@ -33,7 +28,7 @@ class FavoriteCollectionViewCellModel {
         return "#\(id): "
     }
     var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
-    var state = BehaviorRelay<PokemonTableViewCellModelState>(value: .loading(true))
+    var state = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     
     // MARK: - Initializers
     init(data: Pokemon) {

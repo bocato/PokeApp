@@ -27,22 +27,5 @@ class ErrorFactory {
         }
     }
     
-    static func buildPersistenceError(with code: PersistenceErrorCode) -> PersistenceError {
-        switch code {
-        case .unknown:
-            return PersistenceError(message: PersistenceErrorMessage.unknown.rawValue, code: PersistenceErrorCode.unknown.rawValue)
-        case .unexpected:
-            return PersistenceError(message: PersistenceErrorMessage.unexpected.rawValue, code: PersistenceErrorCode.unexpected.rawValue)
-        case .notFound:
-            return PersistenceError(message: PersistenceErrorMessage.notFound.rawValue, code: PersistenceErrorCode.notFound.rawValue)
-        }
-    }
-    
-    static func buildPersistenceError(with error: Error!) -> PersistenceError {
-        let message = (error as NSError).description
-        let code = (error as NSError).code
-        return PersistenceError(message: message, code: code)
-    }
-    
 }
 

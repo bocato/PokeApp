@@ -17,7 +17,13 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var pokemonNameLabel: UILabel!
     
     // MARK: - Properties
-    private let disposeBag = DisposeBag()
+    private(set) var disposeBag = DisposeBag()
+    
+    // MARK: Lifecycle
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
     
     // MARK: - Configuration
     func configure(with cellModel: FavoriteCollectionViewCellModel) {
@@ -33,11 +39,8 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
             .subscribe(onNext: { (state) in
                 switch state {
                 case .loading(let isLoading):
-                    if isLoading {
-                        self.pokemonImageView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
-                    } else {
-                        self.pokemonImageView.stopLoading()
-                    }
+                    self.showImageViewLoader(isLoading)
+                default: return
                 }
             }).disposed(by: disposeBag)
         
@@ -47,6 +50,15 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
                 self.pokemonImageView.image = image
             }).disposed(by: disposeBag)
         
+    }
+    
+    // MARK: - Helpers
+    private func showImageViewLoader(_ show: Bool) {
+        if show {
+            pokemonImageView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
+        } else {
+            pokemonImageView.stopLoading()
+        }
     }
     
 }

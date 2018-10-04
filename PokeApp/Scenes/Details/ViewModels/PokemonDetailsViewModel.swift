@@ -12,7 +12,7 @@ import RxCocoa
 
 // MARK: - Actions
 protocol PokemonDetailsViewControllerActionsDelegate : class {
-    func didAddFavorite(pokemon: Pokemon) // configure didremove
+    func didAddFavorite(pokemon: Pokemon)
     func didRemoveFavorite(pokemon: Pokemon)
 }
 
@@ -36,7 +36,7 @@ class PokemonDetailsViewModel {
         let favoritesManager: FavoritesManager
     }
     
-    private let disposeBag = DisposeBag()
+    private(set) var disposeBag = DisposeBag()
     private let dataSources: DataSources
     weak var actionsDelegate: PokemonDetailsViewControllerActionsDelegate?
     
@@ -60,23 +60,19 @@ class PokemonDetailsViewModel {
     private(set) var pokemonAbilities = BehaviorRelay<[String]>(value: [])
     private(set) var pokemonStats = BehaviorRelay<[String]>(value: [])
     private(set) var pokemonMoves = BehaviorRelay<[String]>(value: [])
-    
-    // MARK: - Action Closures
-    var favoriteButtonTouchUpInsideActionClosure: (()->())? // TODO: Change to get only? Can i do this?
 
     // MARK: - Initialization
     required init(pokemonId: Int, dataSources: DataSources, actionsDelegate: PokemonDetailsViewControllerActionsDelegate) {
         self.pokemonId = pokemonId
         self.dataSources = dataSources
         self.actionsDelegate = actionsDelegate
-        setupActionClosures()
     }
     
     // MARK: - API Calls
-    func loadPokemonData() {
+    func loadPokemonDataObservable() -> Observable<Pokemon?> {
         viewState.accept(.loading(true))
-        dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId)
-            .subscribe(onNext: { pokemonData in
+        return dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId)
+            .do(onNext: { (pokemonData) in
                 
                 guard let pokemonData = pokemonData,
                     let imageURL = pokemonData.imageURL,
@@ -87,13 +83,14 @@ class PokemonDetailsViewModel {
                     let moves = pokemonData.moves else {
                         let error = ErrorFactory.buildNetworkError(with: .unexpected)
                         self.viewState.accept(.error(error))
-                    return
+                        return
                 }
                 
                 self.pokemonData = pokemonData
                 
                 self.favoriteButtonText.accept(self.getfavoritesButtonText())
                 self.downloadImage(from: imageURL)
+                DebugLog(format: imageURL)
                 self.pokemonNumber.accept("#\(number)")
                 self.pokemonName.accept(name.capitalizingFirstLetter())
                 self.pokemonAbilities.accept(self.extractAbilityNames(from: abilities))
@@ -106,7 +103,10 @@ class PokemonDetailsViewModel {
             }, onCompleted: {
                 self.viewState.accept(.loading(false))
             })
-            .disposed(by: disposeBag)
+    }
+    
+    func loadPokemonData() {
+        loadPokemonDataObservable().single().subscribe().disposed(by: disposeBag)
     }
     
     private func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
@@ -163,18 +163,15 @@ class PokemonDetailsViewModel {
         return moveStrings
     }
     
-    // MARK: - Action Closures
-    func setupActionClosures() {
-        
-        self.favoriteButtonTouchUpInsideActionClosure = {
-            guard let pokemonData = self.pokemonData else { return }
-            if self.isThisPokemonAFavorite {
-                self.actionsDelegate?.didRemoveFavorite(pokemon: pokemonData)
-            } else {
-                self.actionsDelegate?.didAddFavorite(pokemon: pokemonData)
-            }
-            self.favoriteButtonText.accept(self.getfavoritesButtonText())
+    // MARK: - Actions
+    func actOnFavoritesButtonTouch() {
+        guard let pokemonData = self.pokemonData else { return }
+        if self.isThisPokemonAFavorite {
+            self.actionsDelegate?.didRemoveFavorite(pokemon: pokemonData)
+        } else {
+            self.actionsDelegate?.didAddFavorite(pokemon: pokemonData)
         }
-        
+        self.favoriteButtonText.accept(self.getfavoritesButtonText())
     }
+    
 }

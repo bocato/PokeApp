@@ -21,5 +21,4 @@ extension Error {
         }
         return false
     }
-    
 }

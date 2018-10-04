@@ -41,7 +41,7 @@ class PokemonTableViewCellModel {
     private func downloadImage(from itemURL: String?) {
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
             pokemonImage.accept(UIImage.fromResource(withName: .openPokeball))
-            self.state.accept(.loading(false))
+            state.accept(.loading(false))
             return
         }
         DispatchQueue.main.async {

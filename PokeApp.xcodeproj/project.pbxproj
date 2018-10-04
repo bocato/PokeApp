@@ -93,6 +93,7 @@
 		E59A94BB216659FB003287F5 /* RxControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BA216659FB003287F5 /* RxControllable.swift */; };
 		E59A94BD21665BFB003287F5 /* Storyboards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BC21665BFB003287F5 /* Storyboards.swift */; };
 		E59A94BF216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BE216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift */; };
+		E59A94C22166901B003287F5 /* ObservableTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94C12166901A003287F5 /* ObservableTypeExtension.swift */; };
 		E59DFB2C211713530052B678 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */; };
 		E59DFB45211715C30052B678 /* MockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB41211715C20052B678 /* MockResponse.swift */; };
 		E59DFB4F21171B950052B678 /* DefaultRequestMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */; };
@@ -110,7 +111,6 @@
 		E5B8183F20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */; };
 		E5B8184120B4AAEE006F2AB0 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8184020B4AAEE006F2AB0 /* BorderView.swift */; };
 		E5B8184320B4AB71006F2AB0 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8184220B4AB71006F2AB0 /* RoundedImageView.swift */; };
-		E5CFBFF42119CDC300038BF5 /* ObservableTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFBFF32119CDC300038BF5 /* ObservableTypeExtension.swift */; };
 		E5CFBFF62119DD0400038BF5 /* CommonViewModelStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFBFF52119DD0400038BF5 /* CommonViewModelStates.swift */; };
 		E5DCC2A220B6F37000325D32 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A120B6F37000325D32 /* FavoritesViewController.swift */; };
 		E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A320B6F37C00325D32 /* FavoritesViewModel.swift */; };
@@ -224,6 +224,7 @@
 		E59A94BA216659FB003287F5 /* RxControllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxControllable.swift; sourceTree = "<group>"; };
 		E59A94BC21665BFB003287F5 /* Storyboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboards.swift; sourceTree = "<group>"; };
 		E59A94BE216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinatorModulesFactory.swift; sourceTree = "<group>"; };
+		E59A94C12166901A003287F5 /* ObservableTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableTypeExtension.swift; sourceTree = "<group>"; };
 		E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		E59DFB41211715C20052B678 /* MockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResponse.swift; sourceTree = "<group>"; };
 		E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRequestMatcher.swift; sourceTree = "<group>"; };
@@ -241,7 +242,6 @@
 		E5B8183E20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsViewModel.swift; sourceTree = "<group>"; };
 		E5B8184020B4AAEE006F2AB0 /* BorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
 		E5B8184220B4AB71006F2AB0 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
-		E5CFBFF32119CDC300038BF5 /* ObservableTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTypeExtension.swift; sourceTree = "<group>"; };
 		E5CFBFF52119DD0400038BF5 /* CommonViewModelStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModelStates.swift; sourceTree = "<group>"; };
 		E5DCC2A120B6F37000325D32 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		E5DCC2A320B6F37C00325D32 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
@@ -563,8 +563,8 @@
 				E56972AB20AA743200F0B3E5 /* DateExtension.swift */,
 				E56D243C20B21DAD0059B0E0 /* StringExtension.swift */,
 				E5825F102117E837008948E3 /* DictionaryExtension.swift */,
-				E5CFBFF32119CDC300038BF5 /* ObservableTypeExtension.swift */,
 				E5363FB42163BEB800788873 /* IdentifiableExtension.swift */,
+				E59A94C12166901A003287F5 /* ObservableTypeExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1106,7 +1106,6 @@
 				E5583E8F20B851EE003CAFA0 /* Coordinator.swift in Sources */,
 				E569729B20AA71DF00F0B3E5 /* ErrorFactory.swift in Sources */,
 				E569728D20AA6ED500F0B3E5 /* UIView+Loading.swift in Sources */,
-				E5CFBFF42119CDC300038BF5 /* ObservableTypeExtension.swift in Sources */,
 				E5B8183D20B49FFD006F2AB0 /* PokemonDetailsViewController.swift in Sources */,
 				E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */,
 				E569729820AA719E00F0B3E5 /* AlertHelper.swift in Sources */,
@@ -1162,6 +1161,7 @@
 				E50B734820B5199500154FCD /* TypeElement.swift in Sources */,
 				E59A94BD21665BFB003287F5 /* Storyboards.swift in Sources */,
 				E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */,
+				E59A94C22166901B003287F5 /* ObservableTypeExtension.swift in Sources */,
 				E59DFB5D2117318F0052B678 /* NSURLSession+Mock.swift in Sources */,
 				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,
 				E5CFBFF62119DD0400038BF5 /* CommonViewModelStates.swift in Sources */,

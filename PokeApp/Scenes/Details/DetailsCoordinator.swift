@@ -8,9 +8,7 @@
 
 import UIKit
 
-protocol DetailsCoordinatorProtocol: Coordinator, PokemonDetailsViewControllerActionsDelegate {}
-
-class DetailsCoordinator: BaseCoordinator, DetailsCoordinatorProtocol {
+class DetailsCoordinator: BaseCoordinator {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
@@ -24,12 +22,12 @@ extension DetailsCoordinator: PokemonDetailsViewControllerActionsDelegate {
     
     func didAddFavorite(pokemon: Pokemon) {
         let outputToSend: DetailsCoordinator.Output = .didAddPokemon(pokemon)
-        self.sendOutputToParent(outputToSend)
+        sendOutputToParent(outputToSend)
     }
     
     func didRemoveFavorite(pokemon: Pokemon) {
         let outputToSend: DetailsCoordinator.Output = .didRemovePokemon(pokemon)
-        self.sendOutputToParent(outputToSend)
+        sendOutputToParent(outputToSend)
     }
     
 }

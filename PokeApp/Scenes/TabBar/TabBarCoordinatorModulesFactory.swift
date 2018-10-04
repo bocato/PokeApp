@@ -35,7 +35,7 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
         let homeCoordinator = HomeCoordinator(router: router, favoritesManager: SimpleFavoritesManager.shared, modulesFactory: homeCoordinatorModulesFactory)
         let services = PokemonService()
         let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
-        let controller = HomeViewController.newInstanceFromStoryboard(viewModel: viewModel)
+        let controller = HomeViewController.newInstance(fromStoryboard: .home, viewModel: viewModel)
         return (homeCoordinator, controller)
     }
     

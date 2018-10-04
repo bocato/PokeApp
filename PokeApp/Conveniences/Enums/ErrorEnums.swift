@@ -26,16 +26,3 @@ enum NetworkErrorMessage: String {
     case jsonParse = "JSON parsing error."
     case connectivity = "Network connectivity error."
 }
-
-// MARK: - PersistenceErrors
-enum PersistenceErrorCode: Int {
-    case unknown = -111
-    case unexpected = -222
-    case notFound = -333
-}
-
-enum PersistenceErrorMessage: String {
-    case unknown = "An unknown error has occured. Try again later."
-    case unexpected = "An unexpected error has occured. Check your internet connection and try again."
-    case notFound = "Could not find object."
-}
