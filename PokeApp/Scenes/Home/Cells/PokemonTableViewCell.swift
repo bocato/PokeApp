@@ -32,11 +32,8 @@ class PokemonTableViewCell: UITableViewCell {
             .subscribe(onNext: { (state) in
                 switch state {
                 case .loading(let isLoading):
-                    if isLoading {
-                        self.pokemonImageView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
-                    } else {
-                        self.pokemonImageView.stopLoading()
-                    }
+                    self.showImageViewLoader(isLoading)
+                default: return
                 }
             }).disposed(by: disposeBag)
         
@@ -49,18 +46,26 @@ class PokemonTableViewCell: UITableViewCell {
     }
     
     // MARK: - Helpers
+    private func showImageViewLoader(_ show: Bool) {
+        if show {
+            pokemonImageView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
+        } else {
+            pokemonImageView.stopLoading()
+        }
+    }
+    
     private func buildNumberAttributedString(from numberString: String) -> NSMutableAttributedString {
         let numberAttributes = [
-            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12),
-            NSAttributedStringKey.foregroundColor: UIColor.blue
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: UIColor.blue
         ]
         return NSMutableAttributedString(string: numberString, attributes: numberAttributes)
     }
     
     private func buildNameAttributedString(from name: String) -> NSAttributedString {
         let nameAttributes = [
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12),
-            NSAttributedStringKey.foregroundColor: UIColor.darkText
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: UIColor.darkText
         ]
         return NSAttributedString(string: name, attributes: nameAttributes)
     }

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import RxCocoa
 
 class FavoriteCollectionViewCellModel {
     
@@ -31,8 +32,8 @@ class FavoriteCollectionViewCellModel {
         }
         return "#\(id): "
     }
-    var pokemonImage = Variable<UIImage?>(nil)
-    var state = Variable<PokemonTableViewCellModelState>(.loading(true))
+    var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
+    var state = BehaviorRelay<PokemonTableViewCellModelState>(value: .loading(true))
     
     // MARK: - Initializers
     init(data: Pokemon) {
@@ -43,16 +44,16 @@ class FavoriteCollectionViewCellModel {
     // MARK: - Configuration
     private func downloadImage(from itemURL: String?) {
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.value = UIImage.fromResource(withName: .openPokeball)
-            self.state.value = .loading(false)
+            pokemonImage.accept(UIImage.fromResource(withName: .openPokeball))
+            self.state.accept(.loading(false))
             return
         }
         DispatchQueue.main.async {
             let pokemonImageViewHolder = UIImageView()
             pokemonImageViewHolder.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
                 guard error != nil else {
-                    self.pokemonImage.value = image
-                    self.state.value = .loading(false)
+                    self.pokemonImage.accept(image)
+                    self.state.accept(.loading(false))
                     return
                 }
             }

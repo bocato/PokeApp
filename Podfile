@@ -6,8 +6,6 @@ def project_dependecies
     pod 'RxSwift', '4.2.0'
     pod 'RxCocoa', '4.2.0'
     pod 'Kingfisher', '~> 4.6.1'
-    pod 'Firebase/Core'
-    pod 'Firebase/RemoteConfig'
 end
 
 def testing_dependencies

@@ -28,9 +28,10 @@ class AppCoordinatorModulesFactory: ModuleFactory {
     
     // MARK: - Builder Methods
     private func buildTabBar(router: RouterProtocol) -> (Coordinator, UIViewController) {
-        let tabBarCoordinator = TabBarCoordinator(router: router)
+        let tabBarCoordinatorModulesFactory = TabBarCoordinatorModulesFactory()
+        let tabBarCoordinator = TabBarCoordinator(router: router, modulesFactory: tabBarCoordinatorModulesFactory)
         let viewModel = TabBarViewModel(actionsDelegate: tabBarCoordinator)
-        let controller = TabBarViewController.newInstanceFromStoryboard(viewModel: viewModel)
+        let controller = TabBarViewController.newInstance(fromStoryboard: .tabBar, viewModel: viewModel)
         return (tabBarCoordinator, controller)
     }
     

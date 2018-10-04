@@ -20,21 +20,21 @@ extension UIView {
     }
     
     // MARK: - Loading View Components
-    private func createBlurView(_ style: UIBlurEffectStyle = .light, alpha: CGFloat = 0.85)  -> UIVisualEffectView {
+    private func createBlurView(_ style: UIBlurEffect.Style = .light, alpha: CGFloat = 0.85)  -> UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.alpha = alpha
         return blurEffectView
     }
     
-    private func createActivityIndicator(_ style: UIActivityIndicatorViewStyle = .whiteLarge, color: UIColor = UIColor.lightGray) -> UIActivityIndicatorView  {
-        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: style)
+    private func createActivityIndicator(_ style: UIActivityIndicatorView.Style = .whiteLarge, color: UIColor = UIColor.lightGray) -> UIActivityIndicatorView  {
+        let activityIndicatorView = UIActivityIndicatorView(style: style)
         activityIndicatorView.color = color
         return activityIndicatorView
     }
     
     // MARK: - Loading Methods
-    func startLoading(in context: LoadingContext = .component, blur: Bool = false, backgroundColor: UIColor = UIColor.clear, activityIndicatorViewStyle: UIActivityIndicatorViewStyle? = nil, activityIndicatorColor: UIColor = UIColor.lightGray) {
+    func startLoading(in context: LoadingContext = .component, blur: Bool = false, backgroundColor: UIColor = UIColor.clear, activityIndicatorViewStyle: UIActivityIndicatorView.Style? = nil, activityIndicatorColor: UIColor = UIColor.lightGray) {
         
         guard let parentView = context == .fullScreen ? (UIApplication.shared.delegate)!.window! : self else { return }
         
@@ -60,7 +60,7 @@ extension UIView {
         }
         
         // Create activityIndicatorView
-        var activityIndicatorStyle: UIActivityIndicatorViewStyle = context == .fullScreen ? .whiteLarge : .white
+        var activityIndicatorStyle: UIActivityIndicatorView.Style = context == .fullScreen ? .whiteLarge : .white
         if let activityIndicatorViewStyle = activityIndicatorViewStyle {
             activityIndicatorStyle = activityIndicatorViewStyle
         }

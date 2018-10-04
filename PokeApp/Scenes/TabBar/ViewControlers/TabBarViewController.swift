@@ -10,30 +10,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TabBarViewController: UITabBarController {
+class TabBarViewController: UITabBarController, RxControllable {
     
+    // MARK: - Types
+    typealias ViewModelType = TabBarViewModel
     
-    // MARK: - Dependencies
-    let disposeBag = DisposeBag()
-    var viewModel: TabBarViewModel!
-    
-    // MARK: - Instantiation
-//    private(set) var viewModel: TabBarViewModel // i can do this only if i use xibs
-//    init(viewModel: TabBarViewModel) { // i can do this only if i use xibs
-//        self.viewModel = viewModel
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    //    let viewController = TabBarViewController(viewModel: TabBarViewModel()) // i can do this only if i use xibs
-    
-    class func newInstanceFromStoryboard(viewModel: TabBarViewModel) ->  TabBarViewController {
-        let controller = TabBarViewController.instantiate(viewControllerOfType: TabBarViewController.self, storyboardName: "TabBar")
-        controller.viewModel = viewModel
-        return controller
-    }
+    // MARK: Dependencies
+    internal var disposeBag: DisposeBag = DisposeBag()
+    internal(set) var viewModel: TabBarViewModel!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -59,9 +43,9 @@ extension TabBarViewController: UITabBarControllerDelegate {
 }
 
 // MARK: - Binding
-private extension TabBarViewController {
+extension TabBarViewController {
     
-    func bindViewModel() {
+    internal func bindViewModel() {
         viewModel.selectedTab
             .asObservable()
             .subscribe(onNext: { (selectedTab) in
@@ -69,7 +53,6 @@ private extension TabBarViewController {
                 self.viewModel.actionsDelegate?.actOnSelectedTab(selectedTab, controller)
             })
             .disposed(by: disposeBag)
-        
     }
     
 }

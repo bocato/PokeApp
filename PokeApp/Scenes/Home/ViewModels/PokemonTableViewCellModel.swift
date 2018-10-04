@@ -8,20 +8,11 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import Kingfisher
 
-// MARK: - Model State
-enum PokemonTableViewCellModelState {
-    case loading(Bool)
-}
-
-// MARK: - PokemonTableViewCellModelProtocol
-protocol PokemonTableViewCellModelProtocol {
-    
-}
-
 // MARK: - PokemonTableViewCellModel Implementation
-class PokemonTableViewCellModel: PokemonTableViewCellModelProtocol {
+class PokemonTableViewCellModel {
     
     // MARK: - Properties
     var pokemonListItem: PokemonListResult!
@@ -37,8 +28,8 @@ class PokemonTableViewCellModel: PokemonTableViewCellModelProtocol {
         }
         return "#\(id): "
     }
-    var pokemonImage = Variable<UIImage?>(nil)
-    var state = Variable<PokemonTableViewCellModelState>(.loading(true))
+    var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
+    var state = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     
     // MARK: - Initializers
     init(listItem: PokemonListResult) {
@@ -49,16 +40,16 @@ class PokemonTableViewCellModel: PokemonTableViewCellModelProtocol {
     // MARK: - Configuration
     private func downloadImage(from itemURL: String?) {
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.value = UIImage.fromResource(withName: .openPokeball)
-            self.state.value = .loading(false)
+            pokemonImage.accept(UIImage.fromResource(withName: .openPokeball))
+            self.state.accept(.loading(false))
             return
         }
         DispatchQueue.main.async {
             let pokemonImageViewHolder = UIImageView()
             pokemonImageViewHolder.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
                 guard error != nil else {
-                    self.pokemonImage.value = image
-                    self.state.value = .loading(false)
+                    self.pokemonImage.accept(image)
+                    self.state.accept(.loading(false))
                     return
                 }
             }

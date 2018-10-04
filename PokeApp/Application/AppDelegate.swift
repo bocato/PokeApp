@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     private lazy var applicationCoordinator: Coordinator? = makeAppCoordinator()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setupApplication()
         return true
@@ -45,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+// MARK: - Helper Extensios
 private extension AppDelegate {
     
     var rootController: UINavigationController {
@@ -52,15 +52,13 @@ private extension AppDelegate {
     }
     
     func setupApplication() {
-        if isRunningTests {
+        if isRunningUnitTests {
             window = UIWindow()
             window?.rootViewController = UIViewController()
             window?.makeKeyAndVisible()
         } else {
             // Start App Coordinator
             applicationCoordinator?.start()
-            // Start Firebase
-            FirebaseApp.configure()
         }
     }
     
@@ -71,8 +69,7 @@ private extension AppDelegate {
 }
 
 private extension AppDelegate {
-    var isRunningTests: Bool {
+    var isRunningUnitTests: Bool {
         return ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil // this means that we are running unit tests
     }
 }
-
