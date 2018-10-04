@@ -389,13 +389,13 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		E548A33320B8209100E72954 /* Coordinators */ = {
+		E548A33320B8209100E72954 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				E5583E8E20B851EE003CAFA0 /* Coordinator.swift */,
 				E5974ED321125F2800D48F25 /* BaseCoordinator.swift */,
 			);
-			path = Coordinators;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		E551382B20A4469700A5F6EB = {
@@ -450,7 +450,7 @@
 				E59DFB5321171F5F0052B678 /* Utils */,
 				E59DFB29211711430052B678 /* Networking */,
 				E514907A2109FF330000C3EB /* Singletons */,
-				E548A33320B8209100E72954 /* Coordinators */,
+				E548A33320B8209100E72954 /* Coordinator */,
 				E5583E9620B86124003CAFA0 /* Routers */,
 				E5583E9720B86155003CAFA0 /* Protocols */,
 				E569729420AA6FFC00F0B3E5 /* UI */,
@@ -512,19 +512,19 @@
 			isa = PBXGroup;
 			children = (
 				E5363FC02164F1E800788873 /* Networking */,
-				E564DD29211323A100307A15 /* Coordinators */,
+				E564DD29211323A100307A15 /* Coordinator */,
 				E5363FB02163A62C00788873 /* Routers */,
 				E5363FB12163A63500788873 /* Extensions */,
 			);
 			path = Conveniences;
 			sourceTree = "<group>";
 		};
-		E564DD29211323A100307A15 /* Coordinators */ = {
+		E564DD29211323A100307A15 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				E564DD2A2113253800307A15 /* BaseCoordinatorTests.swift */,
 			);
-			path = Coordinators;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		E569727E20AA57BE00F0B3E5 /* Networking */ = {
