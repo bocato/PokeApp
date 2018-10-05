@@ -24,6 +24,9 @@ class FavoritesViewModel {
     let viewState = PublishSubject<CommonViewModelState>()
     let favoritesCellModels = PublishSubject<[FavoriteCollectionViewCellModel]>()
     
+    // MARK: Properties
+    private(set) var numberFavorites = 0
+    
     // MARK: - Initialzation
     init(actionsDelegate: FavoritesViewControllerActionsDelegate, favoritesManager: FavoritesManager) {
         self.actionsDelegate = actionsDelegate
@@ -32,12 +35,14 @@ class FavoritesViewModel {
     
     // MARK: -
     func loadFavorites() {
-        viewState.onNext(.loading(true))
         let favoritesCellModels = favoritesManager.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
             return FavoriteCollectionViewCellModel(data: pokemon)
-        })
+        }).sorted { (pokemon1, pokemon2) -> Bool in
+            guard let id1 = pokemon1.pokemonData.id, let id2 = pokemon2.pokemonData.id else { return false }
+            return id1 < id2
+        }
+        numberFavorites = favoritesCellModels.count
         self.favoritesCellModels.onNext(favoritesCellModels)
-        viewState.onNext(.loading(false))
         viewState.onNext(favoritesCellModels.count == 0 ? .empty : .loaded)
     }
     

@@ -35,7 +35,9 @@ class HomeViewModel {
     // MARK: - API Calls
     func loadPokemons() {
         viewState.onNext(.loading(true))
-        services.getPokemonList().single()
+        services.getPokemonList()
+            .observeOn(MainScheduler.instance)
+            .single()
             .subscribe(onNext: { [weak self] (pokemonListResponse) in
                 guard let self = self else { return }
                 guard let results = pokemonListResponse?.results, results.count > 0 else {

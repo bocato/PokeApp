@@ -48,6 +48,19 @@ extension FavoritesViewController {
                 self.viewModel.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: selectedFavoriteCellModel)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.viewState
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (state) in
+                switch state {
+                case .empty:
+                    self?.collectionView.isHidden = true
+                case .loaded:
+                    self?.collectionView.isHidden = false
+                default: return
+                }
+            }).disposed(by: disposeBag)
+        
     }
     
 }
@@ -56,9 +69,11 @@ extension FavoritesViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
-        let cellWidth = width * 0.9
-        let cellHeight = width
-        return CGSize(width: cellWidth, height: cellHeight)
+        var side = width / 2
+        if viewModel.numberFavorites > 1 {
+            side = width/2 * 0.95
+        }
+        return CGSize(width: side, height: side)
     }
     
 }

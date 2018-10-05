@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="d0G-tI-gd9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="d0G-tI-gd9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,6 +18,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97S-5A-pXD" userLabel="No Content View">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="clO-Z5-mtg">
+                                        <rect key="frame" x="47" y="162" width="281" height="323.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pikachu_ops" translatesAutoresizingMaskIntoConstraints="NO" id="Pjx-E1-N7I">
+                                                <rect key="frame" x="0.0" y="0.0" width="281" height="304"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorites..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="o9L-KF-JNI">
+                                                <rect key="frame" x="0.0" y="304" width="281" height="19.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="27"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="clO-Z5-mtg" firstAttribute="width" secondItem="97S-5A-pXD" secondAttribute="width" multiplier="0.75" id="gND-f9-hC0"/>
+                                    <constraint firstItem="clO-Z5-mtg" firstAttribute="height" secondItem="97S-5A-pXD" secondAttribute="height" multiplier="0.5" id="jOv-Uy-FFj"/>
+                                    <constraint firstItem="clO-Z5-mtg" firstAttribute="centerY" secondItem="97S-5A-pXD" secondAttribute="centerY" id="m8o-Bu-x16"/>
+                                    <constraint firstItem="clO-Z5-mtg" firstAttribute="centerX" secondItem="97S-5A-pXD" secondAttribute="centerX" id="rek-6u-CMh"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="AYQ-ia-oN3"/>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0Tm-OB-aTf">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -39,7 +66,7 @@
                                                     <rect key="frame" x="5" y="5" width="154" height="154"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5hI-Vc-lx0">
-                                                            <rect key="frame" x="51" y="20" width="52" height="52.5"/>
+                                                            <rect key="frame" x="51" y="20" width="52" height="52"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="52" id="1g0-U2-no3"/>
                                                                 <constraint firstAttribute="height" constant="52" id="CMP-j7-ILO"/>
@@ -106,13 +133,20 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="delegate" destination="d0G-tI-gd9" id="k3B-is-HfP"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="97S-5A-pXD" firstAttribute="height" secondItem="0Tm-OB-aTf" secondAttribute="height" id="5nD-WK-3Qb"/>
                             <constraint firstItem="0Tm-OB-aTf" firstAttribute="leading" secondItem="59z-dE-beN" secondAttribute="leading" id="6Fc-2m-6ih"/>
+                            <constraint firstItem="97S-5A-pXD" firstAttribute="width" secondItem="0Tm-OB-aTf" secondAttribute="width" id="Th1-tW-iM5"/>
                             <constraint firstItem="0Tm-OB-aTf" firstAttribute="top" secondItem="59z-dE-beN" secondAttribute="top" id="a9q-33-Xzd"/>
                             <constraint firstItem="59z-dE-beN" firstAttribute="bottom" secondItem="0Tm-OB-aTf" secondAttribute="bottom" id="gKJ-RV-u35"/>
+                            <constraint firstItem="97S-5A-pXD" firstAttribute="centerY" secondItem="0Tm-OB-aTf" secondAttribute="centerY" id="pu2-N5-JtE"/>
+                            <constraint firstItem="97S-5A-pXD" firstAttribute="centerX" secondItem="0Tm-OB-aTf" secondAttribute="centerX" id="wJ3-ZD-MQc"/>
                             <constraint firstItem="59z-dE-beN" firstAttribute="trailing" secondItem="0Tm-OB-aTf" secondAttribute="trailing" id="wy1-Sd-Vmb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="59z-dE-beN"/>
@@ -127,4 +161,7 @@
             <point key="canvasLocation" x="-143.19999999999999" y="-118.29085457271366"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pikachu_ops" width="512" height="512"/>
+    </resources>
 </document>
