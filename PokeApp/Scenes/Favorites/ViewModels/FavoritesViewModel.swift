@@ -37,14 +37,14 @@ class FavoritesViewModel {
             return FavoriteCollectionViewCellModel(data: pokemon)
         })
         self.favoritesCellModels.onNext(favoritesCellModels)
-        self.viewState.onNext(.loading(false))
-        self.viewState.onNext(favoritesCellModels.count == 0 ? .empty : .loaded)
+        viewState.onNext(.loading(false))
+        viewState.onNext(favoritesCellModels.count == 0 ? .empty : .loaded)
     }
     
     // MARK: - Actions
     func showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: FavoriteCollectionViewCellModel) {
         guard let id = favoriteCellModel.pokemonData.id else { return }
-        self.actionsDelegate?.showItemDetailsForPokemonWith(id: id)
+        actionsDelegate?.showItemDetailsForPokemonWith(id: id)
     }
     
 }

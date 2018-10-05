@@ -33,10 +33,11 @@ class HomeViewModel {
     }
     
     // MARK: - API Calls
-    func loadPokemonsObservable() -> Observable<PokemonListResponse?> {
+    func loadPokemons() {
         viewState.onNext(.loading(true))
-        return services.getPokemonList()
-            .do(onNext: { (pokemonListResponse) in
+        services.getPokemonList().single()
+            .subscribe(onNext: { [weak self] (pokemonListResponse) in
+                guard let self = self else { return }
                 guard let results = pokemonListResponse?.results, results.count > 0 else {
                     self.viewState.onNext(.empty)
                     return
@@ -46,16 +47,13 @@ class HomeViewModel {
                 })
                 self.viewState.onNext(.loaded)
                 self.pokemonCellModels.accept(viewModelsForResult)
-            }, onError: { (error) in
+            }, onError: { [weak self]  (error) in
                 let networkError = error as! NetworkError
-                self.viewState.onNext(.error(networkError.requestError))
+                self?.viewState.onNext(.error(networkError.requestError))
             }, onCompleted: {
                 self.viewState.onNext(.loading(false))
             })
-    }
-    
-    func loadPokemons(using disposeBag: DisposeBag) {
-        loadPokemonsObservable().fireSingleEvent(disposedBy: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Actions

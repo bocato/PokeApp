@@ -31,8 +31,8 @@ class HomeViewController: UIViewController, RxControllable {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel.loadPokemonsObservable().single().subscribe().disposed(by: disposeBag)
         bindAll()
+        viewModel.loadPokemons()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

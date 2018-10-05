@@ -90,7 +90,6 @@
 		E59A94BB216659FB003287F5 /* RxControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BA216659FB003287F5 /* RxControllable.swift */; };
 		E59A94BD21665BFB003287F5 /* Storyboards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BC21665BFB003287F5 /* Storyboards.swift */; };
 		E59A94BF216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BE216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift */; };
-		E59A94C22166901B003287F5 /* ObservableTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94C12166901A003287F5 /* ObservableTypeExtension.swift */; };
 		E59A94CA2166A012003287F5 /* FavoritesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94C92166A012003287F5 /* FavoritesViewModelTests.swift */; };
 		E59A94CC2166A519003287F5 /* URLRequest+NSURLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5121171EAC0052B678 /* URLRequest+NSURLSessionMock.swift */; };
 		E59A94CD2166A51D003287F5 /* NSURLSession+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5C2117318F0052B678 /* NSURLSession+Mock.swift */; };
@@ -220,7 +219,6 @@
 		E59A94BA216659FB003287F5 /* RxControllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxControllable.swift; sourceTree = "<group>"; };
 		E59A94BC21665BFB003287F5 /* Storyboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboards.swift; sourceTree = "<group>"; };
 		E59A94BE216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinatorModulesFactory.swift; sourceTree = "<group>"; };
-		E59A94C12166901A003287F5 /* ObservableTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableTypeExtension.swift; sourceTree = "<group>"; };
 		E59A94C92166A012003287F5 /* FavoritesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModelTests.swift; sourceTree = "<group>"; };
 		E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
 		E59DFB41211715C20052B678 /* MockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResponse.swift; sourceTree = "<group>"; };
@@ -430,9 +428,7 @@
 		E551384B20A4504C00A5F6EB /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
-				E59A94C021667323003287F5 /* Managers */,
 				E59DFB5321171F5F0052B678 /* Utils */,
-				E59DFB29211711430052B678 /* Networking */,
 				E514907A2109FF330000C3EB /* Singletons */,
 				E548A33320B8209100E72954 /* Coordinator */,
 				E5583E9620B86124003CAFA0 /* Routers */,
@@ -552,7 +548,6 @@
 				E56D243C20B21DAD0059B0E0 /* StringExtension.swift */,
 				E5825F102117E837008948E3 /* DictionaryExtension.swift */,
 				E5363FB42163BEB800788873 /* IdentifiableExtension.swift */,
-				E59A94C12166901A003287F5 /* ObservableTypeExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -772,13 +767,6 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		E59A94C021667323003287F5 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
 		E59A94C721669FDF003287F5 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
@@ -800,13 +788,6 @@
 				E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		E59DFB29211711430052B678 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Networking;
 			sourceTree = "<group>";
 		};
 		E59DFB2A211711550052B678 /* NSURLSessionMock */ = {
@@ -1162,7 +1143,6 @@
 				E59A94D72166A625003287F5 /* Logging.swift in Sources */,
 				E59A94BD21665BFB003287F5 /* Storyboards.swift in Sources */,
 				E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */,
-				E59A94C22166901B003287F5 /* ObservableTypeExtension.swift in Sources */,
 				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,
 				E5CFBFF62119DD0400038BF5 /* CommonViewModelStates.swift in Sources */,
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,

@@ -69,10 +69,12 @@ class PokemonDetailsViewModel {
     }
     
     // MARK: - API Calls
-    func loadPokemonDataObservable() -> Observable<Pokemon?> {
+    func loadPokemonData() {
         viewState.accept(.loading(true))
-        return dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId)
-            .do(onNext: { (pokemonData) in
+        dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId).single()
+            .subscribe(onNext: { [weak self] (pokemonData) in
+                
+                guard let self = self else { return }
                 
                 guard let pokemonData = pokemonData,
                     let imageURL = pokemonData.imageURL,
@@ -97,16 +99,17 @@ class PokemonDetailsViewModel {
                 self.pokemonStats.accept(self.extractStatStrings(from: stats))
                 self.pokemonMoves.accept(self.extractMoveStrings(from: moves))
                 
-            }, onError: { (error) in
-                let networkError = error as! NetworkError
-                self.viewState.accept(.error(networkError.requestError))
-            }, onCompleted: {
-                self.viewState.accept(.loading(false))
+                }, onError: { [weak self] (error) in
+                    
+                    let networkError = error as! NetworkError
+                    self?.viewState.accept(.error(networkError.requestError))
+                    
+                }, onCompleted: {
+                    
+                    self.viewState.accept(.loading(false))
+                    
             })
-    }
-    
-    func loadPokemonData() {
-        loadPokemonDataObservable().single().subscribe().disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     private func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
