@@ -3,15 +3,15 @@ platform :ios, '11.0'
 
 def project_dependecies
     # Pods for PokeApp
-    pod 'RxSwift', '4.2.0'
-    pod 'RxCocoa', '4.2.0'
+    pod 'RxSwift', '4.3.1'
+    pod 'RxCocoa', '4.3.1'
     pod 'Kingfisher', '~> 4.6.1'
 end
 
 def testing_dependencies
     # Pods for testing
-    pod 'RxSwift', '4.2.0'
-    pod 'RxCocoa', '4.2.0'
+    pod 'RxSwift', '4.3.1'
+    pod 'RxCocoa', '4.3.1'
 end
 
 target 'PokeApp' do

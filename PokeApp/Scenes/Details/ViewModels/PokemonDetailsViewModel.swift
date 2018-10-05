@@ -118,7 +118,7 @@ class PokemonDetailsViewModel {
     
     private func downloadImage(from itemURL: String?) {
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.accept(UIImage.fromResource(withName: .openPokeball))
+            pokemonImage.accept(UIImage(named: "open_pokeball")!)
             isLoadingPokemonImage.accept(false)
             return
         }

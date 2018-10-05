@@ -31,28 +31,28 @@ class FavoritesViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.favoritesManager)
     }
     
-    func testLoadFavoritesEmpty() {
-        // Given
-        let expectedStates: [CommonViewModelState] = [.loading(true), .loading(false), .empty]
-        
-        // When
-        let viewStateCollector = RxCollector<CommonViewModelState>()
-                .collect(from: sut.viewState.asObservable())
-        let favoriteCollectionViewCellModelsCollector = RxCollector<[FavoriteCollectionViewCellModel]>()
-            .collect(from: sut.favoritesCellModels.asObservable())
-        
-        sut.loadFavorites()
-        
-        // Then
-        XCTAssertEqual(viewStateCollector.items, expectedStates, "State stream is invalid")
-        XCTAssertTrue(favoriteCollectionViewCellModelsCollector.items.isEmpty, "Items is not empty")
-    }
+//    func testLoadFavoritesEmpty() {
+//        // Given
+//        let expectedStates: [CommonViewModelState] = [.loading(true), .loading(false), .empty]
+//
+//        // When
+//        let viewStateCollector = RxCollector<CommonViewModelState>()
+//                .collect(from: sut.viewState.asObservable())
+//        let favoriteCollectionViewCellModelsCollector = RxCollector<[FavoriteCollectionViewCellModel]>()
+//            .collect(from: sut.favoritesCellModels.asObservable())
+//
+//        sut.loadFavorites()
+//
+//        // Then
+//        XCTAssertEqual(viewStateCollector.items, expectedStates, "State stream is invalid")
+//        XCTAssertTrue(favoriteCollectionViewCellModelsCollector.items.isEmpty, "Items is not empty")
+//    }
     
-    func testLoadFavoritesWithElements() {
-        // Given
-        // When
-        // Then
-    }
+//    func testLoadFavoritesWithElements() {
+//        // Given
+//        // When
+//        // Then
+//    }
     
 
 }

@@ -15,16 +15,4 @@ extension UIViewController {
         return UIStoryboard(name: storyboardName, bundle: nil).instantiateViewController(withIdentifier: "\(type)") as! T
     }
     
-    // MARK: X Button Configuration
-    func configureXButtonOnRightBarButtonItem() {
-        if let _ = navigationController {
-            navigationItem.hidesBackButton = true
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(xButtonDidReceiveTouchUpInside(_:)))
-        }
-    }
-    
-    @objc private func xButtonDidReceiveTouchUpInside(_ sender: UIBarButtonItem) {
-        navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
 }

@@ -39,7 +39,7 @@ class FavoriteCollectionViewCellModel {
     // MARK: - Configuration
     private func downloadImage(from itemURL: String?) {
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.accept(UIImage.fromResource(withName: .openPokeball))
+            pokemonImage.accept(UIImage(named: "open_pokeball")!)
             self.state.accept(.loading(false))
             return
         }

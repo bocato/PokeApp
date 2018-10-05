@@ -30,7 +30,6 @@
 		E5363FAB2163A4C600788873 /* NetworkDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FAA2163A4C600788873 /* NetworkDispatcherTests.swift */; };
 		E5363FB32163A67E00788873 /* EncodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB22163A67E00788873 /* EncodableExtensionTests.swift */; };
 		E5363FB52163BEB800788873 /* IdentifiableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB42163BEB800788873 /* IdentifiableExtension.swift */; };
-		E5363FB72163BF3E00788873 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB62163BF3E00788873 /* DateExtensionTests.swift */; };
 		E5363FB92163BF7A00788873 /* IdentifiableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */; };
 		E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */; };
 		E5363FBF2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */; };
@@ -47,7 +46,6 @@
 		E5583E9D20B86EB8003CAFA0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */; };
 		E5583EA220B880C4003CAFA0 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */; };
 		E5583EA420B8857A003CAFA0 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */; };
-		E564DD272113160C00307A15 /* ApplicationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E564DD262113160C00307A15 /* ApplicationContext.swift */; };
 		E564DD2B2113253800307A15 /* BaseCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E564DD2A2113253800307A15 /* BaseCoordinatorTests.swift */; };
 		E569728020AA57CB00F0B3E5 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */; };
 		E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569728120AA5B9E00F0B3E5 /* NetworkError.swift */; };
@@ -60,12 +58,7 @@
 		E569729820AA719E00F0B3E5 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729720AA719E00F0B3E5 /* AlertHelper.swift */; };
 		E569729B20AA71DF00F0B3E5 /* ErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729A20AA71DF00F0B3E5 /* ErrorFactory.swift */; };
 		E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729D20AA721C00F0B3E5 /* ErrorEnums.swift */; };
-		E56972A020AA730200F0B3E5 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569729F20AA730200F0B3E5 /* UIColorExtension.swift */; };
-		E56972A320AA733A00F0B3E5 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972A220AA733A00F0B3E5 /* UITableViewExtension.swift */; };
-		E56972A520AA736B00F0B3E5 /* UIImage+ProjectResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972A420AA736B00F0B3E5 /* UIImage+ProjectResources.swift */; };
 		E56972A720AA73DE00F0B3E5 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972A620AA73DE00F0B3E5 /* UIViewControllerExtension.swift */; };
-		E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972A820AA740A00F0B3E5 /* UICollectionViewExtension.swift */; };
-		E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972AB20AA743200F0B3E5 /* DateExtension.swift */; };
 		E56972AE20AA746400F0B3E5 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972AD20AA746400F0B3E5 /* Environment.swift */; };
 		E56972B120AA867E00F0B3E5 /* PokemonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972B020AA867E00F0B3E5 /* PokemonService.swift */; };
 		E56972B420AA872D00F0B3E5 /* PokemonListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56972B320AA872D00F0B3E5 /* PokemonListResponse.swift */; };
@@ -85,7 +78,6 @@
 		E56D243920B2110C0059B0E0 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D243820B2110C0059B0E0 /* PokemonTableViewCell.swift */; };
 		E56D243D20B21DAD0059B0E0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56D243C20B21DAD0059B0E0 /* StringExtension.swift */; };
 		E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */; };
-		E5825F112117E837008948E3 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5825F102117E837008948E3 /* DictionaryExtension.swift */; };
 		E5974ED421125F2800D48F25 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5974ED321125F2800D48F25 /* BaseCoordinator.swift */; };
 		E59A94BB216659FB003287F5 /* RxControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BA216659FB003287F5 /* RxControllable.swift */; };
 		E59A94BD21665BFB003287F5 /* Storyboards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BC21665BFB003287F5 /* Storyboards.swift */; };
@@ -155,7 +147,6 @@
 		E5363FAA2163A4C600788873 /* NetworkDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcherTests.swift; sourceTree = "<group>"; };
 		E5363FB22163A67E00788873 /* EncodableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableExtensionTests.swift; sourceTree = "<group>"; };
 		E5363FB42163BEB800788873 /* IdentifiableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableExtension.swift; sourceTree = "<group>"; };
-		E5363FB62163BF3E00788873 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableExtensionTests.swift; sourceTree = "<group>"; };
 		E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
 		E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
@@ -174,7 +165,6 @@
 		E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
-		E564DD262113160C00307A15 /* ApplicationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationContext.swift; sourceTree = "<group>"; };
 		E564DD2A2113253800307A15 /* BaseCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinatorTests.swift; sourceTree = "<group>"; };
 		E569727F20AA57CB00F0B3E5 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		E569728120AA5B9E00F0B3E5 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -187,12 +177,7 @@
 		E569729720AA719E00F0B3E5 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		E569729A20AA71DF00F0B3E5 /* ErrorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorFactory.swift; sourceTree = "<group>"; };
 		E569729D20AA721C00F0B3E5 /* ErrorEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEnums.swift; sourceTree = "<group>"; };
-		E569729F20AA730200F0B3E5 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		E56972A220AA733A00F0B3E5 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
-		E56972A420AA736B00F0B3E5 /* UIImage+ProjectResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ProjectResources.swift"; sourceTree = "<group>"; };
 		E56972A620AA73DE00F0B3E5 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		E56972A820AA740A00F0B3E5 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
-		E56972AB20AA743200F0B3E5 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		E56972AD20AA746400F0B3E5 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		E56972B020AA867E00F0B3E5 /* PokemonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonService.swift; sourceTree = "<group>"; };
 		E56972B320AA872D00F0B3E5 /* PokemonListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListResponse.swift; sourceTree = "<group>"; };
@@ -214,7 +199,6 @@
 		E56D243820B2110C0059B0E0 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 		E56D243C20B21DAD0059B0E0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcherStub.swift; sourceTree = "<group>"; };
-		E5825F102117E837008948E3 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		E5974ED321125F2800D48F25 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		E59A94BA216659FB003287F5 /* RxControllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxControllable.swift; sourceTree = "<group>"; };
 		E59A94BC21665BFB003287F5 /* Storyboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboards.swift; sourceTree = "<group>"; };
@@ -288,7 +272,6 @@
 		E514907A2109FF330000C3EB /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
-				E564DD262113160C00307A15 /* ApplicationContext.swift */,
 				E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */,
 			);
 			path = Singletons;
@@ -333,7 +316,6 @@
 			isa = PBXGroup;
 			children = (
 				E5363FB22163A67E00788873 /* EncodableExtensionTests.swift */,
-				E5363FB62163BF3E00788873 /* DateExtensionTests.swift */,
 				E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */,
 			);
 			path = Extensions;
@@ -539,14 +521,8 @@
 				E569728A20AA5C7500F0B3E5 /* ErrorExtension.swift */,
 				E569728C20AA6ED500F0B3E5 /* UIView+Loading.swift */,
 				E569728E20AA6F6600F0B3E5 /* EncodableExtension.swift */,
-				E569729F20AA730200F0B3E5 /* UIColorExtension.swift */,
-				E56972A220AA733A00F0B3E5 /* UITableViewExtension.swift */,
-				E56972A420AA736B00F0B3E5 /* UIImage+ProjectResources.swift */,
 				E56972A620AA73DE00F0B3E5 /* UIViewControllerExtension.swift */,
-				E56972A820AA740A00F0B3E5 /* UICollectionViewExtension.swift */,
-				E56972AB20AA743200F0B3E5 /* DateExtension.swift */,
 				E56D243C20B21DAD0059B0E0 /* StringExtension.swift */,
-				E5825F102117E837008948E3 /* DictionaryExtension.swift */,
 				E5363FB42163BEB800788873 /* IdentifiableExtension.swift */,
 			);
 			path = Extensions;
@@ -1083,7 +1059,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E56972A020AA730200F0B3E5 /* UIColorExtension.swift in Sources */,
 				E569728220AA5B9E00F0B3E5 /* NetworkError.swift in Sources */,
 				E56D240220AF8D610059B0E0 /* Move.swift in Sources */,
 				E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */,
@@ -1103,7 +1078,6 @@
 				E50B734E20B51A0900154FCD /* JSONAny.swift in Sources */,
 				E569729620AA700500F0B3E5 /* PrimaryButton.swift in Sources */,
 				E56D240820AF8D9E0059B0E0 /* Stat.swift in Sources */,
-				E564DD272113160C00307A15 /* ApplicationContext.swift in Sources */,
 				E5DCC2A220B6F37000325D32 /* FavoritesViewController.swift in Sources */,
 				E59A94BB216659FB003287F5 /* RxControllable.swift in Sources */,
 				E5DCC2A420B6F37C00325D32 /* FavoritesViewModel.swift in Sources */,
@@ -1126,7 +1100,6 @@
 				E56972AE20AA746400F0B3E5 /* Environment.swift in Sources */,
 				E50B734720B5199500154FCD /* GameIndex.swift in Sources */,
 				E5583EA220B880C4003CAFA0 /* TabBarCoordinator.swift in Sources */,
-				E56972A520AA736B00F0B3E5 /* UIImage+ProjectResources.swift in Sources */,
 				E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */,
 				E551385220A4520900A5F6EB /* NetworkDispatcher.swift in Sources */,
 				E50540BB20BA6C77004EA46D /* FavoritesCoordinator.swift in Sources */,
@@ -1136,25 +1109,21 @@
 				E50D15EC20D15EC70090D763 /* AppCoordinatorModulesFactory.swift in Sources */,
 				E532EE1D20F7FD8A00475447 /* HomeModulesFactory.swift in Sources */,
 				E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */,
-				E56972A920AA740A00F0B3E5 /* UICollectionViewExtension.swift in Sources */,
 				E56D243920B2110C0059B0E0 /* PokemonTableViewCell.swift in Sources */,
 				E5583E9D20B86EB8003CAFA0 /* AppCoordinator.swift in Sources */,
 				E50B734820B5199500154FCD /* TypeElement.swift in Sources */,
 				E59A94D72166A625003287F5 /* Logging.swift in Sources */,
 				E59A94BD21665BFB003287F5 /* Storyboards.swift in Sources */,
 				E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */,
-				E56972AC20AA743200F0B3E5 /* DateExtension.swift in Sources */,
 				E5CFBFF62119DD0400038BF5 /* CommonViewModelStates.swift in Sources */,
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,
 				E59A94BF216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift in Sources */,
 				E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */,
 				E5B8184120B4AAEE006F2AB0 /* BorderView.swift in Sources */,
 				E56D243D20B21DAD0059B0E0 /* StringExtension.swift in Sources */,
-				E56972A320AA733A00F0B3E5 /* UITableViewExtension.swift in Sources */,
 				E569728B20AA5C7500F0B3E5 /* ErrorExtension.swift in Sources */,
 				E50B734620B5199500154FCD /* Form.swift in Sources */,
 				E50B734D20B51A0900154FCD /* JSONError.swift in Sources */,
-				E5825F112117E837008948E3 /* DictionaryExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1171,7 +1140,6 @@
 				E5363FC321650C9800788873 /* MockRepositioryTests.swift in Sources */,
 				E59A94CF2166A52A003287F5 /* MockResponse.swift in Sources */,
 				E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */,
-				E5363FB72163BF3E00788873 /* DateExtensionTests.swift in Sources */,
 				E5363FAB2163A4C600788873 /* NetworkDispatcherTests.swift in Sources */,
 				E59A94D52166A5D3003287F5 /* Logging.swift in Sources */,
 				E59A94D32166A53C003287F5 /* MockRepositiory.swift in Sources */,
