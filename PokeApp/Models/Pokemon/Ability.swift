@@ -10,9 +10,9 @@ import Foundation
 
 struct Ability: Codable {
     
-    var isHidden: Bool?
-    var slot: Int?
-    var ability: Form?
+    let isHidden: Bool?
+    let slot: Int?
+    let ability: Form?
     
     enum CodingKeys: String, CodingKey {
         case isHidden = "is_hidden"

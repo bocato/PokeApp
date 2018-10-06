@@ -10,9 +10,9 @@ import Foundation
 
 struct PokemonListResponse: Codable {
     
-    var count: Int?
-    var previous: String?
-    var results: [PokemonListResult]?
-    var next: String?
+    let count: Int?
+    let previous: String?
+    let results: [PokemonListResult]?
+    let next: String?
     
 }

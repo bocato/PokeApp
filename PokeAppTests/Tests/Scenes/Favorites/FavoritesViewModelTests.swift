@@ -14,14 +14,14 @@ class FavoritesViewModelTests: XCTestCase {
     // MARK: - Properties
     var sut: FavoritesViewModel!
     var actionsDelegateStub: FavoritesViewControllerActionsDelegateStub!
-    var mockedFavoritesStub: FavoritesManagerStub!
+    var favoritesManagerStub: FavoritesManagerStub!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         actionsDelegateStub = FavoritesViewControllerActionsDelegateStub()
-        mockedFavoritesStub = FavoritesManagerStub()
-        sut = FavoritesViewModel(actionsDelegate: actionsDelegateStub, favoritesManager: mockedFavoritesStub)
+        favoritesManagerStub = FavoritesManagerStub()
+        sut = FavoritesViewModel(actionsDelegate: actionsDelegateStub, favoritesManager: favoritesManagerStub)
     }
     
     // MARK: - Tests
@@ -31,28 +31,47 @@ class FavoritesViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.favoritesManager)
     }
     
-//    func testLoadFavoritesEmpty() {
-//        // Given
-//        let expectedStates: [CommonViewModelState] = [.loading(true), .loading(false), .empty]
-//
-//        // When
-//        let viewStateCollector = RxCollector<CommonViewModelState>()
-//                .collect(from: sut.viewState.asObservable())
-//        let favoriteCollectionViewCellModelsCollector = RxCollector<[FavoriteCollectionViewCellModel]>()
-//            .collect(from: sut.favoritesCellModels.asObservable())
-//
-//        sut.loadFavorites()
-//
-//        // Then
-//        XCTAssertEqual(viewStateCollector.items, expectedStates, "State stream is invalid")
-//        XCTAssertTrue(favoriteCollectionViewCellModelsCollector.items.isEmpty, "Items is not empty")
-//    }
+    func testLoadFavoritesEmpty() {
+        // Given
+        let expectedStates: [CommonViewModelState] = [.empty]
+        
+        let viewStateCollector = RxCollector<CommonViewModelState>()
+            .collect(from: sut.viewState.asObservable())
+        let favoriteCollectionViewCellModelsCollector = RxCollector<[FavoriteCollectionViewCellModel]>()
+            .collect(from: sut.favoritesCellModels.asObservable())
+        
+        // When
+        sut.loadFavorites()
+
+        // Then
+        XCTAssertEqual(viewStateCollector.items, expectedStates, "State stream is invalid")
+        XCTAssertNotNil(favoriteCollectionViewCellModelsCollector.items.first)
+        XCTAssertTrue(favoriteCollectionViewCellModelsCollector.items.first!.isEmpty, "Items is not empty")
+    }
     
-//    func testLoadFavoritesWithElements() {
-//        // Given
-//        // When
-//        // Then
-//    }
+    func testLoadFavoritesLoaded() {
+        // Given
+        let expectedStates: [CommonViewModelState] = [.loaded]
+        let pikachu = Pokemon(id: 90909123, name: "pikachu", baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
+        
+        let viewStateCollector = RxCollector<CommonViewModelState>()
+            .collect(from: sut.viewState.asObservable())
+        let favoriteCollectionViewCellModelsCollector = RxCollector<[FavoriteCollectionViewCellModel]>()
+            .collect(from: sut.favoritesCellModels.asObservable())
+        
+        // When
+        favoritesManagerStub.add(pokemon: pikachu)
+        sut.loadFavorites()
+        
+        // Then
+        XCTAssertEqual(viewStateCollector.items, expectedStates, "State stream is invalid")
+        XCTAssertNotNil(favoriteCollectionViewCellModelsCollector.items.first)
+        XCTAssertTrue(favoriteCollectionViewCellModelsCollector.items.first!.count == 1, "Items is not empty")
+    }
+    
+    func testShowItemDetailsForSelectedFavoriteCellModel() {
+        
+    }
     
 
 }

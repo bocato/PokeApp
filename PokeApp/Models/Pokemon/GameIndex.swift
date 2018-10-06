@@ -10,8 +10,8 @@ import Foundation
 
 struct GameIndex: Codable {
     
-    var gameIndex: Int?
-    var version: Form?
+    let gameIndex: Int?
+    let version: Form?
     
     enum CodingKeys: String, CodingKey {
         case gameIndex = "game_index"

@@ -10,7 +10,7 @@ import Foundation
 
 struct Form: Codable {
     
-    var name: String?
-    var url: String?
+    let name: String?
+    let url: String?
     
 }

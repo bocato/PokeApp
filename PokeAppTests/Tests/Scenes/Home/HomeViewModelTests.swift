@@ -174,7 +174,7 @@ class HomeViewModelTests: XCTestCase {
         // Given
         let data = "{}".data(using: String.Encoding.utf8)!
         try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
-        let pokemonListItem = PokemonListResult()
+        let pokemonListItem = PokemonListResult(url: "url", name: "name")
         let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
         
         // When

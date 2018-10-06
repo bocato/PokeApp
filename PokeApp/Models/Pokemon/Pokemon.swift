@@ -10,18 +10,18 @@ import Foundation
 
 struct Pokemon: Codable {
     
-    var id: Int?
-    var name: String?
-    var baseExperience, height: Int?
-    var isDefault: Bool?
-    var order, weight: Int?
-    var abilities: [Ability]?
-    var forms: [Form]?
-    var gameIndices: [GameIndex]?
-    var moves: [Move]?
-    var species: Form?
-    var stats: [Stat]?
-    var types: [TypeElement]?
+    let id: Int?
+    let name: String?
+    let baseExperience, height: Int?
+    let isDefault: Bool?
+    let order, weight: Int?
+    let abilities: [Ability]?
+    let forms: [Form]?
+    let gameIndices: [GameIndex]?
+    let moves: [Move]?
+    let species: Form?
+    let stats: [Stat]?
+    let types: [TypeElement]?
     
     enum CodingKeys: String, CodingKey {
         case id, name

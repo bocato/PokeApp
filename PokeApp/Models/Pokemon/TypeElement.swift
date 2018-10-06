@@ -10,7 +10,7 @@ import Foundation
 
 struct TypeElement: Codable {
     
-    var slot: Int?
-    var type: Form?
+    let slot: Int?
+    let type: Form?
     
 }

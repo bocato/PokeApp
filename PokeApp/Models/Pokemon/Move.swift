@@ -10,8 +10,8 @@ import Foundation
 
 struct Move: Codable {
     
-    var move: Form?
-    var versionGroupDetails: [VersionGroupDetail]?
+    let move: Form?
+    let versionGroupDetails: [VersionGroupDetail]?
     
     enum CodingKeys: String, CodingKey {
         case move

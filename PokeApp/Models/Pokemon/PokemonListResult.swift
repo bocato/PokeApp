@@ -10,8 +10,8 @@ import Foundation
 
 struct PokemonListResult: Codable {
     
-    var url: String?
-    var name: String?
+    let url: String?
+    let name: String?
     
 }
 

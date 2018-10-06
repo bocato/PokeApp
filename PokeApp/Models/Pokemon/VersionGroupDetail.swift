@@ -10,9 +10,9 @@ import Foundation
 
 struct VersionGroupDetail: Codable {
     
-    var levelLearnedAt: Int?
-    var versionGroup: Form?
-    var moveLearnMethod: Form?
+    let levelLearnedAt: Int?
+    let versionGroup: Form?
+    let moveLearnMethod: Form?
     
     enum CodingKeys: String, CodingKey {
         case levelLearnedAt = "level_learned_at"

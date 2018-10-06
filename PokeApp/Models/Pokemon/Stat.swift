@@ -10,9 +10,9 @@ import Foundation
 
 struct Stat: Codable {
     
-    var baseStat: Int?
-    var effort: Int?
-    var stat: Form?
+    let baseStat: Int?
+    let effort: Int?
+    let stat: Form?
     
     enum CodingKeys: String, CodingKey {
         case baseStat = "base_stat"
