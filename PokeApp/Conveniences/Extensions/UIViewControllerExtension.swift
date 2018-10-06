@@ -15,4 +15,13 @@ extension UIViewController {
         return UIStoryboard(name: storyboardName, bundle: nil).instantiateViewController(withIdentifier: "\(type)") as! T
     }
     
+    // MARK: - Helpers
+    func showLoading(_ show: Bool) {
+        if show {
+            view.startLoading()
+        } else {
+            view.stopLoading()
+        }
+    }
+    
 }

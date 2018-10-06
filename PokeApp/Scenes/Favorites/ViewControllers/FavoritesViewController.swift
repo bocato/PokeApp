@@ -35,6 +35,7 @@ class FavoritesViewController: UIViewController, RxControllable {
 extension FavoritesViewController {
     
     internal func bindAll() {
+        
         viewModel.favoritesCellModels
             .asObservable()
             .bind(to: collectionView.rx.items(cellIdentifier: FavoriteCollectionViewCell.identifier, cellType: FavoriteCollectionViewCell.self)) { (rowIndex, favoriteCellModel, cell) in

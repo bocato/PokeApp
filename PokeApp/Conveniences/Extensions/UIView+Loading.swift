@@ -13,76 +13,84 @@ fileprivate let loadingViewTag = 11111
 
 extension UIView {
     
-    // MARK: Enum
-    enum LoadingContext {
-        case fullScreen
-        case component
-    }
-    
-    // MARK: - Loading View Components
-    private func createBlurView(_ style: UIBlurEffect.Style = .light, alpha: CGFloat = 0.85)  -> UIVisualEffectView {
-        let blurEffect = UIBlurEffect(style: style)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.alpha = alpha
-        return blurEffectView
-    }
-    
-    private func createActivityIndicator(_ style: UIActivityIndicatorView.Style = .whiteLarge, color: UIColor = UIColor.lightGray) -> UIActivityIndicatorView  {
-        let activityIndicatorView = UIActivityIndicatorView(style: style)
-        activityIndicatorView.color = color
-        return activityIndicatorView
-    }
-    
-    // MARK: - Loading Methods
-    func startLoading(in context: LoadingContext = .component, blur: Bool = false, backgroundColor: UIColor = UIColor.clear, activityIndicatorViewStyle: UIActivityIndicatorView.Style? = nil, activityIndicatorColor: UIColor = UIColor.lightGray) {
-        
-        guard let parentView = context == .fullScreen ? (UIApplication.shared.delegate)!.window! : self else { return }
-        
-        // Create Loading view
-        let loadingView = UIView(frame: parentView.frame)
-        loadingView.backgroundColor = backgroundColor
+    func startLoading(shadow: Bool = false) {
+        let loadingView = UIView()
+        loadingView.frame = self.bounds
         loadingView.tag = loadingViewTag
-        loadingView.center = parentView.center
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.layer.zPosition = 1
-        parentView.addSubview(loadingView)
-        // Configure loadingView autolayout
-        loadingView.centerXAnchor.constraint(equalTo: parentView.centerXAnchor).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
         
-        // Create blurView if needed
-        if blur {
-            let blurView = createBlurView()
-            blurView.frame = loadingView.frame
-            blurView.center = loadingView.center
-            blurView.translatesAutoresizingMaskIntoConstraints = false
-            loadingView.addSubview(blurView)
-        }
-        
-        // Create activityIndicatorView
-        var activityIndicatorStyle: UIActivityIndicatorView.Style = context == .fullScreen ? .whiteLarge : .white
-        if let activityIndicatorViewStyle = activityIndicatorViewStyle {
-            activityIndicatorStyle = activityIndicatorViewStyle
-        }
-        let activityIndicator = createActivityIndicator(activityIndicatorStyle, color: activityIndicatorColor)
-        activityIndicator.frame = loadingView.frame
+        let activityIndicator = LoadingConvenience.activityIndicator
+        activityIndicator.frame = self.bounds
         activityIndicator.startAnimating()
-        loadingView.addSubview(activityIndicator)
-        // Configure activityIndicator autolayout
-        activityIndicator.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
         
+        if shadow {
+            let shadowView = LoadingConvenience.shadowView
+            shadowView.frame = self.bounds
+            loadingView.addSubview(shadowView)
+        }
+        
+        loadingView.addSubview(activityIndicator)
+        
+        DispatchQueue.main.async {
+            self.addSubview(loadingView)
+        }
     }
     
     func stopLoading() {
+        let holderView = self.viewWithTag(loadingViewTag)
         DispatchQueue.main.async {
-            let loadingView = self.viewWithTag(loadingViewTag)
-            UIView.animate(withDuration: 0.2, animations: {
-                loadingView?.alpha = 0
-            }, completion: { (completed) in
-                loadingView?.removeFromSuperview()
-            })
+            holderView?.removeFromSuperview()
         }
+    }
+    
+}
+
+class LoadingConvenience {
+    
+    static let shared = LoadingConvenience()
+    
+    private var loadingView: UIView!
+    private var window = (UIApplication.shared.delegate as! AppDelegate).window!
+    
+    static var blurView: UIVisualEffectView {
+        
+        let effect = UIBlurEffect(style: .light)
+        let view = UIVisualEffectView(effect: effect)
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.alpha = 0.85
+        
+        return view
+    }
+    
+    static var shadowView: UIView {
+        let view = UIView()
+        view.backgroundColor = UIColor.white
+        view.alpha = 0.55
+        return view
+    }
+    
+    static var activityIndicator: UIActivityIndicatorView {
+        let loading = UIActivityIndicatorView(style: .white)
+        loading.color = UIColor.lightGray
+        return loading
+    }
+    
+    // MARK: - Life Cycle
+    init() {
+        setupLoadingView()
+    }
+    
+    // MARK: - Misc
+    func enableFullScreenLoading() {
+        window.addSubview(loadingView)
+    }
+    
+    func disableFullScreenLoading() {
+        loadingView.removeFromSuperview()
+    }
+    
+    private func setupLoadingView() {
+        loadingView = UIView(frame: window.bounds)
+        loadingView.startLoading()
     }
     
 }

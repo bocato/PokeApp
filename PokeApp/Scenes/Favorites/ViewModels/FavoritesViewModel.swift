@@ -60,7 +60,7 @@ extension FavoritesViewModel: CoordinatorDelegate {
         switch (coordinator, output) {
         case let (_, output as HomeCoordinator.Output):
             switch output {
-            case .shouldReloadFavorites:
+                case .shouldReloadFavorites:
                 loadFavorites()
             }
         case let (_, output as FavoritesCoordinator.Output):

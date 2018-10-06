@@ -15,18 +15,18 @@ class FavoritesCoordinatorModulesFactory: ModuleFactory {
     
     // MARK: - ModulesEnum
     enum Modules {
-        case pokemonDetails(Int, RouterProtocol, Coordinator)
+        case pokemonDetails(Int, RouterProtocol)
     }
     
     // MARK: Builders
     func build(_ module: Modules) -> (Coordinator, UIViewController) {
         switch module {
-        case .pokemonDetails(let id, let router, let parentCoordinator):
-            return buildPokemonDetailsModule(pokemonId: id, router: router, parentCoordinator: parentCoordinator)
+        case .pokemonDetails(let id, let router):
+            return buildPokemonDetailsModule(pokemonId: id, router: router)
         }
     }
     
-    private func buildPokemonDetailsModule(pokemonId: Int, router: RouterProtocol, parentCoordinator: Coordinator) -> (Coordinator, UIViewController) {
+    private func buildPokemonDetailsModule(pokemonId: Int, router: RouterProtocol) -> (Coordinator, UIViewController) {
         
         let pokemonDetailsCoordinator = DetailsCoordinator(router: router)
         let pokemonService = PokemonService()

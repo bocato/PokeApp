@@ -45,15 +45,6 @@ class HomeViewController: UIViewController, RxControllable {
         KingfisherManager.shared.cache.clearDiskCache()
     }
     
-    // MARK: - Helpers
-    private func showTableViewLoader(_ show: Bool) {
-        if show {
-            tableView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
-        } else {
-            tableView.stopLoading()
-        }
-    }
-    
 }
 
 // MARK: - Binding
@@ -67,12 +58,12 @@ extension HomeViewController {
     private func bindViewModel() {
         
         viewModel.viewState
-            .observeOn(MainScheduler.instance)
             .asObservable()
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { state in
                 switch state {
                 case .loading(let isLoading):
-                    self.showTableViewLoader(isLoading)
+                    self.showLoading(isLoading)
                 case .error(let networkError):
                     let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
                     AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)
@@ -88,7 +79,6 @@ extension HomeViewController {
     func bindTableView()  {
         
         viewModel.pokemonCellModels
-            .observeOn(MainScheduler.instance)
             .asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: PokemonTableViewCell.identifier, cellType: PokemonTableViewCell.self)) { (rowIndex, pokemonCellModel, cell) in
                 cell.configure(with: pokemonCellModel)

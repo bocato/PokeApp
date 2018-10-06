@@ -31,14 +31,9 @@ class HomeCoordinator: BaseCoordinator {
         switch (child, output) {
         case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
             switch output {
-            case .didAddPokemon:
-                removeChildCoordinator(detailsCoordinator)
+            case .didAddPokemon, .didRemovePokemon:
                 router.popModule(animated: true)
-                let outputToSend: Output = .shouldReloadFavorites
-                sendOutputToParent(outputToSend)
-            case .didRemovePokemon:
                 removeChildCoordinator(detailsCoordinator)
-                router.popModule(animated: true)
                 let outputToSend: Output = .shouldReloadFavorites
                 sendOutputToParent(outputToSend)
             }

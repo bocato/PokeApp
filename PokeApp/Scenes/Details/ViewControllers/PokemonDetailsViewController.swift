@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class PokemonDetailsViewController: UIViewController, RxControllable {
-
+    
     // MARK: Aliases
     typealias ViewModelType = PokemonDetailsViewModel
     
@@ -34,7 +34,7 @@ class PokemonDetailsViewController: UIViewController, RxControllable {
         bindAll()
         viewModel.loadPokemonData()
     }
-
+    
 }
 
 // MARK: - Binding
@@ -52,24 +52,26 @@ extension PokemonDetailsViewController {
         
         viewModel.isLoadingPokemonImage
             .asObservable()
-            .subscribe(onNext: { isLoading in
+            .subscribe(onNext: { [weak self] (isLoading) in
                 if isLoading {
-                    self.pokemonImageView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
+                    self?.pokemonImageView.startLoading()
                 } else {
-                    self.pokemonImageView.stopLoading()
+                    self?.pokemonImageView.stopLoading()
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel.viewState
             .asObservable()
-            .subscribe(onNext: { state in
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (state) in
+                guard let `self` = self else { return }
                 switch state {
-                    case .error(let networkError):
-                        let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
-                        AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet, action: UIAlertAction(title: "Ok", style: .default, handler: { (_) in
-                            self.navigationController?.popViewController(animated: true)
-                        }))
+                case .error(let networkError):
+                    let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
+                    AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet, action: UIAlertAction(title: "Ok", style: .default, handler: { [weak self] (_) in
+                        self?.navigationController?.popViewController(animated: true)
+                    }))
                 default: return
                 }
             })
@@ -127,7 +129,7 @@ extension PokemonDetailsViewController {
         
         favoritesButton.rx.tap.subscribe { onTap in
             self.viewModel.actOnFavoritesButtonTouch()
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
         viewModel.favoriteButtonText
             .asObservable()

@@ -9,7 +9,7 @@
 import XCTest
 @testable import PokeApp
 
-class TabBarCoordinatorModulesFactoryTests: XCTestCase { // Delete?
+class TabBarCoordinatorModulesFactoryTests: XCTestCase {
     
     // MARK: - Properties
     let sut = TabBarCoordinatorModulesFactory()

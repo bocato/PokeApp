@@ -16,12 +16,6 @@ protocol PokemonDetailsViewControllerActionsDelegate : class {
     func didRemoveFavorite()
 }
 
-// MARK: - ViewState
-enum PokemonDetailsViewState {
-    case loading(Bool)
-    case error(SerializedNetworkError?)
-}
-
 class PokemonDetailsViewModel {
     
     // MARK: - Constants
@@ -52,7 +46,7 @@ class PokemonDetailsViewModel {
     
     // MARK: - Rx Properties
     private(set) var isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
-    private(set) var viewState = BehaviorRelay<PokemonDetailsViewState>(value: .loading(true))
+    private(set) var viewState = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     private(set) var favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
     private(set) var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
     private(set) var pokemonNumber = BehaviorRelay<String?>(value: nil)
@@ -70,7 +64,6 @@ class PokemonDetailsViewModel {
     
     // MARK: - API Calls
     func loadPokemonData() {
-        viewState.accept(.loading(true))
         dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId).single()
             .subscribe(onNext: { [weak self] (pokemonData) in
                 
@@ -99,20 +92,16 @@ class PokemonDetailsViewModel {
                 self.pokemonStats.accept(self.extractStatStrings(from: stats))
                 self.pokemonMoves.accept(self.extractMoveStrings(from: moves))
                 
-                }, onError: { [weak self] (error) in
+            }, onError: { [weak self] (error) in
                     
                     let networkError = error as! NetworkError
                     self?.viewState.accept(.error(networkError.requestError))
-                    
-                }, onCompleted: {
-                    
-                    self.viewState.accept(.loading(false))
                     
             })
             .disposed(by: disposeBag)
     }
     
-    private func getfavoritesButtonText() -> String { // TODO: Review when CoreData is implemented
+    private func getfavoritesButtonText() -> String {
         return isThisPokemonAFavorite ? Constants.removeFromFavoritesButtonText : Constants.addToFavoritesButtonText
     }
     

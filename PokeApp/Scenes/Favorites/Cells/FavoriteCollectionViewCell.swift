@@ -55,7 +55,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     // MARK: - Helpers
     private func showImageViewLoader(_ show: Bool) {
         if show {
-            pokemonImageView.startLoading(backgroundColor: UIColor.white, activityIndicatorColor: UIColor.lightGray)
+            pokemonImageView.startLoading()
         } else {
             pokemonImageView.stopLoading()
         }
