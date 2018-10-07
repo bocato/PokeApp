@@ -32,7 +32,6 @@
 		E5363FB92163BF7A00788873 /* IdentifiableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */; };
 		E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */; };
 		E5363FBF2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */; };
-		E5363FC321650C9800788873 /* MockRepositioryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5363FC221650C9800788873 /* MockRepositioryTests.swift */; };
 		E53D4C3D21692D7B006A2222 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C3C21692D7B006A2222 /* StringExtensionTests.swift */; };
 		E53D4C4221692E95006A2222 /* PokemonDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C4121692E95006A2222 /* PokemonDetailsViewModelTests.swift */; };
 		E53D4C4421692F21006A2222 /* FavoritesCoordinatorModulesFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C4321692F21006A2222 /* FavoritesCoordinatorModulesFactoryTests.swift */; };
@@ -45,6 +44,7 @@
 		E53D4C5621699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5521699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift */; };
 		E53D4C5921699F39006A2222 /* bulbassaur.json in Resources */ = {isa = PBXBuildFile; fileRef = E53D4C5821699F39006A2222 /* bulbassaur.json */; };
 		E53D4C5B21699FCB006A2222 /* MockDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */; };
+		E53D4C5E216A3315006A2222 /* PokemonServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5D216A3315006A2222 /* PokemonServiceStub.swift */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
 		E551383F20A4469900A5F6EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E551383E20A4469900A5F6EB /* Assets.xcassets */; };
@@ -93,18 +93,8 @@
 		E59A94BD21665BFB003287F5 /* Storyboards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BC21665BFB003287F5 /* Storyboards.swift */; };
 		E59A94BF216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94BE216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift */; };
 		E59A94CA2166A012003287F5 /* FavoritesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A94C92166A012003287F5 /* FavoritesViewModelTests.swift */; };
-		E59A94CC2166A519003287F5 /* URLRequest+NSURLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5121171EAC0052B678 /* URLRequest+NSURLSessionMock.swift */; };
-		E59A94CD2166A51D003287F5 /* NSURLSession+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5C2117318F0052B678 /* NSURLSession+Mock.swift */; };
-		E59A94CE2166A525003287F5 /* NSURLSession+Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB60211736D80052B678 /* NSURLSession+Swizzling.swift */; };
-		E59A94CF2166A52A003287F5 /* MockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB41211715C20052B678 /* MockResponse.swift */; };
-		E59A94D02166A52F003287F5 /* SessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5E211736AE0052B678 /* SessionMock.swift */; };
-		E59A94D12166A535003287F5 /* DefaultRequestMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */; };
-		E59A94D22166A538003287F5 /* DefaultSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB56211727580052B678 /* DefaultSessionMock.swift */; };
-		E59A94D32166A53C003287F5 /* MockRepositiory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5821172F360052B678 /* MockRepositiory.swift */; };
-		E59A94D42166A541003287F5 /* MockSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5A211731050052B678 /* MockSessionDataTask.swift */; };
 		E59A94D52166A5D3003287F5 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5421171F730052B678 /* Logging.swift */; };
 		E59A94D72166A625003287F5 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB5421171F730052B678 /* Logging.swift */; };
-		E59A94D92166A6D1003287F5 /* NSObject+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */; };
 		E5A454D520CB5F030060FD85 /* DetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A454D420CB5F030060FD85 /* DetailsCoordinator.swift */; };
 		E5B8183B20B49FE8006F2AB0 /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5B8183A20B49FE8006F2AB0 /* Details.storyboard */; };
 		E5B8183D20B49FFD006F2AB0 /* PokemonDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8183C20B49FFD006F2AB0 /* PokemonDetailsViewController.swift */; };
@@ -159,7 +149,6 @@
 		E5363FB82163BF7A00788873 /* IdentifiableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableExtensionTests.swift; sourceTree = "<group>"; };
 		E5363FBC2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
 		E5363FBE2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
-		E5363FC221650C9800788873 /* MockRepositioryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepositioryTests.swift; sourceTree = "<group>"; };
 		E53D4C3C21692D7B006A2222 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		E53D4C4121692E95006A2222 /* PokemonDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		E53D4C4321692F21006A2222 /* FavoritesCoordinatorModulesFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinatorModulesFactoryTests.swift; sourceTree = "<group>"; };
@@ -171,6 +160,7 @@
 		E53D4C5521699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsCoordinatorTests.swift; sourceTree = "<group>"; };
 		E53D4C5821699F39006A2222 /* bulbassaur.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bulbassaur.json; sourceTree = "<group>"; };
 		E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataHelper.swift; sourceTree = "<group>"; };
+		E53D4C5D216A3315006A2222 /* PokemonServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceStub.swift; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E551383720A4469700A5F6EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -223,17 +213,7 @@
 		E59A94BC21665BFB003287F5 /* Storyboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboards.swift; sourceTree = "<group>"; };
 		E59A94BE216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinatorModulesFactory.swift; sourceTree = "<group>"; };
 		E59A94C92166A012003287F5 /* FavoritesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModelTests.swift; sourceTree = "<group>"; };
-		E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Swizzle.swift"; sourceTree = "<group>"; };
-		E59DFB41211715C20052B678 /* MockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockResponse.swift; sourceTree = "<group>"; };
-		E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRequestMatcher.swift; sourceTree = "<group>"; };
-		E59DFB5121171EAC0052B678 /* URLRequest+NSURLSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+NSURLSessionMock.swift"; sourceTree = "<group>"; };
 		E59DFB5421171F730052B678 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
-		E59DFB56211727580052B678 /* DefaultSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSessionMock.swift; sourceTree = "<group>"; };
-		E59DFB5821172F360052B678 /* MockRepositiory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepositiory.swift; sourceTree = "<group>"; };
-		E59DFB5A211731050052B678 /* MockSessionDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionDataTask.swift; sourceTree = "<group>"; };
-		E59DFB5C2117318F0052B678 /* NSURLSession+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Mock.swift"; sourceTree = "<group>"; };
-		E59DFB5E211736AE0052B678 /* SessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMock.swift; sourceTree = "<group>"; };
-		E59DFB60211736D80052B678 /* NSURLSession+Swizzling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Swizzling.swift"; sourceTree = "<group>"; };
 		E5A454D420CB5F030060FD85 /* DetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCoordinator.swift; sourceTree = "<group>"; };
 		E5B8183A20B49FE8006F2AB0 /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		E5B8183C20B49FFD006F2AB0 /* PokemonDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsViewController.swift; sourceTree = "<group>"; };
@@ -345,22 +325,6 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
-		E5363FC02164F1E800788873 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				E5363FC12164F1F900788873 /* NSURLSessionMock */,
-			);
-			path = Networking;
-			sourceTree = "<group>";
-		};
-		E5363FC12164F1F900788873 /* NSURLSessionMock */ = {
-			isa = PBXGroup;
-			children = (
-				E5363FC221650C9800788873 /* MockRepositioryTests.swift */,
-			);
-			path = NSURLSessionMock;
-			sourceTree = "<group>";
-		};
 		E53D4C4021692E89006A2222 /* Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +341,41 @@
 				E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */,
 			);
 			path = MockData;
+			sourceTree = "<group>";
+		};
+		E53D4C5C216A32FF006A2222 /* PokemonService */ = {
+			isa = PBXGroup;
+			children = (
+				E53D4C5D216A3315006A2222 /* PokemonServiceStub.swift */,
+			);
+			path = PokemonService;
+			sourceTree = "<group>";
+		};
+		E53D4C60216A364B006A2222 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				E5974F012114A0F800D48F25 /* Networking */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
+		E53D4C61216A3663006A2222 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E56D242320B200A70059B0E0 /* URLExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E53D4C63216A369A006A2222 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E53D4C61216A3663006A2222 /* Extensions */,
+				E53D4C5721699F14006A2222 /* MockData */,
+				E53D4C60216A364B006A2222 /* Stubs */,
+				E56D242220B2008D0059B0E0 /* Helpers */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		E548A32C20B7BB9100E72954 /* ViewModels */ = {
@@ -506,7 +505,6 @@
 		E564DD282113239700307A15 /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
-				E5363FC02164F1E800788873 /* Networking */,
 				E564DD29211323A100307A15 /* Coordinator */,
 				E5363FB12163A63500788873 /* Extensions */,
 			);
@@ -695,8 +693,7 @@
 		E56D241920B200770059B0E0 /* PokeAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				E53D4C5721699F14006A2222 /* MockData */,
-				E56D242220B2008D0059B0E0 /* Helpers */,
+				E53D4C63216A369A006A2222 /* Common */,
 				E56D242720B201020059B0E0 /* Tests */,
 				E56D241C20B200770059B0E0 /* Info.plist */,
 			);
@@ -706,9 +703,6 @@
 		E56D242220B2008D0059B0E0 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E59A94D82166A6BD003287F5 /* Extensions */,
-				E5974F012114A0F800D48F25 /* Networking */,
-				E56D242320B200A70059B0E0 /* URLExtension.swift */,
 				E56D242520B200DE0059B0E0 /* RxCollector.swift */,
 			);
 			path = Helpers;
@@ -750,19 +744,11 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		E5712E7C20C9626E000A3782 /* Stubs */ = {
-			isa = PBXGroup;
-			children = (
-				E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */,
-			);
-			path = Stubs;
-			sourceTree = "<group>";
-		};
 		E5974F012114A0F800D48F25 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E59DFB2A211711550052B678 /* NSURLSessionMock */,
-				E5712E7C20C9626E000A3782 /* Stubs */,
+				E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */,
+				E53D4C5C216A32FF006A2222 /* PokemonService */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -775,54 +761,6 @@
 				E53D4C5121697B12006A2222 /* FavoritesCoordinatorTests.swift */,
 			);
 			path = Favorites;
-			sourceTree = "<group>";
-		};
-		E59A94D82166A6BD003287F5 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E59DFB2B211713530052B678 /* NSObject+Swizzle.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		E59DFB2A211711550052B678 /* NSURLSessionMock */ = {
-			isa = PBXGroup;
-			children = (
-				E59DFB5021171E7E0052B678 /* Extensions */,
-				E59DFB4D21171B460052B678 /* Models */,
-				E59DFB4C21171B3F0052B678 /* Matchers */,
-				E59DFB56211727580052B678 /* DefaultSessionMock.swift */,
-				E59DFB5821172F360052B678 /* MockRepositiory.swift */,
-				E59DFB5A211731050052B678 /* MockSessionDataTask.swift */,
-			);
-			path = NSURLSessionMock;
-			sourceTree = "<group>";
-		};
-		E59DFB4C21171B3F0052B678 /* Matchers */ = {
-			isa = PBXGroup;
-			children = (
-				E59DFB4E21171B950052B678 /* DefaultRequestMatcher.swift */,
-			);
-			path = Matchers;
-			sourceTree = "<group>";
-		};
-		E59DFB4D21171B460052B678 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E59DFB41211715C20052B678 /* MockResponse.swift */,
-				E59DFB5E211736AE0052B678 /* SessionMock.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		E59DFB5021171E7E0052B678 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E59DFB5121171EAC0052B678 /* URLRequest+NSURLSessionMock.swift */,
-				E59DFB5C2117318F0052B678 /* NSURLSession+Mock.swift */,
-				E59DFB60211736D80052B678 /* NSURLSession+Swizzling.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E59DFB5321171F5F0052B678 /* Utils */ = {
@@ -1158,34 +1096,24 @@
 				E59A94CA2166A012003287F5 /* FavoritesViewModelTests.swift in Sources */,
 				E53D4C46216930C8006A2222 /* HomeModulesFactoryTests.swift in Sources */,
 				E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */,
+				E53D4C5E216A3315006A2222 /* PokemonServiceStub.swift in Sources */,
 				E53D4C5421697B22006A2222 /* HomeCoordinatorTests.swift in Sources */,
 				E53D4C5221697B12006A2222 /* FavoritesCoordinatorTests.swift in Sources */,
-				E59A94D02166A52F003287F5 /* SessionMock.swift in Sources */,
 				E56D243220B206360059B0E0 /* PokemonServiceTests.swift in Sources */,
 				E5363FBF2164143000788873 /* TabBarCoordinatorModulesFactoryTests.swift in Sources */,
-				E59A94CE2166A525003287F5 /* NSURLSession+Swizzling.swift in Sources */,
-				E5363FC321650C9800788873 /* MockRepositioryTests.swift in Sources */,
 				E53D4C4B2169761A006A2222 /* JSON.swift in Sources */,
-				E59A94CF2166A52A003287F5 /* MockResponse.swift in Sources */,
 				E53D4C3D21692D7B006A2222 /* StringExtensionTests.swift in Sources */,
 				E5238DC621109DB600323C84 /* TabBarViewModelTests.swift in Sources */,
 				E5363FAB2163A4C600788873 /* NetworkDispatcherTests.swift in Sources */,
 				E59A94D52166A5D3003287F5 /* Logging.swift in Sources */,
-				E59A94D32166A53C003287F5 /* MockRepositiory.swift in Sources */,
 				E56D242420B200A70059B0E0 /* URLExtension.swift in Sources */,
-				E59A94CD2166A51D003287F5 /* NSURLSession+Mock.swift in Sources */,
 				E56D242620B200DE0059B0E0 /* RxCollector.swift in Sources */,
 				E53D4C4421692F21006A2222 /* FavoritesCoordinatorModulesFactoryTests.swift in Sources */,
-				E59A94CC2166A519003287F5 /* URLRequest+NSURLSessionMock.swift in Sources */,
 				E53D4C4A216966CA006A2222 /* AppCoordinatorTests.swift in Sources */,
 				E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */,
-				E59A94D42166A541003287F5 /* MockSessionDataTask.swift in Sources */,
 				E53D4C5621699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift in Sources */,
-				E59A94D92166A6D1003287F5 /* NSObject+Swizzle.swift in Sources */,
-				E59A94D12166A535003287F5 /* DefaultRequestMatcher.swift in Sources */,
 				E53D4C5021697B04006A2222 /* TabBarCoordinatorTests.swift in Sources */,
 				E5238DD02110DE0800323C84 /* HomeViewModelTests.swift in Sources */,
-				E59A94D22166A538003287F5 /* DefaultSessionMock.swift in Sources */,
 				E53D4C4221692E95006A2222 /* PokemonDetailsViewModelTests.swift in Sources */,
 				E564DD2B2113253800307A15 /* BaseCoordinatorTests.swift in Sources */,
 				E5363FB92163BF7A00788873 /* IdentifiableExtensionTests.swift in Sources */,

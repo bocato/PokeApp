@@ -17,8 +17,11 @@ class PokemonDetailsViewModelTests: XCTestCase {
 
     // MARK: - Properties
     var sut: PokemonDetailsViewModel!
+    var pokemonServiceStub: PokemonServiceStub!
     var actionsDelegateSpy: PokemonDetailsViewControllerActionsDelegateSpy!
     var favoritesManagerStub: FavoritesManagerStub!
+    var testScheduler: TestScheduler!
+    var disposeBag: DisposeBag!
     
     // MARK: - Lifecycle
     override func setUp() {
@@ -33,21 +36,13 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func setupTestEnvironment() {
         let pokemonId = 1
-        let pokemonService = PokemonService()
+        pokemonServiceStub = PokemonServiceStub()
         favoritesManagerStub = FavoritesManagerStub()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonServiceStub, favoritesManager: favoritesManagerStub)
         actionsDelegateSpy = PokemonDetailsViewControllerActionsDelegateSpy(favoritesManagerStub: favoritesManagerStub)
         sut = PokemonDetailsViewModel(pokemonId: pokemonId, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
-        mockServiceResponse()
-    }
-    
-    func mockServiceResponse() {
-        let data = MockDataHelper.getData(forResource: .bulbassaur)
-        do {
-            try URLSession.mockEvery(expression: "v2/pokemon/1", body: data)
-        } catch _ {
-            XCTFail("Could not mock data.")
-        }
+        testScheduler = TestScheduler(initialClock: 0)
+        disposeBag = DisposeBag()
     }
 
     // MARK: - Tests
@@ -92,8 +87,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func testActOnFavoritesButtonTouchWithNilData() {
         // Given
-        let pokemonService = PokemonService()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonServiceStub, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
         // When
@@ -105,10 +99,37 @@ class PokemonDetailsViewModelTests: XCTestCase {
     }
     
     func testLoadPokemonData_unexpectedError() {
+        // Given
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonServiceStub, favoritesManager: favoritesManagerStub)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        
+        let viewStateCollector = RxCollector<CommonViewModelState>().collect(from: sut.viewState.asObservable())
+        
+        // When
+        sut.loadPokemonData()
+        
+        // Then
+        let expectedViewStates: [CommonViewModelState] = [.loading(true)]
         
     }
     
 }
+
+// MARK: - Mocking
+private extension PokemonDetailsViewModelTests {
+    
+    func mockWithBulbassaurData() {
+        let data = MockDataHelper.getData(forResource: .bulbassaur)
+        do {
+            try URLSession.mockEvery(expression: "v2/pokemon/1", body: data)
+        } catch _ {
+            XCTFail("Could not mock data.")
+        }
+    }
+    
+}
+
+
 class PokemonDetailsViewControllerActionsDelegateSpy: PokemonDetailsViewControllerActionsDelegate {
     
     // MARK: - Dependencies
