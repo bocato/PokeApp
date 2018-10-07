@@ -46,7 +46,7 @@ class PokemonDetailsViewModel {
     
     // MARK: - Rx Properties
     private(set) var isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
-    private(set) var isLoadingPokemonData = BehaviorRelay<Bool>(value: true)
+    private(set) var isLoadingPokemonData = PublishSubject<Bool>()
     private(set) var viewState = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     private(set) var favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
     private(set) var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
@@ -63,10 +63,15 @@ class PokemonDetailsViewModel {
         self.actionsDelegate = actionsDelegate
     }
     
+    convenience init(pokemonData: Pokemon, dataSources: DataSources, actionsDelegate: PokemonDetailsViewControllerActionsDelegate) {
+        self.init(pokemonId: pokemonData.id!, dataSources: dataSources, actionsDelegate: actionsDelegate)
+        self.pokemonData = pokemonData
+    }
+    
     // MARK: - API Calls
     func loadPokemonData() {
         
-        isLoadingPokemonData.accept(true)
+        isLoadingPokemonData.onNext(true)
         
         dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId).single()
             .subscribe(onNext: { [weak self] (pokemonData) in
@@ -95,13 +100,13 @@ class PokemonDetailsViewModel {
                 self.pokemonStats.accept(self.extractStatStrings(from: stats))
                 self.pokemonMoves.accept(self.extractMoveStrings(from: moves))
                 
-                self.isLoadingPokemonData.accept(false)
+                self.isLoadingPokemonData.onNext(false)
                 
             }, onError: { [weak self] (error) in
                     
                     let networkError = error as! NetworkError
                     self?.viewState.accept(.error(networkError.requestError))
-                    self?.isLoadingPokemonData.accept(false)
+                    self?.isLoadingPokemonData.onNext(false)
                     
             })
             .disposed(by: disposeBag)
