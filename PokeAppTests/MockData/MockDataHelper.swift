@@ -18,7 +18,8 @@ class MockDataHelper {
     // MARK: Helpers
     static func getData(forResource resource: MockedResource) ->  Data {
         
-        guard let path = Bundle.main.path(forResource: resource.rawValue, ofType: "json"),
+        let bundle = Bundle(for: self)
+        guard let path = bundle.path(forResource: resource.rawValue, ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 fatalError("Resource not found!")
         }
