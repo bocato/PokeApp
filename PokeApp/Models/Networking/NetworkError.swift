@@ -26,6 +26,10 @@ struct NetworkError: Error {
         self.requestError = requestError
     }
     
+    init(rawError: Error) {
+        self.rawError = rawError
+    }
+    
     init(networkResponse: NetworkResponse?, rawError: Error?, requestError: SerializedNetworkError) {
         self.rawError = rawError
         self.rawErrorString = networkResponse?.rawResponse

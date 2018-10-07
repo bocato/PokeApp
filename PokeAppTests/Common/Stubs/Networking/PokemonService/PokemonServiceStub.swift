@@ -12,17 +12,17 @@ import RxSwift
 
 class PokemonServiceStub: PokemonServiceProtocol {
     
-    enum MockData {
+    enum MockType {
         case empty
         case bulbassaurData
         case pokemonList
-        case error
+        case error(NSError?)
     }
     
-    var mockData: MockData
+    var mockType: MockType
     
-    init(mockData: MockData = .empty) {
-        self.mockData = mockData
+    init(mockType: MockType = .empty) {
+        self.mockType = mockType
     }
     
     func getPokemonList() -> Observable<PokemonListResponse?> {
@@ -34,9 +34,9 @@ class PokemonServiceStub: PokemonServiceProtocol {
     }
     
     func getDetailsForPokemon(withId id: Int) -> Observable<Pokemon?> {
-        switch mockData {
-        case .error:
-            return createErrorObservable(ofType: Pokemon.self)
+        switch mockType {
+        case .error(let nsError):
+            return createErrorObservable(ofType: Pokemon.self, withError: nsError)
         case .bulbassaurData:
             let data = MockDataHelper.getData(forResource: .bulbassaur)
             let serializedData = try? JSONDecoder().decode(Pokemon.self, from: data)
@@ -47,9 +47,9 @@ class PokemonServiceStub: PokemonServiceProtocol {
     
     // MARK: - Mock Helpers
     private func mockedPokemonList() -> Observable<PokemonListResponse?> {
-        switch mockData {
-        case .error:
-            return createErrorObservable(ofType: PokemonListResponse.self)
+        switch mockType {
+        case .error(let nsError):
+            return createErrorObservable(ofType: PokemonListResponse.self, withError: nsError)
         case .pokemonList:
             let data = MockDataHelper.getData(forResource: .bulbassaur)
             let serializedData = try? JSONDecoder().decode(PokemonListResponse.self, from: data)
@@ -58,9 +58,13 @@ class PokemonServiceStub: PokemonServiceProtocol {
         }
     }
     
-    private func createErrorObservable<T: Codable>(ofType: T.Type) -> Observable<T?> {
+    private func createErrorObservable<T: Codable>(ofType: T.Type, withError error: NSError?) -> Observable<T?> {
         return Observable.create { observable in
-            observable.onError(NetworkError())
+            var mockedNetworkError = NetworkError(rawError: NSError.buildMockError())
+            if let error = error {
+                mockedNetworkError = NetworkError(rawError: error)
+            }
+            observable.onError(mockedNetworkError)
             return Disposables.create()
         }
     }

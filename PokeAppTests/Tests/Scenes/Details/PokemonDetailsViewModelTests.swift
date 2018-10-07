@@ -70,7 +70,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func testActOnFavoritesButtonTouchWithNilData() {
         // Given
-        let pokemonService = PokemonServiceStub(mockData: .empty)
+        let pokemonService = PokemonServiceStub(mockType: .empty)
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
@@ -84,7 +84,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func testLoadPokemonData_unexpectedError() {
         // Given
-        let pokemonService = PokemonServiceStub(mockData: .empty)
+        let pokemonService = PokemonServiceStub(mockType: .empty)
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
@@ -113,17 +113,39 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func testLoadPokemonData_withBulbassaur() {
         // Given
-        let pokemonService = PokemonServiceStub(mockData: .bulbassaurData)
+        let pokemonService = PokemonServiceStub(mockType: .bulbassaurData)
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
-        
-        let viewStateCollector = RxCollector<CommonViewModelState>().collect(from: sut.viewState.asObservable())
         
         // When
         sut.loadPokemonData()
         
         // Then
         XCTAssertNotNil(sut.pokemonData) // TODO: Test PokemonImage
+    }
+    
+    func testLoadPokemonData_withServiceError() {
+        // Given
+        let mockError = NSError.buildMockError(code: 404, description: "LoadPokemonData error.")
+        let pokemonService = PokemonServiceStub(mockType: .error(mockError))
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        
+        let viewStateCollector = RxCollector<CommonViewModelState>().collect(from: sut.viewState.asObserver())
+        
+        // When
+        sut.loadPokemonData()
+        
+        // Then
+        XCTAssertNil(sut.pokemonData) // TODO: Test PokemonImage
+        var lastStateIsAnError = false
+        if let lastState = viewStateCollector.items.last {
+            switch lastState {
+            case .error(_): lastStateIsAnError = true
+            default: return
+            }
+            XCTAssertTrue(lastStateIsAnError)
+        }
     }
     
 }
