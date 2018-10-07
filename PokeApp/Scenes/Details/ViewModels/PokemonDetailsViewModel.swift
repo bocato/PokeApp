@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 // MARK: - Actions
-protocol PokemonDetailsViewControllerActionsDelegate : class {
+@objc protocol PokemonDetailsViewControllerActionsDelegate : AnyObject {
     func didAddFavorite()
     func didRemoveFavorite()
 }
@@ -46,6 +46,7 @@ class PokemonDetailsViewModel {
     
     // MARK: - Rx Properties
     private(set) var isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
+    private(set) var isLoadingPokemonData = BehaviorRelay<Bool>(value: true)
     private(set) var viewState = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     private(set) var favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
     private(set) var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
@@ -64,6 +65,9 @@ class PokemonDetailsViewModel {
     
     // MARK: - API Calls
     func loadPokemonData() {
+        
+        isLoadingPokemonData.accept(true)
+        
         dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId).single()
             .subscribe(onNext: { [weak self] (pokemonData) in
                 
@@ -85,17 +89,19 @@ class PokemonDetailsViewModel {
                 
                 self.favoriteButtonText.accept(self.getfavoritesButtonText())
                 self.downloadImage(from: imageURL)
-                DebugLog(format: imageURL)
                 self.pokemonNumber.accept("#\(number)")
                 self.pokemonName.accept(name.capitalizingFirstLetter())
                 self.pokemonAbilities.accept(self.extractAbilityNames(from: abilities))
                 self.pokemonStats.accept(self.extractStatStrings(from: stats))
                 self.pokemonMoves.accept(self.extractMoveStrings(from: moves))
                 
+                self.isLoadingPokemonData.accept(false)
+                
             }, onError: { [weak self] (error) in
                     
                     let networkError = error as! NetworkError
                     self?.viewState.accept(.error(networkError.requestError))
+                    self?.isLoadingPokemonData.accept(false)
                     
             })
             .disposed(by: disposeBag)

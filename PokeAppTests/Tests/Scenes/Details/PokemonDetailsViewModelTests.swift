@@ -11,24 +11,62 @@ import XCTest
 
 class PokemonDetailsViewModelTests: XCTestCase {
 
+    // MARK: - Properties
+    var sut: PokemonDetailsViewModel!
+    var actionsDelegate: PokemonDetailsViewControllerActionsDelegateStub!
+    
+    
+    // MARK: - Lifecycle
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        setupTestEnvironment()
     }
-
+    
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+        URLSession.removeAllMocks()
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func setupTestEnvironment() {
+        let pokemonId = 1
+        let pokemonService = PokemonService()
+        let favoritesManager = FavoritesManagerStub()
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManager)
+        actionsDelegate = PokemonDetailsViewControllerActionsDelegateStub()
+        sut = PokemonDetailsViewModel(pokemonId: pokemonId, dataSources: dataSources, actionsDelegate: actionsDelegate)
+        mockServiceResponse()
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func mockServiceResponse() {
+        let data = MockDataHelper.getData(forResource: .bulbassaur)
+        do {
+            try URLSession.mockEvery(expression: "v2/pokemon/1", body: data)
+        } catch _ {
+            XCTFail("Could not mock data.")
         }
     }
 
+    // MARK: -
+    func testActOnFavoritesButtonTouch_addingFavorite() {
+        
+    }
+    
+    
+
+}
+class PokemonDetailsViewControllerActionsDelegateStub: PokemonDetailsViewControllerActionsDelegate {
+    
+    // MARK: - Control Variables
+    var didAddFavoriteWasCalled = false
+    var didRemoveFavoriteWasCalled = false
+    
+    // MARK: - PokemonDetailsViewControllerActionsDelegate
+    func didAddFavorite() {
+        didAddFavoriteWasCalled = true
+    }
+    
+    func didRemoveFavorite() {
+        didRemoveFavoriteWasCalled = true
+    }
+    
 }

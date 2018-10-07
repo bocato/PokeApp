@@ -62,8 +62,6 @@ extension HomeViewController {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { state in
                 switch state {
-                case .loading(let isLoading):
-                    self.showLoading(isLoading)
                 case .error(let networkError):
                     let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
                     AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet)

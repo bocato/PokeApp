@@ -8,43 +8,47 @@
 
 import UIKit
 
-fileprivate var showResourceLoader = false
-
-fileprivate enum LaunchInstructor {
-    
-    case resourceLoader, tabBar
-    
-    static func getApplicationStartPoint(showResourcesLoader: Bool = showResourceLoader) -> LaunchInstructor {
-        if !showResourcesLoader {
-            return .tabBar
-        }
-        return .resourceLoader
-    }
-    
-}
-
 class AppCoordinator: BaseCoordinator {
     
-    // MARK: - Dependencies
-    private var instructor: LaunchInstructor {
-        return LaunchInstructor.getApplicationStartPoint()
+    // MARK: - Enums
+    enum LaunchInstructor {
+        
+        case resourceLoader, tabBar
+        
+        static func getApplicationStartPoint(showResourcesLoader: Bool) -> LaunchInstructor {
+            if !showResourcesLoader {
+                return .tabBar
+            }
+            return .resourceLoader
+        }
+        
     }
-    private lazy var modulesFactory: AppCoordinatorModulesFactory = AppCoordinatorModulesFactory()
+    
+    // MARK: - Dependencies
+    private(set) var showResourceLoader: Bool
+    private(set) var modulesFactory: AppCoordinatorModulesFactory!
     
     // MARK: - Init
-    static func build(window: UIWindow?) -> AppCoordinator? {
+    init(router: RouterProtocol, modulesFactory: AppCoordinatorModulesFactory, showResourceLoader: Bool) {
+        self.showResourceLoader = showResourceLoader
+        self.modulesFactory = modulesFactory
+        super.init(router: router)
+    }
+    
+    open class func build(window: UIWindow?, modulesFactory: AppCoordinatorModulesFactory = AppCoordinatorModulesFactory(), showResourceLoader: Bool = false) -> AppCoordinator? {
         guard let window = window, let rootController = window.rootViewController as? UINavigationController else { return nil }
         let router = Router(navigationController: rootController)
-        return AppCoordinator(router: router)
+        return AppCoordinator(router: router, modulesFactory: modulesFactory, showResourceLoader: showResourceLoader)
     }
     
     // MARK: - Start
     override func start() {
-        switch instructor {
+        let appStartPoint = LaunchInstructor.getApplicationStartPoint(showResourcesLoader: showResourceLoader)
+        switch appStartPoint {
         case .tabBar:
             runMainFlow()
         case .resourceLoader:
-            debugPrint("Not implemented.")
+            runResourcesLoaderFlow()
         }
     }
     
@@ -53,6 +57,10 @@ class AppCoordinator: BaseCoordinator {
         let (tabBarCoordinator, tabBarController) = modulesFactory.build(.tabBar(router: router))
         addChildCoordinator(tabBarCoordinator)
         router.setRootModule(tabBarController, hideBar: true)
+    }
+    
+    private func runResourcesLoaderFlow() {
+       debugPrint("Not implemented.")
     }
     
 }

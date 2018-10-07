@@ -29,6 +29,9 @@ class SimpleFavoritesManager: FavoritesManager {
     // MARK: - Properties
     internal(set) var favorites = [Pokemon]()
     
+    // MARK: - Initialization
+    private init() {}
+    
     // MARK: - Helpers
     func add(pokemon: Pokemon) {
         guard let id = pokemon.id, favorites.filter( { $0.id == id } ).first == nil else {

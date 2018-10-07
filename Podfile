@@ -12,6 +12,8 @@ def testing_dependencies
     # Pods for testing
     pod 'RxSwift', '4.3.1'
     pod 'RxCocoa', '4.3.1'
+    pod 'RxBlocking', '4.3.1'
+    pod 'RxTest', '4.3.1'
 end
 
 target 'PokeApp' do
