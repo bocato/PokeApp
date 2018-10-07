@@ -51,7 +51,7 @@ class PokemonServiceStub: PokemonServiceProtocol {
         case .error(let nsError):
             return createErrorObservable(ofType: PokemonListResponse.self, withError: nsError)
         case .pokemonList:
-            let data = MockDataHelper.getData(forResource: .bulbassaur)
+            let data = MockDataHelper.getData(forResource: .pokemonList)
             let serializedData = try? JSONDecoder().decode(PokemonListResponse.self, from: data)
             return Observable.of(serializedData)
         default: return Observable.of(nil)

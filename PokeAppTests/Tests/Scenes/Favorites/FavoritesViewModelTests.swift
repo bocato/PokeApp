@@ -69,11 +69,36 @@ class FavoritesViewModelTests: XCTestCase {
         XCTAssertTrue(favoriteCollectionViewCellModelsCollector.items.first!.count == 1, "Items is not empty")
     }
     
-    func testShowItemDetailsForSelectedFavoriteCellModel() {
+    func testShowItemDetailsForSelectedFavoriteCellModel_success() {
+        // Given
+        guard let bulbassaur = try? JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur)) else {
+            XCTFail("Could not prepare test case.")
+            return
+        }
+        let favoriteCollectionViewCellModel = FavoriteCollectionViewCellModel(data: bulbassaur)
         
+        // When
+        sut.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: favoriteCollectionViewCellModel)
+        
+        // Then
+        XCTAssertTrue(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled)
+        XCTAssertNotNil(actionsDelegateStub.idToRequestDetails)
+        XCTAssertEqual(actionsDelegateStub.idToRequestDetails!, 1, "Invalid bulbassaur.")
     }
     
-
+    func testShowItemDetailsForSelectedFavoriteCellModel_failure() {
+        // Given
+        let invalidPokemon = Pokemon(id: nil, name: "Missigno", baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
+        let favoriteCollectionViewCellModel = FavoriteCollectionViewCellModel(data: invalidPokemon)
+        
+        // When
+        sut.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: favoriteCollectionViewCellModel)
+        
+        // Then
+        XCTAssertFalse(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled)
+        XCTAssertNil(actionsDelegateStub.idToRequestDetails)
+    }
+    
 }
 
 // MARK: - Helpers
@@ -91,6 +116,7 @@ class FavoritesViewControllerActionsDelegateStub: FavoritesViewControllerActions
     
 }
 
+// MARK: - Stubs
 class FavoritesManagerStub: FavoritesManager {
     
     // MARK: - Properties

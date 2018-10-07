@@ -88,8 +88,10 @@ class PokemonDetailsViewModelTests: XCTestCase {
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
-        let viewStateCollector = RxCollector<CommonViewModelState>().collect(from: sut.viewState.asObservable())
-        let isLoadingPokemonDataCollector = RxCollector<Bool>().collect(from: sut.isLoadingPokemonData.asObservable())
+        let viewStateCollector = RxCollector<CommonViewModelState>()
+            .collect(from: sut.viewState.asObservable())
+        let isLoadingPokemonDataCollector = RxCollector<Bool>()
+            .collect(from: sut.isLoadingPokemonData.asObservable())
         
         // When
         sut.loadPokemonData()
@@ -131,7 +133,8 @@ class PokemonDetailsViewModelTests: XCTestCase {
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
-        let viewStateCollector = RxCollector<CommonViewModelState>().collect(from: sut.viewState.asObserver())
+        let viewStateCollector = RxCollector<CommonViewModelState>()
+            .collect(from: sut.viewState.asObserver())
         
         // When
         sut.loadPokemonData()
@@ -150,6 +153,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
 }
 
+// MARK: - Spies
 class PokemonDetailsViewControllerActionsDelegateSpy: PokemonDetailsViewControllerActionsDelegate {
     
     // MARK: - Dependencies

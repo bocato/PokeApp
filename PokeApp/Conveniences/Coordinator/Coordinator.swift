@@ -13,13 +13,13 @@ protocol CoordinatorInput {}
 protocol CoordinatorOutput {}
 protocol CoordinatorContext {}
 protocol CoordinatorRoutes {}
-protocol CoordinatorDelegate: class {
+protocol CoordinatorDelegate: AnyObject {
 //    func childCoordinatorDidStart(_ cordinator: Coordinator)
 //    func childCoordinatorDidFinish(_ coordinator: Coordinator)
     func receiveOutput(_ output: CoordinatorOutput, fromCoordinator coordinator: Coordinator)
 }
 
-protocol Coordinator: class {
+protocol Coordinator: AnyObject {
     
     // MARK: - Dependencies
     var router: RouterProtocol { get set }

@@ -91,41 +91,24 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
     }
     
-//    func testLoadedStateWithOnePokemon() {
-//        // Given
-//        let jsonDictionary: [String: Any] =
-//            ["count": 949,
-//             "results": [
-//                ["url": "https://pokeapi.co/api/v2/pokemon/1/",
-//                "name" :"bulbasaur"]
-//                ],
-//             "next": "https://pokeapi.co/api/v2/pokemon/?limit=1&offset=1"]
-//        let data = try! JSONSerialization.data(withJSONObject: jsonDictionary, options: .prettyPrinted)
-//        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!
-//        let request = URLRequest(url: url)
-//        URLSession.mockNext(request: request, body: data, delay: 1)
-//
-//        // When
-//        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-//        let viewStateCollector = RxCollector<CommonViewModelState>()
-//            .collect(from: sut.viewState.asObservable())
-//        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
-//            .collect(from: sut.pokemonCellModels.asObservable())
-//
-////        let loadPokemonsExpectation = expectation(description: "loadPokemonsObservable() fetched a result")
-////        _ = sut.loadPokemonsObservable().do(onCompleted: {
-////            loadPokemonsExpectation.fulfill()
-////        }).fireSingleEvent(disposedBy: disposeBag)
-//
-////        waitForExpectations(timeout: 1, handler: nil)
-//
-//        // Then
-//        XCTAssertTrue(viewStateCollector.items.contains(where: { $0 == .loaded }), ".loaded State not reached")
-//        XCTAssertTrue(pokemonCellModelsCollector.items.count == 2, "pokemonCellModels.count is not 2")
-//        XCTAssertTrue(pokemonCellModelsCollector.items.last!.count == 1, "pokemonCellModelsCollector.items[1].count != 1")
-//        XCTAssertTrue(pokemonCellModelsCollector.items.last!.first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
-//    }
-    /////////// OLD
+    func testLoadedState() {
+        // Given
+        let pokemonService = PokemonServiceStub(mockType: .pokemonList)
+        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: pokemonService)
+        
+        let viewStateCollector = RxCollector<CommonViewModelState>()
+            .collect(from: sut.viewState.asObservable())
+        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
+            .collect(from: sut.pokemonCellModels.asObservable())
+        
+        // When
+        sut.loadPokemons()
+        
+        // Then
+        XCTAssertTrue(viewStateCollector.items.contains(where: { $0 == .loaded }), ".loaded State not reached")
+        XCTAssertTrue(pokemonCellModelsCollector.items.count == 2, "pokemonCellModels.count is not 2")
+        XCTAssertTrue(pokemonCellModelsCollector.items.last!.count == 151, "pokemonCellModelsCollector.items[1].count != 1")
+    }
     
     func testShowItemDetailsForSelectedCellModelCalledWithValidPokemonCellModel() {
         // Given
