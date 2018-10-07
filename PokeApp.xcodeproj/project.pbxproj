@@ -45,6 +45,7 @@
 		E53D4C5921699F39006A2222 /* bulbassaur.json in Resources */ = {isa = PBXBuildFile; fileRef = E53D4C5821699F39006A2222 /* bulbassaur.json */; };
 		E53D4C5B21699FCB006A2222 /* MockDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */; };
 		E53D4C5E216A3315006A2222 /* PokemonServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5D216A3315006A2222 /* PokemonServiceStub.swift */; };
+		E53D4C66216A74F1006A2222 /* pokemonList.json in Resources */ = {isa = PBXBuildFile; fileRef = E53D4C65216A74F1006A2222 /* pokemonList.json */; };
 		E548A32E20B7BB9F00E72954 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */; };
 		E551383820A4469700A5F6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551383720A4469700A5F6EB /* AppDelegate.swift */; };
 		E551383F20A4469900A5F6EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E551383E20A4469900A5F6EB /* Assets.xcassets */; };
@@ -161,6 +162,7 @@
 		E53D4C5821699F39006A2222 /* bulbassaur.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bulbassaur.json; sourceTree = "<group>"; };
 		E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataHelper.swift; sourceTree = "<group>"; };
 		E53D4C5D216A3315006A2222 /* PokemonServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceStub.swift; sourceTree = "<group>"; };
+		E53D4C65216A74F1006A2222 /* pokemonList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pokemonList.json; sourceTree = "<group>"; };
 		E548A32D20B7BB9F00E72954 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		E551383420A4469700A5F6EB /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E551383720A4469700A5F6EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				E53D4C5821699F39006A2222 /* bulbassaur.json */,
+				E53D4C65216A74F1006A2222 /* pokemonList.json */,
 				E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */,
 			);
 			path = MockData;
@@ -927,6 +930,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E53D4C5921699F39006A2222 /* bulbassaur.json in Resources */,
+				E53D4C66216A74F1006A2222 /* pokemonList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

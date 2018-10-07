@@ -10,18 +10,12 @@ import XCTest
 @testable import PokeApp
 import RxSwift
 import RxCocoa
-import RxTest
-import RxBlocking
 
 class PokemonDetailsViewModelTests: XCTestCase {
 
     // MARK: - Properties
-    var sut: PokemonDetailsViewModel!
-    var pokemonServiceStub: PokemonServiceStub!
     var actionsDelegateSpy: PokemonDetailsViewControllerActionsDelegateSpy!
     var favoritesManagerStub: FavoritesManagerStub!
-    var testScheduler: TestScheduler!
-    var disposeBag: DisposeBag!
     
     // MARK: - Lifecycle
     override func setUp() {
@@ -29,20 +23,9 @@ class PokemonDetailsViewModelTests: XCTestCase {
         setupTestEnvironment()
     }
     
-    override func tearDown() {
-        super.tearDown()
-        URLSession.removeAllMocks()
-    }
-    
     func setupTestEnvironment() {
-        let pokemonId = 1
-        pokemonServiceStub = PokemonServiceStub()
         favoritesManagerStub = FavoritesManagerStub()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonServiceStub, favoritesManager: favoritesManagerStub)
         actionsDelegateSpy = PokemonDetailsViewControllerActionsDelegateSpy(favoritesManagerStub: favoritesManagerStub)
-        sut = PokemonDetailsViewModel(pokemonId: pokemonId, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
-        testScheduler = TestScheduler(initialClock: 0)
-        disposeBag = DisposeBag()
     }
 
     // MARK: - Tests
@@ -51,7 +34,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
         actionsDelegateSpy.pokemonToAdd = bulbassaur
         
-        let pokemonService = PokemonService()
+        let pokemonService = PokemonServiceStub()
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
@@ -87,7 +70,8 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func testActOnFavoritesButtonTouchWithNilData() {
         // Given
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonServiceStub, favoritesManager: favoritesManagerStub)
+        let pokemonService = PokemonServiceStub(mockData: .empty)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
         // When
@@ -100,7 +84,37 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func testLoadPokemonData_unexpectedError() {
         // Given
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonServiceStub, favoritesManager: favoritesManagerStub)
+        let pokemonService = PokemonServiceStub(mockData: .empty)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        
+        let viewStateCollector = RxCollector<CommonViewModelState>().collect(from: sut.viewState.asObservable())
+        let isLoadingPokemonDataCollector = RxCollector<Bool>().collect(from: sut.isLoadingPokemonData.asObservable())
+        
+        // When
+        sut.loadPokemonData()
+        
+        // Then
+        guard let lastState = viewStateCollector.items.last, let isLoadingPokemonData = isLoadingPokemonDataCollector.items.last else {
+            XCTFail("No states collected.")
+            return
+        }
+        
+        var isLastStateAnError = false
+        switch lastState {
+        case .error(_):
+            isLastStateAnError = true
+        default:
+            isLastStateAnError = false
+        }
+        XCTAssertFalse(isLoadingPokemonData)
+        XCTAssertTrue(isLastStateAnError)
+    }
+    
+    func testLoadPokemonData_withBulbassaur() {
+        // Given
+        let pokemonService = PokemonServiceStub(mockData: .bulbassaurData)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
         
         let viewStateCollector = RxCollector<CommonViewModelState>().collect(from: sut.viewState.asObservable())
@@ -109,26 +123,10 @@ class PokemonDetailsViewModelTests: XCTestCase {
         sut.loadPokemonData()
         
         // Then
-        let expectedViewStates: [CommonViewModelState] = [.loading(true)]
-        
+        XCTAssertNotNil(sut.pokemonData) // TODO: Test PokemonImage
     }
     
 }
-
-// MARK: - Mocking
-private extension PokemonDetailsViewModelTests {
-    
-    func mockWithBulbassaurData() {
-        let data = MockDataHelper.getData(forResource: .bulbassaur)
-        do {
-            try URLSession.mockEvery(expression: "v2/pokemon/1", body: data)
-        } catch _ {
-            XCTFail("Could not mock data.")
-        }
-    }
-    
-}
-
 
 class PokemonDetailsViewControllerActionsDelegateSpy: PokemonDetailsViewControllerActionsDelegate {
     

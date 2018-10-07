@@ -25,11 +25,6 @@ class HomeViewModelTests: XCTestCase {
         sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
     }
     
-    override func tearDown() {
-        super.tearDown()
-        URLSession.removeAllMocks()
-    }
-    
     // MARK: - Tests
     func testInit() {
         // Given
@@ -53,120 +48,6 @@ class HomeViewModelTests: XCTestCase {
         let collectedPokemonCellModels = pokemonCellModelsCollector.items.first!
         XCTAssertTrue(collectedPokemonCellModels.isEmpty, "First pokemonCellModels is not []")
     }
-    
-//    func testEmptyCellModels() {
-//        // Given
-//        let data = "{}".data(using: String.Encoding.utf8)!
-//        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
-//        
-//        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
-//            .collect(from: sut.pokemonCellModels.asObservable())
-//        let viewStateCollector = RxCollector<CommonViewModelState>()
-//            .collect(from: sut.viewState.asObservable())
-//        
-//        // When
-//        let pokemonCellModelsExpectation = expectation(description: "Collected all necessary pokemonCellModels.")
-//        sut.pokemonCellModels
-//            .asObservable()
-//            .subscribe(onNext: { (cellModels) in
-//                if pokemonCellModelsCollector.items.count == 1 {
-//                    pokemonCellModelsExpectation.fulfill()
-//                }
-//            }).disposed(by: disposeBag)
-//        
-//        let viewStatesExpectation = expectation(description: "Reached expected state.")
-//        sut.viewState
-//            .asObservable()
-//            .subscribe(onNext: { (state) in
-//                if state == .empty {
-//                    viewStatesExpectation.fulfill()
-//                }
-//            }).disposed(by: disposeBag)
-//        
-//        waitForExpectations(timeout: 2) { (error) in
-//            
-//            // Then
-////            let viewStateExpectedResults: [CommonViewModelState] = [.loading(true), .empty, .loading(false)]
-////            XCTAssertEqual(viewStateExpectedResults, viewStateCollector.items, "Invalid events for .empty state.")
-//            XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
-//            
-//        }
-//        
-//    }
-    
-//    func testErrorState() {
-//        // Given
-//        try! URLSession.mockEvery(expression: "v2/pokemon") { (url, headers) -> MockResponse in
-//            let error = NSError(domain: "test", code: 404, userInfo: nil)
-//            return .failure(error: error)
-//        }
-//        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-//        let viewStateCollector = RxCollector<CommonViewModelState>()
-//            .collect(from: sut.viewState.asObservable())
-//        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
-//            .collect(from: sut.pokemonCellModels.asObservable())
-//
-//        // When
-//        let viewStateExpectation = expectation(description: "ViewState did change")
-//        sut.viewState.asObservable()
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { (state) in
-//                switch state {
-//                case .error(_):
-//                    viewStateExpectation.fulfill()
-//                default: return
-//                }
-//            }).disposed(by: disposeBag)
-//        sut.loadPokemons()
-//        waitForExpectations(timeout: 5, handler: nil)
-//
-//        // Then
-//        switch viewStateCollector.items.last! {
-//        case .error(let serializedError): XCTAssertNotNil(serializedError, "The error is nil!")
-//            break
-//        default: XCTFail("The last viewState is not an error!")
-//        }
-//        XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")
-//    }
-//
-//    func testLoadedStateWithOnePokemon() {
-//        // Given
-//        let jsonDictionary: [String: Any] =
-//            ["count": 949,
-//             "results": [
-//                ["url": "https://pokeapi.co/api/v2/pokemon/1/",
-//                 "name" :"bulbasaur"]
-//                ],
-//             "next": "https://pokeapi.co/api/v2/pokemon/?limit=1&offset=1"]
-//        let data = try! JSONSerialization.data(withJSONObject: jsonDictionary, options: .prettyPrinted)
-//        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=150")!
-//        let request = URLRequest(url: url)
-//        URLSession.mockNext(request: request, body: data, delay: 1)
-//
-//        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-//        let viewStateCollector = RxCollector<CommonViewModelState>()
-//            .collect(from: sut.viewState.asObservable())
-//        let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
-//            .collect(from: sut.pokemonCellModels.asObservable())
-//
-//        // When
-//        let loadPokemonsExpectation = expectation(description: "loadPokemons() fetched a result")
-//        sut.pokemonCellModels.asObservable().subscribe(onNext: { (cells) in
-//            if cells.count > 0 {
-//                loadPokemonsExpectation.fulfill()
-//            }
-//        }).disposed(by: disposeBag)
-//
-//        sut.loadPokemons()
-//
-//        waitForExpectations(timeout: 1, handler: nil)
-//
-//        // Then
-//        XCTAssertTrue(viewStateCollector.items.contains(where: { $0 == .loaded }), ".loaded State not reached")
-//        XCTAssertTrue(pokemonCellModelsCollector.items.count == 2, "pokemonCellModels.count is not 2")
-//        XCTAssertTrue(pokemonCellModelsCollector.items.last!.count == 1, "pokemonCellModelsCollector.items[1].count != 1")
-//        XCTAssertTrue(pokemonCellModelsCollector.items.last!.first!.pokemonListItem.name! == "bulbasaur", "we don't have a bulbassaur in the first result")
-//    }
     
     ///////////////////////// OLD
 //    func testEmptyState() {
@@ -260,49 +141,48 @@ class HomeViewModelTests: XCTestCase {
     
     func testLoadPokemons() {
         // Given
-        let data = "{}".data(using: String.Encoding.utf8)!
-        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+        let pokemonServiceStub = PokemonServiceStub(mockData: .empty)
         
         // When
-        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services: pokemonServiceStub)
         sut.loadPokemons()
         
         // Then
         XCTAssertTrue(sut.loadPokemonsDidRun, "loadPokemons() did not run")
     }
     
-    func testShowItemDetailsForSelectedCellModelCalledWithValidPokemonCellModel() {
-        // Given
-        let data = "{}".data(using: String.Encoding.utf8)!
-        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
-        let pokemonListItem = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbassaur")
-        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
-        
-        // When
-        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-        sut.showItemDetailsForSelectedCellModel(cellModel)
-        
-        // Then
-        XCTAssertTrue(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was not called")
-        XCTAssertNotNil(actionsDelegateStub.pokemonIdToShowDetails, "Invalid pokemon id")
-        XCTAssertEqual(actionsDelegateStub.pokemonIdToShowDetails!, pokemonListItem.id!, "Invalid pokemon id")
-    }
-    
-    func testShowItemDetailsForSelectedCellModelCalledWithInvalidPokemonCellModel() {
-        // Given
-        let data = "{}".data(using: String.Encoding.utf8)!
-        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
-        let pokemonListItem = PokemonListResult(url: "url", name: "")
-        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
-        
-        // When
-        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
-        sut.showItemDetailsForSelectedCellModel(cellModel)
-        
-        // Then
-        XCTAssertFalse(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was called")
-        XCTAssertNil(actionsDelegateStub.pokemonIdToShowDetails, "The pokemon id should be nil")
-    }
+//    func testShowItemDetailsForSelectedCellModelCalledWithValidPokemonCellModel() {
+//        // Given
+//        let data = "{}".data(using: String.Encoding.utf8)!
+//        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+//        let pokemonListItem = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbassaur")
+//        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
+//
+//        // When
+//        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+//        sut.showItemDetailsForSelectedCellModel(cellModel)
+//
+//        // Then
+//        XCTAssertTrue(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was not called")
+//        XCTAssertNotNil(actionsDelegateStub.pokemonIdToShowDetails, "Invalid pokemon id")
+//        XCTAssertEqual(actionsDelegateStub.pokemonIdToShowDetails!, pokemonListItem.id!, "Invalid pokemon id")
+//    }
+//
+//    func testShowItemDetailsForSelectedCellModelCalledWithInvalidPokemonCellModel() {
+//        // Given
+//        let data = "{}".data(using: String.Encoding.utf8)!
+//        try! URLSession.mockEvery(expression: "v2/pokemon/", body: data)
+//        let pokemonListItem = PokemonListResult(url: "url", name: "")
+//        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
+//
+//        // When
+//        let sut = HomeViewModelStub(actionsDelegate: actionsDelegateStub, services:  PokemonService())
+//        sut.showItemDetailsForSelectedCellModel(cellModel)
+//
+//        // Then
+//        XCTAssertFalse(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was called")
+//        XCTAssertNil(actionsDelegateStub.pokemonIdToShowDetails, "The pokemon id should be nil")
+//    }
     
 }
 

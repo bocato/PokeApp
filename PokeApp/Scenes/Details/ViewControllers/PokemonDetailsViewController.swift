@@ -62,8 +62,8 @@ extension PokemonDetailsViewController {
             .disposed(by: disposeBag)
         
         viewModel.viewState
-            .asDriver()
-            .drive(onNext: { [weak self] (state) in
+            .asObservable()
+            .subscribe(onNext: { [weak self] (state) in
                 guard let `self` = self else { return }
                 switch state {
                 case .error(let networkError):

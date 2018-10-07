@@ -47,7 +47,7 @@ class PokemonDetailsViewModel {
     // MARK: - Rx Properties
     private(set) var isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
     private(set) var isLoadingPokemonData = PublishSubject<Bool>()
-    private(set) var viewState = BehaviorRelay<CommonViewModelState>(value: .loading(true))
+    private(set) var viewState = PublishSubject<CommonViewModelState>()
     private(set) var favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
     private(set) var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
     private(set) var pokemonNumber = BehaviorRelay<String?>(value: nil)
@@ -85,8 +85,12 @@ class PokemonDetailsViewModel {
                     let abilities = pokemonData.abilities,
                     let stats = pokemonData.stats,
                     let moves = pokemonData.moves else {
+                        
+                        self.isLoadingPokemonData.onNext(false)
+                        
                         let error = ErrorFactory.buildNetworkError(with: .unexpected)
-                        self.viewState.accept(.error(error))
+                        self.viewState.onNext(.error(error))
+                        
                         return
                 }
                 
@@ -105,7 +109,7 @@ class PokemonDetailsViewModel {
             }, onError: { [weak self] (error) in
                     
                     let networkError = error as! NetworkError
-                    self?.viewState.accept(.error(networkError.requestError))
+                    self?.viewState.onNext(.error(networkError.requestError))
                     self?.isLoadingPokemonData.onNext(false)
                     
             })

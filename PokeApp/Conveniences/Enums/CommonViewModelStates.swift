@@ -9,12 +9,10 @@
 import Foundation
 
 enum CommonViewModelState {
-    
     case loading(Bool)
     case error(SerializedNetworkError?)
     case empty
     case loaded
-    
 }
 
 extension CommonViewModelState: Equatable {
