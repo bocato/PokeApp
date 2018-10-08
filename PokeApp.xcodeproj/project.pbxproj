@@ -103,6 +103,7 @@
 		E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */; };
 		E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */; };
 		E5DCC2AA20B6F7D900325D32 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */; };
+		E5F1B262216B91850009E628 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B261216B91850009E628 /* CoordinatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,6 +221,7 @@
 		E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
 		E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		E5DCC2A920B6F7D900325D32 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
+		E5F1B261216B91850009E628 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -510,6 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				E564DD2A2113253800307A15 /* BaseCoordinatorTests.swift */,
+				E5F1B261216B91850009E628 /* CoordinatorTests.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -919,15 +922,11 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-PokeAppTests/Pods-PokeAppTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework",
-				"${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxBlocking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTest.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1078,6 +1077,7 @@
 				E58C08AB216AA29B0039D362 /* NSErrorExtension.swift in Sources */,
 				E56D242420B200A70059B0E0 /* URLExtension.swift in Sources */,
 				E58C08AD216AB5AF0039D362 /* FavoriteCollectionViewCellModelTests.swift in Sources */,
+				E5F1B262216B91850009E628 /* CoordinatorTests.swift in Sources */,
 				E56D242620B200DE0059B0E0 /* RxCollector.swift in Sources */,
 				E53D4C4421692F21006A2222 /* FavoritesCoordinatorModulesFactoryTests.swift in Sources */,
 				E53D4C4A216966CA006A2222 /* AppCoordinatorTests.swift in Sources */,

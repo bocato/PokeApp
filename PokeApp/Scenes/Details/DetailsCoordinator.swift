@@ -18,9 +18,9 @@ class DetailsCoordinator: Coordinator {
     
     // MARK: - Dependencies
     internal(set) var router: RouterProtocol
-    weak internal(set) var delegate: CoordinatorDelegate?
     
     // MARK: - Properties
+    weak internal(set) var delegate: CoordinatorDelegate?
     internal(set) var childCoordinators: [String : Coordinator] = [:]
     internal(set) weak var parentCoordinator: Coordinator? = nil
     internal(set) var context: CoordinatorContext? // This is a struct
