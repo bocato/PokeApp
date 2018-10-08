@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppCoordinator: BaseCoordinator {
+class AppCoordinator: Coordinator {
     
     // MARK: - Enums
     enum LaunchInstructor {
@@ -25,14 +25,21 @@ class AppCoordinator: BaseCoordinator {
     }
     
     // MARK: - Dependencies
+    internal(set) var router: RouterProtocol
+    weak internal(set) var delegate: CoordinatorDelegate?
     private(set) var showResourceLoader: Bool
     private(set) var modulesFactory: AppCoordinatorModulesFactory!
+    
+    // MARK: - Properties
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) weak var parentCoordinator: Coordinator? = nil
+    internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Init
     init(router: RouterProtocol, modulesFactory: AppCoordinatorModulesFactory, showResourceLoader: Bool) {
         self.showResourceLoader = showResourceLoader
         self.modulesFactory = modulesFactory
-        super.init(router: router)
+        self.router = router
     }
     
     open class func build(window: UIWindow?, modulesFactory: AppCoordinatorModulesFactory = AppCoordinatorModulesFactory(), showResourceLoader: Bool = false) -> AppCoordinator? {
@@ -42,7 +49,7 @@ class AppCoordinator: BaseCoordinator {
     }
     
     // MARK: - Start
-    override func start() {
+    func start() {
         let appStartPoint = LaunchInstructor.getApplicationStartPoint(showResourcesLoader: showResourceLoader)
         switch appStartPoint {
         case .tabBar:

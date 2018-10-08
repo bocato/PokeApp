@@ -64,7 +64,7 @@ extension PokemonDetailsViewController {
         viewModel.viewState
             .asObservable()
             .subscribe(onNext: { [weak self] (state) in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 switch state {
                 case .error(let networkError):
                     let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue

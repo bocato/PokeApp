@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 
 // MARK: - Actions
-@objc protocol PokemonDetailsViewControllerActionsDelegate : AnyObject {
-    func didAddFavorite()
-    func didRemoveFavorite()
+protocol PokemonDetailsViewControllerActionsDelegate : AnyObject {
+    func didAddFavorite(_ pokemon: Pokemon)
+    func didRemoveFavorite(_ pokemon: Pokemon)
 }
 
 class PokemonDetailsViewModel {
@@ -76,7 +76,7 @@ class PokemonDetailsViewModel {
         dataSources.pokemonService.getDetailsForPokemon(withId: pokemonId).single()
             .subscribe(onNext: { [weak self] (pokemonData) in
                 
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 
                 guard let pokemonData = pokemonData,
                     let imageURL = pokemonData.imageURL,
@@ -129,7 +129,7 @@ class PokemonDetailsViewModel {
         DispatchQueue.main.async {
             let pokemonImageViewHolder = UIImageView()
             pokemonImageViewHolder.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { [weak self] (image, error, cache, url) in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 guard error != nil else {
                     self.pokemonImage.accept(image)
                     self.isLoadingPokemonImage.accept(false)
@@ -176,10 +176,10 @@ class PokemonDetailsViewModel {
         guard let pokemonData = self.pokemonData else { return }
         if isThisPokemonAFavorite {
             dataSources.favoritesManager.remove(pokemon: pokemonData)
-            actionsDelegate?.didRemoveFavorite()
+            actionsDelegate?.didRemoveFavorite(pokemonData)
         } else {
             dataSources.favoritesManager.add(pokemon: pokemonData)
-            actionsDelegate?.didAddFavorite()
+            actionsDelegate?.didAddFavorite(pokemonData)
         }
         favoriteButtonText.accept(getfavoritesButtonText())
     }

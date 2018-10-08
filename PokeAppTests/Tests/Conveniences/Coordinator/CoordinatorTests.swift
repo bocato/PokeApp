@@ -1,52 +1,57 @@
 //
-//  BaseCoordinatorTests.swift
+//  CoordinatorTests.swift
 //  PokeAppTests
 //
-//  Created by Eduardo Sanches Bocato on 02/08/18.
+//  Created by Eduardo Bocato on 08/10/18.
 //  Copyright © 2018 Bocato. All rights reserved.
 //
 
 import XCTest
 @testable import PokeApp
 
-class BaseCoordinatorTests: XCTestCase {
+class CoordinatorTests: XCTestCase {
+
+    // MARK: Output
+    enum TestOutput: CoordinatorOutput {
+        case test
+    }
     
     // MARK: - Properties
-    var sut: BaseCoordinatorSpy!
-    
+    var sut: CoordinatorSpy!
+
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        sut = BaseCoordinatorSpy(router: Router())
+        sut = CoordinatorSpy(router: Router())
     }
-    
+
     // MARK: Tests
     func testInit() {
         // Given
-        let sut: BaseCoordinator?
+        let sut: Coordinator?
         // When
-        sut = BaseCoordinator(router: Router())
+        sut = CoordinatorSpy(router: Router())
         // Then
         XCTAssertNotNil(sut, "initalization failed")
     }
-    
+
     func testStart() {
         // When
         sut.start()
         // Then
         XCTAssertTrue(sut.startWasCalled, "Start was not called")
     }
-    
+
     func testFinish() {
         // When
         sut.finish()
         // Then
         XCTAssertTrue(sut.finishWasCalled, "Finish was not called")
     }
-    
+
     func testAddChildCoordinatorThatDoesntExist() {
         // Given
-        let childCoordinator = BaseCoordinatorSpy(router: Router())
+        let childCoordinator = CoordinatorSpy(router: Router())
         // When
         let didAddChild = sut.addChildCoordinator(childCoordinator)
         // Then
@@ -54,10 +59,10 @@ class BaseCoordinatorTests: XCTestCase {
         XCTAssertTrue(childCoordinator.startWasCalled, "Start was not called on childCoordinator")
         XCTAssertTrue(sut.numberOfChildCoordinators == 1, "Wrong number of childs")
     }
-    
+
     func testAddChildCoordinatorThatExists() {
         // Given
-        let childCoordinator = BaseCoordinatorSpy(router: Router())
+        let childCoordinator = CoordinatorSpy(router: Router())
         // When
         let didAddChild1 = sut.addChildCoordinator(childCoordinator)
         let didAddChild2 = sut.addChildCoordinator(childCoordinator)
@@ -67,11 +72,11 @@ class BaseCoordinatorTests: XCTestCase {
         XCTAssertFalse(didAddChild2, "Child 2 was added, but it shouldn't be")
         XCTAssertTrue(sut.numberOfChildCoordinators == 1, "Wrong number of childs")
     }
-    
+
     func testRemoveChildCoordinatorThatDoesntExist() {
         // Given
         testAddChildCoordinatorThatDoesntExist()
-        let childCoordinator2 = BaseCoordinatorSpy(router: Router())
+        let childCoordinator2 = CoordinatorSpy(router: Router())
         // When
         let didRemoveChild = sut.removeChildCoordinator(childCoordinator2)
         // Then
@@ -79,7 +84,7 @@ class BaseCoordinatorTests: XCTestCase {
         XCTAssertFalse(childCoordinator2.finishWasCalled, "Finish wascalled on childCoordinator, but shouldn't be")
         XCTAssertTrue(sut.numberOfChildCoordinators == 1, "Wrong number of childs, whe should have one")
     }
-    
+
     func testRemoveNilCoordinator() {
         // Given
         testAddChildCoordinatorThatDoesntExist()
@@ -89,10 +94,10 @@ class BaseCoordinatorTests: XCTestCase {
         XCTAssertFalse(didRemoveChild, "Child was removed, but shouldn't be since it doesn't exist")
         XCTAssertTrue(sut.numberOfChildCoordinators == 1, "Wrong number of childs, whe should have one")
     }
-    
+
     func testRemoveChildCoordinatorThatExists() {
         // Given
-        let childCoordinator = BaseCoordinatorSpy(router: Router())
+        let childCoordinator = CoordinatorSpy(router: Router())
         let _ = sut.addChildCoordinator(childCoordinator)
         // When
         let didRemoveChild = sut.removeChildCoordinator(childCoordinator)
@@ -101,71 +106,84 @@ class BaseCoordinatorTests: XCTestCase {
         XCTAssertTrue(childCoordinator.finishWasCalled, "Finish was not called on childCoordinator")
         XCTAssertTrue(sut.numberOfChildCoordinators == 0, "Wrong number of childs")
     }
-    
-    func testSendAndReceiveOutput() {
+
+    func testSendOutputToParent() {
         // Given
-        let childCoordinator = BaseCoordinatorSpy(router: Router())
-        let _ = sut.addChildCoordinator(childCoordinator)
-        enum TestOutput: CoordinatorOutput {
-            case test
-        }
+        let router = Router()
+        let childCoordinator = CoordinatorSpy(router: router)
+        let didAddChildCoordinator = sut.addChildCoordinator(childCoordinator)
+        
+        XCTAssertEqual(childCoordinator.parentCoordinator?.identifier, sut.identifier)
+        XCTAssertTrue(didAddChildCoordinator)
+        
         let outputToSend: TestOutput = .test
+        
         // When
-        childCoordinator.sendOutputToParent(outputToSend)
+        childCoordinator.sendOutputToParent_spy(outputToSend)
+        
         // Then
-        XCTAssertTrue(sut.didReceiveOutputFromChild, "Output was not received")
-        let receivedOutput = sut.lastReceivedOutput as? TestOutput
-        XCTAssertNotNil(receivedOutput, "Invalid output type")
-        XCTAssertEqual(outputToSend, receivedOutput!,  "Invalid output")
+        XCTAssertTrue(childCoordinator.didSendOutputToParent)
+        let lastSentOutput = childCoordinator.lastSentOutput as? TestOutput
+        XCTAssertNotNil(lastSentOutput)
     }
-    
+
 }
 
-class BaseCoordinatorSpy: BaseCoordinator {
+class CoordinatorSpy: Coordinator {
+    
+    // MARK: - Dependencies
+    internal(set) var router: RouterProtocol
+    
+    // MARK: - Properties
+    weak internal(set) var delegate: CoordinatorDelegate?
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) weak var parentCoordinator: Coordinator? = nil
+    internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Control Variables
     var initWasCalled = false
     var startWasCalled = false
     var finishWasCalled = false
-    var numberOfChildCoordinators = 0
+    var numberOfChildCoordinators: Int {
+        return childCoordinators.keys.count
+    }
+    var didSendOutputToParent = false
+    var lastSentOutput: CoordinatorOutput?
     var didReceiveOutputFromChild = false
     var lastReceivedOutput: CoordinatorOutput?
-    
-    // MARK: - Methods
-    override func start() {
-        super.start()
-        startWasCalled = true
+
+    // MARK: - Intialization
+    init(router: RouterProtocol) {
+        self.router = router
     }
     
-    override func finish() {
-        super.finish()
+    // MARK: - Methods
+    func start() {
+        startWasCalled = true
+    }
+
+    func finish() {
         finishWasCalled = true
     }
     
-    override func addChildCoordinator(_ coordinator: Coordinator) -> Bool {
-        let didAddChild = super.addChildCoordinator(coordinator)
-        if didAddChild {
-            numberOfChildCoordinators += 1
-        }
-        return didAddChild
+    func sendOutputToParent_spy(_ output: CoordinatorOutput) {
+        sendOutputToParent(output)
+        didSendOutputToParent = true
+        lastSentOutput = output
     }
+
+}
+
+class CoordinatorDelegateSpy: CoordinatorDelegate {
     
-    override func removeChildCoordinator(_ coordinator: Coordinator?) -> Bool {
-        let didRemoveChild = super.removeChildCoordinator(coordinator)
-        if didRemoveChild {
-            numberOfChildCoordinators -= 1
-        }
-        return didRemoveChild
-    }
+    // MARK: - Control Variables
+    var lastReceivedOutput: CoordinatorOutput?
+    var cordinatorWhoSentTheLastOuput: Coordinator?
     
-    override func sendOutputToParent(_ output: CoordinatorOutput) {
-        super.sendOutputToParent(output)
-    }
-    
-    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
-        super.receiveChildOutput(child: child, output: output)
+    // MARK: - CoordinatorDelegate
+    func receiveOutput(_ output: CoordinatorOutput, fromCoordinator coordinator: Coordinator) {
         lastReceivedOutput = output
-        didReceiveOutputFromChild = true
+        cordinatorWhoSentTheLastOuput = coordinator
     }
     
 }

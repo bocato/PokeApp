@@ -9,19 +9,39 @@
 import Foundation
 import UIKit
 
-class TabBarCoordinator: BaseCoordinator {
+protocol TabBarCoordinatorProtocol: Coordinator, TabBarViewControllerActionsDelegate {
     
-    // MARK: - Dependencies
-    private(set) var modulesFactory: TabBarCoordinatorModulesFactory
+    // MARK: Properties
+    var modulesFactory: TabBarCoordinatorModulesFactory {get set}
     
     // MARK: - Initialization
-    init(router: RouterProtocol, modulesFactory: TabBarCoordinatorModulesFactory) {
+    init(router: RouterProtocol, modulesFactory: TabBarCoordinatorModulesFactory)
+    
+    // MARK: - TabBarViewControllerActionsDelegate
+    func actOnSelectedTab(_ selectedTab: TabBarViewModel.TabIndex, _ navigationController: UINavigationController)
+
+}
+
+class TabBarCoordinator: TabBarCoordinatorProtocol {
+    
+    // MARK: - Dependencies
+    internal(set) var router: RouterProtocol
+    weak internal(set) var delegate: CoordinatorDelegate?
+    internal(set) var modulesFactory: TabBarCoordinatorModulesFactory
+    
+    // MARK: - Properties
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) weak var parentCoordinator: Coordinator? = nil
+    internal(set) var context: CoordinatorContext? // This is a struct
+    
+    // MARK: - Initialization
+    required init(router: RouterProtocol, modulesFactory: TabBarCoordinatorModulesFactory) {
         self.modulesFactory = modulesFactory
-        super.init(router: router)
+        self.router = router
     }
     
     // MARK: - Outputs
-    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+    func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
         switch (child, output) {
         case let (favoritesCoordinator as FavoritesCoordinator, output as FavoritesCoordinator.Output):
             self.delegate?.receiveOutput(output, fromCoordinator: favoritesCoordinator)
@@ -31,17 +51,13 @@ class TabBarCoordinator: BaseCoordinator {
         }
     }
     
-}
-
-extension TabBarCoordinator: TabBarViewControllerActionsDelegate {
-    
     // MARK: - TabBarViewControllerActionsDelegate
     func actOnSelectedTab(_ selectedTab: TabBarViewModel.TabIndex, _ navigationController: UINavigationController) {
-        if navigationController.viewControllers.isEmpty {
+        if navigationController.viewControllers.isEmpty { // First load!
             switch selectedTab {
             case .home:
                 let (coordinator, controller) = modulesFactory.build(.home(navigationController))
-                self.addChildCoordinator(coordinator)
+                addChildCoordinator(coordinator)
                 coordinator.router.setRootModule(controller)
             case .favorites:
                 let (coordinator, controller) = modulesFactory.build(.favorites(navigationController))

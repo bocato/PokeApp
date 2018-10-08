@@ -7,27 +7,93 @@
 //
 
 import XCTest
+@testable import PokeApp
 
 class FavoritesCoordinatorTests: XCTestCase {
 
+    // MARK: - Properties
+    var coordinatorDelegateSpy: CoordinatorDelegateSpy!
+    var sut: FavoritesCoordinatorSpy!
+    
+    // MARK: - Lifecycle
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        let router = Router()
+        let modulesFactory = FavoritesCoordinatorModulesFactory()
+        coordinatorDelegateSpy = CoordinatorDelegateSpy()
+        sut = FavoritesCoordinatorSpy(router: router, modulesFactory: modulesFactory, favoritesManager: SimpleFavoritesManager.shared)
+        sut.delegate = coordinatorDelegateSpy
     }
-
+    
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+    
+    // MARK: - Tests
+    func testReceivingDidAddPokemonOutputFromDetailsCoordinator() {
+        // Given
+        let router = Router()
+        let detailsCoordinator = DetailsCoordinator(router: router)
+        sut.addChildCoordinator(detailsCoordinator)
+        let outputToSend: DetailsCoordinator.Output = .didAddPokemon
+        
+        // When
+        detailsCoordinator.sendOutputToParent(outputToSend)
+        
+        // Then
+        let childWhoSentTheLastOutput = sut.childWhoSentTheLastOutput as? DetailsCoordinator
+        XCTAssertNotNil(childWhoSentTheLastOutput)
+        XCTAssertEqual(childWhoSentTheLastOutput!.identifier, detailsCoordinator.identifier, "Invalid child.")
+        
+        let lastReceivedChildOutput = sut.lastReceivedChildOutput as? DetailsCoordinator.Output
+        XCTAssertNotNil(lastReceivedChildOutput)
+        XCTAssertEqual(lastReceivedChildOutput, outputToSend, "Invalid output.")
+    }
+    
+    func testReceivingDidRemovePokemonOutputFromDetailsCoordinator() {
+        // Given
+        let router = Router()
+        let detailsCoordinator = DetailsCoordinator(router: router)
+        sut.addChildCoordinator(detailsCoordinator)
+        let outputToSend: DetailsCoordinator.Output = .didRemovePokemon
+        
+        // When
+        detailsCoordinator.sendOutputToParent(outputToSend)
+        
+        // Then
+        let childWhoSentTheLastOutput = sut.childWhoSentTheLastOutput as? DetailsCoordinator
+        XCTAssertNotNil(childWhoSentTheLastOutput)
+        XCTAssertEqual(childWhoSentTheLastOutput!.identifier, detailsCoordinator.identifier, "Invalid child.")
+        
+        let lastReceivedChildOutput = sut.lastReceivedChildOutput as? DetailsCoordinator.Output
+        XCTAssertNotNil(lastReceivedChildOutput)
+        XCTAssertEqual(lastReceivedChildOutput, outputToSend, "Invalid output.")
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+}
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+class FavoritesCoordinatorSpy: FavoritesCoordinator {
+    
+    // MARK: - Control Variables [Coordinator]
+    var childWhoSentTheLastOutput: Coordinator?
+    var lastReceivedChildOutput: CoordinatorOutput?
+    
+    // MARK: - Control Variables [ActionsDelegate]
+    var showItemDetailsForPokemonWithIdWasCalled = false
+    var idForLastPokemonDetailsRequest: Int?
+    
+    // MARK: - Outputs
+    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+        childWhoSentTheLastOutput = child
+        lastReceivedChildOutput = output
+        super.receiveChildOutput(child: child, output: output)
     }
-
+    
+    // MARK: - FavoritesViewControllerActionsDelegate
+    override func showItemDetailsForPokemonWith(id: Int) {
+        showItemDetailsForPokemonWithIdWasCalled = true
+        idForLastPokemonDetailsRequest = id
+        super.showItemDetailsForPokemonWith(id: id)
+    }
+    
 }

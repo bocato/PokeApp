@@ -8,7 +8,21 @@
 
 import Foundation
 
-class HomeCoordinator: BaseCoordinator {
+protocol HomeCoordinatorProtocol: Coordinator, HomeViewControllerActionsDelegate {
+    
+    // MARK: Dependencies
+    var favoritesManager: FavoritesManager {get set}
+    var modulesFactory: HomeCoordinatorModulesFactory {get set}
+    
+    // MARK: - Initialization
+    init(router: RouterProtocol, favoritesManager: FavoritesManager, modulesFactory: HomeCoordinatorModulesFactory)
+    
+    // MARK: - HomeViewControllerActionsDelegate
+    func showItemDetailsForPokemonWith(id: Int)
+    
+}
+
+class HomeCoordinator: HomeCoordinatorProtocol {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
@@ -16,18 +30,25 @@ class HomeCoordinator: BaseCoordinator {
     }
     
     // MARK: - Dependencies
-    private let favoritesManager: FavoritesManager
-    private let modulesFactory: HomeCoordinatorModulesFactory
+    internal(set) var router: RouterProtocol
+    weak internal(set) var delegate: CoordinatorDelegate?
+    internal(set) var favoritesManager: FavoritesManager
+    internal(set) var modulesFactory: HomeCoordinatorModulesFactory
+    
+    // MARK: - Properties
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) weak var parentCoordinator: Coordinator? = nil
+    internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: Initialization
-    init(router: RouterProtocol, favoritesManager: FavoritesManager, modulesFactory: HomeCoordinatorModulesFactory){
+    required init(router: RouterProtocol, favoritesManager: FavoritesManager, modulesFactory: HomeCoordinatorModulesFactory) {
         self.favoritesManager = favoritesManager
         self.modulesFactory = modulesFactory
-        super.init(router: router)
+        self.router = router
     }
     
-    // MARK: - Dealing with ouputs
-    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+    // MARK: - Outputs
+    func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
         switch (child, output) {
         case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
             switch output {
@@ -41,10 +62,7 @@ class HomeCoordinator: BaseCoordinator {
         }
     }
     
-}
-
-extension HomeCoordinator: HomeViewControllerActionsDelegate {
-    
+    // MARK: - HomeViewControllerActionsDelegate
     func showItemDetailsForPokemonWith(id: Int) {
         let router = self.router
         let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router))
