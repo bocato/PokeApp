@@ -102,22 +102,28 @@ class CoordinatorTests: XCTestCase {
         XCTAssertTrue(sut.numberOfChildCoordinators == 0, "Wrong number of childs")
     }
 
-//    func testSendAndReceiveOutput() {
-//        // Given
-//        let childCoordinator = CoordinatorSpy(router: Router())
-//        let _ = sut.addChildCoordinator(childCoordinator)
-//        enum TestOutput: CoordinatorOutput {
-//            case test
-//        }
-//        let outputToSend: TestOutput = .test
-//        // When
-//        childCoordinator.sendOutputToParent(outputToSend)
-//        // Then
-//        XCTAssertTrue(sut.didReceiveOutputFromChild, "Output was not received")
-//        let receivedOutput = sut.lastReceivedOutput as? TestOutput
-//        XCTAssertNotNil(receivedOutput, "Invalid output type")
-//        XCTAssertEqual(outputToSend, receivedOutput!,  "Invalid output")
-//    }
+    func testSendOutputToParent() {
+        // Given
+        let router = Router()
+        let childCoordinator = CoordinatorSpy(router: router)
+        let didAddChildCoordinator = sut.addChildCoordinator(childCoordinator)
+        
+        XCTAssertEqual(childCoordinator.parentCoordinator?.identifier, sut.identifier)
+        XCTAssertTrue(didAddChildCoordinator)
+        
+        enum TestOutput: CoordinatorOutput {
+            case test
+        }
+        let outputToSend: TestOutput = .test
+        
+        // When
+        childCoordinator.sendOutputToParent_spy(outputToSend)
+        
+        // Then
+        XCTAssertTrue(childCoordinator.didSendOutputToParent)
+        let lastSentOutput = childCoordinator.lastSentOutput as? TestOutput
+        XCTAssertNotNil(lastSentOutput)
+    }
 
 }
 
@@ -158,46 +164,10 @@ class CoordinatorSpy: Coordinator {
         finishWasCalled = true
     }
     
-    @discardableResult
-    func addChildCoordinator(_ coordinator: Coordinator) -> Bool {
-        if let child = childCoordinators[coordinator.identifier], child === coordinator {
-            return false
-        }
-        coordinator.parentCoordinator = self
-        childCoordinators[coordinator.identifier] = coordinator
-        coordinator.start()
-        return true
-    }
-    
-    @discardableResult
-    func removeChildCoordinator(_ coordinator: Coordinator?) -> Bool {
-        guard childCoordinators.isEmpty == false, let coordinator = coordinator else {
-            return false
-        }
-        if let coordinatorToRemove = childCoordinators[coordinator.identifier], coordinator === coordinatorToRemove {
-            childCoordinators.removeValue(forKey: coordinator.identifier)
-            coordinatorToRemove.finish()
-            return true
-        }
-        return false
-    }
-    
-    func sendOutputToParent(_ output: CoordinatorOutput) {
-        guard let parentCoordinator = parentCoordinator else {
-            return
-        }
-        parentCoordinator.receiveChildOutput(child: self, output: output)
+    func sendOutputToParent_spy(_ output: CoordinatorOutput) {
+        sendOutputToParent(output)
         didSendOutputToParent = true
         lastSentOutput = output
-    }
-    
-    func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
-        guard let parentCoordinator = parentCoordinator else {
-            return
-        }
-        parentCoordinator.receiveChildOutput(child: child, output: output)
-        didReceiveOutputFromChild = true
-        lastReceivedOutput = output
     }
 
 }

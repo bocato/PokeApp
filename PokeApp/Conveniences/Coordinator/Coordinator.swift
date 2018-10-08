@@ -33,6 +33,8 @@ protocol Coordinator: AnyObject {
     // MARK: Functions
     func start()
     func finish()
+    func addChildCoordinator(_ coordinator: Coordinator) -> Bool
+    func removeChildCoordinator(_ coordinator: Coordinator?) -> Bool
     func sendOutputToParent(_ output: CoordinatorOutput)
     func receiveChildOutput(child: Coordinator, output: CoordinatorOutput)
     
@@ -45,6 +47,15 @@ extension Coordinator {
 }
 
 extension Coordinator {
+    
+    // MARK: - Lifecycle
+    func start() { // Override if needed
+        debugPrint("start() called from: \(identifier)")
+    }
+    
+    func finish() { // Override if needed
+        debugPrint("finish() called from: \(identifier)")
+    }
     
     // MARK: - Helper Methods
     @discardableResult

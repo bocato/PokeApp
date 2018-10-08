@@ -26,15 +26,7 @@ class TabBarCoordinator: Coordinator {
         self.modulesFactory = modulesFactory
         self.router = router
     }
-    
-    // MARK: - Start / Finish
-    func start() {
-        debugPrint("Not needed.")
-    }
-    
-    func finish() {
-        debugPrint("Not needed.")
-    }
+
     
     // MARK: - Outputs
     func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {

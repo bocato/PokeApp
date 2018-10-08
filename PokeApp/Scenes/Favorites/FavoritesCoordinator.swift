@@ -33,15 +33,6 @@ class FavoritesCoordinator: Coordinator {
         self.router = router
     }
     
-    // MARK: - Start / Finish
-    func start() {
-        debugPrint("Not needed.")
-    }
-    
-    func finish() {
-        debugPrint("Not needed.")
-    }
-    
     // MARK: - Dealing with ouputs
     func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
         switch (child, output) {

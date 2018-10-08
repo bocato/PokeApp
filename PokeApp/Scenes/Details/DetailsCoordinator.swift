@@ -30,15 +30,6 @@ class DetailsCoordinator: Coordinator {
         self.router = router
     }
     
-    // MARK: - Start / Finish
-    func start() {
-        debugPrint("Not needed.")
-    }
-    
-    func finish() {
-        debugPrint("Not needed.")
-    }
-    
 }
 
 extension DetailsCoordinator: PokemonDetailsViewControllerActionsDelegate { // TODO: Channge this... Use, dependency injection.
