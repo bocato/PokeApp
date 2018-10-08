@@ -32,7 +32,8 @@ class TabBarCoordinatorTests: XCTestCase {
     // MARK: - Tests
     func testReceiveChildOutputFromFavoritesCoordinator() {
         // Given
-        let favoritesCoordinator = FavoritesCoordinator(router: Router(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: SimpleFavoritesManager.shared)
+        let favoritesManager = FavoritesManagerStub()
+        let favoritesCoordinator = FavoritesCoordinator(router: Router(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManager)
         sut.addChildCoordinator(favoritesCoordinator)
         let outputToSend: FavoritesCoordinator.Output = .shouldReloadFavorites
         
@@ -51,7 +52,8 @@ class TabBarCoordinatorTests: XCTestCase {
     
     func testReceiveChildOutputFromHomeCoordinator() {
         // Given
-        let homeCoordinator = HomeCoordinator(router: Router(), favoritesManager: SimpleFavoritesManager.shared, modulesFactory: HomeCoordinatorModulesFactory())
+        let favoritesManager = FavoritesManagerStub()
+        let homeCoordinator = HomeCoordinator(router: Router(), favoritesManager: favoritesManager, modulesFactory: HomeCoordinatorModulesFactory())
         sut.addChildCoordinator(homeCoordinator)
         let outputToSend: HomeCoordinator.Output = .shouldReloadFavorites
         

@@ -1,5 +1,5 @@
 //
-//  FavoritesManager.swift
+//  SimpleFavoritesManager.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 24/05/18.
@@ -8,18 +8,7 @@
 
 
 // TODO: Delete this when CoreData is implemented
-
 import Foundation
-
-protocol FavoritesManager {
-    // MARK: - Properties
-    var favorites: [Pokemon] { get set }
-    
-    // MARK: - Functions
-    func add(pokemon: Pokemon)
-    func remove(pokemon: Pokemon)
-    func isFavorite(pokemon: Pokemon) -> Bool
-}
 
 class SimpleFavoritesManager: FavoritesManager {
     
