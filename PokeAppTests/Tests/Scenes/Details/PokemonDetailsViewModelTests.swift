@@ -14,7 +14,7 @@ import RxCocoa
 class PokemonDetailsViewModelTests: XCTestCase {
 
     // MARK: - Properties
-    var actionsDelegateSpy: PokemonDetailsViewControllerActionsDelegateSpy!
+    var detailsCoordinatorSpy: DetailsCoordinatorSpy!
     var favoritesManagerStub: FavoritesManagerStub!
     
     // MARK: - Lifecycle
@@ -25,25 +25,22 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func setupTestEnvironment() {
         favoritesManagerStub = FavoritesManagerStub()
-        actionsDelegateSpy = PokemonDetailsViewControllerActionsDelegateSpy(favoritesManagerStub: favoritesManagerStub)
+        detailsCoordinatorSpy = DetailsCoordinatorSpy(router: Router())
     }
 
     // MARK: - Tests
-    func testActOnFavoritesButtonTouch_addingFavorite() {
+    func testActOnFavoritesButtonTouch_AddingFavorite() {
         // Given
         let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
-        actionsDelegateSpy.pokemonToAdd = bulbassaur
         
         let pokemonService = PokemonServiceStub()
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
-        let sut = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        let sut = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         // When
         sut.actOnFavoritesButtonTouch()
         
         // Then
-        XCTAssertTrue(actionsDelegateSpy.didAddFavoriteWasCalled)
-        XCTAssertTrue(actionsDelegateSpy.didAddPokemon)
         let bulbassaurSearch = favoritesManagerStub.favorites.filter( { $0.name == "bulbassaur" })
         XCTAssertNotNil(bulbassaurSearch)
     }
@@ -51,19 +48,17 @@ class PokemonDetailsViewModelTests: XCTestCase {
     func testActOnFavoritesButtonTouch_RemovingFavorite() {
         // Given
         let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
-        actionsDelegateSpy.pokemonToRemove = bulbassaur
         favoritesManagerStub.add(pokemon: bulbassaur)
 
         let pokemonService = PokemonService()
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
-        let sut = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        let sut = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
 
         // When
         sut.actOnFavoritesButtonTouch()
         
         // Then
-        XCTAssertTrue(self.actionsDelegateSpy.didRemoveFavoriteWasCalled)
-        XCTAssertTrue(self.actionsDelegateSpy.didRemovePokemon)
+        XCTAssertTrue(detailsCoordinatorSpy.didRemoveFavoriteWasCalled)
         let bulbassaurSearch = self.favoritesManagerStub.favorites.filter( { $0.name == "bulbassaur" })
         XCTAssertTrue(bulbassaurSearch.isEmpty)
     }
@@ -72,21 +67,21 @@ class PokemonDetailsViewModelTests: XCTestCase {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .empty)
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
-        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         // When
         sut.actOnFavoritesButtonTouch()
         
         // Then
-        XCTAssertFalse(self.actionsDelegateSpy.didRemoveFavoriteWasCalled)
-        XCTAssertFalse(self.actionsDelegateSpy.didAddFavoriteWasCalled)
+        XCTAssertFalse(detailsCoordinatorSpy.didRemoveFavoriteWasCalled)
+        XCTAssertFalse(detailsCoordinatorSpy.didAddFavoriteWasCalled)
     }
     
     func testLoadPokemonData_unexpectedError() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .empty)
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
-        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
@@ -117,7 +112,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .bulbassaurData)
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
-        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         // When
         sut.loadPokemonData()
@@ -131,7 +126,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         let mockError = NSError.buildMockError(code: 404, description: "LoadPokemonData error.")
         let pokemonService = PokemonServiceStub(mockType: .error(mockError))
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
-        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: actionsDelegateSpy)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObserver())
@@ -149,48 +144,6 @@ class PokemonDetailsViewModelTests: XCTestCase {
             }
             XCTAssertTrue(lastStateIsAnError)
         }
-    }
-    
-}
-
-// MARK: - Spies
-class PokemonDetailsViewControllerActionsDelegateSpy: PokemonDetailsViewControllerActionsDelegate {
-    
-    // MARK: - Dependencies
-    private var favoritesManagerStub: FavoritesManagerStub
-    
-    // MARK: - Control Variables
-    var didAddFavoriteWasCalled = false
-    var didRemoveFavoriteWasCalled = false
-    var pokemonToAdd: Pokemon?
-    var didAddPokemon = false
-    var pokemonToRemove: Pokemon?
-    var didRemovePokemon = false
-    
-    // MARK: - Initialization
-    init(favoritesManagerStub: FavoritesManagerStub) {
-        self.favoritesManagerStub = favoritesManagerStub
-    }
-    
-    // MARK: - PokemonDetailsViewControllerActionsDelegate
-    func didAddFavorite() {
-        didAddFavoriteWasCalled = true
-        guard let pokemonToAdd = pokemonToAdd else {
-            didAddPokemon = false
-            return
-        }
-        favoritesManagerStub.add(pokemon: pokemonToAdd)
-        didAddPokemon = true
-    }
-    
-    func didRemoveFavorite() {
-        didRemoveFavoriteWasCalled = true
-        guard let pokemonToRemove = pokemonToRemove else {
-            didAddPokemon = false
-            return
-        }
-        favoritesManagerStub.remove(pokemon: pokemonToRemove)
-        didRemovePokemon = true
     }
     
 }

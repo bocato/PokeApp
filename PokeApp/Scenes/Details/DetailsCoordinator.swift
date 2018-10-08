@@ -8,7 +8,18 @@
 
 import UIKit
 
-class DetailsCoordinator: Coordinator {
+protocol DetailsCoordinatorProtocol: Coordinator, PokemonDetailsViewControllerActionsDelegate {
+    
+    // MARK: - Initialization
+    init(router: RouterProtocol)
+    
+    // MARK: - PokemonDetailsViewControllerActionsDelegate
+    func didAddFavorite(_ pokemon: Pokemon)
+    func didRemoveFavorite(_ pokemon: Pokemon)
+    
+}
+
+class DetailsCoordinator: DetailsCoordinatorProtocol {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
@@ -26,20 +37,17 @@ class DetailsCoordinator: Coordinator {
     internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Init
-    init(router: RouterProtocol) {
+    required init(router: RouterProtocol) {
         self.router = router
     }
     
-}
-
-extension DetailsCoordinator: PokemonDetailsViewControllerActionsDelegate { // TODO: Channge this... Use, dependency injection.
-    
-    func didAddFavorite() {
+    // MARK: - PokemonDetailsViewControllerActionsDelegate
+    func didAddFavorite(_ pokemon: Pokemon) {
         let outputToSend: DetailsCoordinator.Output = .didAddPokemon
         sendOutputToParent(outputToSend)
     }
     
-    func didRemoveFavorite() {
+    func didRemoveFavorite(_ pokemon: Pokemon) {
         let outputToSend: DetailsCoordinator.Output = .didRemovePokemon
         sendOutputToParent(outputToSend)
     }

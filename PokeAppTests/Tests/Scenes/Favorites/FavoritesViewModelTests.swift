@@ -12,7 +12,7 @@ import XCTest
 class FavoritesViewModelTests: XCTestCase {
 
     // MARK: - Properties
-    var sut: FavoritesViewModel!
+    var sut: FavoritesViewModelSpy!
     var favoritesCoordinatorSpy: FavoritesCoordinatorSpy!
     var favoritesManagerStub: FavoritesManagerStub!
     
@@ -21,7 +21,7 @@ class FavoritesViewModelTests: XCTestCase {
         super.setUp()
         favoritesManagerStub = FavoritesManagerStub()
         favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: Router(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManagerStub)
-        sut = FavoritesViewModel(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManagerStub)
+        sut = FavoritesViewModelSpy(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManagerStub)
     }
     
     // MARK: - Tests
@@ -99,22 +99,78 @@ class FavoritesViewModelTests: XCTestCase {
         XCTAssertNil(favoritesCoordinatorSpy.idForLastPokemonDetailsRequest)
     }
     
+    func testReceiveOutputFromHomeCoordinator() {
+        // Given
+        let router = Router()
+        let tabBarCoordinator = TabBarCoordinator(router: router, modulesFactory: TabBarCoordinatorModulesFactory())
+        tabBarCoordinator.delegate = sut
+        
+        let homeCoordinator = HomeCoordinator(router: router, favoritesManager: favoritesManagerStub, modulesFactory: HomeCoordinatorModulesFactory())
+        tabBarCoordinator.addChildCoordinator(homeCoordinator)
+        
+        let detailsCoordinator = DetailsCoordinator(router: router)
+        homeCoordinator.addChildCoordinator(detailsCoordinator)
+        
+        let outputToSend: DetailsCoordinator.Output = .didAddPokemon
+        
+        // When
+        detailsCoordinator.sendOutputToParent(outputToSend)
+        
+        // Then
+        let coordinatorWhoSentTheLastOutput = sut.coordinatorWhoSentTheLastOutput as? HomeCoordinator
+        XCTAssertNotNil(coordinatorWhoSentTheLastOutput)
+        
+        let lastReceivedParentOutput = sut.lastReceivedOutput as? HomeCoordinator.Output
+        XCTAssertNotNil(lastReceivedParentOutput)
+        XCTAssertEqual(lastReceivedParentOutput!, .shouldReloadFavorites, "Invalid output.")
+    }
+    
+    
+    func testReceiveOutputFromFavoritesCoordinator() {
+        // Given
+        let router = Router()
+        let tabBarCoordinator = TabBarCoordinator(router: router, modulesFactory: TabBarCoordinatorModulesFactory())
+        tabBarCoordinator.delegate = sut
+        
+        let favoritesCoordinator = FavoritesCoordinator(router: router, modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: FavoritesManagerStub())
+        tabBarCoordinator.addChildCoordinator(favoritesCoordinator)
+        
+        let detailsCoordinator = DetailsCoordinator(router: router)
+        favoritesCoordinator.addChildCoordinator(detailsCoordinator)
+        
+        let outputToSend: DetailsCoordinator.Output = .didAddPokemon
+        
+        // When
+        detailsCoordinator.sendOutputToParent(outputToSend)
+        
+        // Then
+        let coordinatorWhoSentTheLastOutput = sut.coordinatorWhoSentTheLastOutput as? FavoritesCoordinator
+        XCTAssertNotNil(coordinatorWhoSentTheLastOutput)
+        
+        let lastReceivedParentOutput = sut.lastReceivedOutput as? FavoritesCoordinator.Output
+        XCTAssertNotNil(lastReceivedParentOutput)
+        XCTAssertEqual(lastReceivedParentOutput!, .shouldReloadFavorites, "Invalid output.")
+    }
+    
+    
 }
 
-//// MARK: - Helpers
-//class FavoritesViewControllerActionsDelegateSpy: FavoritesViewControllerActionsDelegate {
-//
-//    // MARK: Control Variables
-//    var showItemDetailsForPokemonWithIdWasCalled = false
-//    var idToRequestDetails: Int?
-//
-//    // MARK: -
-//    func showItemDetailsForPokemonWith(id: Int) {
-//        showItemDetailsForPokemonWithIdWasCalled = true
-//        idToRequestDetails = id
-//    }
-//
-//}
+// MARK: - Spies
+class FavoritesViewModelSpy: FavoritesViewModel {
+    
+    // MARK: - Control Variables
+    var lastReceivedOutput: CoordinatorOutput?
+    var coordinatorWhoSentTheLastOutput: Coordinator?
+    
+    // MARK: - CoordinatorDelegate
+    override func receiveOutput(_ output: CoordinatorOutput, fromCoordinator coordinator: Coordinator) {
+        lastReceivedOutput = output
+        coordinatorWhoSentTheLastOutput = coordinator
+        super.receiveOutput(output, fromCoordinator: coordinator)
+    }
+    
+}
+
 
 // MARK: - Stubs
 class FavoritesManagerStub: FavoritesManager {

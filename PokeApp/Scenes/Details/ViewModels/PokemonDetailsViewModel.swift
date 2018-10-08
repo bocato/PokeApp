@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 
 // MARK: - Actions
-@objc protocol PokemonDetailsViewControllerActionsDelegate : AnyObject {
-    func didAddFavorite()
-    func didRemoveFavorite()
+protocol PokemonDetailsViewControllerActionsDelegate : AnyObject {
+    func didAddFavorite(_ pokemon: Pokemon)
+    func didRemoveFavorite(_ pokemon: Pokemon)
 }
 
 class PokemonDetailsViewModel {
@@ -176,10 +176,10 @@ class PokemonDetailsViewModel {
         guard let pokemonData = self.pokemonData else { return }
         if isThisPokemonAFavorite {
             dataSources.favoritesManager.remove(pokemon: pokemonData)
-            actionsDelegate?.didRemoveFavorite()
+            actionsDelegate?.didRemoveFavorite(pokemonData)
         } else {
             dataSources.favoritesManager.add(pokemon: pokemonData)
-            actionsDelegate?.didAddFavorite()
+            actionsDelegate?.didAddFavorite(pokemonData)
         }
         favoriteButtonText.accept(getfavoritesButtonText())
     }

@@ -14,7 +14,7 @@ protocol FavoritesViewControllerActionsDelegate: class {
     func showItemDetailsForPokemonWith(id: Int)
 }
 
-class FavoritesViewModel {
+class FavoritesViewModel: CoordinatorDelegate {
     
     // MARK: - Dependencies
     weak var actionsDelegate: FavoritesViewControllerActionsDelegate?
@@ -52,15 +52,12 @@ class FavoritesViewModel {
         actionsDelegate?.showItemDetailsForPokemonWith(id: id)
     }
     
-}
-
-extension FavoritesViewModel: CoordinatorDelegate {
-    
+    // MARK: - CoordinatorDelegate
     func receiveOutput(_ output: CoordinatorOutput, fromCoordinator coordinator: Coordinator) {
         switch (coordinator, output) {
         case let (_, output as HomeCoordinator.Output):
             switch output {
-                case .shouldReloadFavorites:
+            case .shouldReloadFavorites:
                 loadFavorites()
             }
         case let (_, output as FavoritesCoordinator.Output):

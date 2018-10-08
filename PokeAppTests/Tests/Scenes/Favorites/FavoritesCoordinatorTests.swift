@@ -74,7 +74,7 @@ class FavoritesCoordinatorTests: XCTestCase {
 
 class FavoritesCoordinatorSpy: FavoritesCoordinator {
     
-    // MARK: - Control Variables [FavoritesCoordinator]
+    // MARK: - Control Variables [Coordinator]
     var childWhoSentTheLastOutput: Coordinator?
     var lastReceivedChildOutput: CoordinatorOutput?
     

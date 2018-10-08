@@ -36,7 +36,7 @@
 		E53D4C5021697B04006A2222 /* TabBarCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C4F21697B04006A2222 /* TabBarCoordinatorTests.swift */; };
 		E53D4C5221697B12006A2222 /* FavoritesCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5121697B12006A2222 /* FavoritesCoordinatorTests.swift */; };
 		E53D4C5421697B22006A2222 /* HomeCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5321697B22006A2222 /* HomeCoordinatorTests.swift */; };
-		E53D4C5621699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5521699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift */; };
+		E53D4C5621699AB8006A2222 /* DetailsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5521699AB8006A2222 /* DetailsCoordinatorTests.swift */; };
 		E53D4C5921699F39006A2222 /* bulbassaur.json in Resources */ = {isa = PBXBuildFile; fileRef = E53D4C5821699F39006A2222 /* bulbassaur.json */; };
 		E53D4C5B21699FCB006A2222 /* MockDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */; };
 		E53D4C5E216A3315006A2222 /* PokemonServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5D216A3315006A2222 /* PokemonServiceStub.swift */; };
@@ -148,7 +148,7 @@
 		E53D4C4F21697B04006A2222 /* TabBarCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinatorTests.swift; sourceTree = "<group>"; };
 		E53D4C5121697B12006A2222 /* FavoritesCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinatorTests.swift; sourceTree = "<group>"; };
 		E53D4C5321697B22006A2222 /* HomeCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorTests.swift; sourceTree = "<group>"; };
-		E53D4C5521699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsCoordinatorTests.swift; sourceTree = "<group>"; };
+		E53D4C5521699AB8006A2222 /* DetailsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCoordinatorTests.swift; sourceTree = "<group>"; };
 		E53D4C5821699F39006A2222 /* bulbassaur.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bulbassaur.json; sourceTree = "<group>"; };
 		E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataHelper.swift; sourceTree = "<group>"; };
 		E53D4C5D216A3315006A2222 /* PokemonServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceStub.swift; sourceTree = "<group>"; };
@@ -322,7 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				E53D4C4121692E95006A2222 /* PokemonDetailsViewModelTests.swift */,
-				E53D4C5521699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift */,
+				E53D4C5521699AB8006A2222 /* DetailsCoordinatorTests.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -1076,7 +1076,7 @@
 				E53D4C4A216966CA006A2222 /* AppCoordinatorTests.swift in Sources */,
 				E58C08AF216AB85B0039D362 /* PokemonTableViewCellModelTests.swift in Sources */,
 				E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */,
-				E53D4C5621699AB8006A2222 /* PokemonDetailsCoordinatorTests.swift in Sources */,
+				E53D4C5621699AB8006A2222 /* DetailsCoordinatorTests.swift in Sources */,
 				E53D4C5021697B04006A2222 /* TabBarCoordinatorTests.swift in Sources */,
 				E5238DD02110DE0800323C84 /* HomeViewModelTests.swift in Sources */,
 				E53D4C4221692E95006A2222 /* PokemonDetailsViewModelTests.swift in Sources */,
