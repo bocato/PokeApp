@@ -8,7 +8,21 @@
 
 import UIKit
 
-class FavoritesCoordinator: Coordinator {
+protocol FavoritesCoordinatorProtocol: Coordinator, FavoritesViewControllerActionsDelegate {
+    
+    // MARK: Properties
+    var modulesFactory: FavoritesCoordinatorModulesFactory {get set}
+    var favoritesManager: FavoritesManager {get set}
+    
+    // MARK: - Initialization
+    init(router: RouterProtocol, modulesFactory: FavoritesCoordinatorModulesFactory, favoritesManager: FavoritesManager)
+    
+    // MARK: - FavoritesViewControllerActionsDelegate
+    func showItemDetailsForPokemonWith(id: Int)
+    
+}
+
+class FavoritesCoordinator: FavoritesCoordinatorProtocol {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
@@ -18,8 +32,8 @@ class FavoritesCoordinator: Coordinator {
     // MARK: - Dependencies
     internal(set) var router: RouterProtocol
     weak internal(set) var delegate: CoordinatorDelegate?
-    private(set) var modulesFactory: FavoritesCoordinatorModulesFactory
-    private(set) var favoritesManager: FavoritesManager
+    internal(set) var modulesFactory: FavoritesCoordinatorModulesFactory
+    internal(set) var favoritesManager: FavoritesManager
     
     // MARK: - Properties
     internal(set) var childCoordinators: [String : Coordinator] = [:]
@@ -27,7 +41,7 @@ class FavoritesCoordinator: Coordinator {
     internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Initialization
-    init(router: RouterProtocol, modulesFactory: FavoritesCoordinatorModulesFactory, favoritesManager: FavoritesManager) {
+    required init(router: RouterProtocol, modulesFactory: FavoritesCoordinatorModulesFactory, favoritesManager: FavoritesManager) {
         self.modulesFactory = modulesFactory
         self.favoritesManager = favoritesManager
         self.router = router
@@ -38,21 +52,17 @@ class FavoritesCoordinator: Coordinator {
         switch (child, output) {
         case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
             switch output {
-            case .didRemovePokemon:
+            case .didRemovePokemon, .didAddPokemon:
                 removeChildCoordinator(detailsCoordinator)
                 router.popModule(animated: true)
                 let outputToSend: Output = .shouldReloadFavorites
                 sendOutputToParent(outputToSend)
-            default: break
             }
         default: return
         }
     }
     
-}
-
-extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate { // TODO: Channge this... Use, dependency injection.
-    
+    // MARK: - FavoritesViewControllerActionsDelegate
     func showItemDetailsForPokemonWith(id: Int) {
         let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router))
         addChildCoordinator(coordinator)

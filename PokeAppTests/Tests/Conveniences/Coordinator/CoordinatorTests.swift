@@ -11,6 +11,11 @@ import XCTest
 
 class CoordinatorTests: XCTestCase {
 
+    // MARK: Output
+    enum TestOutput: CoordinatorOutput {
+        case test
+    }
+    
     // MARK: - Properties
     var sut: CoordinatorSpy!
 
@@ -111,9 +116,6 @@ class CoordinatorTests: XCTestCase {
         XCTAssertEqual(childCoordinator.parentCoordinator?.identifier, sut.identifier)
         XCTAssertTrue(didAddChildCoordinator)
         
-        enum TestOutput: CoordinatorOutput {
-            case test
-        }
         let outputToSend: TestOutput = .test
         
         // When
@@ -170,4 +172,18 @@ class CoordinatorSpy: Coordinator {
         lastSentOutput = output
     }
 
+}
+
+class CoordinatorDelegateSpy: CoordinatorDelegate {
+    
+    // MARK: - Control Variables
+    var lastReceivedOutput: CoordinatorOutput?
+    var cordinatorWhoSentTheLastOuput: Coordinator?
+    
+    // MARK: - CoordinatorDelegate
+    func receiveOutput(_ output: CoordinatorOutput, fromCoordinator coordinator: Coordinator) {
+        lastReceivedOutput = output
+        cordinatorWhoSentTheLastOuput = coordinator
+    }
+    
 }

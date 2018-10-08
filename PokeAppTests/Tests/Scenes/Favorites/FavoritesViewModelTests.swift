@@ -13,15 +13,15 @@ class FavoritesViewModelTests: XCTestCase {
 
     // MARK: - Properties
     var sut: FavoritesViewModel!
-    var actionsDelegateStub: FavoritesViewControllerActionsDelegateStub!
+    var favoritesCoordinatorSpy: FavoritesCoordinatorSpy!
     var favoritesManagerStub: FavoritesManagerStub!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        actionsDelegateStub = FavoritesViewControllerActionsDelegateStub()
         favoritesManagerStub = FavoritesManagerStub()
-        sut = FavoritesViewModel(actionsDelegate: actionsDelegateStub, favoritesManager: favoritesManagerStub)
+        favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: Router(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManagerStub)
+        sut = FavoritesViewModel(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManagerStub)
     }
     
     // MARK: - Tests
@@ -81,9 +81,9 @@ class FavoritesViewModelTests: XCTestCase {
         sut.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: favoriteCollectionViewCellModel)
         
         // Then
-        XCTAssertTrue(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled)
-        XCTAssertNotNil(actionsDelegateStub.idToRequestDetails)
-        XCTAssertEqual(actionsDelegateStub.idToRequestDetails!, 1, "Invalid bulbassaur.")
+        XCTAssertTrue(favoritesCoordinatorSpy.showItemDetailsForPokemonWithIdWasCalled)
+        XCTAssertNotNil(favoritesCoordinatorSpy.idForLastPokemonDetailsRequest)
+        XCTAssertEqual(favoritesCoordinatorSpy.idForLastPokemonDetailsRequest!, 1, "Invalid bulbassaur.")
     }
     
     func testShowItemDetailsForSelectedFavoriteCellModel_failure() {
@@ -95,26 +95,26 @@ class FavoritesViewModelTests: XCTestCase {
         sut.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: favoriteCollectionViewCellModel)
         
         // Then
-        XCTAssertFalse(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled)
-        XCTAssertNil(actionsDelegateStub.idToRequestDetails)
+        XCTAssertFalse(favoritesCoordinatorSpy.showItemDetailsForPokemonWithIdWasCalled)
+        XCTAssertNil(favoritesCoordinatorSpy.idForLastPokemonDetailsRequest)
     }
     
 }
 
-// MARK: - Helpers
-class FavoritesViewControllerActionsDelegateStub: FavoritesViewControllerActionsDelegate {
-    
-    // MARK: Control Variables
-    var showItemDetailsForPokemonWithIdWasCalled = false
-    var idToRequestDetails: Int?
-    
-    // MARK: -
-    func showItemDetailsForPokemonWith(id: Int) {
-        showItemDetailsForPokemonWithIdWasCalled = true
-        idToRequestDetails = id
-    }
-    
-}
+//// MARK: - Helpers
+//class FavoritesViewControllerActionsDelegateSpy: FavoritesViewControllerActionsDelegate {
+//
+//    // MARK: Control Variables
+//    var showItemDetailsForPokemonWithIdWasCalled = false
+//    var idToRequestDetails: Int?
+//
+//    // MARK: -
+//    func showItemDetailsForPokemonWith(id: Int) {
+//        showItemDetailsForPokemonWithIdWasCalled = true
+//        idToRequestDetails = id
+//    }
+//
+//}
 
 // MARK: - Stubs
 class FavoritesManagerStub: FavoritesManager {

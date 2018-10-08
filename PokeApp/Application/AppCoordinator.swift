@@ -59,10 +59,6 @@ class AppCoordinator: Coordinator {
         }
     }
     
-    func finish() {
-        debugPrint("Not implemented.")
-    }
-    
     // MARK: - Flows
     private func runMainFlow() {
         let (tabBarCoordinator, tabBarController) = modulesFactory.build(.tabBar(router: router))

@@ -13,13 +13,13 @@ class TabBarViewModelTests: XCTestCase {
     
     // MARK: - Properties
     var sut: TabBarViewModel!
-    var actionsDelegateStub: TabBarViewControllerActionsDelegateStub!
+    var tabBarCoordinator: TabBarCoordinatorSpy!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        actionsDelegateStub = TabBarViewControllerActionsDelegateStub()
-        sut = TabBarViewModel(actionsDelegate: actionsDelegateStub)
+        tabBarCoordinator = TabBarCoordinatorSpy(router: Router(), modulesFactory: TabBarCoordinatorModulesFactory())
+        sut = TabBarViewModel(actionsDelegate: tabBarCoordinator)
     }
     
     // MARK: - Tests
@@ -47,35 +47,6 @@ class TabBarViewModelTests: XCTestCase {
         sut.selectedTab.accept(.favorites)
         // Then
         XCTAssertEqual(collector.items.last!, .favorites, "selected tab is not Favorites")
-    }
-    
-    func testActOnSelectedTab() {
-        // Given
-        guard let actionsDelegateStub = sut.actionsDelegate as? TabBarViewControllerActionsDelegateStub else {
-            XCTFail("actionsDelegate is null")
-            return
-        }
-        // When
-        actionsDelegateStub.actOnSelectedTab(.home, UINavigationController())
-        // Then
-        XCTAssertEqual(actionsDelegateStub.lastSelectedTab, .home, "Home was not selected")
-        XCTAssertTrue(actionsDelegateStub.actOnSelectedTabWasCalled, "actOnSelectedTab was not called")
-    }
-    
-}
-
-class TabBarViewControllerActionsDelegateStub: TabBarViewControllerActionsDelegate {
-    
-    // MARK: Control Variables
-    var actOnSelectedTabWasCalled = false
-    var lastSelectedTab: TabBarViewModel.TabIndex?
-    
-    // MARK: - TabBarViewControllerActionsDelegate Functions
-    func actOnSelectedTab(_ selectedTab: TabBarViewModel.TabIndex, _ navigationController: UINavigationController) {
-        if navigationController.viewControllers.isEmpty {
-            self.lastSelectedTab = selectedTab
-            self.actOnSelectedTabWasCalled = true
-        }
     }
     
 }

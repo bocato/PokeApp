@@ -14,13 +14,13 @@ class HomeViewModelTests: XCTestCase {
     
     // MARK: - Properties
     var disposeBag = DisposeBag()
-    var actionsDelegateStub: HomeViewControllerActionsDelegateStub!
+    var homeCoordinatorSpy: HomeCoordinatorSpy!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         disposeBag = DisposeBag()
-        actionsDelegateStub = HomeViewControllerActionsDelegateStub()
+        homeCoordinatorSpy = HomeCoordinatorSpy(router: Router(), favoritesManager: FavoritesManagerStub(), modulesFactory: HomeCoordinatorModulesFactory())
     }
     
     // MARK: - Tests
@@ -28,7 +28,7 @@ class HomeViewModelTests: XCTestCase {
         // Given
         var sut: HomeViewModel
         // When
-        sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: PokemonServiceStub())
+        sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: PokemonServiceStub())
         // Then
         XCTAssertNotNil(sut, "invalid viewModel instance")
         XCTAssertNotNil(sut.actionsDelegate, "ActionsDelegate was not set")
@@ -36,7 +36,7 @@ class HomeViewModelTests: XCTestCase {
     
     func testInitialState() {
         // Given
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: PokemonServiceStub())
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: PokemonServiceStub())
         
         // When
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
@@ -50,7 +50,7 @@ class HomeViewModelTests: XCTestCase {
     func testEmptyState() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .empty)
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
@@ -70,7 +70,7 @@ class HomeViewModelTests: XCTestCase {
         // Given
         let mockError = NSError.buildMockError(code: 404, description: "LoadPokemons error.")
         let pokemonService = PokemonServiceStub(mockType: .error(mockError))
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
@@ -94,7 +94,7 @@ class HomeViewModelTests: XCTestCase {
     func testLoadedState() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .pokemonList)
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
@@ -118,15 +118,15 @@ class HomeViewModelTests: XCTestCase {
             return
         }
         let cellModel = PokemonTableViewCellModel(listItem: bulbassaurListResult)
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
 
         // When
         sut.showItemDetailsForSelectedCellModel(cellModel)
 
         // Then
-        XCTAssertTrue(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was not called")
-        XCTAssertNotNil(actionsDelegateStub.pokemonIdToShowDetails, "Invalid pokemon id")
-        XCTAssertEqual(actionsDelegateStub.pokemonIdToShowDetails!, bulbassaurListResult.id!, "Invalid pokemon id")
+        XCTAssertTrue(homeCoordinatorSpy.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was not called")
+        XCTAssertNotNil(homeCoordinatorSpy.idForLastPokemonDetailsRequest, "Invalid pokemon id")
+        XCTAssertEqual(homeCoordinatorSpy.idForLastPokemonDetailsRequest!, bulbassaurListResult.id!, "Invalid pokemon id")
     }
 
     func testShowItemDetailsForSelectedCellModelCalledWithInvalidPokemonCellModel() {
@@ -134,27 +134,14 @@ class HomeViewModelTests: XCTestCase {
         let pokemonService = PokemonServiceStub()
         let pokemonListItem = PokemonListResult(url: "url", name: "")
         let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
-        let sut = HomeViewModel(actionsDelegate: actionsDelegateStub, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
         
         // When
         sut.showItemDetailsForSelectedCellModel(cellModel)
 
         // Then
-        XCTAssertFalse(actionsDelegateStub.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was called")
-        XCTAssertNil(actionsDelegateStub.pokemonIdToShowDetails, "The pokemon id should be nil")
-    }
-    
-}
-
-// MARK: - Stubs
-class HomeViewControllerActionsDelegateStub: HomeViewControllerActionsDelegate {
-    
-    var showItemDetailsForPokemonWithIdWasCalled = false
-    var pokemonIdToShowDetails: Int?
-    
-    func showItemDetailsForPokemonWith(id: Int) {
-        showItemDetailsForPokemonWithIdWasCalled = true
-        pokemonIdToShowDetails = id
+        XCTAssertFalse(homeCoordinatorSpy.showItemDetailsForPokemonWithIdWasCalled, "showItemDetailsForSelectedCellModel() was called")
+        XCTAssertNil(homeCoordinatorSpy.idForLastPokemonDetailsRequest, "The pokemon id should be nil")
     }
     
 }
