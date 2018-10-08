@@ -43,3 +43,40 @@ extension Coordinator {
         return String(describing: type(of: self))
     }
 }
+
+extension Coordinator {
+    
+    // MARK: - Helper Methods
+    @discardableResult
+    func addChildCoordinator(_ coordinator: Coordinator) -> Bool {
+        if let child = childCoordinators[coordinator.identifier], child === coordinator {
+            return false
+        }
+        coordinator.parentCoordinator = self
+        childCoordinators[coordinator.identifier] = coordinator
+        coordinator.start()
+        return true
+    }
+    
+    @discardableResult
+    func removeChildCoordinator(_ coordinator: Coordinator?) -> Bool {
+        guard childCoordinators.isEmpty == false, let coordinator = coordinator else {
+            return false
+        }
+        if let coordinatorToRemove = childCoordinators[coordinator.identifier], coordinator === coordinatorToRemove {
+            childCoordinators.removeValue(forKey: coordinator.identifier)
+            coordinatorToRemove.finish()
+            return true
+        }
+        return false
+    }
+    
+    func sendOutputToParent(_ output: CoordinatorOutput) {
+        parentCoordinator?.receiveChildOutput(child: self, output: output)
+    }
+    
+    func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+        parentCoordinator?.receiveChildOutput(child: child, output: output)
+    }
+    
+}

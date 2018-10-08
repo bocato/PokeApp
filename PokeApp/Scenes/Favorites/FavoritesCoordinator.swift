@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoritesCoordinator: BaseCoordinator {
+class FavoritesCoordinator: Coordinator {
     
     // MARK: - Outputs
     enum Output: CoordinatorOutput {
@@ -16,18 +16,34 @@ class FavoritesCoordinator: BaseCoordinator {
     }
     
     // MARK: - Dependencies
+    internal(set) var router: RouterProtocol
+    weak internal(set) var delegate: CoordinatorDelegate?
     private(set) var modulesFactory: FavoritesCoordinatorModulesFactory
     private(set) var favoritesManager: FavoritesManager
+    
+    // MARK: - Properties
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) weak var parentCoordinator: Coordinator? = nil
+    internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Initialization
     init(router: RouterProtocol, modulesFactory: FavoritesCoordinatorModulesFactory, favoritesManager: FavoritesManager) {
         self.modulesFactory = modulesFactory
         self.favoritesManager = favoritesManager
-        super.init(router: router)
+        self.router = router
+    }
+    
+    // MARK: - Start / Finish
+    func start() {
+        debugPrint("Not needed.")
+    }
+    
+    func finish() {
+        debugPrint("Not needed.")
     }
     
     // MARK: - Dealing with ouputs
-    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+    func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
         switch (child, output) {
         case let (detailsCoordinator as DetailsCoordinator, output as DetailsCoordinator.Output):
             switch output {
@@ -44,7 +60,7 @@ class FavoritesCoordinator: BaseCoordinator {
     
 }
 
-extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate {
+extension FavoritesCoordinator: FavoritesViewControllerActionsDelegate { // TODO: Channge this... Use, dependency injection.
     
     func showItemDetailsForPokemonWith(id: Int) {
         let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router))

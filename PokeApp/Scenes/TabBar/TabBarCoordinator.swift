@@ -9,19 +9,35 @@
 import Foundation
 import UIKit
 
-class TabBarCoordinator: BaseCoordinator {
+class TabBarCoordinator: Coordinator {
     
     // MARK: - Dependencies
+    internal(set) var router: RouterProtocol
+    weak internal(set) var delegate: CoordinatorDelegate?
     private(set) var modulesFactory: TabBarCoordinatorModulesFactory
+    
+    // MARK: - Properties
+    internal(set) var childCoordinators: [String : Coordinator] = [:]
+    internal(set) weak var parentCoordinator: Coordinator? = nil
+    internal(set) var context: CoordinatorContext? // This is a struct
     
     // MARK: - Initialization
     init(router: RouterProtocol, modulesFactory: TabBarCoordinatorModulesFactory) {
         self.modulesFactory = modulesFactory
-        super.init(router: router)
+        self.router = router
+    }
+    
+    // MARK: - Start / Finish
+    func start() {
+        debugPrint("Not needed.")
+    }
+    
+    func finish() {
+        debugPrint("Not needed.")
     }
     
     // MARK: - Outputs
-    override func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
+    func receiveChildOutput(child: Coordinator, output: CoordinatorOutput) {
         switch (child, output) {
         case let (favoritesCoordinator as FavoritesCoordinator, output as FavoritesCoordinator.Output):
             self.delegate?.receiveOutput(output, fromCoordinator: favoritesCoordinator)
