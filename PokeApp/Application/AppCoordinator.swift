@@ -44,7 +44,7 @@ class AppCoordinator: Coordinator {
     
     open class func build(window: UIWindow?, modulesFactory: AppCoordinatorModulesFactory = AppCoordinatorModulesFactory(), showResourceLoader: Bool = false) -> AppCoordinator? {
         guard let window = window, let rootController = window.rootViewController as? UINavigationController else { return nil }
-        let router = Router(navigationController: rootController)
+        let router = SimpleRouter(navigationController: rootController)
         return AppCoordinator(router: router, modulesFactory: modulesFactory, showResourceLoader: showResourceLoader)
     }
     

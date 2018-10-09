@@ -20,7 +20,7 @@ class DetailsCoordinatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
         coordinatorDelegateSpy = CoordinatorDelegateSpy()
-        sut = DetailsCoordinatorSpy(router: Router())
+        sut = DetailsCoordinatorSpy(router: SimpleRouter())
         imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
     }
 

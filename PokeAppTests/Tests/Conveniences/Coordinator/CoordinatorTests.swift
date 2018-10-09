@@ -22,7 +22,7 @@ class CoordinatorTests: XCTestCase {
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        sut = CoordinatorSpy(router: Router())
+        sut = CoordinatorSpy(router: SimpleRouter())
     }
 
     // MARK: Tests
@@ -30,7 +30,7 @@ class CoordinatorTests: XCTestCase {
         // Given
         let sut: Coordinator?
         // When
-        sut = CoordinatorSpy(router: Router())
+        sut = CoordinatorSpy(router: SimpleRouter())
         // Then
         XCTAssertNotNil(sut, "initalization failed")
     }
@@ -51,7 +51,7 @@ class CoordinatorTests: XCTestCase {
 
     func testAddChildCoordinatorThatDoesntExist() {
         // Given
-        let childCoordinator = CoordinatorSpy(router: Router())
+        let childCoordinator = CoordinatorSpy(router: SimpleRouter())
         // When
         let didAddChild = sut.addChildCoordinator(childCoordinator)
         // Then
@@ -62,7 +62,7 @@ class CoordinatorTests: XCTestCase {
 
     func testAddChildCoordinatorThatExists() {
         // Given
-        let childCoordinator = CoordinatorSpy(router: Router())
+        let childCoordinator = CoordinatorSpy(router: SimpleRouter())
         // When
         let didAddChild1 = sut.addChildCoordinator(childCoordinator)
         let didAddChild2 = sut.addChildCoordinator(childCoordinator)
@@ -76,7 +76,7 @@ class CoordinatorTests: XCTestCase {
     func testRemoveChildCoordinatorThatDoesntExist() {
         // Given
         testAddChildCoordinatorThatDoesntExist()
-        let childCoordinator2 = CoordinatorSpy(router: Router())
+        let childCoordinator2 = CoordinatorSpy(router: SimpleRouter())
         // When
         let didRemoveChild = sut.removeChildCoordinator(childCoordinator2)
         // Then
@@ -97,7 +97,7 @@ class CoordinatorTests: XCTestCase {
 
     func testRemoveChildCoordinatorThatExists() {
         // Given
-        let childCoordinator = CoordinatorSpy(router: Router())
+        let childCoordinator = CoordinatorSpy(router: SimpleRouter())
         let _ = sut.addChildCoordinator(childCoordinator)
         // When
         let didRemoveChild = sut.removeChildCoordinator(childCoordinator)
@@ -109,7 +109,7 @@ class CoordinatorTests: XCTestCase {
 
     func testSendOutputToParent() {
         // Given
-        let router = Router()
+        let router = SimpleRouter()
         let childCoordinator = CoordinatorSpy(router: router)
         let didAddChildCoordinator = sut.addChildCoordinator(childCoordinator)
         

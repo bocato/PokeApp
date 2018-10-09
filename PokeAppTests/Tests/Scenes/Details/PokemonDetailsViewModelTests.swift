@@ -26,7 +26,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     
     func setupTestEnvironment() {
         favoritesManagerStub = FavoritesManagerStub()
-        detailsCoordinatorSpy = DetailsCoordinatorSpy(router: Router())
+        detailsCoordinatorSpy = DetailsCoordinatorSpy(router: SimpleRouter())
         imageDownloader = ImageDownloaderStub()
     }
 

@@ -22,7 +22,7 @@ class AppCoordinatorModulesFactoryTests: XCTestCase {
     // MARK: Tests
     func testBuildTabBarModule() {
         // Given
-        let router = Router()
+        let router = SimpleRouter()
         // When
         let (coordinator, controller) = sut.build(.tabBar(router: router))
         let tabBarCoordinator = coordinator as? TabBarCoordinator

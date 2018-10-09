@@ -23,7 +23,7 @@ class HomeModulesFactoryTests: XCTestCase  {
     // MARK: Tests
     func testBuildPokemonDetails() {
         // Given
-        let router = Router()
+        let router = SimpleRouter()
         // When
         let (coordinator, controller) = sut.build(.pokemonDetails(1, router))
         let detailsCoordinator = coordinator as? DetailsCoordinator

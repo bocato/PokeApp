@@ -18,7 +18,7 @@ class TabBarCoordinatorTests: XCTestCase {
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        let router = Router()
+        let router = SimpleRouter()
         let modulesFactory = TabBarCoordinatorModulesFactory()
         coordinatorDelegateSpy = CoordinatorDelegateSpy()
         sut = TabBarCoordinatorSpy(router: router, modulesFactory: modulesFactory)
@@ -33,7 +33,7 @@ class TabBarCoordinatorTests: XCTestCase {
     func testReceiveChildOutputFromFavoritesCoordinator() {
         // Given
         let favoritesManager = FavoritesManagerStub()
-        let favoritesCoordinator = FavoritesCoordinator(router: Router(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManager)
+        let favoritesCoordinator = FavoritesCoordinator(router: SimpleRouter(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManager)
         sut.addChildCoordinator(favoritesCoordinator)
         let outputToSend: FavoritesCoordinator.Output = .shouldReloadFavorites
         
@@ -53,7 +53,7 @@ class TabBarCoordinatorTests: XCTestCase {
     func testReceiveChildOutputFromHomeCoordinator() {
         // Given
         let favoritesManager = FavoritesManagerStub()
-        let homeCoordinator = HomeCoordinator(router: Router(), favoritesManager: favoritesManager, modulesFactory: HomeCoordinatorModulesFactory())
+        let homeCoordinator = HomeCoordinator(router: SimpleRouter(), favoritesManager: favoritesManager, modulesFactory: HomeCoordinatorModulesFactory())
         sut.addChildCoordinator(homeCoordinator)
         let outputToSend: HomeCoordinator.Output = .shouldReloadFavorites
         

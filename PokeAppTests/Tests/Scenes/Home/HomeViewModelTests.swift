@@ -21,7 +21,7 @@ class HomeViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         disposeBag = DisposeBag()
-        homeCoordinatorSpy = HomeCoordinatorSpy(router: Router(), favoritesManager: FavoritesManagerStub(), modulesFactory: HomeCoordinatorModulesFactory())
+        homeCoordinatorSpy = HomeCoordinatorSpy(router: SimpleRouter(), favoritesManager: FavoritesManagerStub(), modulesFactory: HomeCoordinatorModulesFactory())
         imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
     }
     

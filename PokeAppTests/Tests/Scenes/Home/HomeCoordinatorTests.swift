@@ -18,7 +18,7 @@ class HomeCoordinatorTests: XCTestCase {
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        let router = Router()
+        let router = SimpleRouter()
         let modulesFactory = HomeCoordinatorModulesFactory()
         coordinatorDelegateSpy = CoordinatorDelegateSpy()
         let favoritesManagerStub = FavoritesManagerStub()
@@ -33,7 +33,7 @@ class HomeCoordinatorTests: XCTestCase {
     // MARK: - Tests
     func testReceivingDidAddPokemonOutputFromDetailsCoordinator() {
         // Given
-        let router = Router()
+        let router = SimpleRouter()
         let detailsCoordinator = DetailsCoordinator(router: router)
         sut.addChildCoordinator(detailsCoordinator)
         let outputToSend: DetailsCoordinator.Output = .didAddPokemon
@@ -53,7 +53,7 @@ class HomeCoordinatorTests: XCTestCase {
     
     func testReceivingDidRemovePokemonOutputFromDetailsCoordinator() {
         // Given
-        let router = Router()
+        let router = SimpleRouter()
         let detailsCoordinator = DetailsCoordinator(router: router)
         sut.addChildCoordinator(detailsCoordinator)
         let outputToSend: DetailsCoordinator.Output = .didRemovePokemon

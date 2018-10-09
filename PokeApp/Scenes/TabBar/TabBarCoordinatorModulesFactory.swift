@@ -30,7 +30,7 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
     }
     
     private func  buildHomeModule(with navigationController: UINavigationController) -> (Coordinator, UIViewController) {
-        let router = Router(navigationController: navigationController)
+        let router = SimpleRouter(navigationController: navigationController)
         let homeCoordinatorModulesFactory = HomeCoordinatorModulesFactory()
         let homeCoordinator = HomeCoordinator(router: router, favoritesManager: SimpleFavoritesManager.shared, modulesFactory: homeCoordinatorModulesFactory)
         let services = PokemonService()
@@ -41,7 +41,7 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
     }
     
     private func buildFavoritesModule(with navigationController: UINavigationController) -> (Coordinator, UIViewController) {
-        let router = Router(navigationController: navigationController)
+        let router = SimpleRouter(navigationController: navigationController)
         let favoritesCoordinatorModulesFactory = FavoritesCoordinatorModulesFactory()
         let favoritesManager = SimpleFavoritesManager.shared
         let favoritesCoordinator = FavoritesCoordinator(router: router, modulesFactory: favoritesCoordinatorModulesFactory, favoritesManager: favoritesManager)

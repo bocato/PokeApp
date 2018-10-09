@@ -18,7 +18,7 @@ class TabBarViewModelTests: XCTestCase {
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        tabBarCoordinator = TabBarCoordinatorSpy(router: Router(), modulesFactory: TabBarCoordinatorModulesFactory())
+        tabBarCoordinator = TabBarCoordinatorSpy(router: SimpleRouter(), modulesFactory: TabBarCoordinatorModulesFactory())
         sut = TabBarViewModel(actionsDelegate: tabBarCoordinator)
     }
     

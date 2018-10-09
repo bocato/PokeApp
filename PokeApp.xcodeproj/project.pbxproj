@@ -49,7 +49,7 @@
 		E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E6520B74C30003CAFA0 /* TabBarViewController.swift */; };
 		E5583E8F20B851EE003CAFA0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E8E20B851EE003CAFA0 /* Coordinator.swift */; };
 		E5583E9920B8616C003CAFA0 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9820B8616C003CAFA0 /* Presentable.swift */; };
-		E5583E9B20B868A3003CAFA0 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9A20B868A3003CAFA0 /* Router.swift */; };
+		E5583E9B20B868A3003CAFA0 /* SimpleRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9A20B868A3003CAFA0 /* SimpleRouter.swift */; };
 		E5583E9D20B86EB8003CAFA0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */; };
 		E5583EA220B880C4003CAFA0 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */; };
 		E5583EA420B8857A003CAFA0 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */; };
@@ -101,6 +101,7 @@
 		E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */; };
 		E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */; };
 		E5DCC2AA20B6F7D900325D32 /* SimpleFavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A920B6F7D900325D32 /* SimpleFavoritesManager.swift */; };
+		E5F0ECDA216D274B00E70C49 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F0ECD9216D274B00E70C49 /* RouterProtocol.swift */; };
 		E5F1B262216B91850009E628 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B261216B91850009E628 /* CoordinatorTests.swift */; };
 		E5F1B269216BFBA30009E628 /* SimpleFavoritesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B268216BFBA30009E628 /* SimpleFavoritesManagerTests.swift */; };
 		E5F1B26B216BFBFE0009E628 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */; };
@@ -168,7 +169,7 @@
 		E5583E6520B74C30003CAFA0 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E5583E8E20B851EE003CAFA0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E5583E9820B8616C003CAFA0 /* Presentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
-		E5583E9A20B868A3003CAFA0 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		E5583E9A20B868A3003CAFA0 /* SimpleRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRouter.swift; sourceTree = "<group>"; };
 		E5583E9C20B86EB8003CAFA0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		E5583EA320B8857A003CAFA0 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
@@ -222,6 +223,7 @@
 		E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
 		E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		E5DCC2A920B6F7D900325D32 /* SimpleFavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFavoritesManager.swift; sourceTree = "<group>"; };
+		E5F0ECD9216D274B00E70C49 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		E5F1B261216B91850009E628 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
 		E5F1B268216BFBA30009E628 /* SimpleFavoritesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFavoritesManagerTests.swift; sourceTree = "<group>"; };
 		E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
@@ -490,7 +492,7 @@
 		E5583E9620B86124003CAFA0 /* Routers */ = {
 			isa = PBXGroup;
 			children = (
-				E5583E9A20B868A3003CAFA0 /* Router.swift */,
+				E5583E9A20B868A3003CAFA0 /* SimpleRouter.swift */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -503,6 +505,7 @@
 				E59A94BA216659FB003287F5 /* RxControllable.swift */,
 				E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */,
 				E5F1B271216CE8630009E628 /* ImageDownloaderProtocol.swift */,
+				E5F0ECD9216D274B00E70C49 /* RouterProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 		E564DD282113239700307A15 /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
+				E5F0ECDB216D287200E70C49 /* Routers */,
 				E5F1B267216BFB8C0009E628 /* Singletons */,
 				E564DD29211323A100307A15 /* Coordinator */,
 				E5363FB12163A63500788873 /* Extensions */,
@@ -812,6 +816,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		E5F0ECDB216D287200E70C49 /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Routers;
+			sourceTree = "<group>";
+		};
 		E5F1B267216BFB8C0009E628 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1040,7 +1051,7 @@
 				E5583EA420B8857A003CAFA0 /* HomeCoordinator.swift in Sources */,
 				E569728820AA5BFF00F0B3E5 /* URLHelper.swift in Sources */,
 				E56D243420B20ADA0059B0E0 /* HomeViewController.swift in Sources */,
-				E5583E9B20B868A3003CAFA0 /* Router.swift in Sources */,
+				E5583E9B20B868A3003CAFA0 /* SimpleRouter.swift in Sources */,
 				E50D15E820CF0EB00090D763 /* ModuleFactory.swift in Sources */,
 				E5363FB52163BEB800788873 /* IdentifiableExtension.swift in Sources */,
 				E56D23F920AF8CD30059B0E0 /* Pokemon.swift in Sources */,
@@ -1068,6 +1079,7 @@
 				E5583E6620B74C30003CAFA0 /* TabBarViewController.swift in Sources */,
 				E5CFBFF62119DD0400038BF5 /* CommonViewModelStates.swift in Sources */,
 				E56D243620B20E830059B0E0 /* HomeViewModel.swift in Sources */,
+				E5F0ECDA216D274B00E70C49 /* RouterProtocol.swift in Sources */,
 				E59A94BF216662C7003287F5 /* FavoritesCoordinatorModulesFactory.swift in Sources */,
 				E569729E20AA721C00F0B3E5 /* ErrorEnums.swift in Sources */,
 				E5B8184120B4AAEE006F2AB0 /* BorderView.swift in Sources */,

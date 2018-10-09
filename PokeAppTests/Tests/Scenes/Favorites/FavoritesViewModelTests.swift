@@ -21,7 +21,7 @@ class FavoritesViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         favoritesManagerStub = FavoritesManagerStub()
-        favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: Router(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManagerStub)
+        favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: SimpleRouter(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManagerStub)
         imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
         sut = FavoritesViewModelSpy(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
     }
@@ -103,7 +103,7 @@ class FavoritesViewModelTests: XCTestCase {
     
     func testReceiveOutputFromHomeCoordinator() {
         // Given
-        let router = Router()
+        let router = SimpleRouter()
         let tabBarCoordinator = TabBarCoordinator(router: router, modulesFactory: TabBarCoordinatorModulesFactory())
         tabBarCoordinator.delegate = sut
         
@@ -130,7 +130,7 @@ class FavoritesViewModelTests: XCTestCase {
     
     func testReceiveOutputFromFavoritesCoordinator() {
         // Given
-        let router = Router()
+        let router = SimpleRouter()
         let tabBarCoordinator = TabBarCoordinator(router: router, modulesFactory: TabBarCoordinatorModulesFactory())
         tabBarCoordinator.delegate = sut
         

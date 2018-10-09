@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  SimpleRouter.swift
 //  PokeApp
 //
 //  Created by Eduardo Sanches Bocato on 25/05/18.
@@ -9,33 +9,7 @@
 import Foundation
 import UIKit
 
-protocol RouterProtocol: class, Presentable { // As basic as possible for now...
-    
-    // MARK: - Properties
-    var navigationController: UINavigationController { get }
-    var rootViewController: UIViewController? { get }
-    
-    // MARK: - Present / Dismiss
-    func present(_ module: Presentable?)
-    func present(_ module: Presentable?, animated: Bool)
-    func dismissModule()
-    func dismissModule(animated: Bool, completion: (() -> Void)?) // this completion block runs when the viewcontroller is being dismissed
-    
-    // MARK: - Push / Pop
-    func push(_ module: Presentable?)
-    func push(_ module: Presentable?, animated: Bool)
-    func push(_ module: Presentable?, animated: Bool, completion: (() -> Void)?) // this completion block runs when the viewcontroller is beeing popped
-    func popModule()
-    func popModule(animated: Bool)
-    
-    // MARK: - Modules
-    func setRootModule(_ module: Presentable?)
-    func setRootModule(_ module: Presentable?, hideBar: Bool)
-    func popToRootModule(animated: Bool)
-    
-}
-
-final class Router: NSObject, RouterProtocol {
+final class SimpleRouter: NSObject, RouterProtocol {
     
     // MARK: - Properties
     private var completions: [UIViewController : () -> Void]
@@ -139,7 +113,7 @@ final class Router: NSObject, RouterProtocol {
     
 }
 
-extension Router: UINavigationControllerDelegate {
+extension SimpleRouter: UINavigationControllerDelegate {
     
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         
