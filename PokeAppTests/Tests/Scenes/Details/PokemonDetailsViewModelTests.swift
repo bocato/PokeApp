@@ -27,7 +27,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     func setupTestEnvironment() {
         favoritesManagerStub = FavoritesManagerStub()
         detailsCoordinatorSpy = DetailsCoordinatorSpy(router: Router())
-        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+        imageDownloader = ImageDownloaderStub()
     }
 
     // MARK: - Tests
@@ -121,7 +121,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         sut.loadPokemonData()
         
         // Then
-        XCTAssertNotNil(sut.pokemonData) // TODO: Test PokemonImage
+        XCTAssertNotNil(sut.pokemonData)
     }
     
     func testLoadPokemonData_withServiceError() {
@@ -138,7 +138,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         sut.loadPokemonData()
         
         // Then
-        XCTAssertNil(sut.pokemonData) // TODO: Test PokemonImage
+        XCTAssertNil(sut.pokemonData)
         var lastStateIsAnError = false
         if let lastState = viewStateCollector.items.last {
             switch lastState {
@@ -147,6 +147,43 @@ class PokemonDetailsViewModelTests: XCTestCase {
             }
             XCTAssertTrue(lastStateIsAnError)
         }
+    }
+    
+    func testLoadPokemonDataWithImageDownloadError() {
+        // Given
+        let pokemonService = PokemonServiceStub(mockType: .bulbassaurData)
+        let mockError = NSError.buildMockError(code: 404, description: "LoadPokemonData error.")
+        let imageDownloader = ImageDownloaderStub(mockType: .error(mockError))
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
+        
+        let pokemonImageCollector = RxCollector<UIImage?>().collect(from: sut.pokemonImage.asObservable())
+        
+        // When
+        sut.loadPokemonData()
+        
+        // Then
+        let image = pokemonImageCollector.items.last
+        XCTAssertNotNil(image, "Invalid result.")
+        let expectedImage = UIImage(named: "open_pokeball")
+        XCTAssertEqual(image, expectedImage)
+    }
+    
+    func testLoadPokemonDataWithImageDownloadSuccess() {
+        // Given
+        let pokemonService = PokemonServiceStub(mockType: .bulbassaurData)
+        let imageDownloader = ImageDownloaderStub(mockType: .blankImage)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
+        let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
+        
+        let pokemonImageCollector = RxCollector<UIImage?>().collect(from: sut.pokemonImage.asObservable())
+        
+        // When
+        sut.loadPokemonData()
+        
+        // Then
+        let image = pokemonImageCollector.items.last!
+        XCTAssertNotNil(image, "Invalid result.")
     }
     
 }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol RouterProtocol: class, Presentable { // maybe i have to refactor / change this router...
+protocol RouterProtocol: class, Presentable { // As basic as possible for now...
     
     // MARK: - Properties
     var navigationController: UINavigationController { get }
@@ -19,7 +19,7 @@ protocol RouterProtocol: class, Presentable { // maybe i have to refactor / chan
     func present(_ module: Presentable?)
     func present(_ module: Presentable?, animated: Bool)
     func dismissModule()
-    func dismissModule(animated: Bool, completion: (() -> Void)?) // this completion block runs when the viewcontroller is beeing dismissed
+    func dismissModule(animated: Bool, completion: (() -> Void)?) // this completion block runs when the viewcontroller is being dismissed
     
     // MARK: - Push / Pop
     func push(_ module: Presentable?)
@@ -143,7 +143,7 @@ extension Router: UINavigationControllerDelegate {
     
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         
-        // Ensure the view controller is popping
+        // Make sure that the view controller is popping
         guard let poppedViewController = navigationController.transitionCoordinator?.viewController(forKey: .from),
             !navigationController.viewControllers.contains(poppedViewController) else {
                 return

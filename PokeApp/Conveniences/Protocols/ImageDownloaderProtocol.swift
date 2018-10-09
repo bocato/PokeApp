@@ -7,8 +7,8 @@
 //
 
 import UIKit
+import RxSwift
 
 protocol ImageDownloaderProtocol {
-    typealias CompletionHandler = (_ image: UIImage?, _ error: NSError?) -> Void
-    func download(with url: URL, completionHandler: CompletionHandler?)
+    func download(with url: URL) -> Observable<UIImage?>
 }

@@ -44,9 +44,10 @@ class PokemonDetailsViewModel {
         }
         return dataSources.favoritesManager.isFavorite(pokemon: pokemonData)
     }
+    let placeholderImage = UIImage(named: "open_pokeball")!
     
     // MARK: - Rx Properties
-    let isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
+    let isLoadingPokemonImage = PublishSubject<Bool>()
     let isLoadingPokemonData = PublishSubject<Bool>()
     let viewState = PublishSubject<CommonViewModelState>()
     let favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
@@ -122,21 +123,24 @@ class PokemonDetailsViewModel {
     }
     
     private func downloadImage(from itemURL: String?) {
+        
+        isLoadingPokemonImage.onNext(true)
+        
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.accept(UIImage(named: "open_pokeball")!)
-            isLoadingPokemonImage.accept(false)
+            pokemonImage.accept(placeholderImage)
+            isLoadingPokemonImage.onNext(false)
             return
         }
-        DispatchQueue.main.async {
-            self.dataSources.imageDownloader.download(with: imageURL, completionHandler: { [weak self] (image, error) in
-                guard let self = self else { return }
-                guard error != nil else {
-                    self.pokemonImage.accept(image)
-                    self.isLoadingPokemonImage.accept(false)
-                    return
-                }
-            })
-        }
+        
+        self.dataSources.imageDownloader.download(with: imageURL)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self](image) in
+                self?.pokemonImage.accept(image)
+            }, onError: { [weak self] (error) in
+                self?.pokemonImage.accept(self?.placeholderImage)
+            }, onCompleted: {
+                self.isLoadingPokemonImage.onNext(false)
+            }).disposed(by: disposeBag)
     }
     
     private func extractAbilityNames(from abilities: [Ability]) -> [String] {
