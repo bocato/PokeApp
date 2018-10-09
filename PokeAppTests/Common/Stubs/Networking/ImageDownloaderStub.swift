@@ -28,7 +28,7 @@ class ImageDownloaderStub: ImageDownloaderProtocol {
     }
     
     // MARK: - ImageDownloaderProtocol
-    func download(with url: URL?) -> Observable<UIImage?> {
+    func download(with url: URL) -> Observable<UIImage?> {
         switch mockType {
         case .image(let image):
             return Observable.of(image)

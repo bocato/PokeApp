@@ -10,5 +10,5 @@ import UIKit
 import RxSwift
 
 protocol ImageDownloaderProtocol {
-    func download(with url: URL?) -> Observable<UIImage?>
+    func download(with url: URL) -> Observable<UIImage?>
 }

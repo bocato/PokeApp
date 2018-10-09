@@ -10,21 +10,14 @@ import XCTest
 @testable import PokeApp
 
 class PokemonTableViewCellModelTests: XCTestCase {
-
-    // MARK: - Properties
-    var imageDownloader: ImageDownloaderProtocol!
-    
-    // MARK: - Lifecycle
-    override func setUp() {
-        super.setUp()
-        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
-    }
     
     // MARK: - Tests
     func testValidPokemonName() {
         // Given
         let bulbassaur = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbasaur")
-        let sut = PokemonTableViewCellModel(listItem: bulbassaur, imageDownloader: imageDownloader)
+        
+        // When
+        let sut = PokemonTableViewCellModel(listItem: bulbassaur, imageDownloader: ImageDownloaderStub())
         
         // Then
         XCTAssertEqual(sut.pokemonName, "Bulbasaur")
@@ -33,7 +26,9 @@ class PokemonTableViewCellModelTests: XCTestCase {
     func testInvalidPokemonName() {
         // Given
         let invalid = PokemonListResult(url: nil, name: nil)
-        let sut = PokemonTableViewCellModel(listItem: invalid, imageDownloader: imageDownloader)
+        
+        // When
+        let sut = PokemonTableViewCellModel(listItem: invalid, imageDownloader: ImageDownloaderStub())
         
         // Then
         XCTAssertEqual(sut.pokemonName, "")
@@ -42,7 +37,7 @@ class PokemonTableViewCellModelTests: XCTestCase {
     func testValidPokemonNumberString() {
         // Given
         let bulbassaur = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbasaur")
-        let sut = PokemonTableViewCellModel(listItem: bulbassaur, imageDownloader: imageDownloader)
+        let sut = PokemonTableViewCellModel(listItem: bulbassaur, imageDownloader: ImageDownloaderStub())
         
         // Then
         XCTAssertEqual(sut.pokemonNumberString, "#1: ")
@@ -51,10 +46,39 @@ class PokemonTableViewCellModelTests: XCTestCase {
     func testInvalidPokemonNumberString() {
         // Given
         let invalid = PokemonListResult(url: nil, name: nil)
-        let sut = PokemonTableViewCellModel(listItem: invalid, imageDownloader: imageDownloader)
+        let sut = PokemonTableViewCellModel(listItem: invalid, imageDownloader: ImageDownloaderStub())
         
         // Then
         XCTAssertEqual(sut.pokemonNumberString, "")
+    }
+    
+    func testWithValidPokemon() {
+        // Given
+        let bulbassaur = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbasaur")
+        let image = UIImage()
+        let imageDownloader = ImageDownloaderStub(mockType: .image(image))
+        
+        // When
+        let sut = PokemonTableViewCellModel(listItem: bulbassaur, imageDownloader: imageDownloader)
+        let pokemonImageCollector = RxCollector<UIImage?>().collect(from: sut.pokemonImage.asObservable())
+        
+        // Then
+        let collectedImage = pokemonImageCollector.items.last!
+        XCTAssertNotNil(collectedImage, "Invalid result.")
+        XCTAssertEqual(image, collectedImage)
+    }
+    
+    func testWithInvalidPokemon() {
+        // Given
+        let invalid = PokemonListResult(url: nil, name: nil)
+        
+        // When
+        let sut = PokemonTableViewCellModel(listItem: invalid, imageDownloader: ImageDownloaderStub())
+        let pokemonImageCollector = RxCollector<UIImage?>().collect(from: sut.pokemonImage.asObservable())
+        
+        // Then
+        let image = pokemonImageCollector.items.last!
+        XCTAssertNil(image, "Invalid result.")
     }
 
 }

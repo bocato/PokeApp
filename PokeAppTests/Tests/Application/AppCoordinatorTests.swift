@@ -23,7 +23,7 @@ class AppCoordinatorTests: XCTestCase {
     }
     
     
-    func tesBuildNil() {
+    func testBuildNil() {
         let appCoordinator = AppCoordinator.build(window: nil)
         XCTAssertNil(appCoordinator)
     }
@@ -47,6 +47,36 @@ class AppCoordinatorTests: XCTestCase {
         let appCoordinator = AppCoordinator.build(window: window, modulesFactory: modulesFactory, showResourceLoader: false)
         // Then
         XCTAssertNotNil(appCoordinator)
+    }
+    
+    func testStartWithMainFlow() {
+        // Given
+        let window = UIWindow()
+        window.rootViewController = UINavigationController()
+        let modulesFactory = AppCoordinatorModulesFactory()
+        // When
+        let appCoordinator = AppCoordinator.build(window: window, modulesFactory: modulesFactory, showResourceLoader: false)!
+        appCoordinator.start()
+        // Then
+        let containsTabBarCoordinator = appCoordinator.childCoordinators.contains { (key, value) -> Bool in
+            return key == "TabBarCoordinator"
+        }
+        XCTAssertTrue(containsTabBarCoordinator)
+    }
+    
+    func testStartWithResourceLoader() {
+        // Given
+        let window = UIWindow()
+        window.rootViewController = UINavigationController()
+        let modulesFactory = AppCoordinatorModulesFactory()
+        // When
+        let appCoordinator = AppCoordinator.build(window: window, modulesFactory: modulesFactory, showResourceLoader: true)!
+        appCoordinator.start()
+        // Then
+        let containsTabBarCoordinator = appCoordinator.childCoordinators.contains { (key, value) -> Bool in
+            return key == "TabBarCoordinator"
+        }
+        XCTAssertFalse(containsTabBarCoordinator)
     }
 
 }

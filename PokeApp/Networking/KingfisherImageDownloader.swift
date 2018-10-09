@@ -11,16 +11,9 @@ import RxSwift
 
 class KingfisherImageDownloader: ImageDownloaderProtocol {
     
-    func download(with url: URL?) -> Observable<UIImage?> {
+    func download(with url: URL) -> Observable<UIImage?> {
         
         return Observable.create({ observable in
-            
-            guard let url = url else {
-                let error = ErrorFactory.buildNetworkError(with: .invalidURL)
-                observable.onError(error)
-                observable.onCompleted()
-                return Disposables.create()
-            }
             
             let imageHolder = UIImageView()
             imageHolder.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { (image, error, _, _) in

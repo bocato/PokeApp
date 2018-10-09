@@ -66,7 +66,7 @@ class FavoritesViewModel: CoordinatorDelegate {
             case .shouldReloadFavorites:
                 loadFavorites()
             }
-        default: break
+        default: return
         }
     }
     
