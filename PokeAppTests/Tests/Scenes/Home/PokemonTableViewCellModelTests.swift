@@ -11,10 +11,20 @@ import XCTest
 
 class PokemonTableViewCellModelTests: XCTestCase {
 
+    // MARK: - Properties
+    var imageDownloader: ImageDownloaderProtocol!
+    
+    // MARK: - Lifecycle
+    override func setUp() {
+        super.setUp()
+        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+    }
+    
+    // MARK: - Tests
     func testValidPokemonName() {
         // Given
         let bulbassaur = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbasaur")
-        let sut = PokemonTableViewCellModel(listItem: bulbassaur)
+        let sut = PokemonTableViewCellModel(listItem: bulbassaur, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonName, "Bulbasaur")
@@ -23,7 +33,7 @@ class PokemonTableViewCellModelTests: XCTestCase {
     func testInvalidPokemonName() {
         // Given
         let invalid = PokemonListResult(url: nil, name: nil)
-        let sut = PokemonTableViewCellModel(listItem: invalid)
+        let sut = PokemonTableViewCellModel(listItem: invalid, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonName, "")
@@ -32,7 +42,7 @@ class PokemonTableViewCellModelTests: XCTestCase {
     func testValidPokemonNumberString() {
         // Given
         let bulbassaur = PokemonListResult(url: "https://pokeapi.co/api/v2/pokemon/1/", name: "bulbasaur")
-        let sut = PokemonTableViewCellModel(listItem: bulbassaur)
+        let sut = PokemonTableViewCellModel(listItem: bulbassaur, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonNumberString, "#1: ")
@@ -41,7 +51,7 @@ class PokemonTableViewCellModelTests: XCTestCase {
     func testInvalidPokemonNumberString() {
         // Given
         let invalid = PokemonListResult(url: nil, name: nil)
-        let sut = PokemonTableViewCellModel(listItem: invalid)
+        let sut = PokemonTableViewCellModel(listItem: invalid, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonNumberString, "")

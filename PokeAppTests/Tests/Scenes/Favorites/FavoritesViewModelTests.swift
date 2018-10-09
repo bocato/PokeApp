@@ -15,13 +15,15 @@ class FavoritesViewModelTests: XCTestCase {
     var sut: FavoritesViewModelSpy!
     var favoritesCoordinatorSpy: FavoritesCoordinatorSpy!
     var favoritesManagerStub: FavoritesManagerStub!
+    var imageDownloader: ImageDownloaderProtocol!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         favoritesManagerStub = FavoritesManagerStub()
         favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: Router(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManagerStub)
-        sut = FavoritesViewModelSpy(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManagerStub)
+        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+        sut = FavoritesViewModelSpy(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
     }
     
     // MARK: - Tests
@@ -75,7 +77,7 @@ class FavoritesViewModelTests: XCTestCase {
             XCTFail("Could not prepare test case.")
             return
         }
-        let favoriteCollectionViewCellModel = FavoriteCollectionViewCellModel(data: bulbassaur)
+        let favoriteCollectionViewCellModel = FavoriteCollectionViewCellModel(data: bulbassaur, imageDownloader: imageDownloader)
         
         // When
         sut.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: favoriteCollectionViewCellModel)
@@ -89,7 +91,7 @@ class FavoritesViewModelTests: XCTestCase {
     func testShowItemDetailsForSelectedFavoriteCellModel_failure() {
         // Given
         let invalidPokemon = Pokemon(id: nil, name: "Missigno", baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
-        let favoriteCollectionViewCellModel = FavoriteCollectionViewCellModel(data: invalidPokemon)
+        let favoriteCollectionViewCellModel = FavoriteCollectionViewCellModel(data: invalidPokemon, imageDownloader: imageDownloader)
         
         // When
         sut.showItemDetailsForSelectedFavoriteCellModel(favoriteCellModel: favoriteCollectionViewCellModel)

@@ -34,7 +34,8 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
         let homeCoordinatorModulesFactory = HomeCoordinatorModulesFactory()
         let homeCoordinator = HomeCoordinator(router: router, favoritesManager: SimpleFavoritesManager.shared, modulesFactory: homeCoordinatorModulesFactory)
         let services = PokemonService()
-        let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services)
+        let imageDownloader = KingfisherImageDownloader()
+        let viewModel = HomeViewModel(actionsDelegate: homeCoordinator, services: services, imageDownloader: imageDownloader)
         let controller = HomeViewController.newInstance(fromStoryboard: .home, viewModel: viewModel)
         return (homeCoordinator, controller)
     }
@@ -44,7 +45,8 @@ class TabBarCoordinatorModulesFactory: ModuleFactory {
         let favoritesCoordinatorModulesFactory = FavoritesCoordinatorModulesFactory()
         let favoritesManager = SimpleFavoritesManager.shared
         let favoritesCoordinator = FavoritesCoordinator(router: router, modulesFactory: favoritesCoordinatorModulesFactory, favoritesManager: favoritesManager)
-        let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator, favoritesManager: favoritesManager)
+        let imageDownloader = KingfisherImageDownloader()
+        let viewModel = FavoritesViewModel(actionsDelegate: favoritesCoordinator, favoritesManager: favoritesManager, imageDownloader: imageDownloader)
         let controller = FavoritesViewController.newInstance(fromStoryboard: .favorites, viewModel: viewModel)
         return (favoritesCoordinator, controller)
     }

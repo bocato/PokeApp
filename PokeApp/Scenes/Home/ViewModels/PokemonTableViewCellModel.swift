@@ -9,13 +9,14 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import Kingfisher
 
-// MARK: - PokemonTableViewCellModel Implementation
 class PokemonTableViewCellModel {
     
+    // MARK: - Dependencies
+    private let imageDownloader: ImageDownloaderProtocol
+    
     // MARK: - Properties
-    var pokemonListItem: PokemonListResult!
+    private(set) var pokemonListItem: PokemonListResult!
     var pokemonName: String {
         guard let name = pokemonListItem.name else {
             return ""
@@ -28,12 +29,13 @@ class PokemonTableViewCellModel {
         }
         return "#\(id): "
     }
-    var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
-    var state = BehaviorRelay<CommonViewModelState>(value: .loading(true))
+    let pokemonImage = BehaviorRelay<UIImage?>(value: nil)
+    let state = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     
     // MARK: - Initializers
-    init(listItem: PokemonListResult) {
+    init(listItem: PokemonListResult, imageDownloader: ImageDownloaderProtocol) {
         pokemonListItem = listItem
+        self.imageDownloader = imageDownloader
         downloadImage(from: listItem.imageURL)
     }
     
@@ -45,14 +47,13 @@ class PokemonTableViewCellModel {
             return
         }
         DispatchQueue.main.async {
-            let pokemonImageViewHolder = UIImageView()
-            pokemonImageViewHolder.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
+            self.imageDownloader.download(with: imageURL, completionHandler: { (image, error) in
                 guard error != nil else {
                     self.pokemonImage.accept(image)
                     self.state.accept(.loading(false))
                     return
                 }
-            }
+            })
         }
     }
     

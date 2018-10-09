@@ -13,8 +13,11 @@ import RxCocoa
 
 class FavoriteCollectionViewCellModel {
     
+    // MARK: - Dependencies
+    private let imageDownloader: ImageDownloaderProtocol
+    
     // MARK: - Properties
-    var pokemonData: Pokemon!
+    private(set) var pokemonData: Pokemon!
     var pokemonName: String {
         guard let name = pokemonData.name else {
             return ""
@@ -27,12 +30,13 @@ class FavoriteCollectionViewCellModel {
         }
         return "#\(id): "
     }
-    var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
-    var state = BehaviorRelay<CommonViewModelState>(value: .loading(true))
+    let pokemonImage = BehaviorRelay<UIImage?>(value: nil)
+    let state = BehaviorRelay<CommonViewModelState>(value: .loading(true))
     
     // MARK: - Initializers
-    init(data: Pokemon) {
+    init(data: Pokemon, imageDownloader: ImageDownloaderProtocol) {
         pokemonData = data
+        self.imageDownloader = imageDownloader
         downloadImage(from: pokemonData.imageURL)
     }
     
@@ -44,14 +48,13 @@ class FavoriteCollectionViewCellModel {
             return
         }
         DispatchQueue.main.async {
-            let pokemonImageViewHolder = UIImageView()
-            pokemonImageViewHolder.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
+            self.imageDownloader.download(with: imageURL, completionHandler: { (image, error) in
                 guard error != nil else {
                     self.pokemonImage.accept(image)
                     self.state.accept(.loading(false))
                     return
                 }
-            }
+            })
         }
     }
     

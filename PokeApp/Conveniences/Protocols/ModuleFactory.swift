@@ -12,30 +12,3 @@ protocol ModuleFactory {
     associatedtype ModulesEnum
     func build(_ module: ModulesEnum) -> (Coordinator, UIViewController)
 }
-
-
-//// IDEA WITH DATA STORE...
-//protocol ModulesFactoryProtocol {
-//
-//    // MARK: - Associated Types
-//    associatedtype StoreType
-//
-//    // MARK: - Dependencies
-//    var store: StoreType? { get set }
-//
-//}
-
-//class BaseModulesFactory<T> {
-//
-//    // MARK: - Associated Types
-//    typealias StoreType = T
-//
-//    // MARK: - Dependencies
-//    var store: T?
-//
-//    // MARK: - Initialization
-//    init(store: T) {
-//        self.store = store
-//    }
-//
-//}

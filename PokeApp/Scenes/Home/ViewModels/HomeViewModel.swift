@@ -17,19 +17,20 @@ protocol HomeViewControllerActionsDelegate: class { // This is related to the us
 class HomeViewModel {
     
     // MARK: - Dependencies
-    private let disposeBag: DisposeBag!
+    private let disposeBag = DisposeBag()
     private(set) weak var actionsDelegate: HomeViewControllerActionsDelegate?
     private let services: PokemonServiceProtocol
+    private let imageDownloader: ImageDownloaderProtocol
     
     // MARK: - Properties
     let pokemonCellModels = BehaviorRelay<[PokemonTableViewCellModel]>(value: [])
     let viewState = PublishSubject<CommonViewModelState>()
     
     // MARK: - Intialization
-    init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol, disposeBag: DisposeBag = DisposeBag()) {
+    init(actionsDelegate: HomeViewControllerActionsDelegate, services: PokemonServiceProtocol, imageDownloader: ImageDownloaderProtocol) {
         self.actionsDelegate = actionsDelegate
         self.services = services
-        self.disposeBag = disposeBag
+        self.imageDownloader = imageDownloader
     }
     
     // MARK: - API Calls
@@ -45,7 +46,7 @@ class HomeViewModel {
                     return
                 }
                 let viewModelsForResult = results.map({ (listItem) -> PokemonTableViewCellModel in
-                    return PokemonTableViewCellModel(listItem: listItem)
+                    return PokemonTableViewCellModel(listItem: listItem, imageDownloader: self.imageDownloader)
                 })
                 self.viewState.onNext(.loaded)
                 self.pokemonCellModels.accept(viewModelsForResult)

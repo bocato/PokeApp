@@ -28,14 +28,15 @@ class PokemonDetailsViewModel {
     struct DataSources {
         let pokemonService: PokemonServiceProtocol
         let favoritesManager: FavoritesManager
+        let imageDownloader: ImageDownloaderProtocol
     }
     
-    private(set) var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     private let dataSources: DataSources
     weak var actionsDelegate: PokemonDetailsViewControllerActionsDelegate?
     
     // MARK: - Properties
-    private var pokemonId: Int
+    private(set) var pokemonId: Int
     private(set) var pokemonData: Pokemon?
     private var isThisPokemonAFavorite: Bool {
         guard let pokemonData = pokemonData else {
@@ -45,16 +46,16 @@ class PokemonDetailsViewModel {
     }
     
     // MARK: - Rx Properties
-    private(set) var isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
-    private(set) var isLoadingPokemonData = PublishSubject<Bool>()
-    private(set) var viewState = PublishSubject<CommonViewModelState>()
-    private(set) var favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
-    private(set) var pokemonImage = BehaviorRelay<UIImage?>(value: nil)
-    private(set) var pokemonNumber = BehaviorRelay<String?>(value: nil)
-    private(set) var pokemonName = BehaviorRelay<String?>(value: nil)
-    private(set) var pokemonAbilities = BehaviorRelay<[String]>(value: [])
-    private(set) var pokemonStats = BehaviorRelay<[String]>(value: [])
-    private(set) var pokemonMoves = BehaviorRelay<[String]>(value: [])
+    let isLoadingPokemonImage = BehaviorRelay<Bool>(value: true)
+    let isLoadingPokemonData = PublishSubject<Bool>()
+    let viewState = PublishSubject<CommonViewModelState>()
+    let favoriteButtonText = BehaviorRelay<String>(value: "Add to Favorites")
+    let pokemonImage = BehaviorRelay<UIImage?>(value: nil)
+    let pokemonNumber = BehaviorRelay<String?>(value: nil)
+    let pokemonName = BehaviorRelay<String?>(value: nil)
+    let pokemonAbilities = BehaviorRelay<[String]>(value: [])
+    let pokemonStats = BehaviorRelay<[String]>(value: [])
+    let pokemonMoves = BehaviorRelay<[String]>(value: [])
 
     // MARK: - Initialization
     required init(pokemonId: Int, dataSources: DataSources, actionsDelegate: PokemonDetailsViewControllerActionsDelegate) {
@@ -127,15 +128,14 @@ class PokemonDetailsViewModel {
             return
         }
         DispatchQueue.main.async {
-            let pokemonImageViewHolder = UIImageView()
-            pokemonImageViewHolder.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { [weak self] (image, error, cache, url) in
+            self.dataSources.imageDownloader.download(with: imageURL, completionHandler: { [weak self] (image, error) in
                 guard let self = self else { return }
                 guard error != nil else {
                     self.pokemonImage.accept(image)
                     self.isLoadingPokemonImage.accept(false)
                     return
                 }
-            }
+            })
         }
     }
     

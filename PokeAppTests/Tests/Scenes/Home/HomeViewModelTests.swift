@@ -15,12 +15,14 @@ class HomeViewModelTests: XCTestCase {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     var homeCoordinatorSpy: HomeCoordinatorSpy!
+    var imageDownloader: ImageDownloaderProtocol!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         disposeBag = DisposeBag()
         homeCoordinatorSpy = HomeCoordinatorSpy(router: Router(), favoritesManager: FavoritesManagerStub(), modulesFactory: HomeCoordinatorModulesFactory())
+        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
     }
     
     // MARK: - Tests
@@ -28,7 +30,7 @@ class HomeViewModelTests: XCTestCase {
         // Given
         var sut: HomeViewModel
         // When
-        sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: PokemonServiceStub())
+        sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: PokemonServiceStub(), imageDownloader: imageDownloader)
         // Then
         XCTAssertNotNil(sut, "invalid viewModel instance")
         XCTAssertNotNil(sut.actionsDelegate, "ActionsDelegate was not set")
@@ -36,7 +38,7 @@ class HomeViewModelTests: XCTestCase {
     
     func testInitialState() {
         // Given
-        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: PokemonServiceStub())
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: PokemonServiceStub(), imageDownloader: imageDownloader)
         
         // When
         let pokemonCellModelsCollector = RxCollector<[PokemonTableViewCellModel]>()
@@ -50,7 +52,7 @@ class HomeViewModelTests: XCTestCase {
     func testEmptyState() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .empty)
-        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService, imageDownloader: imageDownloader)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
@@ -70,7 +72,7 @@ class HomeViewModelTests: XCTestCase {
         // Given
         let mockError = NSError.buildMockError(code: 404, description: "LoadPokemons error.")
         let pokemonService = PokemonServiceStub(mockType: .error(mockError))
-        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService, imageDownloader: imageDownloader)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
@@ -94,7 +96,7 @@ class HomeViewModelTests: XCTestCase {
     func testLoadedState() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .pokemonList)
-        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService, imageDownloader: imageDownloader)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
             .collect(from: sut.viewState.asObservable())
@@ -117,8 +119,8 @@ class HomeViewModelTests: XCTestCase {
             XCTFail("Could not prepare test case.")
             return
         }
-        let cellModel = PokemonTableViewCellModel(listItem: bulbassaurListResult)
-        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
+        let cellModel = PokemonTableViewCellModel(listItem: bulbassaurListResult, imageDownloader: imageDownloader)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService, imageDownloader: imageDownloader)
 
         // When
         sut.showItemDetailsForSelectedCellModel(cellModel)
@@ -133,8 +135,8 @@ class HomeViewModelTests: XCTestCase {
         // Given
         let pokemonService = PokemonServiceStub()
         let pokemonListItem = PokemonListResult(url: "url", name: "")
-        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem)
-        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService)
+        let cellModel = PokemonTableViewCellModel(listItem: pokemonListItem, imageDownloader: imageDownloader)
+        let sut = HomeViewModel(actionsDelegate: homeCoordinatorSpy, services: pokemonService, imageDownloader: imageDownloader)
         
         // When
         sut.showItemDetailsForSelectedCellModel(cellModel)

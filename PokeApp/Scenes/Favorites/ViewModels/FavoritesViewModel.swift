@@ -18,7 +18,8 @@ class FavoritesViewModel: CoordinatorDelegate {
     
     // MARK: - Dependencies
     weak var actionsDelegate: FavoritesViewControllerActionsDelegate?
-    internal(set) var favoritesManager: FavoritesManager
+    let favoritesManager: FavoritesManager
+    let imageDownloader: ImageDownloaderProtocol
     
     // MARK: - RXProperties
     let viewState = PublishSubject<CommonViewModelState>()
@@ -28,22 +29,22 @@ class FavoritesViewModel: CoordinatorDelegate {
     private(set) var numberFavorites = 0
     
     // MARK: - Initialzation
-    init(actionsDelegate: FavoritesViewControllerActionsDelegate, favoritesManager: FavoritesManager) {
+    init(actionsDelegate: FavoritesViewControllerActionsDelegate, favoritesManager: FavoritesManager, imageDownloader: ImageDownloaderProtocol) {
         self.actionsDelegate = actionsDelegate
         self.favoritesManager = favoritesManager
+        self.imageDownloader = imageDownloader
     }
     
     // MARK: -
     func loadFavorites() {
-        let favoritesCellModels = favoritesManager.favorites.map({ (pokemon) -> FavoriteCollectionViewCellModel in
-            return FavoriteCollectionViewCellModel(data: pokemon)
-        }).sorted { (pokemon1, pokemon2) -> Bool in
-            guard let id1 = pokemon1.pokemonData.id, let id2 = pokemon2.pokemonData.id else { return false }
-            return id1 < id2
-        }
-        numberFavorites = favoritesCellModels.count
-        self.favoritesCellModels.onNext(favoritesCellModels)
-        viewState.onNext(favoritesCellModels.count == 0 ? .empty : .loaded)
+        let cellModels = favoritesManager.favorites
+            .sorted(by: { $0.id! < $1.id! })
+            .map({ (pokemon) -> FavoriteCollectionViewCellModel in
+                return FavoriteCollectionViewCellModel(data: pokemon, imageDownloader: self.imageDownloader)
+        })
+        numberFavorites = cellModels.count
+        favoritesCellModels.onNext(cellModels)
+        viewState.onNext(cellModels.count == 0 ? .empty : .loaded)
     }
     
     // MARK: - Actions

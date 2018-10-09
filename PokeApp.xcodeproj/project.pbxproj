@@ -104,6 +104,8 @@
 		E5F1B262216B91850009E628 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B261216B91850009E628 /* CoordinatorTests.swift */; };
 		E5F1B269216BFBA30009E628 /* SimpleFavoritesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B268216BFBA30009E628 /* SimpleFavoritesManagerTests.swift */; };
 		E5F1B26B216BFBFE0009E628 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */; };
+		E5F1B270216CE83E0009E628 /* KingfisherImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B26F216CE83E0009E628 /* KingfisherImageDownloader.swift */; };
+		E5F1B272216CE8630009E628 /* ImageDownloaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B271216CE8630009E628 /* ImageDownloaderProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +224,8 @@
 		E5F1B261216B91850009E628 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
 		E5F1B268216BFBA30009E628 /* SimpleFavoritesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFavoritesManagerTests.swift; sourceTree = "<group>"; };
 		E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
+		E5F1B26F216CE83E0009E628 /* KingfisherImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherImageDownloader.swift; sourceTree = "<group>"; };
+		E5F1B271216CE8630009E628 /* ImageDownloaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +463,7 @@
 			children = (
 				E56972AF20AA85EB00F0B3E5 /* Common */,
 				E56972B020AA867E00F0B3E5 /* PokemonService.swift */,
+				E5F1B26F216CE83E0009E628 /* KingfisherImageDownloader.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -495,6 +500,7 @@
 				E50D15E720CF0EB00090D763 /* ModuleFactory.swift */,
 				E59A94BA216659FB003287F5 /* RxControllable.swift */,
 				E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */,
+				E5F1B271216CE8630009E628 /* ImageDownloaderProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1012,7 +1018,9 @@
 				E5A454D520CB5F030060FD85 /* DetailsCoordinator.swift in Sources */,
 				E56972B620AA87B200F0B3E5 /* PokemonListResult.swift in Sources */,
 				E56972B420AA872D00F0B3E5 /* PokemonListResponse.swift in Sources */,
+				E5F1B270216CE83E0009E628 /* KingfisherImageDownloader.swift in Sources */,
 				E5B8183F20B4A00C006F2AB0 /* PokemonDetailsViewModel.swift in Sources */,
+				E5F1B272216CE8630009E628 /* ImageDownloaderProtocol.swift in Sources */,
 				E569728020AA57CB00F0B3E5 /* NetworkResponse.swift in Sources */,
 				E5583E8F20B851EE003CAFA0 /* Coordinator.swift in Sources */,
 				E569729B20AA71DF00F0B3E5 /* ErrorFactory.swift in Sources */,

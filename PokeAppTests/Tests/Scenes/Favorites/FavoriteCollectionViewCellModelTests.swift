@@ -11,13 +11,20 @@ import XCTest
 
 class FavoriteCollectionViewCellModelTests: XCTestCase {
 
+    // MARK: - Properties
+    var imageDownloader: ImageDownloaderProtocol!
+    
+    // MARK: - Lifecycle
+    override func setUp() {
+        super.setUp()
+        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+    }
+    
+    // MARK: - Tests
     func testValidPokemonName() {
         // Given
-        guard let bulbassaur = try? JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur)) else {
-            XCTFail("Could not prepare test case.")
-            return
-        }
-        let sut = FavoriteCollectionViewCellModel(data: bulbassaur)
+        let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
+        let sut = FavoriteCollectionViewCellModel(data: bulbassaur, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonName, "Bulbasaur")
@@ -26,7 +33,7 @@ class FavoriteCollectionViewCellModelTests: XCTestCase {
     func testInvalidPokemonName() {
         // Given
         let invalidPokemon = Pokemon(id: nil, name: nil, baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
-        let sut = FavoriteCollectionViewCellModel(data: invalidPokemon)
+        let sut = FavoriteCollectionViewCellModel(data: invalidPokemon, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonName, "")
@@ -34,11 +41,8 @@ class FavoriteCollectionViewCellModelTests: XCTestCase {
     
     func testValidPokemonNumberString() {
         // Given
-        guard let bulbassaur = try? JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur)) else {
-            XCTFail("Could not prepare test case.")
-            return
-        }
-        let sut = FavoriteCollectionViewCellModel(data: bulbassaur)
+        let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
+        let sut = FavoriteCollectionViewCellModel(data: bulbassaur, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonNumberString, "#1: ")
@@ -47,7 +51,7 @@ class FavoriteCollectionViewCellModelTests: XCTestCase {
     func testInvalidPokemonNumberString() {
         // Given
         let invalidPokemon = Pokemon(id: nil, name: "Missigno", baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
-        let sut = FavoriteCollectionViewCellModel(data: invalidPokemon)
+        let sut = FavoriteCollectionViewCellModel(data: invalidPokemon, imageDownloader: imageDownloader)
         
         // Then
         XCTAssertEqual(sut.pokemonNumberString, "")

@@ -14,12 +14,14 @@ class DetailsCoordinatorTests: XCTestCase {
     // MARK: - Properties
     var coordinatorDelegateSpy: CoordinatorDelegateSpy!
     var sut: DetailsCoordinatorSpy!
+    var imageDownloader: ImageDownloaderProtocol!
 
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         coordinatorDelegateSpy = CoordinatorDelegateSpy()
         sut = DetailsCoordinatorSpy(router: Router())
+        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
     }
 
     override func tearDown() {
@@ -33,7 +35,7 @@ class DetailsCoordinatorTests: XCTestCase {
         
         let favoritesManagerStub = FavoritesManagerStub()
         let pokemonService = PokemonServiceStub()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let pokemonDetailsViewModel = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: sut)
 
         // When
@@ -52,7 +54,7 @@ class DetailsCoordinatorTests: XCTestCase {
         
         let favoritesManagerStub = FavoritesManagerStub()
         let pokemonService = PokemonServiceStub()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let pokemonDetailsViewModel = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: sut)
         
         favoritesManagerStub.add(pokemon: bulbassaur)

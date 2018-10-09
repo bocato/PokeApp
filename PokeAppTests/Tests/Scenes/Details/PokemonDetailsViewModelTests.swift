@@ -16,7 +16,8 @@ class PokemonDetailsViewModelTests: XCTestCase {
     // MARK: - Properties
     var detailsCoordinatorSpy: DetailsCoordinatorSpy!
     var favoritesManagerStub: FavoritesManagerStub!
-    
+    var imageDownloader: ImageDownloaderProtocol!
+
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
@@ -26,6 +27,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     func setupTestEnvironment() {
         favoritesManagerStub = FavoritesManagerStub()
         detailsCoordinatorSpy = DetailsCoordinatorSpy(router: Router())
+        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
     }
 
     // MARK: - Tests
@@ -34,7 +36,8 @@ class PokemonDetailsViewModelTests: XCTestCase {
         let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
         
         let pokemonService = PokemonServiceStub()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         // When
@@ -51,7 +54,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         favoritesManagerStub.add(pokemon: bulbassaur)
 
         let pokemonService = PokemonService()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
 
         // When
@@ -66,7 +69,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     func testActOnFavoritesButtonTouchWithNilData() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .empty)
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         // When
@@ -80,7 +83,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     func testLoadPokemonData_unexpectedError() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .empty)
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()
@@ -111,7 +114,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
     func testLoadPokemonData_withBulbassaur() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .bulbassaurData)
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         // When
@@ -125,7 +128,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         // Given
         let mockError = NSError.buildMockError(code: 404, description: "LoadPokemonData error.")
         let pokemonService = PokemonServiceStub(mockType: .error(mockError))
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
         let viewStateCollector = RxCollector<CommonViewModelState>()

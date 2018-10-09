@@ -30,7 +30,8 @@ class FavoritesCoordinatorModulesFactory: ModuleFactory {
         
         let pokemonDetailsCoordinator = DetailsCoordinator(router: router)
         let pokemonService = PokemonService()
-        let viewModelDataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: SimpleFavoritesManager.shared)
+        let imageDownloader = KingfisherImageDownloader()
+        let viewModelDataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: SimpleFavoritesManager.shared, imageDownloader: imageDownloader)
         let viewModel = PokemonDetailsViewModel(pokemonId: pokemonId, dataSources: viewModelDataSources, actionsDelegate: pokemonDetailsCoordinator)
         let pokemonDetailsViewController = PokemonDetailsViewController.newInstance(fromStoryboard: .details, viewModel: viewModel)
         
