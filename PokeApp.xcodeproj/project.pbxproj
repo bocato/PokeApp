@@ -102,6 +102,7 @@
 		E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */; };
 		E5DCC2AA20B6F7D900325D32 /* SimpleFavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A920B6F7D900325D32 /* SimpleFavoritesManager.swift */; };
 		E5F0ECDA216D274B00E70C49 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F0ECD9216D274B00E70C49 /* RouterProtocol.swift */; };
+		E5F0ECDD216D296600E70C49 /* SimpleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F0ECDC216D296600E70C49 /* SimpleRouterTests.swift */; };
 		E5F1B262216B91850009E628 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B261216B91850009E628 /* CoordinatorTests.swift */; };
 		E5F1B269216BFBA30009E628 /* SimpleFavoritesManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B268216BFBA30009E628 /* SimpleFavoritesManagerTests.swift */; };
 		E5F1B26B216BFBFE0009E628 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */; };
@@ -224,6 +225,7 @@
 		E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		E5DCC2A920B6F7D900325D32 /* SimpleFavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFavoritesManager.swift; sourceTree = "<group>"; };
 		E5F0ECD9216D274B00E70C49 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
+		E5F0ECDC216D296600E70C49 /* SimpleRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRouterTests.swift; sourceTree = "<group>"; };
 		E5F1B261216B91850009E628 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
 		E5F1B268216BFBA30009E628 /* SimpleFavoritesManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFavoritesManagerTests.swift; sourceTree = "<group>"; };
 		E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
@@ -721,18 +723,10 @@
 		E56D242820B2010D0059B0E0 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E56D243020B206050059B0E0 /* Common */,
+				E5363FAA2163A4C600788873 /* NetworkDispatcherTests.swift */,
 				E56D243120B206360059B0E0 /* PokemonServiceTests.swift */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		E56D243020B206050059B0E0 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				E5363FAA2163A4C600788873 /* NetworkDispatcherTests.swift */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		E56D243720B210EF0059B0E0 /* Cells */ = {
@@ -819,6 +813,7 @@
 		E5F0ECDB216D287200E70C49 /* Routers */ = {
 			isa = PBXGroup;
 			children = (
+				E5F0ECDC216D296600E70C49 /* SimpleRouterTests.swift */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -1098,6 +1093,7 @@
 				E53D4C46216930C8006A2222 /* HomeModulesFactoryTests.swift in Sources */,
 				E5712E7E20C9627B000A3782 /* NetworkDispatcherStub.swift in Sources */,
 				E53D4C5E216A3315006A2222 /* PokemonServiceStub.swift in Sources */,
+				E5F0ECDD216D296600E70C49 /* SimpleRouterTests.swift in Sources */,
 				E53D4C5421697B22006A2222 /* HomeCoordinatorTests.swift in Sources */,
 				E53D4C5221697B12006A2222 /* FavoritesCoordinatorTests.swift in Sources */,
 				E56D243220B206360059B0E0 /* PokemonServiceTests.swift in Sources */,
