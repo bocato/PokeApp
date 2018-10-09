@@ -106,7 +106,7 @@
 		E5F1B26B216BFBFE0009E628 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */; };
 		E5F1B270216CE83E0009E628 /* KingfisherImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B26F216CE83E0009E628 /* KingfisherImageDownloader.swift */; };
 		E5F1B272216CE8630009E628 /* ImageDownloaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B271216CE8630009E628 /* ImageDownloaderProtocol.swift */; };
-		E5F1B274216CF83D0009E628 /* ImageDownladerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B273216CF83C0009E628 /* ImageDownladerStub.swift */; };
+		E5F1B274216CF83D0009E628 /* ImageDownloaderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1B273216CF83C0009E628 /* ImageDownloaderStub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,7 +227,7 @@
 		E5F1B26A216BFBFE0009E628 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		E5F1B26F216CE83E0009E628 /* KingfisherImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherImageDownloader.swift; sourceTree = "<group>"; };
 		E5F1B271216CE8630009E628 /* ImageDownloaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderProtocol.swift; sourceTree = "<group>"; };
-		E5F1B273216CF83C0009E628 /* ImageDownladerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownladerStub.swift; sourceTree = "<group>"; };
+		E5F1B273216CF83C0009E628 /* ImageDownloaderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderStub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,8 +377,8 @@
 			children = (
 				E53D4C61216A3663006A2222 /* Extensions */,
 				E53D4C5721699F14006A2222 /* MockData */,
-				E53D4C60216A364B006A2222 /* Stubs */,
 				E56D242220B2008D0059B0E0 /* Helpers */,
+				E53D4C60216A364B006A2222 /* Stubs */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -743,8 +743,8 @@
 			isa = PBXGroup;
 			children = (
 				E5712E7D20C9627B000A3782 /* NetworkDispatcherStub.swift */,
+				E5F1B273216CF83C0009E628 /* ImageDownloaderStub.swift */,
 				E53D4C5C216A32FF006A2222 /* PokemonService */,
-				E5F1B273216CF83C0009E628 /* ImageDownladerStub.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1102,7 +1102,7 @@
 				E53D4C4A216966CA006A2222 /* AppCoordinatorTests.swift in Sources */,
 				E5F1B269216BFBA30009E628 /* SimpleFavoritesManagerTests.swift in Sources */,
 				E58C08AF216AB85B0039D362 /* PokemonTableViewCellModelTests.swift in Sources */,
-				E5F1B274216CF83D0009E628 /* ImageDownladerStub.swift in Sources */,
+				E5F1B274216CF83D0009E628 /* ImageDownloaderStub.swift in Sources */,
 				E5363FBD2163E7C900788873 /* AppCoordinatorModulesFactoryTests.swift in Sources */,
 				E53D4C5621699AB8006A2222 /* DetailsCoordinatorTests.swift in Sources */,
 				E53D4C5021697B04006A2222 /* TabBarCoordinatorTests.swift in Sources */,

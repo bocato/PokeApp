@@ -149,30 +149,31 @@ class PokemonDetailsViewModelTests: XCTestCase {
         }
     }
     
-    func testLoadPokemonDataWithImageDownloadError() {
+    func testLoadPokemonImageReturningPlaceholder() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .bulbassaurData)
         let mockError = NSError.buildMockError(code: 404, description: "LoadPokemonData error.")
         let imageDownloader = ImageDownloaderStub(mockType: .error(mockError))
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
-        
+
         let pokemonImageCollector = RxCollector<UIImage?>().collect(from: sut.pokemonImage.asObservable())
-        
+
         // When
         sut.loadPokemonData()
-        
+
         // Then
-        let image = pokemonImageCollector.items.last
+        let image = pokemonImageCollector.items.last!
         XCTAssertNotNil(image, "Invalid result.")
         let expectedImage = UIImage(named: "open_pokeball")
         XCTAssertEqual(image, expectedImage)
     }
-    
-    func testLoadPokemonDataWithImageDownloadSuccess() {
+
+    func testLoadPokemonImageReturningSomeImage() {
         // Given
         let pokemonService = PokemonServiceStub(mockType: .bulbassaurData)
-        let imageDownloader = ImageDownloaderStub(mockType: .blankImage)
+        let image = UIImage()
+        let imageDownloader = ImageDownloaderStub(mockType: .image(image))
         let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
         let sut = PokemonDetailsViewModel(pokemonId: 1, dataSources: dataSources, actionsDelegate: detailsCoordinatorSpy)
         
@@ -182,8 +183,9 @@ class PokemonDetailsViewModelTests: XCTestCase {
         sut.loadPokemonData()
         
         // Then
-        let image = pokemonImageCollector.items.last!
-        XCTAssertNotNil(image, "Invalid result.")
+        let collectedImage = pokemonImageCollector.items.last!
+        XCTAssertNotNil(collectedImage, "Invalid result.")
+        XCTAssertEqual(image, collectedImage)
     }
     
 }

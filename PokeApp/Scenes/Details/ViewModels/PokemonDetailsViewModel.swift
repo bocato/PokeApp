@@ -38,12 +38,6 @@ class PokemonDetailsViewModel {
     // MARK: - Properties
     private(set) var pokemonId: Int
     private(set) var pokemonData: Pokemon?
-    private var isThisPokemonAFavorite: Bool {
-        guard let pokemonData = pokemonData else {
-            return false
-        }
-        return dataSources.favoritesManager.isFavorite(pokemon: pokemonData)
-    }
     let placeholderImage = UIImage(named: "open_pokeball")!
     
     // MARK: - Rx Properties
@@ -81,7 +75,8 @@ class PokemonDetailsViewModel {
                 guard let self = self else { return }
                 
                 guard let pokemonData = pokemonData,
-                    let imageURL = pokemonData.imageURL,
+                    let imageURLString = pokemonData.imageURL,
+                    let imageURL = URL(string: imageURLString),
                     let number = pokemonData.id,
                     let name = pokemonData.name,
                     let abilities = pokemonData.abilities,
@@ -98,7 +93,8 @@ class PokemonDetailsViewModel {
                 
                 self.pokemonData = pokemonData
                 
-                self.favoriteButtonText.accept(self.getfavoritesButtonText())
+                let isFavorite = self.dataSources.favoritesManager.isFavorite(pokemon: pokemonData)
+                self.favoriteButtonText.accept(self.getfavoritesButtonText(isFavorite: isFavorite))
                 self.downloadImage(from: imageURL)
                 self.pokemonNumber.accept("#\(number)")
                 self.pokemonName.accept(name.capitalizingFirstLetter())
@@ -118,21 +114,15 @@ class PokemonDetailsViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getfavoritesButtonText() -> String {
-        return isThisPokemonAFavorite ? Constants.removeFromFavoritesButtonText : Constants.addToFavoritesButtonText
+    private func getfavoritesButtonText(isFavorite: Bool) -> String {
+        return isFavorite ? Constants.removeFromFavoritesButtonText : Constants.addToFavoritesButtonText
     }
     
-    private func downloadImage(from itemURL: String?) {
+    private func downloadImage(from url: URL) {
         
         isLoadingPokemonImage.onNext(true)
         
-        guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.accept(placeholderImage)
-            isLoadingPokemonImage.onNext(false)
-            return
-        }
-        
-        self.dataSources.imageDownloader.download(with: imageURL)
+        self.dataSources.imageDownloader.download(with: url)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self](image) in
                 self?.pokemonImage.accept(image)
@@ -178,6 +168,7 @@ class PokemonDetailsViewModel {
     // MARK: - Actions
     func actOnFavoritesButtonTouch() {
         guard let pokemonData = self.pokemonData else { return }
+        let isThisPokemonAFavorite = self.dataSources.favoritesManager.isFavorite(pokemon: pokemonData)
         if isThisPokemonAFavorite {
             dataSources.favoritesManager.remove(pokemon: pokemonData)
             actionsDelegate?.didRemoveFavorite(pokemonData)
@@ -185,7 +176,7 @@ class PokemonDetailsViewModel {
             dataSources.favoritesManager.add(pokemon: pokemonData)
             actionsDelegate?.didAddFavorite(pokemonData)
         }
-        favoriteButtonText.accept(getfavoritesButtonText())
+        favoriteButtonText.accept(getfavoritesButtonText(isFavorite: isThisPokemonAFavorite))
     }
     
 }

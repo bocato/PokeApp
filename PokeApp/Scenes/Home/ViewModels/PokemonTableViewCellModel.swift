@@ -45,9 +45,8 @@ class PokemonTableViewCellModel {
     
     // MARK: - Configuration
     private func downloadImage(from itemURL: String?) {
+        
         guard let urlString = itemURL, let imageURL = URL(string: urlString) else {
-            pokemonImage.accept(placeholderImage)
-            state.accept(.loading(false))
             return
         }
         

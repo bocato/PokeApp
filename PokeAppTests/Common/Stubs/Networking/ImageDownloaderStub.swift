@@ -1,5 +1,5 @@
 //
-//  ImageDownladerStub.swift
+//  ImageDownloaderStub.swift
 //  PokeAppTests
 //
 //  Created by Eduardo Bocato on 09/10/18.
@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 @testable import PokeApp
 
 class ImageDownloaderStub: ImageDownloaderProtocol {
@@ -26,17 +27,16 @@ class ImageDownloaderStub: ImageDownloaderProtocol {
         self.mockType = mockType
     }
     
-    // MARK: -
-//    func download(with url: URL, completionHandler: CompletionHandler?) {
-//        switch mockType {
-//        case .image(let image):
-//            completionHandler?(image, nil)
-//        case .blankImage:
-//            let image = UIImage()
-//            completionHandler?(image, nil)
-//        case .error(let error):
-//            completionHandler?(nil, error)
-//        }
-//    }
+    // MARK: - ImageDownloaderProtocol
+    func download(with url: URL?) -> Observable<UIImage?> {
+        switch mockType {
+        case .image(let image):
+            return Observable.of(image)
+        case .blankImage:
+            return Observable.of(UIImage())
+        case .error(let error):
+            return Observable.error(error)
+        }
+    }
     
 }
