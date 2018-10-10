@@ -64,12 +64,10 @@ class HomeCoordinator: HomeCoordinatorProtocol {
     
     // MARK: - HomeViewControllerActionsDelegate
     func showItemDetailsForPokemonWith(id: Int) {
-        let router = self.router
         let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router))
         addChildCoordinator(coordinator)
         router.push(controller, animated: true) { // completion runs on back button touched...
-            weak var weakSelf = self
-            weakSelf?.removeChildCoordinator(coordinator)
+            self.removeChildCoordinator(coordinator)
         }
     }
     

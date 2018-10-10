@@ -14,6 +14,7 @@ class HomeCoordinatorTests: XCTestCase {
     // MARK: - Properties
     var coordinatorDelegateSpy: CoordinatorDelegateSpy!
     var sut: HomeCoordinatorSpy!
+    var favoritesManager: FavoritesManager!
     
     // MARK: - Lifecycle
     override func setUp() {
@@ -21,13 +22,14 @@ class HomeCoordinatorTests: XCTestCase {
         let router = SimpleRouter()
         let modulesFactory = HomeCoordinatorModulesFactory()
         coordinatorDelegateSpy = CoordinatorDelegateSpy()
-        let favoritesManagerStub = FavoritesManagerStub()
-        sut = HomeCoordinatorSpy(router: router, favoritesManager: favoritesManagerStub, modulesFactory: modulesFactory)
+        favoritesManager = SimpleFavoritesManager.shared
+        sut = HomeCoordinatorSpy(router: router, favoritesManager: favoritesManager, modulesFactory: modulesFactory)
         sut.delegate = coordinatorDelegateSpy
     }
     
     override func tearDown() {
         super.tearDown()
+        favoritesManager.favorites.removeAll()
     }
     
     // MARK: - Tests

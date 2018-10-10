@@ -14,16 +14,21 @@ class FavoritesViewModelTests: XCTestCase {
     // MARK: - Properties
     var sut: FavoritesViewModelSpy!
     var favoritesCoordinatorSpy: FavoritesCoordinatorSpy!
-    var favoritesManagerStub: FavoritesManagerStub!
+    var favoritesManager: FavoritesManager!
     var imageDownloader: ImageDownloaderProtocol!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        favoritesManagerStub = FavoritesManagerStub()
-        favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: SimpleRouter(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManagerStub)
+        favoritesManager = SimpleFavoritesManager.shared
+        favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: SimpleRouter(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManager)
         imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
-        sut = FavoritesViewModelSpy(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
+        sut = FavoritesViewModelSpy(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManager, imageDownloader: imageDownloader)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        favoritesManager.favorites.removeAll()
     }
     
     // MARK: - Tests
@@ -51,7 +56,7 @@ class FavoritesViewModelTests: XCTestCase {
         XCTAssertTrue(favoriteCollectionViewCellModelsCollector.items.first!.isEmpty, "Items is not empty")
     }
     
-    func testLoadFavoritesLoaded() {
+    func testLoadFavoritesLoadedState() {
         // Given
         let expectedStates: [CommonViewModelState] = [.loaded]
         let pikachu = Pokemon(id: 90909123, name: "pikachu", baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
@@ -62,7 +67,7 @@ class FavoritesViewModelTests: XCTestCase {
             .collect(from: sut.favoritesCellModels.asObservable())
         
         // When
-        favoritesManagerStub.add(pokemon: pikachu)
+        favoritesManager.add(pokemon: pikachu)
         sut.loadFavorites()
         
         // Then
@@ -107,7 +112,7 @@ class FavoritesViewModelTests: XCTestCase {
         let tabBarCoordinator = TabBarCoordinator(router: router, modulesFactory: TabBarCoordinatorModulesFactory())
         tabBarCoordinator.delegate = sut
         
-        let homeCoordinator = HomeCoordinator(router: router, favoritesManager: favoritesManagerStub, modulesFactory: HomeCoordinatorModulesFactory())
+        let homeCoordinator = HomeCoordinator(router: router, favoritesManager: favoritesManager, modulesFactory: HomeCoordinatorModulesFactory())
         tabBarCoordinator.addChildCoordinator(homeCoordinator)
         
         let detailsCoordinator = DetailsCoordinator(router: router)
@@ -134,7 +139,7 @@ class FavoritesViewModelTests: XCTestCase {
         let tabBarCoordinator = TabBarCoordinator(router: router, modulesFactory: TabBarCoordinatorModulesFactory())
         tabBarCoordinator.delegate = sut
         
-        let favoritesCoordinator = FavoritesCoordinator(router: router, modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: FavoritesManagerStub())
+        let favoritesCoordinator = FavoritesCoordinator(router: router, modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManager)
         tabBarCoordinator.addChildCoordinator(favoritesCoordinator)
         
         let detailsCoordinator = DetailsCoordinator(router: router)
@@ -154,6 +159,31 @@ class FavoritesViewModelTests: XCTestCase {
         XCTAssertEqual(lastReceivedParentOutput!, .shouldReloadFavorites, "Invalid output.")
     }
     
+    func testIfFavoritesIsSorted() {
+        // Given
+        let pokemon1 = Pokemon(id: 1, name: "Pikachu", baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
+        let pokemon2 = Pokemon(id: 2, name: "Pikachu", baseExperience: nil, height: nil, isDefault: nil, order: nil, weight: nil, abilities: nil, forms: nil, gameIndices: nil, moves: nil, species: nil, stats: nil, types: nil)
+        
+        
+        let favoriteCollectionViewCellModelsCollector = RxCollector<[FavoriteCollectionViewCellModel]>()
+            .collect(from: sut.favoritesCellModels.asObservable())
+        
+        // When
+        favoritesManager.add(pokemon: pokemon2)
+        favoritesManager.add(pokemon: pokemon1)
+        sut.loadFavorites()
+        
+        // Then
+        let favoritesManagerIds = favoritesManager.favorites.map { (pokemon) -> Int in
+            return pokemon.id!
+        }
+        XCTAssertNotNil(favoriteCollectionViewCellModelsCollector.items.first)
+        let cellModelsIds = favoriteCollectionViewCellModelsCollector.items.first!.map { (cellModel) -> Int in
+            return cellModel.pokemonData.id!
+        }
+        XCTAssertNotEqual(favoritesManagerIds, cellModelsIds)
+    }
+    
     
 }
 
@@ -169,38 +199,6 @@ class FavoritesViewModelSpy: FavoritesViewModel {
         lastReceivedOutput = output
         coordinatorWhoSentTheLastOutput = coordinator
         super.receiveOutput(output, fromCoordinator: coordinator)
-    }
-    
-}
-
-
-// MARK: - Stubs
-class FavoritesManagerStub: FavoritesManager {
-    
-    // MARK: - Properties
-    internal(set) var favorites = [Pokemon]()
-    
-    // MARK: - Helpers
-    func add(pokemon: Pokemon) {
-        guard let id = pokemon.id, favorites.filter( { $0.id == id } ).first == nil else {
-            return
-        }
-        favorites.append(pokemon)
-        favorites.sort(by: { $0.id! < $1.id! })
-    }
-    
-    func remove(pokemon: Pokemon) {
-        guard let id = pokemon.id, let index = favorites.index(where: { $0.id ==  id }) else {
-            return
-        }
-        favorites.remove(at: index)
-    }
-    
-    func isFavorite(pokemon: Pokemon) -> Bool {
-        guard let id = pokemon.id, let _ = favorites.filter( { $0.id == id } ).first else {
-            return false
-        }
-        return true
     }
     
 }

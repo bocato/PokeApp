@@ -15,17 +15,20 @@ class DetailsCoordinatorTests: XCTestCase {
     var coordinatorDelegateSpy: CoordinatorDelegateSpy!
     var sut: DetailsCoordinatorSpy!
     var imageDownloader: ImageDownloaderProtocol!
-
+    var favoritesManager: FavoritesManager!
+    
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         coordinatorDelegateSpy = CoordinatorDelegateSpy()
         sut = DetailsCoordinatorSpy(router: SimpleRouter())
-        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+        imageDownloader = ImageDownloaderStub()
+        favoritesManager = SimpleFavoritesManager.shared
     }
 
     override func tearDown() {
         super.tearDown()
+        favoritesManager.favorites.removeAll()
     }
 
     // MARK: - Tests
@@ -33,9 +36,8 @@ class DetailsCoordinatorTests: XCTestCase {
         // Given
         let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
         
-        let favoritesManagerStub = FavoritesManagerStub()
         let pokemonService = PokemonServiceStub()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManager, imageDownloader: imageDownloader)
         let pokemonDetailsViewModel = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: sut)
 
         // When
@@ -52,12 +54,11 @@ class DetailsCoordinatorTests: XCTestCase {
         // Given
         let bulbassaur = try! JSONDecoder().decode(Pokemon.self, from: MockDataHelper.getData(forResource: .bulbassaur))
         
-        let favoritesManagerStub = FavoritesManagerStub()
         let pokemonService = PokemonServiceStub()
-        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManagerStub, imageDownloader: imageDownloader)
+        let dataSources = PokemonDetailsViewModel.DataSources(pokemonService: pokemonService, favoritesManager: favoritesManager, imageDownloader: imageDownloader)
         let pokemonDetailsViewModel = PokemonDetailsViewModel(pokemonData: bulbassaur, dataSources: dataSources, actionsDelegate: sut)
         
-        favoritesManagerStub.add(pokemon: bulbassaur)
+        favoritesManager.add(pokemon: bulbassaur)
         
         // When
         pokemonDetailsViewModel.actOnFavoritesButtonTouch()

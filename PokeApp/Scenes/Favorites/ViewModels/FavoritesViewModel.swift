@@ -38,10 +38,10 @@ class FavoritesViewModel: CoordinatorDelegate {
     // MARK: -
     func loadFavorites() {
         let cellModels = favoritesManager.favorites
-            .sorted(by: { $0.id! < $1.id! })
-            .map({ (pokemon) -> FavoriteCollectionViewCellModel in
-                return FavoriteCollectionViewCellModel(data: pokemon, imageDownloader: self.imageDownloader)
-        })
+                .sorted(by: { $0.id! < $1.id! })
+                .map({ (pokemon) -> FavoriteCollectionViewCellModel in
+                    return FavoriteCollectionViewCellModel(data: pokemon, imageDownloader: self.imageDownloader)
+                })
         numberFavorites = cellModels.count
         favoritesCellModels.onNext(cellModels)
         viewState.onNext(cellModels.count == 0 ? .empty : .loaded)

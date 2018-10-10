@@ -67,8 +67,7 @@ class FavoritesCoordinator: FavoritesCoordinatorProtocol {
         let (coordinator, controller) = modulesFactory.build(.pokemonDetails(id, router))
         addChildCoordinator(coordinator)
         router.push(controller, animated: true) {
-            weak var weakSelf = self
-            weakSelf?.removeChildCoordinator(coordinator)
+            self.removeChildCoordinator(coordinator)
         }
     }
     

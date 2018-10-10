@@ -14,12 +14,14 @@ class TabBarCoordinatorTests: XCTestCase {
     // MARK: - Properties
     var coordinatorDelegateSpy: CoordinatorDelegateSpy!
     var sut: TabBarCoordinatorSpy!
+    var favoritesManager: FavoritesManager!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         let router = SimpleRouter()
         let modulesFactory = TabBarCoordinatorModulesFactory()
+        favoritesManager = SimpleFavoritesManager.shared
         coordinatorDelegateSpy = CoordinatorDelegateSpy()
         sut = TabBarCoordinatorSpy(router: router, modulesFactory: modulesFactory)
         sut.delegate = coordinatorDelegateSpy
@@ -27,12 +29,12 @@ class TabBarCoordinatorTests: XCTestCase {
 
     override func tearDown() {
         super.tearDown()
+        favoritesManager.favorites.removeAll()
     }
 
     // MARK: - Tests
     func testReceiveChildOutputFromFavoritesCoordinator() {
         // Given
-        let favoritesManager = FavoritesManagerStub()
         let favoritesCoordinator = FavoritesCoordinator(router: SimpleRouter(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManager)
         sut.addChildCoordinator(favoritesCoordinator)
         let outputToSend: FavoritesCoordinator.Output = .shouldReloadFavorites
@@ -52,7 +54,6 @@ class TabBarCoordinatorTests: XCTestCase {
     
     func testReceiveChildOutputFromHomeCoordinator() {
         // Given
-        let favoritesManager = FavoritesManagerStub()
         let homeCoordinator = HomeCoordinator(router: SimpleRouter(), favoritesManager: favoritesManager, modulesFactory: HomeCoordinatorModulesFactory())
         sut.addChildCoordinator(homeCoordinator)
         let outputToSend: HomeCoordinator.Output = .shouldReloadFavorites

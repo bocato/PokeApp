@@ -16,13 +16,20 @@ class HomeViewModelTests: XCTestCase {
     var disposeBag = DisposeBag()
     var homeCoordinatorSpy: HomeCoordinatorSpy!
     var imageDownloader: ImageDownloaderProtocol!
+    var favoritesManager: FavoritesManager!
     
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         disposeBag = DisposeBag()
-        homeCoordinatorSpy = HomeCoordinatorSpy(router: SimpleRouter(), favoritesManager: FavoritesManagerStub(), modulesFactory: HomeCoordinatorModulesFactory())
+        favoritesManager = SimpleFavoritesManager.shared
+        homeCoordinatorSpy = HomeCoordinatorSpy(router: SimpleRouter(), favoritesManager: favoritesManager, modulesFactory: HomeCoordinatorModulesFactory())
         imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        favoritesManager.favorites.removeAll()
     }
     
     // MARK: - Tests
