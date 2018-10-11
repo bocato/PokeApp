@@ -36,8 +36,10 @@ ignore:
  - "*ViewController.swift" # ignore ViewControllers
  - "**/Scenes/**/Cells/**" # ignore CollectionView and TableViewCells
  - "*ViewCell.swift" # ignore CollectionView and TableViewCells
- - "**/UIView+Loading.swift" 
+ - "**/AppDelegate.swift"
+ - "**/UIView*Loading.swift" 
  - "**/UIViewControllerExtension.swift"
  - "**/AlertHelper.swift"
  - "**/SimpleRouter.swift"
  - "**/KingfisherImageDownloader.swift"
+ - "**/Factories/ErrorFactory.swift"
