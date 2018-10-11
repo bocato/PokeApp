@@ -483,12 +483,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E5583E6320B74C09003CAFA0 /* ViewControlers */ = {
+		E5583E6320B74C09003CAFA0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				E5583E6520B74C30003CAFA0 /* TabBarViewController.swift */,
 			);
-			path = ViewControlers;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		E5583E9620B86124003CAFA0 /* Routers */ = {
@@ -642,7 +642,7 @@
 				E56972BC20ACEA5B00F0B3E5 /* TabBar.storyboard */,
 				E50D15E920CF11A50090D763 /* TabBarCoordinatorModulesFactory.swift */,
 				E5583EA120B880C4003CAFA0 /* TabBarCoordinator.swift */,
-				E5583E6320B74C09003CAFA0 /* ViewControlers */,
+				E5583E6320B74C09003CAFA0 /* ViewControllers */,
 				E548A32C20B7BB9100E72954 /* ViewModels */,
 			);
 			path = TabBar;

@@ -1,10 +1,25 @@
 ignore:
+####
+# Ignore Generated Classes
  - "Pods/.*" # ignore pods from code coverage
  - "Libraries/.*" # ignore third party libraries from code coverage
+ ####
+ # Ignore Tests
  - "*Test/.*" # ignore Tests from code coverage
- - "**.storyboard" # ignore Storyboards
- - "PokeApp/Conveniences/UI/**" # ignore UI elements
- - "PokeApp/Scenes/**/ViewControllers/**" # ignore ViewControlers
- - "*ViewController.swift" # ignore ViewControllers
- - "PokeApp/Scenes/**/Cells/**" # ignore ViewControlers
- - "*ViewCell.swift" # ignore ignore CollectionView and TableViewCells
+ ####
+ # Ignore UI
+ - "**.storyboard" # Storyboards
+ - "PokeApp/Conveniences/UI/**" # Custom UI elements
+ ####
+ # Ignore ViewControllers
+ - "PokeApp/Scenes/**/ViewControllers/**"
+ - "*ViewController.swift"
+ ####
+ # Ignore View Related Classes
+ - "PokeApp/Scenes/**/Cells/**"
+ - "*ViewCell.swift" # CollectionView and TableViewCells
+####
+# Other Classes
+- "UIView+Loading.swift"
+- "UIViewControllerExtension.swift"
+- "AlertHelper.swift"
