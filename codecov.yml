@@ -30,8 +30,9 @@ ignore:
  - "Libraries/.*" # ignore third party libraries from code coverage
  - "*Test/.*" # ignore Tests from code coverage
  - "**.storyboard" # Storyboards
+ - "PokeApp/Models/*"
  - "PokeApp/Conveniences/UI/**" # custom UI elements
- - "PokeApp/Scenes/**/ViewControllers/**" # ignore ViewControllers
+ - "PokeApp/Scenes/**/ViewControllers/*" # ignore ViewControllers
  - "*ViewController.swift" # ignore ViewControllers
  - "PokeApp/Scenes/**/Cells/**" # ignore CollectionView and TableViewCells
  - "*ViewCell.swift" # ignore CollectionView and TableViewCells
