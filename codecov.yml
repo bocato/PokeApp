@@ -2,4 +2,9 @@ ignore:
  - "Pods/.*" # ignore pods from code coverage
  - "Libraries/.*" # ignore third party libraries from code coverage
  - "*Test/.*" # ignore Tests from code coverage
- - "**ViewController.swift" # ignore viewControllers
+ - "**.storyboard" # ignore Storyboards
+ - "/Conveniences/UI/*"
+ - "/Scenes/*/ViewControllers/*" # ignore ViewControlers
+ - "*ViewController.swift" # ignore ViewControllers
+ - "/Scenes/*/Cells/*" # ignore Cells
+ - "*ViewCell.swift" # ignore ignore CollectionView and TableViewCells
