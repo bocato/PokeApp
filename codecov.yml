@@ -35,7 +35,6 @@ ignore:
  - "*ViewController.swift" # ignore ViewControllers
  - "PokeApp/Scenes/**/Cells/**" # ignore CollectionView and TableViewCells
  - "*ViewCell.swift" # ignore CollectionView and TableViewCells
-# Other Classes
- - "UIView+Loading.swift"
+ - "UIView+Loading.swift" 
  - "UIViewControllerExtension.swift"
  - "AlertHelper.swift"
