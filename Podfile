@@ -5,7 +5,7 @@ def project_dependecies
     # Pods for PokeApp
     pod 'RxSwift', '4.3.1'
     pod 'RxCocoa', '4.3.1'
-    pod 'Kingfisher', '4.6.1'
+    pod 'Kingfisher', '4.10.0'
 end
 
 def testing_dependencies
