@@ -15,15 +15,20 @@ class KingfisherImageDownloader: ImageDownloaderProtocol {
         
         return Observable.create({ observable in
             
-            let imageHolder = UIImageView()
-            imageHolder.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { (image, error, _, _) in
-                guard let image = image, error == nil else {
-                    observable.onError(error!)
+            DispatchQueue.main.async {
+                
+                let imageHolder = UIImageView()
+                
+                imageHolder.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { (image, error, _, _) in
+                    guard let image = image, error == nil else {
+                        observable.onError(error!)
+                        observable.onCompleted()
+                        return
+                    }
+                    observable.onNext(image)
                     observable.onCompleted()
-                    return
                 }
-                observable.onNext(image)
-                observable.onCompleted()
+                
             }
             
             return Disposables.create()

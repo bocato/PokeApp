@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -275,6 +275,7 @@
                                     </view>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7g-Tw-FQ1" customClass="PrimaryButton" customModule="PokeApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="513" width="335" height="44"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="details.buttons.addRemoveFavorite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="8tL-1x-wab"/>
                                         </constraints>
@@ -298,6 +299,7 @@
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="details.views.root"/>
                         <constraints>
                             <constraint firstItem="nPI-91-Xr3" firstAttribute="bottom" secondItem="Qr9-wL-ily" secondAttribute="bottom" constant="20" id="NnQ-Tu-mhE"/>
                             <constraint firstItem="nPI-91-Xr3" firstAttribute="trailing" secondItem="Qr9-wL-ily" secondAttribute="trailing" constant="20" id="NxN-c5-egM"/>

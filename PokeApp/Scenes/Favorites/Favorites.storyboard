@@ -139,6 +139,7 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="favorites.views.root"/>
                         <constraints>
                             <constraint firstItem="97S-5A-pXD" firstAttribute="height" secondItem="0Tm-OB-aTf" secondAttribute="height" id="5nD-WK-3Qb"/>
                             <constraint firstItem="0Tm-OB-aTf" firstAttribute="leading" secondItem="59z-dE-beN" secondAttribute="leading" id="6Fc-2m-6ih"/>

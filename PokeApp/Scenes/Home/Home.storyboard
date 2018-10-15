@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nLZ-uz-mdY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nLZ-uz-mdY">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,13 +22,13 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="YaC-nm-mnt">
-                                        <rect key="frame" x="47.5" y="162" width="281" height="323.5"/>
+                                        <rect key="frame" x="47" y="162" width="281" height="323.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pikachu_ops" translatesAutoresizingMaskIntoConstraints="NO" id="yh8-CR-pek">
-                                                <rect key="frame" x="0.0" y="0.0" width="281" height="287"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="281" height="304"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load Pokémons..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dYi-2I-Pwo">
-                                                <rect key="frame" x="0.0" y="287" width="281" height="36.5"/>
+                                                <rect key="frame" x="0.0" y="304" width="281" height="19.5"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="27"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -58,14 +56,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eN3-19-vpY">
-                                                    <rect key="frame" x="10" y="10" width="80" height="79.5"/>
+                                                    <rect key="frame" x="10" y="10" width="80" height="80"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="Yan-yc-lSR"/>
                                                         <constraint firstAttribute="height" constant="80" id="jVP-S3-EGC"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijv-JS-4p0">
-                                                    <rect key="frame" x="100" y="31" width="224" height="38"/>
+                                                    <rect key="frame" x="100" y="31" width="224" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -81,6 +79,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="eN3-19-vpY" secondAttribute="bottom" constant="10" id="uXQ-k1-PSg"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="home.tableViews.cells.pokemonTableViewCell"/>
                                         <connections>
                                             <outlet property="infoLabel" destination="ijv-JS-4p0" id="NbJ-06-HM2"/>
                                             <outlet property="pokemonImageView" destination="eN3-19-vpY" id="Ktu-sG-PPA"/>
@@ -90,6 +89,7 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="home.views.root"/>
                         <constraints>
                             <constraint firstItem="63r-0h-gXg" firstAttribute="bottom" secondItem="jOd-rd-tmF" secondAttribute="bottom" id="5iA-Ns-6ar"/>
                             <constraint firstItem="jOd-rd-tmF" firstAttribute="top" secondItem="63r-0h-gXg" secondAttribute="top" id="Ezj-m8-fuV"/>
@@ -113,6 +113,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="pikachu_ops" width="256" height="256"/>
+        <image name="pikachu_ops" width="512" height="512"/>
     </resources>
 </document>

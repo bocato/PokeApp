@@ -36,41 +36,43 @@ extension UIView {
     // MARK: - Loading Methods
     func startLoading(in context: LoadingContext = .component, blur: Bool = false, backgroundColor: UIColor = UIColor.clear, activityIndicatorViewStyle: UIActivityIndicatorView.Style? = nil, activityIndicatorColor: UIColor = UIColor.lightGray) {
         
-        guard let parentView = context == .fullScreen ? (UIApplication.shared.delegate)!.window! : self else { return }
-        
-        // Create Loading view
-        let loadingView = UIView(frame: parentView.frame)
-        loadingView.backgroundColor = backgroundColor
-        loadingView.tag = loadingViewTag
-        loadingView.center = parentView.center
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.layer.zPosition = 1
-        parentView.addSubview(loadingView)
-        // Configure loadingView autolayout
-        loadingView.centerXAnchor.constraint(equalTo: parentView.centerXAnchor).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
-        
-        // Create blurView if needed
-        if blur {
-            let blurView = createBlurView()
-            blurView.frame = loadingView.frame
-            blurView.center = loadingView.center
-            blurView.translatesAutoresizingMaskIntoConstraints = false
-            loadingView.addSubview(blurView)
+        DispatchQueue.main.async {
+            guard let parentView = context == .fullScreen ? (UIApplication.shared.delegate)!.window! : self else { return }
+            
+            // Create Loading view
+            let loadingView = UIView(frame: parentView.frame)
+            loadingView.backgroundColor = backgroundColor
+            loadingView.tag = loadingViewTag
+            loadingView.center = parentView.center
+            loadingView.translatesAutoresizingMaskIntoConstraints = false
+            loadingView.layer.zPosition = 1
+            parentView.addSubview(loadingView)
+            // Configure loadingView autolayout
+            loadingView.centerXAnchor.constraint(equalTo: parentView.centerXAnchor).isActive = true
+            loadingView.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
+            
+            // Create blurView if needed
+            if blur {
+                let blurView = self.createBlurView()
+                blurView.frame = loadingView.frame
+                blurView.center = loadingView.center
+                blurView.translatesAutoresizingMaskIntoConstraints = false
+                loadingView.addSubview(blurView)
+            }
+            
+            // Create activityIndicatorView
+            var activityIndicatorStyle: UIActivityIndicatorView.Style = context == .fullScreen ? .whiteLarge : .white
+            if let activityIndicatorViewStyle = activityIndicatorViewStyle {
+                activityIndicatorStyle = activityIndicatorViewStyle
+            }
+            let activityIndicator = self.createActivityIndicator(activityIndicatorStyle, color: activityIndicatorColor)
+            activityIndicator.frame = loadingView.frame
+            activityIndicator.startAnimating()
+            loadingView.addSubview(activityIndicator)
+            // Configure activityIndicator autolayout
+            activityIndicator.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor).isActive = true
+            activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
         }
-        
-        // Create activityIndicatorView
-        var activityIndicatorStyle: UIActivityIndicatorView.Style = context == .fullScreen ? .whiteLarge : .white
-        if let activityIndicatorViewStyle = activityIndicatorViewStyle {
-            activityIndicatorStyle = activityIndicatorViewStyle
-        }
-        let activityIndicator = createActivityIndicator(activityIndicatorStyle, color: activityIndicatorColor)
-        activityIndicator.frame = loadingView.frame
-        activityIndicator.startAnimating()
-        loadingView.addSubview(activityIndicator)
-        // Configure activityIndicator autolayout
-        activityIndicator.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
         
     }
     

@@ -29,7 +29,10 @@ private extension AppDelegate {
     }
     
     func setupApplication() {
-        if isRunningUnitTests {
+    
+        UIView.setAnimationsEnabled(!isRunningUITests)
+        
+        if isRunningUnitTests && !isRunningUITests {
             window = UIWindow()
             window?.rootViewController = UIViewController()
             window?.makeKeyAndVisible()
@@ -46,7 +49,17 @@ private extension AppDelegate {
 }
 
 private extension AppDelegate {
+    
     var isRunningUnitTests: Bool {
         return ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil // this means that we are running unit tests
     }
+    
+    var isRunningUITests: Bool {
+        var isRunningUITestsEnvironmentVariableValue = false
+        if let isRunningUITests = ProcessInfo.processInfo.environment["IS_RUNNING_UI_TESTS"] { // this is injected on the scheme arguments
+            isRunningUITestsEnvironmentVariableValue = isRunningUITests == "YES"
+        }
+        return ProcessInfo.processInfo.arguments.contains("UITestMode") || isRunningUITestsEnvironmentVariableValue
+    }
+    
 }
