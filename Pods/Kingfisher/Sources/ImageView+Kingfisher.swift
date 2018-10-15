@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 15/4/6.
 //
-//  Copyright (c) 2018 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2017 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -198,10 +198,7 @@ extension Kingfisher where Base: ImageView {
     /// It will be `nil` if `indicatorType` is `.none`.
     public fileprivate(set) var indicator: Indicator? {
         get {
-            guard let box = objc_getAssociatedObject(base, &indicatorKey) as? Box<Indicator> else {
-                return nil
-            }
-            return box.value
+            return objc_getAssociatedObject(base, &indicatorKey) as? Indicator
         }
         
         set {
@@ -222,9 +219,7 @@ extension Kingfisher where Base: ImageView {
             }
             
             // Save in associated object
-            // Wrap newValue with Box to workaround an issue that Swift does not recognize
-            // and casting protocol for associate object correctly. https://github.com/onevcat/Kingfisher/issues/872
-            objc_setAssociatedObject(base, &indicatorKey, newValue.map(Box.init), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(base, &indicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     

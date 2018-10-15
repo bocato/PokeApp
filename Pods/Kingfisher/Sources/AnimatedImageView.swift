@@ -9,7 +9,7 @@
 //
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2018 Reda Lemeden.
+//  Copyright (c) 2017 Reda Lemeden.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -305,7 +305,6 @@ class Animator {
     fileprivate let maxTimeStep: TimeInterval = 1.0
     fileprivate var frameCount = 0
     fileprivate var currentFrameIndex = 0
-    fileprivate var currentFrameIndexInBuffer = 0
     fileprivate var currentPreloadIndex = 0
     fileprivate var timeSinceLastFrameChange: TimeInterval = 0.0
     fileprivate var needsPrescaling = true
@@ -316,7 +315,7 @@ class Animator {
     private var loopCount = 0
     
     var currentFrame: UIImage? {
-        return frame(at: currentFrameIndexInBuffer)
+        return frame(at: currentFrameIndex)
     }
 
     var isReachMaxRepeatCount: Bool {
@@ -381,7 +380,7 @@ class Animator {
         let frameToProcess = min(frameCount, maxFrameCount)
         animatedFrames.reserveCapacity(frameToProcess)
         animatedFrames = (0..<frameToProcess).reduce([]) { $0 + pure(prepareFrame(at: $1))}
-        currentPreloadIndex = (frameToProcess + 1) % frameCount - 1
+        currentPreloadIndex = (frameToProcess + 1) % frameCount
     }
     
     private func prepareFrame(at index: Int) -> AnimatedFrame {
@@ -427,24 +426,21 @@ class Animator {
      */
     func updateCurrentFrame(duration: CFTimeInterval) -> Bool {
         timeSinceLastFrameChange += min(maxTimeStep, duration)
-        guard let frameDuration = animatedFrames[safe: currentFrameIndexInBuffer]?.duration, frameDuration <= timeSinceLastFrameChange else {
+        guard let frameDuration = animatedFrames[safe: currentFrameIndex]?.duration, frameDuration <= timeSinceLastFrameChange else {
             return false
         }
         
         timeSinceLastFrameChange -= frameDuration
         
-        let lastFrameIndex = currentFrameIndexInBuffer
-        currentFrameIndexInBuffer += 1
-        currentFrameIndexInBuffer = currentFrameIndexInBuffer % animatedFrames.count
-        
+        let lastFrameIndex = currentFrameIndex
+        currentFrameIndex += 1
+        currentFrameIndex = currentFrameIndex % animatedFrames.count
+
         if animatedFrames.count < frameCount {
             preloadFrameAsynchronously(at: lastFrameIndex)
         }
-        
-        currentFrameIndex += 1
-        
-        if currentFrameIndex == frameCount {
-            currentFrameIndex = 0
+
+        if currentFrameIndex == 0 {
             currentRepeatCount += 1
 
             delegate?.animator(self, didPlayAnimationLoops: currentRepeatCount)
