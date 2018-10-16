@@ -16,7 +16,7 @@ class AddAndRemoveFavoritesFlowTests: XCTestCase {
     var detailsBot: DetailsBot?
     var favoritesBot: FavoritesBot?
     
-    // MARK: -
+    // MARK: - Setup
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -29,10 +29,32 @@ class AddAndRemoveFavoritesFlowTests: XCTestCase {
         super.tearDown()
         detailsBot = nil
         favoritesBot = nil
+        URLSession.removeAllMocks()
+    }
+    
+    private func mockPokemonList() {
+        let pokemons = MockDataHelper.getData(forResource: .pokemonList)
+        do {
+            try URLSession.mockNext(expression: "/pokemon/", body: pokemons)
+        } catch let error {
+            XCTFail("Could not mock pokemonList, error: \(error.localizedDescription)")
+        }
+    }
+    
+    private func mockBulbassaur() {
+        let bulbassaur = MockDataHelper.getData(forResource: .pokemonList)
+        do {
+            try URLSession.mockNext(expression: "/pokemon/1", body: bulbassaur)
+        } catch let error {
+            XCTFail("Could not mock bulbassaur, error: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - Tests
     func testAddToFavorites() {
+        
+        mockPokemonList()
+        mockBulbassaur()
         
         group("Given the Home View is loaded") { (activity) in
             homeBot

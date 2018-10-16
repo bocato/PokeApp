@@ -17,7 +17,7 @@ class MockDataHelper {
     }
     
     // MARK: Helpers
-    static func getData(forResource resource: MockedResource) ->  Data {
+    static func getData(forResource resource: MockedResource) -> Data {
         
         let bundle = Bundle(for: self)
         guard let path = bundle.path(forResource: resource.rawValue, ofType: "json"),

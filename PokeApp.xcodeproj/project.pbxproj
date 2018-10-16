@@ -101,6 +101,9 @@
 		E5DCC2A620B6F3B100325D32 /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A520B6F3B100325D32 /* FavoriteCollectionViewCell.swift */; };
 		E5DCC2A820B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A720B6F3CA00325D32 /* FavoriteCollectionViewCellModel.swift */; };
 		E5DCC2AA20B6F7D900325D32 /* SimpleFavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DCC2A920B6F7D900325D32 /* SimpleFavoritesManager.swift */; };
+		E5EE716D217659C100D83BB5 /* bulbassaur.json in Resources */ = {isa = PBXBuildFile; fileRef = E53D4C5821699F39006A2222 /* bulbassaur.json */; };
+		E5EE716E217659C400D83BB5 /* pokemonList.json in Resources */ = {isa = PBXBuildFile; fileRef = E53D4C65216A74F1006A2222 /* pokemonList.json */; };
+		E5EE716F217659C700D83BB5 /* MockDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D4C5A21699FCB006A2222 /* MockDataHelper.swift */; };
 		E5F0ECDA216D274B00E70C49 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F0ECD9216D274B00E70C49 /* RouterProtocol.swift */; };
 		E5F0ECDD216D296600E70C49 /* SimpleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F0ECDC216D296600E70C49 /* SimpleRouterTests.swift */; };
 		E5F182A02174D4D1000BA0BB /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1829B2174D4D1000BA0BB /* XCTestCaseExtension.swift */; };
@@ -1161,6 +1164,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5EE716D217659C100D83BB5 /* bulbassaur.json in Resources */,
+				E5EE716E217659C400D83BB5 /* pokemonList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1363,6 +1368,7 @@
 				E5F182BB2174DC47000BA0BB /* NSURLSession+Swizzling.swift in Sources */,
 				E5F182C12174DCC6000BA0BB /* Logging.swift in Sources */,
 				E5F182A42174D4D1000BA0BB /* XCUIElementQueryExtension.swift in Sources */,
+				E5EE716F217659C700D83BB5 /* MockDataHelper.swift in Sources */,
 				E5F182B02174DC1D000BA0BB /* MockRepositiory.swift in Sources */,
 				E5F182BC2174DC48000BA0BB /* URLRequest+NSURLSessionMock.swift in Sources */,
 				E5F182B72174DC3E000BA0BB /* DefaultRequestMatcher.swift in Sources */,
