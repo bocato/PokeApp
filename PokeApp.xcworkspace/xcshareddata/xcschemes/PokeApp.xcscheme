@@ -49,16 +49,6 @@
                ReferencedContainer = "container:PokeApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5F1828C2174D36C000BA0BB"
-               BuildableName = "PokeAppUITests.xctest"
-               BlueprintName = "PokeAppUITests"
-               ReferencedContainer = "container:PokeApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
