@@ -29,6 +29,7 @@ ignore:
  - "Pods/.*" # ignore pods from code coverage
  - "Libraries/.*" # ignore third party libraries from code coverage
  - "*Test/.*" # ignore Tests from code coverage
+ - "*Tests/.*" # ignore Tests from code coverage
  - "**.storyboard" # Storyboards
  - "**/Models/*"
  - "**/Conveniences/UI/**" # custom UI elements
