@@ -44,3 +44,5 @@ ignore:
  - "**/SimpleRouter.swift"
  - "**/KingfisherImageDownloader.swift"
  - "**/Factories/ErrorFactory.swift"
+ - "**/ErrorExtension.swift"
+ - "**/CommonViewModelStates.swift"
