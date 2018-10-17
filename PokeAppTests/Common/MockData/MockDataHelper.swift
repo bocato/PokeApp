@@ -12,8 +12,8 @@ class MockDataHelper {
     
     // MARK: Enums
     enum MockedResource: String {
-        case bulbassaur = "bulbassaur"
-        case pokemonList = "pokemonList"
+        case bulbassaur
+        case pokemonList
     }
     
     // MARK: Helpers

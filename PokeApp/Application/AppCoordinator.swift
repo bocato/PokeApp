@@ -25,15 +25,15 @@ class AppCoordinator: Coordinator {
     }
     
     // MARK: - Dependencies
-    internal(set) var router: RouterProtocol
-    weak internal(set) var delegate: CoordinatorDelegate?
+    internal var router: RouterProtocol
+    weak internal var delegate: CoordinatorDelegate?
     private(set) var showResourceLoader: Bool
     private(set) var modulesFactory: AppCoordinatorModulesFactory!
     
     // MARK: - Properties
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) weak var parentCoordinator: Coordinator? = nil
-    internal(set) var context: CoordinatorContext? // This is a struct
+    internal var childCoordinators: [String : Coordinator] = [:]
+    internal weak var parentCoordinator: Coordinator?
+    internal var context: CoordinatorContext? // This is a struct
     
     // MARK: - Init
     init(router: RouterProtocol, modulesFactory: AppCoordinatorModulesFactory, showResourceLoader: Bool) {
@@ -71,4 +71,3 @@ class AppCoordinator: Coordinator {
     }
     
 }
-

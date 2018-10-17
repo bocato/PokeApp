@@ -6,12 +6,14 @@ def project_dependecies
     pod 'RxSwift', '4.3.1'
     pod 'RxCocoa', '4.3.1'
     pod 'Kingfisher', '4.10.0'
+    pod 'SwiftLint'
 end
 
 def testing_dependencies
     # Pods for testing
     pod 'RxSwift', '4.3.1'
     pod 'RxCocoa', '4.3.1'
+    pod 'SwiftLint'
 end
 
 target 'PokeApp' do

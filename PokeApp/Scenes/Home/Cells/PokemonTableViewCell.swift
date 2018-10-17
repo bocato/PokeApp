@@ -70,7 +70,7 @@ class PokemonTableViewCell: UITableViewCell {
         return NSAttributedString(string: name, attributes: nameAttributes)
     }
     
-    private func buildInfoLabelAttributedText(from cellModel: PokemonTableViewCellModel) ->  NSAttributedString {
+    private func buildInfoLabelAttributedText(from cellModel: PokemonTableViewCellModel) -> NSAttributedString {
         let numberAttributedString = buildNumberAttributedString(from: cellModel.pokemonNumberString)
         let nameAttributedString = buildNameAttributedString(from: cellModel.pokemonName)
         numberAttributedString.append(nameAttributedString)

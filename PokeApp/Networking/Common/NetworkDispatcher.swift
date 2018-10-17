@@ -163,7 +163,7 @@ class NetworkDispatcher: NetworkDispatcherProtocol {
                 return Disposables.create()
             }
             
-            let task = self.dispatch(urlRequest: request, onCompleted: { (networkResponse, networkError) in
+            let task = self.dispatch(urlRequest: request, onCompleted: { (_, networkError) in
                 
                 if let networkError = networkError {
                     observable.onError(networkError)

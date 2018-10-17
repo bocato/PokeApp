@@ -17,7 +17,7 @@ enum CommonViewModelState {
 
 extension CommonViewModelState: Equatable {
     
-    static func ==(lhs: CommonViewModelState, rhs: CommonViewModelState) -> Bool {
+    static func == (lhs: CommonViewModelState, rhs: CommonViewModelState) -> Bool {
         switch (lhs, rhs) {
         case let (.loading(l), .loading(r)): return l == r
         case (.empty, .empty): return true

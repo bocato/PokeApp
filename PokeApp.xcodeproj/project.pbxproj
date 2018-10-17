@@ -1037,6 +1037,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E551384620A4469900A5F6EB /* Build configuration list for PBXNativeTarget "PokeApp" */;
 			buildPhases = (
+				E5F23DD4217776EF0006FF7F /* SwiftLint */,
 				8B2033AA3873421ACD9658D8 /* [CP] Check Pods Manifest.lock */,
 				E551383020A4469700A5F6EB /* Sources */,
 				E551383120A4469700A5F6EB /* Frameworks */,
@@ -1231,6 +1232,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PokeApp/Pods-PokeApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E5F23DD4217776EF0006FF7F /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		F59D80868CF7E289F3A9986A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

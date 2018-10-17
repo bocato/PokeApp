@@ -42,9 +42,10 @@ struct DefaultRequestMatcher: RequestMatcher {
         guard request.httpMethod == method else { return .noMatch }
         
         let path = request.url?.absoluteString ?? ""
+        // swiftlint:disable legacy_constructor
         let range = NSMakeRange(0, path.utf16.count)
         let matches = pathMatcher.matches(in: path, options: [], range: range)
-        guard matches.count > 0 else { return .noMatch }
+        guard !matches.isEmpty else { return .noMatch }
         
         // If there were any matches, extract them here (match at index 0 is the whole string - skip that one)
         var extractions = [String]()

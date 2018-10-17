@@ -25,8 +25,8 @@ class PokemonDetailsViewController: UIViewController, RxControllable {
     @IBOutlet private weak var favoritesButton: PrimaryButton!
     
     // MARK: - Properties
-    internal(set) var viewModel: PokemonDetailsViewModel!
-    internal(set) var disposeBag = DisposeBag()
+    internal var viewModel: PokemonDetailsViewModel!
+    internal var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -68,7 +68,7 @@ extension PokemonDetailsViewController {
                 switch state {
                 case .error(let networkError):
                     let errorMessage = networkError?.message ?? NetworkErrorMessage.unexpected.rawValue
-                    AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet, action: UIAlertAction(title: "Ok", style: .default, handler: { [weak self] (_) in
+                    AlertHelper.showAlert(in: self, withTitle: "Error", message: errorMessage, preferredStyle: .actionSheet, action: UIAlertAction(title: "Ok", style: .default, handler: { [weak self] _ in
                         self?.navigationController?.popViewController(animated: true)
                     }))
                 default: return
@@ -103,21 +103,21 @@ extension PokemonDetailsViewController {
         
         viewModel.pokemonAbilities
             .asObservable()
-            .bind(to: abilitiesTableView.rx.items(cellIdentifier: "AbilitiesTableViewCell", cellType: UITableViewCell.self)) { (rowIndex, abilityString, cell) in
+            .bind(to: abilitiesTableView.rx.items(cellIdentifier: "AbilitiesTableViewCell", cellType: UITableViewCell.self)) { (_, abilityString, cell) in
                 cell.textLabel?.text = abilityString
             }
             .disposed(by: disposeBag)
         
         viewModel.pokemonStats
             .asObservable()
-            .bind(to: statsTableView.rx.items(cellIdentifier: "StatsTableViewCell", cellType: UITableViewCell.self)) { (rowIndex, statString, cell) in
+            .bind(to: statsTableView.rx.items(cellIdentifier: "StatsTableViewCell", cellType: UITableViewCell.self)) { (_, statString, cell) in
                 cell.textLabel?.text = statString
             }
             .disposed(by: disposeBag)
         
         viewModel.pokemonMoves
             .asObservable()
-            .bind(to: movesTableView.rx.items(cellIdentifier: "MovesTableViewCell", cellType: UITableViewCell.self)) { (rowIndex, moveString, cell) in
+            .bind(to: movesTableView.rx.items(cellIdentifier: "MovesTableViewCell", cellType: UITableViewCell.self)) { (_, moveString, cell) in
                 cell.textLabel?.text = moveString
             }
             .disposed(by: disposeBag)
@@ -126,9 +126,9 @@ extension PokemonDetailsViewController {
     
     private func bindButtons() {
         
-        favoritesButton.rx.tap.subscribe { onTap in
+        favoritesButton.rx.tap.subscribe { _ in
             self.viewModel.actOnFavoritesButtonTouch()
-            }.disposed(by: disposeBag)
+        }.disposed(by: disposeBag)
         
         viewModel.favoriteButtonText
             .asObservable()
@@ -147,4 +147,3 @@ extension PokemonDetailsViewController: UITableViewDelegate {
     }
     
 }
-

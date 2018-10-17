@@ -17,10 +17,10 @@ class MockSessionDataTask: URLSessionDataTask { // Internal implementation of `N
     weak var session: URLSession?
     private var mutex: pthread_mutex_t = pthread_mutex_t()
     private var completionHandler: ((Data? , URLResponse?, Error?) -> Void)?
-    let onResume: (_ task: MockSessionDataTask)->()
+    let onResume: (_ task: MockSessionDataTask) -> Void
     
     // MARK: - Initialization
-    init(onResume: @escaping (_ task: MockSessionDataTask)->()) {
+    init(onResume: @escaping (_ task: MockSessionDataTask) -> Void) {
         self.onResume = onResume
     }
     
@@ -87,8 +87,7 @@ class MockSessionDataTask: URLSessionDataTask { // Internal implementation of `N
             if let completionHandler = completionHandler {
                 let urlResponse = HTTPURLResponse(url: (self.originalRequest?.url)!, statusCode: NSURLErrorCancelled, httpVersion: "HTTP/1.1", headerFields: [:])!
                 completionHandler(nil, urlResponse, NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
-            }
-            else {
+            } else {
                 if let delegate = session?.delegate as? URLSessionDataDelegate {
                     delegate.urlSession?(self.session!, task: self, didCompleteWithError: NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
                 }
@@ -111,13 +110,12 @@ class MockSessionDataTask: URLSessionDataTask { // Internal implementation of `N
         if let completionHandler = completionHandler { // if we have a completion handler set, respond to it
             let dispatchWorkItemForCompletionHandler = createDispatchWorkItemForSuccessCompletionHandler(with: request, session: session, delay: delay, statusCode: statusCode, headers: headers, body: body, completionHandler: completionHandler)
             dispatchWorkItems.append(dispatchWorkItemForCompletionHandler)
-        }
-        else { // if the completion handler is not set, respond to the session delegate
+        } else { // if the completion handler is not set, respond to the session delegate
             let dispatchWorkItemsForSessionDelegate = createSuccesssDispatchWorkItemsToRespondForSessionDelegate(with: request, session: session, delay: delay, statusCode: statusCode, headers: headers, body: body)
             dispatchWorkItems.append(contentsOf: dispatchWorkItemsForSessionDelegate)
         }
         
-        self.completionHandler = completionHandler;
+        self.completionHandler = completionHandler
         self._originalRequest = request
         self.session = session
         self._state = .running
@@ -128,18 +126,17 @@ class MockSessionDataTask: URLSessionDataTask { // Internal implementation of `N
     // MARK: - Handling ERROR responses
     func scheduleMockedErrorResponses(with request: URLRequest, session: URLSession, delay: Double, error: NSError, completionHandler : ((Data?, URLResponse?, Error?) -> Void)?) {
         
-        var dispatchWorkItems : [DispatchWorkItem] = [];
+        var dispatchWorkItems : [DispatchWorkItem] = []
         
         if let completionHandler = completionHandler { // if we have a completion handler set, respond to it
             let dispatchWorkItemForErrorCompletionHandler = createDispatchWorkItemForErrorCompletionHandler(with: request, session: session, delay: delay, error: error, completionHandler: completionHandler)
             dispatchWorkItems.append(dispatchWorkItemForErrorCompletionHandler)
-        }
-        else { // if the completion handler is not set, respond to the session delegate
+        } else { // if the completion handler is not set, respond to the session delegate
             let dispatchWorkerItemForSessionDelegate = createErrorDispatchWorkItemToRespondForSessionDelegate(with: request, session: session, delay: delay, error: error)
             dispatchWorkItems.append(dispatchWorkerItemForSessionDelegate)
         }
         
-        self.completionHandler = completionHandler;
+        self.completionHandler = completionHandler
         self._originalRequest = request
         self.session = session
         self._state = .running
@@ -245,8 +242,7 @@ private extension MockSessionDataTask {
 // MARK: - ERROR Response Helpers
 private extension MockSessionDataTask {
     
-    func createDispatchWorkItemForErrorCompletionHandler(with request: URLRequest, session: URLSession, delay: Double, error: NSError, completionHandler : @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DispatchWorkItem
-    {
+    func createDispatchWorkItemForErrorCompletionHandler(with request: URLRequest, session: URLSession, delay: Double, error: NSError, completionHandler : @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DispatchWorkItem {
         return DispatchWorkItem { [weak self] in
             guard let task = self else { return }
             pthread_mutex_lock(&task.mutex)

@@ -17,7 +17,7 @@ class TabBarViewController: UITabBarController, RxControllable {
     
     // MARK: Dependencies
     internal var disposeBag: DisposeBag = DisposeBag()
-    internal(set) var viewModel: TabBarViewModel!
+    internal var viewModel: TabBarViewModel!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {

@@ -62,4 +62,3 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     }
     
 }
-

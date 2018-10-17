@@ -30,15 +30,15 @@ class HomeCoordinator: HomeCoordinatorProtocol {
     }
     
     // MARK: - Dependencies
-    internal(set) var router: RouterProtocol
-    weak internal(set) var delegate: CoordinatorDelegate?
-    internal(set) var favoritesManager: FavoritesManager
-    internal(set) var modulesFactory: HomeCoordinatorModulesFactory
+    internal var router: RouterProtocol
+    weak internal var delegate: CoordinatorDelegate?
+    internal var favoritesManager: FavoritesManager
+    internal var modulesFactory: HomeCoordinatorModulesFactory
     
     // MARK: - Properties
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) weak var parentCoordinator: Coordinator? = nil
-    internal(set) var context: CoordinatorContext? // This is a struct
+    internal var childCoordinators: [String : Coordinator] = [:]
+    internal weak var parentCoordinator: Coordinator?
+    internal var context: CoordinatorContext? // This is a struct
     
     // MARK: Initialization
     required init(router: RouterProtocol, favoritesManager: FavoritesManager, modulesFactory: HomeCoordinatorModulesFactory) {

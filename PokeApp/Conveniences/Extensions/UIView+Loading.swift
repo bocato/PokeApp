@@ -9,7 +9,7 @@
 import UIKit
 
 // MARK: Constants
-fileprivate let loadingViewTag = 11111
+private let loadingViewTag = 11111
 
 extension UIView {
     
@@ -20,14 +20,14 @@ extension UIView {
     }
     
     // MARK: - Loading View Components
-    private func createBlurView(_ style: UIBlurEffect.Style = .light, alpha: CGFloat = 0.85)  -> UIVisualEffectView {
+    private func createBlurView(_ style: UIBlurEffect.Style = .light, alpha: CGFloat = 0.85) -> UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.alpha = alpha
         return blurEffectView
     }
     
-    private func createActivityIndicator(_ style: UIActivityIndicatorView.Style = .whiteLarge, color: UIColor = UIColor.lightGray) -> UIActivityIndicatorView  {
+    private func createActivityIndicator(_ style: UIActivityIndicatorView.Style = .whiteLarge, color: UIColor = UIColor.lightGray) -> UIActivityIndicatorView {
         let activityIndicatorView = UIActivityIndicatorView(style: style)
         activityIndicatorView.color = color
         return activityIndicatorView
@@ -81,11 +81,10 @@ extension UIView {
             let loadingView = self.viewWithTag(loadingViewTag)
             UIView.animate(withDuration: 0.2, animations: {
                 loadingView?.alpha = 0
-            }, completion: { (completed) in
+            }, completion: { _ in
                 loadingView?.removeFromSuperview()
             })
         }
     }
     
 }
-

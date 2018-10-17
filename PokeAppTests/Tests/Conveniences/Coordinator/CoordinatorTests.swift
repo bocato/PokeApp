@@ -98,7 +98,7 @@ class CoordinatorTests: XCTestCase {
     func testRemoveChildCoordinatorThatExists() {
         // Given
         let childCoordinator = CoordinatorSpy(router: SimpleRouter())
-        let _ = sut.addChildCoordinator(childCoordinator)
+        _ = sut.addChildCoordinator(childCoordinator)
         // When
         let didRemoveChild = sut.removeChildCoordinator(childCoordinator)
         // Then
@@ -132,13 +132,13 @@ class CoordinatorTests: XCTestCase {
 class CoordinatorSpy: Coordinator {
     
     // MARK: - Dependencies
-    internal(set) var router: RouterProtocol
+    internal var router: RouterProtocol
     
     // MARK: - Properties
-    weak internal(set) var delegate: CoordinatorDelegate?
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) weak var parentCoordinator: Coordinator? = nil
-    internal(set) var context: CoordinatorContext? // This is a struct
+    weak internal var delegate: CoordinatorDelegate?
+    internal var childCoordinators: [String : Coordinator] = [:]
+    internal weak var parentCoordinator: Coordinator?
+    internal var context: CoordinatorContext? // This is a struct
     
     // MARK: - Control Variables
     var initWasCalled = false

@@ -34,7 +34,7 @@ extension URLSession {
     @discardableResult
     public class func mockNext(request: URLRequest, body: Data?, headers: [String: String] = [:], statusCode: Int = 200, delay: Double = DefaultSessionMockDelay) -> MockReference {
         let requestMatcher = DefaultRequestMatcher(url: request.url!, method: request.httpMethod!)
-        return mock(next: requestMatcher, delay: delay, response: { (url, extractions) -> MockResponse in
+        return mock(next: requestMatcher, delay: delay, response: { (_,_) -> MockResponse in
             return .success(statusCode: statusCode, headers: headers, body: body)
         })
     }
@@ -49,7 +49,7 @@ extension URLSession {
      */
     public class func mockEvery(request: URLRequest, body: Data?, headers: [String: String] = [:], statusCode: Int = 200, delay: Double = DefaultSessionMockDelay) {
         let requestMatcher = DefaultRequestMatcher(url: request.url!, method: request.httpMethod!)
-        mock(every: requestMatcher, delay: delay) { (url, extractions) -> MockResponse in
+        mock(every: requestMatcher, delay: delay) { (_,_) -> MockResponse in
             return .success(statusCode: statusCode, headers: headers, body: body)
         }
     }
@@ -66,7 +66,7 @@ extension URLSession {
     @discardableResult
     public class func mockNext(expression: String, httpMethod: String = "GET", body: Data?, headers: [String: String] = [:], statusCode: Int = 200, delay: Double = DefaultSessionMockDelay) throws -> MockReference {
         let requestMatcher = try DefaultRequestMatcher(expression: expression, method: httpMethod)
-        return mock(next: requestMatcher, delay: delay, response: { (url, extractions) -> MockResponse in
+        return mock(next: requestMatcher, delay: delay, response: { (_,_) -> MockResponse in
             return .success(statusCode: statusCode, headers: headers, body: body)
         })
     }
@@ -82,7 +82,7 @@ extension URLSession {
      */
     public class func mockEvery(expression: String, httpMethod: String = "GET", body: Data?, headers: [String: String] = [:], statusCode: Int = 200, delay: Double = DefaultSessionMockDelay) throws {
         let requestMatcher = try DefaultRequestMatcher(expression: expression, method: httpMethod)
-        mock(every: requestMatcher, delay: delay) { (url, extractions) -> MockResponse in
+        mock(every: requestMatcher, delay: delay) { (_,_) -> MockResponse in
             return .success(statusCode: statusCode, headers: headers, body: body)
         }
     }

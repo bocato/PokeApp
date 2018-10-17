@@ -12,6 +12,7 @@ extension UIViewController {
     
     // MARK: - Instantiation
     class func instantiate<T>(viewControllerOfType type: T.Type, storyboardName: String) -> T {
+        // swiftlint:disable force_cast
         return UIStoryboard(name: storyboardName, bundle: nil).instantiateViewController(withIdentifier: "\(type)") as! T
     }
     

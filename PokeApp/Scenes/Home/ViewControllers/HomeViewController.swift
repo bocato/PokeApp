@@ -25,8 +25,8 @@ class HomeViewController: UIViewController, RxControllable {
     @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Dependencies
-    internal(set) var viewModel: HomeViewModel!
-    internal(set) var disposeBag = DisposeBag()
+    internal var viewModel: HomeViewModel!
+    internal var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -74,11 +74,11 @@ extension HomeViewController {
         
     }
     
-    func bindTableView()  {
+    func bindTableView() {
         
         viewModel.pokemonCellModels
             .asObservable()
-            .bind(to: tableView.rx.items(cellIdentifier: PokemonTableViewCell.identifier, cellType: PokemonTableViewCell.self)) { (rowIndex, pokemonCellModel, cell) in
+            .bind(to: tableView.rx.items(cellIdentifier: PokemonTableViewCell.identifier, cellType: PokemonTableViewCell.self)) { (_, pokemonCellModel, cell) in
                 cell.configure(with: pokemonCellModel)
             }
             .disposed(by: disposeBag)

@@ -58,7 +58,7 @@ class AppCoordinatorTests: XCTestCase {
         let appCoordinator = AppCoordinator.build(window: window, modulesFactory: modulesFactory, showResourceLoader: false)!
         appCoordinator.start()
         // Then
-        let containsTabBarCoordinator = appCoordinator.childCoordinators.contains { (key, value) -> Bool in
+        let containsTabBarCoordinator = appCoordinator.childCoordinators.contains { (key, _) -> Bool in
             return key == "TabBarCoordinator"
         }
         XCTAssertTrue(containsTabBarCoordinator)
@@ -73,7 +73,7 @@ class AppCoordinatorTests: XCTestCase {
         let appCoordinator = AppCoordinator.build(window: window, modulesFactory: modulesFactory, showResourceLoader: true)!
         appCoordinator.start()
         // Then
-        let containsTabBarCoordinator = appCoordinator.childCoordinators.contains { (key, value) -> Bool in
+        let containsTabBarCoordinator = appCoordinator.childCoordinators.contains { (key, _) -> Bool in
             return key == "TabBarCoordinator"
         }
         XCTAssertFalse(containsTabBarCoordinator)

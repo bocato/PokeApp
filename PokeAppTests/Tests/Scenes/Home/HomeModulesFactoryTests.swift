@@ -9,7 +9,7 @@
 import XCTest
 @testable import PokeApp
 
-class HomeModulesFactoryTests: XCTestCase  {
+class HomeModulesFactoryTests: XCTestCase {
     
     // MARK: - Properties
     var sut: HomeCoordinatorModulesFactory!

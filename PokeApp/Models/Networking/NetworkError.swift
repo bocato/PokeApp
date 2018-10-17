@@ -20,7 +20,7 @@ struct NetworkError: Error {
     var request: URLRequest?
     var task: URLSessionDataTaskProtocol?
     
-    init(){}
+    init() {}
     
     init(requestError: SerializedNetworkError) {
         self.requestError = requestError

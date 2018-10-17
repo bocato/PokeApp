@@ -25,7 +25,7 @@ class DefaultSessionMock: SessionMock {
     
     private func createURLSessionDataTask(from extractions: [String], request: URLRequest, completionHandler: CompletionHandler?, session: URLSession) -> URLSessionDataTask {
        
-        let task = MockSessionDataTask() { task in
+        let task = MockSessionDataTask { task in
             
             let response = self.mockResponse(request.url!, extractions)
             
@@ -68,7 +68,7 @@ extension DefaultSessionMock {
 // MARK: - Equatable
 extension DefaultSessionMock: Equatable {
     
-    static func ==(lhs: DefaultSessionMock, rhs: DefaultSessionMock) -> Bool {
+    static func == (lhs: DefaultSessionMock, rhs: DefaultSessionMock) -> Bool {
         return lhs === rhs
     }
     

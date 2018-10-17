@@ -12,7 +12,7 @@ class Environment {
     
     // MARK: Enums
     enum EnvironmentType: String {
-        case dev = "dev"
+        case dev
     }
     
     // MARK: - Singleton
@@ -43,7 +43,6 @@ class Environment {
         case .dev:
             self.baseURL = "https://pokeapi.co/api/v2/"
             self.spritesURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"
-            break
         }
     }
     

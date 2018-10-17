@@ -44,7 +44,7 @@ class FavoritesViewModel: CoordinatorDelegate {
                 })
         numberFavorites = cellModels.count
         favoritesCellModels.onNext(cellModels)
-        viewState.onNext(cellModels.count == 0 ? .empty : .loaded)
+        viewState.onNext(cellModels.isEmpty ? .empty : .loaded)
     }
     
     // MARK: - Actions

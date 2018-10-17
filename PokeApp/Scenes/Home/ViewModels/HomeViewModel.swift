@@ -41,7 +41,7 @@ class HomeViewModel {
             .single()
             .subscribe(onNext: { [weak self] (pokemonListResponse) in
                 guard let self = self else { return }
-                guard let results = pokemonListResponse?.results, results.count > 0 else {
+                guard let results = pokemonListResponse?.results, !results.isEmpty else {
                     self.viewState.onNext(.empty)
                     return
                 }
@@ -51,7 +51,7 @@ class HomeViewModel {
                 self.viewState.onNext(.loaded)
                 self.pokemonCellModels.accept(viewModelsForResult)
             }, onError: { [weak self]  (error) in
-                let networkError = error as! NetworkError
+                guard let networkError = error as? NetworkError else { return }
                 self?.viewState.onNext(.error(networkError.requestError))
             }, onCompleted: {
                 self.viewState.onNext(.loading(false))

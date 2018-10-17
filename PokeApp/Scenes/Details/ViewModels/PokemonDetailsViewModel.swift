@@ -106,7 +106,7 @@ class PokemonDetailsViewModel {
                 
             }, onError: { [weak self] (error) in
                     
-                    let networkError = error as! NetworkError
+                    guard let networkError = error as? NetworkError else { return }
                     self?.viewState.onNext(.error(networkError.requestError))
                     self?.isLoadingPokemonData.onNext(false)
                     
@@ -126,7 +126,7 @@ class PokemonDetailsViewModel {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self](image) in
                 self?.pokemonImage.accept(image)
-            }, onError: { [weak self] (error) in
+            }, onError: { [weak self] _ in
                 self?.pokemonImage.accept(self?.placeholderImage)
             }, onCompleted: {
                 self.isLoadingPokemonImage.onNext(false)

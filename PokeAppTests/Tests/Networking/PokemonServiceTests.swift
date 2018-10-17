@@ -42,7 +42,7 @@ class PokemonServiceTests: XCTestCase {
             .collect(from: response)
 
         guard let error = collector.error as? NetworkError,
-            let _ = error.request?.url else {
+            let request = error.request, request.url != nil else {
                 XCTAssert(false, "Request url not found")
                 return
         }
@@ -89,15 +89,3 @@ class PokemonServiceTests: XCTestCase {
     
     
 }
-
-
-
-
-
-
-
-
-
-
-
-

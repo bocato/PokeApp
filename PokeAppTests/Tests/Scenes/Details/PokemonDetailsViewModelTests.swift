@@ -49,7 +49,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         sut.actOnFavoritesButtonTouch()
         
         // Then
-        let bulbassaurSearch = favoritesManager.favorites.filter( { $0.name == "bulbassaur" })
+        let bulbassaurSearch = favoritesManager.favorites.filter({ $0.name == "bulbassaur" })
         XCTAssertNotNil(bulbassaurSearch)
     }
     
@@ -67,7 +67,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         
         // Then
         XCTAssertTrue(detailsCoordinatorSpy.didRemoveFavoriteWasCalled)
-        let bulbassaurSearch = favoritesManager.favorites.filter( { $0.name == "bulbassaur" })
+        let bulbassaurSearch = favoritesManager.favorites.filter({ $0.name == "bulbassaur" })
         XCTAssertTrue(bulbassaurSearch.isEmpty)
     }
     
@@ -107,7 +107,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         
         var isLastStateAnError = false
         switch lastState {
-        case .error(_):
+        case .error:
             isLastStateAnError = true
         default:
             isLastStateAnError = false
@@ -147,7 +147,7 @@ class PokemonDetailsViewModelTests: XCTestCase {
         var lastStateIsAnError = false
         if let lastState = viewStateCollector.items.last {
             switch lastState {
-            case .error(_): lastStateIsAnError = true
+            case .error: lastStateIsAnError = true
             default: return
             }
             XCTAssertTrue(lastStateIsAnError)

@@ -9,7 +9,6 @@
 import Foundation
 import XCTest
 
-fileprivate var XCUIApplicationReflectableStatusesObjectKey = "XCUIApplication"
 @available(iOS 9.0, *)
 extension XCTestCase {
     
@@ -48,14 +47,14 @@ extension XCTestCase {
     // MARK: - Other Helpers
     /* A simple wrapper around creating an activity for grouping your test statements. */
     @discardableResult
-    public func group(_ text: String = "Group", closure: (_ activity: XCTActivity)-> ()) -> XCTestCase {
+    public func group(_ text: String = "Group", closure: (_ activity: XCTActivity) -> Void) -> XCTestCase {
         XCTContext.runActivity(named: text) { activity in
             closure(activity)
         }
         return self
     }
     
-    func delay(_ delay: Double, completion: @escaping ()->()) {
+    func delay(_ delay: Double, completion: @escaping () -> Void) {
         let when = DispatchTime.now() + delay
         DispatchQueue.main.asyncAfter(deadline: when, execute: completion)
     }

@@ -22,7 +22,7 @@ class FavoritesViewModelTests: XCTestCase {
         super.setUp()
         favoritesManager = SimpleFavoritesManager.shared
         favoritesCoordinatorSpy = FavoritesCoordinatorSpy(router: SimpleRouter(), modulesFactory: FavoritesCoordinatorModulesFactory(), favoritesManager: favoritesManager)
-        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+        imageDownloader = ImageDownloaderStub()
         sut = FavoritesViewModelSpy(actionsDelegate: favoritesCoordinatorSpy, favoritesManager: favoritesManager, imageDownloader: imageDownloader)
     }
     

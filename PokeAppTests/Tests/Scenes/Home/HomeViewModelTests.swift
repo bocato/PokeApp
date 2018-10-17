@@ -24,7 +24,7 @@ class HomeViewModelTests: XCTestCase {
         disposeBag = DisposeBag()
         favoritesManager = SimpleFavoritesManager.shared
         homeCoordinatorSpy = HomeCoordinatorSpy(router: SimpleRouter(), favoritesManager: favoritesManager, modulesFactory: HomeCoordinatorModulesFactory())
-        imageDownloader = KingfisherImageDownloader() // TODO: Change this to the mock version
+        imageDownloader = ImageDownloaderStub()
     }
     
     override func tearDown() {
@@ -92,9 +92,8 @@ class HomeViewModelTests: XCTestCase {
         // Then
         var isLastStateAnError = false
         switch viewStateCollector.items.last! {
-            case .error(_): isLastStateAnError = true
-                break
-            default: XCTFail("The last viewState is not an error!")
+        case .error: isLastStateAnError = true
+        default: XCTFail("The last viewState is not an error!")
         }
         XCTAssertTrue(isLastStateAnError, "The last viewState is not an error!")
         XCTAssertTrue(pokemonCellModelsCollector.items.first!.isEmpty, "pokemonCellModels is not empty")

@@ -55,7 +55,7 @@ class FavoriteCollectionViewCellModel {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] (image) in
                 self?.pokemonImage.accept(image)
-            }, onError: { [weak self] (error) in
+            }, onError: { [weak self] _ in
                 self?.pokemonImage.accept(self?.placeholderImage)
             }, onCompleted: {
                 self.state.accept(.loading(false))

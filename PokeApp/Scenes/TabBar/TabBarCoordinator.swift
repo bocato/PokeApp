@@ -25,14 +25,14 @@ protocol TabBarCoordinatorProtocol: Coordinator, TabBarViewControllerActionsDele
 class TabBarCoordinator: TabBarCoordinatorProtocol {
     
     // MARK: - Dependencies
-    internal(set) var router: RouterProtocol
-    weak internal(set) var delegate: CoordinatorDelegate?
-    internal(set) var modulesFactory: TabBarCoordinatorModulesFactory
+    internal var router: RouterProtocol
+    weak internal var delegate: CoordinatorDelegate?
+    internal var modulesFactory: TabBarCoordinatorModulesFactory
     
     // MARK: - Properties
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) weak var parentCoordinator: Coordinator? = nil
-    internal(set) var context: CoordinatorContext? // This is a struct
+    internal var childCoordinators: [String : Coordinator] = [:]
+    internal weak var parentCoordinator: Coordinator?
+    internal var context: CoordinatorContext? // This is a struct
     
     // MARK: - Initialization
     required init(router: RouterProtocol, modulesFactory: TabBarCoordinatorModulesFactory) {

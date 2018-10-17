@@ -28,13 +28,13 @@ class DetailsCoordinator: DetailsCoordinatorProtocol {
     }
     
     // MARK: - Dependencies
-    internal(set) var router: RouterProtocol
+    internal var router: RouterProtocol
     
     // MARK: - Properties
-    weak internal(set) var delegate: CoordinatorDelegate?
-    internal(set) var childCoordinators: [String : Coordinator] = [:]
-    internal(set) weak var parentCoordinator: Coordinator? = nil
-    internal(set) var context: CoordinatorContext? // This is a struct
+    weak internal var delegate: CoordinatorDelegate?
+    internal var childCoordinators: [String : Coordinator] = [:]
+    internal weak var parentCoordinator: Coordinator?
+    internal var context: CoordinatorContext? // This is a struct
     
     // MARK: - Init
     required init(router: RouterProtocol) {

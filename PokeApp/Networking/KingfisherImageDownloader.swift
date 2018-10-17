@@ -38,5 +38,3 @@ class KingfisherImageDownloader: ImageDownloaderProtocol {
     }
     
 }
-
-

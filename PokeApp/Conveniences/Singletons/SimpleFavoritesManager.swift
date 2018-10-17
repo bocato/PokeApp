@@ -16,14 +16,14 @@ class SimpleFavoritesManager: FavoritesManager {
     static let shared = SimpleFavoritesManager()
     
     // MARK: - Properties
-    internal(set) var favorites = [Pokemon]()
+    internal var favorites = [Pokemon]()
     
     // MARK: - Initialization
     private init() {}
     
     // MARK: - Helpers
     func add(pokemon: Pokemon) {
-        guard let id = pokemon.id, favorites.filter( { $0.id == id } ).first == nil else {
+        guard let id = pokemon.id, favorites.filter({ $0.id == id }).first == nil else {
             return
         }
         favorites.append(pokemon)
@@ -37,7 +37,7 @@ class SimpleFavoritesManager: FavoritesManager {
     }
     
     func isFavorite(pokemon: Pokemon) -> Bool {
-        guard let id = pokemon.id, let _ = favorites.filter( { $0.id == id } ).first else {
+        guard let id = pokemon.id, favorites.filter({ $0.id == id }).first != nil else {
             return false
         }
         return true

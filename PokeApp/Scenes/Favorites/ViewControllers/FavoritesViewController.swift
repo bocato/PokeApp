@@ -19,8 +19,8 @@ class FavoritesViewController: UIViewController, RxControllable {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     // MARK: - Dependencies
-    internal(set) var viewModel: FavoritesViewModel!
-    internal(set) var disposeBag = DisposeBag()
+    internal var viewModel: FavoritesViewModel!
+    internal var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -38,7 +38,7 @@ extension FavoritesViewController {
         
         viewModel.favoritesCellModels
             .asObservable()
-            .bind(to: collectionView.rx.items(cellIdentifier: FavoriteCollectionViewCell.identifier, cellType: FavoriteCollectionViewCell.self)) { (rowIndex, favoriteCellModel, cell) in
+            .bind(to: collectionView.rx.items(cellIdentifier: FavoriteCollectionViewCell.identifier, cellType: FavoriteCollectionViewCell.self)) { (_, favoriteCellModel, cell) in
                 cell.configure(with: favoriteCellModel)
             }
             .disposed(by: disposeBag)
